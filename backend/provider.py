@@ -178,8 +178,11 @@ class Provider:
             if not isinstance(content, str):
                 raise ValueError("Missing JSON content")
             return response_model.model_validate_json(content, strict=True)
-        except (ValueError, TypeError, KeyError, IndexError, ValidationError, json.JSONDecodeError):
+        except (ValueError, TypeError, KeyError, IndexError, ValidationError, json.JSONDecodeError) as validation_error:
             error = ProviderError("provider_invalid_response", "Provider response failed local validation.", 502)
+            if isinstance(validation_error, ValidationError):
+                error.validation_errors = [{"loc": list(item["loc"]), "type": item["type"], "message": item["msg"]}
+                                           for item in validation_error.errors()]
             # Retain only model content for an explicit local ingestion diagnostic, never headers/error bodies.
             try:
                 error.invalid_content = response.json()["choices"][0]["message"]["content"]

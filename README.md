@@ -4,9 +4,11 @@ SpectraPlan is a planned AI assistant for the first technical assessment of indu
 
 ## Project status
 
-**F01 and F02 are complete:** a FastAPI readiness API, a React status page and structured provider adapters are implemented. Both local services and their development API connection have been verified. On 2026-10-17, Groq `qwen/qwen3.8-27b` returned a live structured response that passed local schema and content validation, and the complete 64-page F02 corpus was published and validated.
+**F01–F04 are complete for their tested development gates:** a FastAPI readiness API, a React status page, structured provider adapters, backend enquiry extraction, and context-aware hybrid evidence retrieval are implemented. Both local services and their development API connection have been verified. On 2026-10-17, Groq `qwen/qwen3.8-27b` returned the initial live provider smoke response, the complete 64-page F02 corpus was published and validated, and F03 extraction was checked with LLMTech.
 
-F02 adds source inventory, page-aware Qwen extraction and verification, workbook import, a manual inspection report, and Qdrant + BM25 search. The active corpus is `corpus-4aac882441587796afe5`, with 152 passages, 81 retrieval-eligible passages, 19 method rows and 63 flagged records. Enquiry extraction, assessment generation and evaluation remain future increments.
+F02 adds source inventory, page-aware Qwen extraction and verification, workbook import, a manual inspection report, and Qdrant + BM25 search. The active corpus is `corpus-4aac882441587796afe5`, with 152 passages, 81 retrieval-eligible passages, 19 method rows and 63 flagged records. F03 adds typed enquiry extraction and `POST /api/extract`, with exact input provenance, separate streams, explicit unknowns and attributed customer claims. Assessment generation and full evaluation remain future increments. See [customer extraction](docs/customer_extraction.md) for its API, provider options and checks.
+
+F04 adds `POST /api/retrieve` and revision-pinned `GET /api/evidence/{evidence_id}`. It combines BM25, local BGE/Qdrant semantic search and structured method lookup into at most eight evidence records, exposing selection reasons, scores, context coverage and remaining gaps. See [evidence retrieval](docs/evidence_retrieval.md) for the API, semantic threshold, single follow-up budget and verification records.
 
 ## Local setup
 
@@ -58,6 +60,7 @@ Environment variables override the root `.env`. Relative paths resolve from the 
 | `REQUEST_DEADLINE_S` | 90 seconds shared across attempts and retry delays |
 | `PROVIDER_MAX_RETRIES` | 2 retries, at most 3 attempts |
 | `PROVIDER_MAX_COMPLETION_TOKENS` | 4096; the small smoke test uses 2048 |
+| `EXTRACTION_MAX_COMPLETION_TOKENS` | 3072; F03 output ceiling, also capped by the provider ceiling |
 | `SOURCE_DIR` | `knowledge/original_sources` |
 | `CORPUS_DIR` | `knowledge` |
 | `SMOKE_OUTPUT_DIR` | `outputs/provider_smoke` |
@@ -228,7 +231,7 @@ The active corpus is **`corpus-4aac882441587796afe5`**: all 64 PDF pages process
 
 Deep validation passes against the original sources, workbook cells, page-image hashes and Qdrant/BM25 membership. Replaying all 64 cached responses exactly reproduces the 152 published records. Representative powder/API and opaque-dairy searches exercise both retrieval branches; backend regression tests pass (69 tests). Context-aware evidence selection remains F04 work: generic search can still return biomedical material for a dairy query.
 
-`outputs/ingest/published_validation.json` records current completion checks. `outputs/ingest/live_validation.json` retains the earlier failed Groq pilot as historical evidence; it is not the active corpus status. Readiness is local configuration/index readiness, not a live provider check or scientific endorsement. F03 customer-enquiry extraction is the next feature.
+`outputs/ingest/published_validation.json` records current completion checks. `outputs/ingest/live_validation.json` retains the earlier failed Groq pilot as historical evidence; it is not the active corpus status. Readiness is local configuration/index readiness, not a live provider check or scientific endorsement. F03 customer-enquiry extraction is documented [separately](docs/customer_extraction.md).
 
 ## Manual search and S06 website crawl
 
@@ -249,4 +252,4 @@ HTML is parsed locally without another LLM or new parser dependency. Navigation,
 
 `WEB_CORPUS_DIR` defaults to `knowledge/web`. Its `current.json` points to an immutable `versions/web-<hash>/` snapshot with a manifest, extracted pages, records, BM25/embedding segments and a local Qdrant index. Raw HTML and vector binaries are ignored by Git; extracted provenance remains trackable. A failed crawl/index build keeps the previous pointer. Existing BGE files must be present locally before indexing the website; the crawler uses local-only embeddings.
 
-`GET /api/search/status` reports technical and website dataset readiness. `POST /api/search` accepts `query` (1–2000 characters), `mode` (`compare`, `bm25`, `qdrant`, `hybrid`), `dataset` (`technical`, `website`, `all`), `limit` (1–8) and `expand_synonyms`. Semantic queries must fit 512 tokenizer tokens. Missing/corrupt datasets or a busy vector store return a sanitized 503; invalid inputs return 422. The manual search API does not implement customer-context extraction, assessment generation or an evidence-resolution endpoint; those remain F03–F06 work.
+`GET /api/search/status` reports technical and website dataset readiness. `POST /api/search` accepts `query` (1–2000 characters), `mode` (`compare`, `bm25`, `qdrant`, `hybrid`), `dataset` (`technical`, `website`, `all`), `limit` (1–8) and `expand_synonyms`. Semantic queries must fit 512 tokenizer tokens. Missing/corrupt datasets or a busy vector store return a sanitized 503; invalid inputs return 422. The manual search API remains separate from `POST /api/extract`; context-based evidence retrieval, assessment generation and an evidence-resolution endpoint remain F04–F06 work.

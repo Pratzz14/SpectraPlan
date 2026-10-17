@@ -1,7 +1,7 @@
 # SpectraPlan Iterative Implementation Plan
 
 **Based on:** [Technical specification v1.1](spec.md)\
-**Status:** F01–F02 complete; corpus published and validated; F03 customer enquiry extraction is next\
+**Status:** F01–F04 complete for tested development gates; F05 structured assessment is next\
 **Structure:** Main feature → tasks → subtasks\
 **Target:** A working, source-grounded spectroscopy assessment app with reproducible evaluation outputs.
 
@@ -94,23 +94,25 @@ The timeboxes are the specification's proposed 12-hour budget, not guaranteed es
 **Spec:** Sections 6.1 and 9.2.\
 **Primary files:** `backend/models.py`, `backend/agent.py`, `tests/`.
 
-- [ ] **F03.1 — Define fact and provenance models**
-  - [ ] Implement `CaseFacts`, `MeasurementContext`, `CustomerStatement` and fact-provenance records with safe collection defaults.
-  - [ ] Represent reported facts, requested outcomes, proposed approaches and customer claims separately.
-  - [ ] Preserve exact supporting input quotes, context IDs, raw ranges and units; use `null` for unknown values.
+- [x] **F03.1 — Define fact and provenance models**
+  - [x] Implement `CaseFacts`, `MeasurementContext`, `CustomerStatement` and fact-provenance records with safe collection defaults.
+  - [x] Represent reported facts, requested outcomes, proposed approaches and customer claims separately.
+  - [x] Preserve exact supporting input quotes, context IDs, raw ranges and units; use `null` for unknown values.
 
-- [ ] **F03.2 — Implement structured extraction**
-  - [ ] Write a versioned extraction prompt that records only what the customer states and does not recommend a method.
-  - [ ] Separate distinct streams/targets into contexts and preserve shared constraints without inventing per-stream facts.
-  - [ ] Parse and validate extraction output; reject malformed structures and untraceable input quotes.
-  - [ ] Expose extraction through a callable pipeline stage; add `/api/extract` only if useful for development.
+- [x] **F03.2 — Implement structured extraction**
+  - [x] Write a versioned extraction prompt that records only what the customer states and does not recommend a method.
+  - [x] Separate distinct streams/targets into contexts and preserve shared constraints without inventing per-stream facts.
+  - [x] Parse and validate extraction output; reject malformed structures and untraceable input quotes.
+  - [x] Expose extraction through a callable pipeline stage; add `/api/extract` only if useful for development.
 
-- [ ] **F03.3 — Check extraction behavior**
-  - [ ] Verify D01/D02 produce the stated sample properties, targets and unknowns.
-  - [ ] Test a synthetic multi-stream enquiry and a customer assertion of an unproven instrument capability.
-  - [ ] Test missing numerical values and ambiguous units; confirm they do not become assumed defaults or unsupported conversions.
+- [x] **F03.3 — Check extraction behavior**
+  - [x] Verify D01/D02 produce the stated sample properties, targets and unknowns.
+  - [x] Test a synthetic multi-stream enquiry and a customer assertion of an unproven instrument capability.
+  - [x] Test missing numerical values and ambiguous units; confirm they do not become assumed defaults or unsupported conversions.
 
 **Completion gate:** Extracted facts trace to the enquiry, separate streams remain separate, and customer requests cannot silently become verified technical capabilities.
+
+**Observed F03 status (2026-10-17): Complete for the tested development cases.** Implemented typed models, a versioned quoted-value extraction schema, deterministic provenance construction, exact quotation/value checks, separate context/shared-constraint validation, raw quantity preservation and one bounded repair. `POST /api/extract` uses the same corpus-independent stage. The full backend suite passed **122 tests**. Final `extraction-v6` outputs for D01/D02 and the three synthetic cases passed mechanical checks and agent comparison against their enquiry text using user-authorized LLMTech `nvidia/Qwen3.8-27B-NVFP4`. [Review and exact run records](../../outputs/extraction/review.json) distinguish this inspection from independent human/scientific validation. Earlier Groq request-size/HTTP 429 failures and earlier extraction defects are preserved. Saved interactive provider settings were not changed; see [provider setup](../customer_extraction.md). F04 remains separate future work.
 
 ## F04 — Evidence retrieval
 
@@ -118,23 +120,25 @@ The timeboxes are the specification's proposed 12-hour budget, not guaranteed es
 **Spec:** Sections 5 and 9.1.\
 **Primary files:** `backend/retrieval.py`, `tests/`.
 
-- [ ] **F04.1 — Implement lexical search**
-  - [ ] Build BM25 over reviewed technical passages and expose a deterministic search function.
-  - [ ] Form queries from each context's target, matrix, process, requested method and consequential unknowns.
-  - [ ] Add a small documented domain synonym map where needed; exclude scenario IDs and scenario-specific phrase matching.
+- [x] **F04.1 — Implement lexical search**
+  - [x] Build BM25 over reviewed technical passages and expose a deterministic search function.
+  - [x] Form queries from each context's target, matrix, process, requested method and consequential unknowns.
+  - [x] Add a small documented domain synonym map where needed; exclude scenario IDs and scenario-specific phrase matching.
 
-- [ ] **F04.2 — Combine passages and method rows**
-  - [ ] Retrieve relevant method-table rows alongside passages and place both in one evidence ledger.
-  - [ ] Deduplicate and balance support across contexts, geometry, compatibility and limitations where relevant.
-  - [ ] Target four to eight meaningful records, with eight as the total cap; never pad weak results.
-  - [ ] Permit one additional targeted/broadened search and expose any remaining evidence gap.
+- [x] **F04.2 — Combine passages and method rows**
+  - [x] Retrieve relevant method-table rows alongside passages and place both in one evidence ledger.
+  - [x] Deduplicate and balance support across contexts, geometry, compatibility and limitations where relevant.
+  - [x] Target four to eight meaningful records, with eight as the total cap; never pad weak results.
+  - [x] Permit one additional targeted/broadened search and expose any remaining evidence gap.
 
-- [ ] **F04.3 — Implement evidence resolution**
-  - [ ] Resolve evidence IDs to the exact source revision, file, page, reviewed text/transcription and optional workbook locator.
-  - [ ] Implement `/api/evidence/{evidence_id}` using the allowlisted corpus rather than arbitrary file paths.
-  - [ ] Test relevant retrieval on development enquiries, missing support, unknown IDs and unreviewed records.
+- [x] **F04.3 — Implement evidence resolution**
+  - [x] Resolve evidence IDs to the exact source revision, file, page, reviewed text/transcription and optional workbook locator.
+  - [x] Implement `/api/evidence/{evidence_id}` using the allowlisted corpus rather than arbitrary file paths.
+  - [x] Test relevant retrieval on development enquiries, missing support, unknown IDs and unreviewed records.
 
 **Completion gate:** A developer can inspect why each returned record is relevant. A successful empty search is distinguishable from a broken index, and table evidence has the same traceability as PDF evidence.
+
+**Observed F04 status (2026-10-17): Complete for the inspected development cases.** Context-aware BM25/local BGE/Qdrant retrieval and structured method lookup produce a version-pinned ledger of at most eight records, with scores, selection reasons, context/facet associations, one follow-up query and explicit gaps. Added `POST /api/retrieve` and `GET /api/evidence/{evidence_id}` with exact record/corpus revisions and workbook notes. The full backend suite passed **145 tests**. Real-corpus HTTP checks resolved every D01 ledger record exactly; development diagnostics returned 5 records for D01, 4 for D02, 8 for the multi-stream case and zero for an unsupported target. The ambiguous-input case retains an application gap after its follow-up. [Inspection receipt](../../outputs/retrieval/review.json) records source-relevance findings and heuristic/scientific limits. See [retrieval contract](../evidence_retrieval.md). No provider calls, source rebuilds, frontend changes or assessment generation were added.
 
 ## F05 — Structured technical assessment
 
@@ -331,7 +335,7 @@ Add one row after each implementation increment. Include the exact check/command
 
 **Runner note:** Python asynchronous networking and the Vite proxy stalled inside the restricted Windows sandbox. Tests and both servers were verified outside it; a minimal traceback located the stall in Windows `socketpair` during event-loop creation. Workspace-local temporary paths resolved the separate `ensurepip` write restriction. These accommodations do not change application behavior.
 
-**Suggested next iteration request:** “Implement F03 customer enquiry extraction using the published F02 corpus. Verify the F03 completion gate, update this plan and report unresolved dependencies. Reuse the existing search infrastructure when continuing F04.”
+**Suggested next iteration request:** “Implement F05 structured technical assessment using the F03 facts and F04 pinned evidence ledger.”
 
 
 ### 2026-10-17 — F02 implementation and bounded live validation
@@ -434,3 +438,20 @@ At the user's request, documented the implemented capabilities for later pipelin
 - [x] Document read-only search separately from network/write-producing crawl refresh; include CLI/Python bindings, crawl bounds, local dependencies, concurrency and timeout limitations.
 - [x] Record source-scope rules and the requirement to resolve current snapshot versions at runtime rather than hardcoding checkpoint values.
 - [ ] Add agent tool registration/adapters when implementing the later assessment orchestration. No tools are registered merely by adding this documentation; no runtime behavior changed in this documentation step.
+
+### 2026-10-17 — F03 customer enquiry extraction
+
+- Implemented `backend/models.py`, `backend/agent.py`, `POST /api/extract`, explicit LLMTech/Groq development-run overrides and exact D01/D02 enquiry fixtures without worked answers.
+- Provider output pairs values with input quotes; Python creates public provenance paths and context references. Live inspection motivated checks for verbatim structured values, sample-form omissions and duplicated shared-constraint evidence.
+- `python -m pytest -q --basetemp tmp/f03-final-verified`: **122 passed**. OpenAPI exposes `ExtractionRequest` and `CaseFacts`; invalid inputs, schema failures, quotes, context membership, units, shared constraints, repairs, deadlines and sanitized API failures are covered.
+- User-authorized `python -m backend.smoke_extraction --provider llmtech --public-trial` runs with final `extraction-v6` passed D01/D02 and all three synthetic cases. See `outputs/extraction/review.json` for the two exact records, their hashes, checked behaviors and limitations. This is agent source comparison, not independent human validation or spectroscopy performance evidence.
+- Groq failed with generated-JSON rejection and HTTP 429 request-size/rate limits; earlier records remain intact. API provider selection still follows backend configuration; the runner override does not modify `.env`.
+- F03 completion gate is closed for the reviewed cases. F04 context-based retrieval is next; no extraction frontend or assessment generation was added.
+
+### 2026-10-17 — F04 context-aware evidence retrieval
+
+- Implemented deterministic context queries, documented domain synonyms, hybrid candidate scoring, semantic-only admission at cosine 0.65, structured method/geometry lookup, distinct-method balancing, exact deduplication and an eight-record ledger cap.
+- Added one case-wide follow-up query, explicit evidence gaps, version-pinned resolution, exact PDF/figure/workbook metadata and sanitized 404/409/422/503/504 contracts. Existing manual search shares the Qdrant lock.
+- `python -m pytest -q --basetemp tmp/f04-final-verified`: **145 passed**. Initial sandbox runs stalled during Windows asyncio loopback initialization; the verified suite ran with loopback available.
+- `python -m backend.smoke_retrieval` and real-corpus ASGI API checks passed without provider calls. Exact outputs, hashes, source inspection and limitations are recorded in `outputs/retrieval/review.json` and `api_validation.json`. Development diagnostics are kept under ignored `tmp/f04-retrieval-development/`.
+- F04 gate is closed for the tested development inputs. F05 synthesis and claim-level scientific support review remain separate work. Existing F03 working-tree changes were preserved; no commit was created.

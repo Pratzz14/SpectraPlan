@@ -1,13 +1,9 @@
 """Local retrieval comparison; website claims remain a separate context dataset."""
-import threading
 import time
 
 from backend.knowledge_store import active_directory, load_records, read_json, validate_corpus
-from backend.retrieval import COLLECTION, QUERY_PREFIX, Embedder, fuse, query_tokens, tokens
+from backend.retrieval import COLLECTION, QUERY_PREFIX, SEARCH_LOCK, Embedder, fuse, query_tokens, tokens
 from backend.web_ingest import validate_web, web_directory
-
-SEARCH_LOCK = threading.RLock()
-
 
 class SearchUnavailable(Exception):
     pass

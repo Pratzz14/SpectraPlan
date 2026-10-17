@@ -24,6 +24,8 @@ class Settings(BaseSettings):
     request_deadline_s: float = Field(default=90, gt=0, le=600)
     provider_max_retries: int = Field(default=2, ge=0, le=2)
     provider_max_completion_tokens: int = Field(default=4096, ge=128, le=16384)
+    extraction_max_completion_tokens: int = Field(default=3072, ge=128, le=16384)
+    retrieval_semantic_min_score: float = Field(default=0.65, ge=0, le=1, allow_inf_nan=False)
     source_dir: Path = Path("knowledge/original_sources")
     corpus_dir: Path = Path("knowledge")
     smoke_output_dir: Path = Path("outputs/provider_smoke")

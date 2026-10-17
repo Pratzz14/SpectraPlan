@@ -1,0 +1,17 @@
+{
+  "validation_kind": "ASGI HTTP contract checks using the real published corpus and local embeddings; no provider calls",
+  "corpus_version": "corpus-4aac882441587796afe5",
+  "diagnostic_record": "20261017T172345052038Z.json",
+  "diagnostic_sha256": "10b3796e576b0ab5a11395f06db113da94fcb4ff307b45a34d38b5e68c06075b",
+  "retrieval_code_sha256": "0f0e4e705f0db16e0b36a601d95e1854ba39831ceafedaeb363cf944d79d4e33",
+  "checks": [
+    "POST /api/retrieve accepts saved D01 CaseFacts",
+    "Every ledger evidence_url returns exactly the embedded record",
+    "Workbook locator, source page, source hash and notes survive API resolution",
+    "Unknown evidence returns 404",
+    "Unsupported-target retrieval returns HTTP 200 with an empty ledger and gaps",
+    "OpenAPI exposes typed retrieval and evidence endpoints"
+  ],
+  "resolved_records": 5,
+  "status": "passed"
+}

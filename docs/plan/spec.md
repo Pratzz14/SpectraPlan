@@ -212,6 +212,7 @@ class CaseFacts(BaseModel):
     customer_claims_and_requests: list[CustomerStatement] = Field(default_factory=list)
     shared_constraints: list[str] = Field(default_factory=list)
     missing_information: list[str] = Field(default_factory=list)
+    fact_provenance: list[FactProvenance] = Field(default_factory=list)
 
 class MeasurementContext(BaseModel):
     context_id: str                          # e.g. stream_1; never an evaluation case ID
@@ -224,6 +225,7 @@ class MeasurementContext(BaseModel):
     temperature: str | None = None           # preserve stated range and units
     pressure: str | None = None              # preserve gauge/absolute basis if given
     response_time_s: float | None = None
+    response_time_raw: str | None = None       # exact stated wording, including ambiguous units
     concentration_range: str | None = None    # preserve stated basis and units
     required_error: str | None = None         # preserve stated basis and units
     reference_assays: list[str] = []
@@ -232,6 +234,8 @@ class MeasurementContext(BaseModel):
 ```
 
 These are schema sketches, not a standalone Python module; define referenced models before use. Use `Field(default_factory=list)` for collections in the implementation. `CustomerStatement` contains `text`, `kind` (`reported_fact`, `requested_outcome`, `proposed_approach` or `customer_claim`), `context_ids` and an exact `input_quote`. Every extracted stated value must be traceable to an input quote through a fact-provenance record. A quoted claim is evidence of what the customer said, not scientific verification.
+
+The F03 implementation uses `FactProvenance` records containing a JSON Pointer `field_path`, `context_ids` and an exact `input_quote`. Stated structured text remains verbatim; narrative statements can summarize while retaining attribution. The provider returns values paired with quotes, and Python constructs the public provenance pointers. `/api/extract` returns the public `CaseFacts` shape, not the internal quoted-value transport shape. See [customer extraction](../customer_extraction.md) for validation, provider configuration and development checks.
 
 Create one context per distinct stream/process target when required; an undefined liquid can still have a context with unknown fields. `null` means **unknown**, not zero or ambient conditions. Preserve raw wording for ranges and ambiguous units; clarify rather than incorrectly converting. Optional normalized numeric fields must retain the raw value and conversion basis. Do not duplicate a shared constraint as if it had been independently stated for every stream.
 

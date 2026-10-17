@@ -1,0 +1,69 @@
+{
+  "generated_at": "2026-10-17T16:29:49.712695+00:00",
+  "review_status": "agent_source_comparison_passed_for_listed_cases",
+  "review_scope": "Agent inspection of saved facts and supporting quotations against the original enquiry; not independent human or scientific validation",
+  "prompt_version": "extraction-v6",
+  "provider": "llmtech",
+  "model": "nvidia/Qwen3.8-27B-NVFP4",
+  "automated_checks": {
+    "command": ".venv/Scripts/python.exe -m pytest -q --basetemp tmp/f03-final-verified",
+    "passed": 122
+  },
+  "cases": [
+    {
+      "case_id": "D01",
+      "record": "20261017T162638Z_eca1681faa1948bd9a0b11aacd0c05e3.json",
+      "record_sha256": "63ca548f6d1c140087c98226e3f9f0ddf9f9d90dd046b68b4ff5f0502f5e911d",
+      "checks": [
+        "Powder form, API target, existing laboratory checks and feed-frame request retained",
+        "API/excipient wording retained in source quotations",
+        "Concentration range, required error and numerical response time remain null"
+      ]
+    },
+    {
+      "case_id": "D02",
+      "record": "20261017T162638Z_eca1681faa1948bd9a0b11aacd0c05e3.json",
+      "record_sha256": "63ca548f6d1c140087c98226e3f9f0ddf9f9d90dd046b68b4ff5f0502f5e911d",
+      "checks": [
+        "Concentrated milk product, opaque appearance, fat/protein targets and existing sampling retained",
+        "Temperature/texture variability retained in its exact supporting quote; temperature has no invented numeric range",
+        "Flowing process and laboratory-retention request retained; unspecified phase and numeric limits remain unknown"
+      ]
+    },
+    {
+      "case_id": "multi_stream",
+      "record": "20261017T162839Z_2d073001ae594680b250652ae122a62c.json",
+      "record_sha256": "3661f4b2f2fbfc606d9b8e010129527e4fb56ea1639398af0390868174569e34",
+      "checks": [
+        "Two contexts retain separate API versus fat/protein targets and powder versus liquid forms",
+        "35 C is attached only to stream A; stream B temperature remains null",
+        "Laboratory-retention requirement is recorded once at case level"
+      ]
+    },
+    {
+      "case_id": "capability_claim",
+      "record": "20261017T162839Z_2d073001ae594680b250652ae122a62c.json",
+      "record_sha256": "3661f4b2f2fbfc606d9b8e010129527e4fb56ea1639398af0390868174569e34",
+      "checks": [
+        "Instrument ownership is reported_fact; unvalidated measurement ability remains customer_claim",
+        "Protein tracking and fluorescence proposal remain separately attributed; no verified capability is emitted",
+        "Unstated numerical performance values remain null"
+      ]
+    },
+    {
+      "case_id": "ambiguous_units",
+      "record": "20261017T162839Z_2d073001ae594680b250652ae122a62c.json",
+      "record_sha256": "3661f4b2f2fbfc606d9b8e010129527e4fb56ea1639398af0390868174569e34",
+      "checks": [
+        "20-40 C, 2 bar(g), 5-10% and raw response-time 2 are preserved without conversion",
+        "Numerical seconds and error remain null; missing concentration basis and time units are explicit unknowns"
+      ]
+    }
+  ],
+  "limitations": [
+    "Mechanical validation cannot prove arbitrary prose entailment, exhaustive extraction or correct scientific attribution.",
+    "Some outputs may contain overlapping target names or brief field values; supporting quotes retain source wording.",
+    "Earlier failed or mechanically valid but semantically deficient runs are preserved as historical diagnostics, not accepted results.",
+    "Saved interactive provider configuration remains unchanged; Groq request-size/rate-limit failures were observed."
+  ]
+}

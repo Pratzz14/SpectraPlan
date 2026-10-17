@@ -1,0 +1,131 @@
+{
+  "generated_at": "2026-10-17T17:25:49.658918+00:00",
+  "review_status": "agent_source_relevance_inspection_completed",
+  "review_scope": "Inspection of selected canonical source text, scope, query matches, table cells and locators; not independent human or scientific validation",
+  "diagnostic_record": "20261017T172345052038Z.json",
+  "diagnostic_sha256": "10b3796e576b0ab5a11395f06db113da94fcb4ff307b45a34d38b5e68c06075b",
+  "retrieval_code_sha256": "0f0e4e705f0db16e0b36a601d95e1854ba39831ceafedaeb363cf944d79d4e33",
+  "corpus_version": "corpus-4aac882441587796afe5",
+  "automated_checks": {
+    "command": ".venv/Scripts/python.exe -m pytest -q --basetemp tmp/f04-final-verified",
+    "passed": 145,
+    "api_validation_record": "api_validation.json",
+    "api_validation_sha256": "7c0b868544b5099943545be2de3383eacb63852e59d79b0e512755ddf078bbb2"
+  },
+  "inspection_findings": [
+    "D01 retains S01 p.14 pharmaceutical context, p.15 NIR/Raman equipment evidence and separate NIR/Raman method rows.",
+    "D02 retains S01 p.17 opaque milk reflection evidence and p.18 contrasting transmission/reflection limitations; matrix-specific passages take priority over tissue research.",
+    "The multi-stream ledger preserves pharmaceutical and dairy associations and stays within the eight-record cap.",
+    "The capability-claim case retains customer_claim attribution in query traces; retrieved fluorescence rows are comparison guidance, not validation of the customer assertion.",
+    "Ambiguous-units input retains an application evidence gap after one follow-up; general or research candidates do not establish support for its unspecified matrix/target.",
+    "The unsupported target returns no evidence, explicit gaps and exactly one follow-up query.",
+    "Workbook rows retain T01 file/hash, sheet/row, S01 Table 1 page 6 citation and all notes; exact HTTP resolution matches ledger records."
+  ],
+  "cases": [
+    {
+      "case_id": "D01",
+      "records": 5,
+      "gaps": [],
+      "search_rounds": 1,
+      "selected_evidence_ids": [
+        "S01:p014:txt:727f9ea2c0b286a3",
+        "S01:p015:txt:3fa6d0000254f55e",
+        "T01:method_comparison:r009",
+        "S01:p018:txt:250c09c5fdb749b3",
+        "T01:method_comparison:r013"
+      ]
+    },
+    {
+      "case_id": "D02",
+      "records": 4,
+      "gaps": [],
+      "search_rounds": 1,
+      "selected_evidence_ids": [
+        "S01:p017:txt:03613ea0cb0945fb",
+        "T01:method_comparison:r009",
+        "S01:p018:txt:250c09c5fdb749b3",
+        "S01:p009:txt:fafd6a6388e4e7dd"
+      ]
+    },
+    {
+      "case_id": "multi_stream",
+      "records": 8,
+      "gaps": [],
+      "search_rounds": 1,
+      "selected_evidence_ids": [
+        "S01:p014:txt:727f9ea2c0b286a3",
+        "S01:p017:txt:03613ea0cb0945fb",
+        "S01:p015:txt:5d65dd1642425d18",
+        "T01:method_comparison:r009",
+        "T01:method_comparison:r008",
+        "S01:p018:txt:250c09c5fdb749b3",
+        "T01:method_comparison:r002",
+        "T01:method_comparison:r013"
+      ]
+    },
+    {
+      "case_id": "capability_claim",
+      "records": 4,
+      "gaps": [],
+      "search_rounds": 1,
+      "selected_evidence_ids": [
+        "S01:p017:txt:03613ea0cb0945fb",
+        "T01:method_comparison:r009",
+        "T01:method_comparison:r019",
+        "S01:p009:txt:fafd6a6388e4e7dd"
+      ]
+    },
+    {
+      "case_id": "ambiguous_units",
+      "records": 4,
+      "gaps": [
+        {
+          "context_id": "stream_1",
+          "facet": "application",
+          "reason": "no_relevant_evidence",
+          "message": "No admitted source evidence was found for this context/facet"
+        }
+      ],
+      "search_rounds": 2,
+      "selected_evidence_ids": [
+        "S04:p003:txt:63787604987d3bce",
+        "S02:p013:txt:2043bfa1aa0aba5a",
+        "S01:p007:txt:551863e24544d004",
+        "S01:p008:txt:be6f9ab28134f796"
+      ]
+    },
+    {
+      "case_id": "unsupported_target",
+      "records": 0,
+      "gaps": [
+        {
+          "context_id": "stream_1",
+          "facet": "application",
+          "reason": "no_relevant_evidence",
+          "message": "No admitted source evidence was found for this context/facet"
+        },
+        {
+          "context_id": "stream_1",
+          "facet": "geometry",
+          "reason": "no_relevant_evidence",
+          "message": "No admitted source evidence was found for this context/facet"
+        },
+        {
+          "context_id": "stream_1",
+          "facet": "limitations",
+          "reason": "no_relevant_evidence",
+          "message": "No admitted source evidence was found for this context/facet"
+        }
+      ],
+      "search_rounds": 2,
+      "selected_evidence_ids": []
+    }
+  ],
+  "limitations": [
+    "Facet coverage and relevance thresholds are deterministic heuristics, not scientific entailment checks.",
+    "Some records provide general or cross-matrix method/limitation context; they cannot substantiate a sample-specific claim without further review.",
+    "All original evidence scopes and automated/human review metadata remain visible; automated validation does not imply AFS approval.",
+    "The cosine 0.65 default is a project choice, not a calibrated confidence score.",
+    "Checks establish local retrieval/API behavior, not a frontend assessment flow, equipment compatibility guarantees or physical measurement performance."
+  ]
+}

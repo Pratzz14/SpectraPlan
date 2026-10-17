@@ -1,0 +1,14 @@
+{
+  "source_file": "AFS_Examples_and_Reference.docx",
+  "source_sha256": "5511a7aaf972613b6c9dcb0b8425c68a4399cc0444eae542e516d6a5be9b978e",
+  "cases": [
+    {
+      "case_id": "D01",
+      "description": "We manufacture tablets from a powder blend containing an active pharmaceutical ingredient and excipients. Laboratory checks tell us whether the blend is on target, but results arrive after the material has moved through the press. We want to assess whether a fiber based measurement in the feed frame could follow API concentration changes. Our first pilot should compare reasonable measurement options before we commit to production equipment."
+    },
+    {
+      "case_id": "D02",
+      "description": "We produce an opaque, concentrated milk product that flows through a processing line. We currently sample it for fat and protein analysis and would like earlier information about composition changes. Product temperature and texture vary during production. We want an initial spectroscopy concept and a practical comparison experiment, while retaining our laboratory checks."
+    }
+  ]
+}

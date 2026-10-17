@@ -1,0 +1,473 @@
+{
+  "run_id": "2d073001ae594680b250652ae122a62c",
+  "generated_at": "2026-10-17T16:28:15.872891+00:00",
+  "provider": "llmtech",
+  "model": "nvidia/Qwen3.8-27B-NVFP4",
+  "endpoint": "https://api.llmtech.eu/v1",
+  "prompt_version": "extraction-v6",
+  "prompt_sha256": "0658a07388bc7af334a2671e59be11c64832a4989b27ff4054ea54324857b924",
+  "schema_sha256": "9f318dbc9b6b577346ce7a962d93d4f2c34c807a611b6ed26e461e650d9d5045",
+  "settings": {
+    "call_timeout_s": 60,
+    "request_deadline_s": 90.0,
+    "max_completion_tokens": 4096,
+    "extraction_max_completion_tokens": 3072,
+    "max_retries": 2
+  },
+  "review_status": "pending_manual_semantic_review",
+  "cases": [
+    {
+      "case_id": "multi_stream",
+      "description": "Stream A is a powder blend containing API and excipients. We want to follow API concentration. Stream B is an opaque liquid milk product; we want to measure fat and protein. Both streams must retain independent laboratory checks. Only stream A runs at 35 C. No temperature has been supplied for stream B.",
+      "outcome": "passed_mechanical_validation",
+      "facts": {
+        "contexts": [
+          {
+            "context_id": "stream_1",
+            "label": "Stream A",
+            "target_analytes": [
+              "API"
+            ],
+            "measurement_goals": [
+              "follow API concentration"
+            ],
+            "sample_matrix": "API and excipients",
+            "sample_phase": "powder",
+            "appearance": null,
+            "temperature": "35 C",
+            "pressure": null,
+            "response_time_raw": null,
+            "response_time_s": null,
+            "concentration_range": null,
+            "required_error": null,
+            "reference_assays": [],
+            "process_constraints": [],
+            "missing_information": [
+              "exact form of 'API' in the powder blend",
+              "excipient types",
+              "API concentration range"
+            ]
+          },
+          {
+            "context_id": "stream_2",
+            "label": "Stream B",
+            "target_analytes": [
+              "fat",
+              "protein"
+            ],
+            "measurement_goals": [
+              "measure fat and protein"
+            ],
+            "sample_matrix": "milk product",
+            "sample_phase": "liquid",
+            "appearance": "opaque",
+            "temperature": null,
+            "pressure": null,
+            "response_time_raw": null,
+            "response_time_s": null,
+            "concentration_range": null,
+            "required_error": null,
+            "reference_assays": [],
+            "process_constraints": [],
+            "missing_information": [
+              "temperature for stream B",
+              "fat and protein concentration ranges",
+              "specific lab check methods"
+            ]
+          }
+        ],
+        "customer_claims_and_requests": [
+          {
+            "text": "We want to follow API concentration",
+            "kind": "requested_outcome",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "We want to follow API concentration"
+          },
+          {
+            "text": "we want to measure fat and protein",
+            "kind": "requested_outcome",
+            "context_ids": [
+              "stream_2"
+            ],
+            "input_quote": "we want to measure fat and protein"
+          },
+          {
+            "text": "Both streams must retain independent laboratory checks",
+            "kind": "requested_outcome",
+            "context_ids": [],
+            "input_quote": "Both streams must retain independent laboratory checks"
+          }
+        ],
+        "shared_constraints": [
+          "retain independent laboratory checks"
+        ],
+        "missing_information": [
+          "temperature for stream B",
+          "specific lab check methods"
+        ],
+        "fact_provenance": [
+          {
+            "field_path": "/contexts/0/label",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "Stream A"
+          },
+          {
+            "field_path": "/contexts/0/target_analytes/0",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "follow API concentration"
+          },
+          {
+            "field_path": "/contexts/0/measurement_goals/0",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "We want to follow API concentration"
+          },
+          {
+            "field_path": "/contexts/0/sample_matrix",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "containing API and excipients"
+          },
+          {
+            "field_path": "/contexts/0/sample_phase",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "powder blend"
+          },
+          {
+            "field_path": "/contexts/0/temperature",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "runs at 35 C"
+          },
+          {
+            "field_path": "/contexts/1/label",
+            "context_ids": [
+              "stream_2"
+            ],
+            "input_quote": "Stream B"
+          },
+          {
+            "field_path": "/contexts/1/target_analytes/0",
+            "context_ids": [
+              "stream_2"
+            ],
+            "input_quote": "measure fat and protein"
+          },
+          {
+            "field_path": "/contexts/1/target_analytes/1",
+            "context_ids": [
+              "stream_2"
+            ],
+            "input_quote": "measure fat and protein"
+          },
+          {
+            "field_path": "/contexts/1/measurement_goals/0",
+            "context_ids": [
+              "stream_2"
+            ],
+            "input_quote": "we want to measure fat and protein"
+          },
+          {
+            "field_path": "/contexts/1/sample_matrix",
+            "context_ids": [
+              "stream_2"
+            ],
+            "input_quote": "liquid milk product"
+          },
+          {
+            "field_path": "/contexts/1/sample_phase",
+            "context_ids": [
+              "stream_2"
+            ],
+            "input_quote": "liquid milk product"
+          },
+          {
+            "field_path": "/contexts/1/appearance",
+            "context_ids": [
+              "stream_2"
+            ],
+            "input_quote": "opaque liquid"
+          },
+          {
+            "field_path": "/shared_constraints/0",
+            "context_ids": [],
+            "input_quote": "Both streams must retain independent laboratory checks"
+          }
+        ]
+      },
+      "error": null,
+      "usage": {
+        "prompt_tokens": 1250,
+        "completion_tokens": 490,
+        "total_tokens": 1740
+      }
+    },
+    {
+      "case_id": "capability_claim",
+      "description": "We own a fluorescence instrument. We believe it can measure protein accurately in milk, but we have not validated that relationship. We want to track protein concentration and propose trying fluorescence first.",
+      "outcome": "passed_mechanical_validation",
+      "facts": {
+        "contexts": [
+          {
+            "context_id": "stream_1",
+            "label": "milk",
+            "target_analytes": [
+              "protein",
+              "protein concentration"
+            ],
+            "measurement_goals": [
+              "track protein concentration"
+            ],
+            "sample_matrix": "milk",
+            "sample_phase": null,
+            "appearance": null,
+            "temperature": null,
+            "pressure": null,
+            "response_time_raw": null,
+            "response_time_s": null,
+            "concentration_range": null,
+            "required_error": null,
+            "reference_assays": [],
+            "process_constraints": [],
+            "missing_information": []
+          }
+        ],
+        "customer_claims_and_requests": [
+          {
+            "text": "We own a fluorescence instrument.",
+            "kind": "reported_fact",
+            "context_ids": [],
+            "input_quote": "We own a fluorescence instrument."
+          },
+          {
+            "text": "We believe it can measure protein accurately in milk, but we have not validated that relationship.",
+            "kind": "customer_claim",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "We believe it can measure protein accurately in milk, but we have not validated that relationship."
+          },
+          {
+            "text": "We want to track protein concentration.",
+            "kind": "requested_outcome",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "We want to track protein concentration"
+          },
+          {
+            "text": "propose trying fluorescence first.",
+            "kind": "proposed_approach",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "propose trying fluorescence first."
+          }
+        ],
+        "shared_constraints": [],
+        "missing_information": [
+          "What specific protein concentration range is the target?",
+          "What are the sample temperature and pressure conditions?",
+          "What is the required response time?",
+          "Are there existing reference assays for protein in milk?",
+          "What is the sample phase (liquid, etc.)?"
+        ],
+        "fact_provenance": [
+          {
+            "field_path": "/contexts/0/label",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "measure protein accurately in milk"
+          },
+          {
+            "field_path": "/contexts/0/target_analytes/0",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "measure protein accurately in milk"
+          },
+          {
+            "field_path": "/contexts/0/target_analytes/1",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "track protein concentration"
+          },
+          {
+            "field_path": "/contexts/0/measurement_goals/0",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "We want to track protein concentration"
+          },
+          {
+            "field_path": "/contexts/0/sample_matrix",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "measure protein accurately in milk"
+          }
+        ]
+      },
+      "error": null,
+      "usage": {
+        "prompt_tokens": 631,
+        "completion_tokens": 613,
+        "total_tokens": 1244
+      }
+    },
+    {
+      "case_id": "ambiguous_units",
+      "description": "We have a slurry at 20-40 C and 2 bar(g). We want to measure water content in the range 5-10%, but the concentration basis has not been defined. Our response time requirement is '2', with the units still undecided. We have not agreed an error limit.",
+      "outcome": "passed_mechanical_validation",
+      "facts": {
+        "contexts": [
+          {
+            "context_id": "stream_1",
+            "label": "slurry",
+            "target_analytes": [
+              "water content"
+            ],
+            "measurement_goals": [
+              "5-10%"
+            ],
+            "sample_matrix": "slurry",
+            "sample_phase": "slurry",
+            "appearance": null,
+            "temperature": "20-40 C",
+            "pressure": "2 bar(g)",
+            "response_time_raw": "2",
+            "response_time_s": null,
+            "concentration_range": "5-10%",
+            "required_error": null,
+            "reference_assays": [],
+            "process_constraints": [],
+            "missing_information": [
+              "The concentration basis has not been defined.",
+              "The units for the response time requirement are undecided.",
+              "No error limit has been agreed."
+            ]
+          }
+        ],
+        "customer_claims_and_requests": [
+          {
+            "text": "We want to measure water content in the range 5-10%",
+            "kind": "requested_outcome",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "We want to measure water content in the range 5-10%"
+          }
+        ],
+        "shared_constraints": [
+          "concentration basis has not been defined",
+          "units still undecided",
+          "We have not agreed an error limit."
+        ],
+        "missing_information": [
+          "What is the concentration basis for water content?",
+          "What are the units for the response time requirement?",
+          "What is the acceptable error limit?"
+        ],
+        "fact_provenance": [
+          {
+            "field_path": "/contexts/0/label",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "We have a slurry at 20-40 C and 2 bar(g)."
+          },
+          {
+            "field_path": "/contexts/0/target_analytes/0",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "We want to measure water content in the range 5-10%"
+          },
+          {
+            "field_path": "/contexts/0/measurement_goals/0",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "We want to measure water content in the range 5-10%"
+          },
+          {
+            "field_path": "/contexts/0/sample_matrix",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "We have a slurry at 20-40 C and 2 bar(g)."
+          },
+          {
+            "field_path": "/contexts/0/sample_phase",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "We have a slurry at 20-40 C and 2 bar(g)."
+          },
+          {
+            "field_path": "/contexts/0/temperature",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "We have a slurry at 20-40 C and 2 bar(g)."
+          },
+          {
+            "field_path": "/contexts/0/pressure",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "We have a slurry at 20-40 C and 2 bar(g)."
+          },
+          {
+            "field_path": "/contexts/0/response_time_raw",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "Our response time requirement is '2'"
+          },
+          {
+            "field_path": "/contexts/0/concentration_range",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "We want to measure water content in the range 5-10%"
+          },
+          {
+            "field_path": "/shared_constraints/0",
+            "context_ids": [],
+            "input_quote": "but the concentration basis has not been defined."
+          },
+          {
+            "field_path": "/shared_constraints/1",
+            "context_ids": [],
+            "input_quote": "with the units still undecided."
+          },
+          {
+            "field_path": "/shared_constraints/2",
+            "context_ids": [],
+            "input_quote": "We have not agreed an error limit."
+          }
+        ]
+      },
+      "error": null,
+      "usage": {
+        "prompt_tokens": 1191,
+        "completion_tokens": 488,
+        "total_tokens": 1679
+      }
+    }
+  ]
+}

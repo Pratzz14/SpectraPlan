@@ -8,9 +8,15 @@ from fastapi.responses import FileResponse, RedirectResponse
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from backend.config import Settings
+from backend.agent import extract_case
+from backend.models import CaseFacts, ExtractionRequest
+from backend.provider import ProviderError
 from backend.health import HealthResponse, ProviderStatus, inspect_corpus
 from backend.knowledge_store import active_directory, inside, read_json
 from backend.search_service import SearchService, SearchUnavailable
+from backend.evidence import CorpusUnavailable, EvidenceNotFound, EvidenceRevisionMismatch, ResolvedEvidence, load_snapshot
+from backend.retrieval import CaseRetrievalService, RetrievalTimeout, SEARCH_LOCK
+from backend.retrieval_models import RetrievalResult
 
 
 class SearchRequest(BaseModel):
@@ -33,6 +39,41 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     config = settings if settings is not None else Settings()
     application = FastAPI(title="SpectraPlan", version="0.1.0")
     search_service = SearchService(config)
+    retrieval_service = CaseRetrievalService(config)
+    application.state.retrieval_service = retrieval_service
+
+    @application.post("/api/retrieve", response_model=RetrievalResult)
+    def retrieve(facts: CaseFacts):
+        try:
+            return retrieval_service.retrieve_case(facts)
+        except RetrievalTimeout as error:
+            raise HTTPException(504, {"code": "retrieval_timeout", "message": str(error)}) from None
+        except CorpusUnavailable as error:
+            raise HTTPException(503, {"code": "retrieval_unavailable", "message": str(error)}) from None
+        except ValueError as error:
+            raise HTTPException(422, {"code": "invalid_contexts", "message": str(error)}) from None
+
+    @application.get("/api/evidence/{evidence_id}", response_model=ResolvedEvidence)
+    def evidence(evidence_id: str, corpus_version: str | None = None, revision: str | None = None):
+        if not SEARCH_LOCK.acquire(timeout=30):
+            raise HTTPException(503, {"code": "evidence_unavailable", "message": "Evidence search is busy"})
+        try:
+            return load_snapshot(config.corpus_dir, corpus_version).resolve(evidence_id, revision)
+        except EvidenceNotFound as error:
+            raise HTTPException(404, {"code": "evidence_not_found", "message": str(error)}) from None
+        except EvidenceRevisionMismatch as error:
+            raise HTTPException(409, {"code": "evidence_revision_mismatch", "message": str(error)}) from None
+        except CorpusUnavailable as error:
+            raise HTTPException(503, {"code": "evidence_unavailable", "message": str(error)}) from None
+        finally:
+            SEARCH_LOCK.release()
+
+    @application.post("/api/extract", response_model=CaseFacts)
+    async def extract(request: ExtractionRequest):
+        try:
+            return await extract_case(request.description, config)
+        except ProviderError as error:
+            raise HTTPException(error.http_status, {"code": error.code, "message": str(error)}) from None
 
     @application.get("/api/search/status")
     def search_status():
