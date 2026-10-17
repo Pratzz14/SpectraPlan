@@ -1,7 +1,7 @@
 # SpectraPlan Iterative Implementation Plan
 
 **Based on:** [Technical specification v1.1](spec.md)\
-**Status:** F01 complete, including live-provider verification; F02 next\
+**Status:** F02 checkpointed at user request; 64 source pages saved, publication gate remains open\
 **Structure:** Main feature → tasks → subtasks\
 **Target:** A working, source-grounded spectroscopy assessment app with reproducible evaluation outputs.
 
@@ -60,35 +60,29 @@ The timeboxes are the specification's proposed 12-hour budget, not guaranteed es
 
 **Observed F01 status (2026-10-17): Complete.** Local services, readiness API, development proxy and browser checks pass. Selected provider: Groq `qwen/qwen3.8-27b`, with configurable medium reasoning and strict JSON Schema plus local Pydantic validation. After the key was supplied locally, the [successful live smoke record](../../outputs/provider_smoke/20261017T094530Z_0cb5a2339fbc465d895e14d32f6745ea.json) captured `sample_phase="powder"` and `target="moisture"`, with local schema/content validation and exit 0. The [earlier missing-key attempt](../../outputs/provider_smoke/20261017T092630Z_d3e51022e47a4ec4ab8a9cfb114b34f3.json) is preserved. Missing corpus is expected; F02–F10 remain unimplemented.
 
-## F02 — Reviewed AFS knowledge base
+## F02 — Source-grounded AFS knowledge base
 
-**Outcome:** A small, reproducible technical corpus with trustworthy source locations.\
-**Spec:** Section 5.\
-**Primary files:** `backend/ingest.py`, `knowledge/source_manifest.json`, `knowledge/passages.jsonl`, `knowledge/methods.json`.
+**Outcome:** Reproducible technical evidence with source locations, automated validation and optional manual verification. No mandatory approval workflow.**Spec:** Section 5 and `docs/knowledge_pipeline.md`.**Primary files:** `backend/ingest.py`, `knowledge/source_manifest.json`, `knowledge/passages.jsonl`, `knowledge/methods.json`.
 
-- [ ] **F02.1 — Inventory and separate the supplied materials**
-  - [ ] Map source IDs S01–S06 to their exact supplied filenames; record hashes and PDF page counts.
-  - [ ] Keep challenge instructions, development examples and final evaluation inputs outside the technical retrieval corpus.
-  - [ ] Classify S05/S06 as business context and configure source locations without hardcoded Downloads paths.
+- [x] **F02.1 — Inventory and separate materials**
+  - [x] Map S01–S06 and T01 to exact filenames; compute hashes, PDF page counts and workbook dimensions.
+  - [x] Exclude development, evaluation, challenge and unknown content from technical retrieval.
+  - [x] Classify S05/S06 as business context and use configurable source locations.
+- [ ] **F02.2 — Implement page-level extraction and source checks**
+  - [x] Extract exact source blocks, render pages, retain 1-based page locations and quotation offsets.
+  - [x] Add versioned Qwen extraction/verification prompts with strict schemas and separate figure transcriptions.
+  - [x] Separate automated validation, human verification and technical retrieval eligibility.
+  - [ ] Complete the live 64-page corpus build and inspect representative text and high-value S02 figures.
+- [x] **F02.3 — Import the method table**
+  - [x] Preserve all 19 rows, nine columns and seven notes, with workbook sheet/row and S01 Table 1 p.6 provenance.
+  - [x] Preserve qualitative ratings, optical depth/path and fiber-length distinctions.
+- [ ] **F02.4 — Verify end-to-end ingestion**
+  - [x] Test locations, stable IDs, caching, method rows, exclusions, report escaping and atomic publication.
+  - [x] Implement local BGE embeddings, token checks, Qdrant, BM25 and RRF search.
+  - [x] Document rebuild commands and manual inspection without an approval step.
+  - [ ] Verify full live corpus, unchanged-source rebuild and representative real hybrid searches.
 
-- [ ] **F02.2 — Extract and review page-level evidence**
-  - [ ] Extract S01–S05 text with 1-based page numbers and headings, then form coherent passages without separating quantities from labels or units.
-  - [ ] Start with evidence needed for D01/D02; expand to the remaining methods, application families and research limitations before F08.
-  - [ ] Inspect relevant S02 visuals, especially slides 6–10, 13–16 and 18, and label reviewed figure transcriptions separately from verbatim text.
-  - [ ] Assign stable evidence IDs, source location, content kind, evidence scope, revision and project review status; exclude unreviewed records from the active corpus.
-
-- [ ] **F02.3 — Import the method comparison table**
-  - [ ] Parse all 19 method/geometry rows from the workbook and preserve the notes sheet.
-  - [ ] Retain method, geometry, sample type, physical phenomenon, path/depth, qualitative ratings and workbook sheet/row provenance.
-  - [ ] Give rows stable evidence IDs and retain their underlying citation to S01 Table 1, page 6.
-  - [ ] Preserve the distinction between optical path/depth and fiber-link length; do not convert qualitative ratings into product guarantees.
-
-- [ ] **F02.4 — Verify ingestion**
-  - [ ] Check representative passage text, page numbers and visual transcriptions against the original sources.
-  - [ ] Test page numbering, unique evidence IDs, method-row parsing and exclusion of nontechnical/evaluation content.
-  - [ ] Confirm rebuilding unchanged sources preserves the intended IDs and revision metadata; document how to rebuild the corpus.
-
-**Completion gate:** The corpus contains no placeholders, every active record resolves to a reviewed source location, and table ingestion preserves all rows and provenance. Project review status must not imply AFS approval.
+**Completion gate:** Every active record resolves to its source and passes defined automated checks; all workbook data and notes survive; ambiguous and excluded records are inspectable; and the published corpus/index revisions agree. Human verification is optional and never implies AFS approval. Keep the live gate open until it is evidenced.
 
 ## F03 — Customer enquiry extraction
 
@@ -333,3 +327,62 @@ Add one row after each implementation increment. Include the exact check/command
 **Runner note:** Python asynchronous networking and the Vite proxy stalled inside the restricted Windows sandbox. Tests and both servers were verified outside it; a minimal traceback located the stall in Windows `socketpair` during event-loop creation. Workspace-local temporary paths resolved the separate `ensurepip` write restriction. These accommodations do not change application behavior.
 
 **Suggested next iteration request:** “Implement F02 only. Complete its subtasks, verify its completion gate, update this plan with the actual results, and report any unresolved dependency.”
+
+
+### 2026-10-17 — F02 implementation and bounded live validation
+
+Implemented the ingestion CLI, strict Qwen text/visual extraction and separate verification contracts, exact source anchors, immutable generations with atomic publication, workbook import, the inspection report and local Qdrant/BM25 search. Updated readiness fields and frontend language to separate automated eligibility from optional human verification; no approval workflow is required. Added the pipeline contract and rebuild instructions.
+
+Verification evidence:
+
+- Automated backend tests and dependency checks pass; exact final test count is recorded in `outputs/ingest/test_validation.json`.
+- Frontend TypeScript/production build passes. Playwright with installed Microsoft Edge verifies the real localhost readiness page at 1440×1000 and 390×844, status refresh, report filtering, all 19 method rows, seven notes, source images and empty search state. Browser plugin unavailable; bundled Chromium absent; installed Edge used. No relevant console errors after adding the report favicon. See `outputs/ingest/frontend_qa.json` and `report_qa.json`.
+- Real local BGE embeddings, persistent Qdrant and BM25 run on synthetic evidence. Both retrieval branches participate; index checksums remain valid after search. This is component evidence, not real-source scientific validation.
+- Inventory confirms all eight supplied files and 64 PDF pages. The live Qwen pilot extracts and separately verifies an eligible S01 p.10 passage. S02 p.6 fails provider strict JSON generation after the bounded retry (`HTTP 400`, `json_validate_failed`). No full corpus or partial pilot is published. See `outputs/ingest/live_validation.json`.
+- API errors additionally report 7K input TPM and 1K output TPM within the account's displayed 8K TPM. Compact references, token pacing, separate stage caches and bounded JSON-generation retries are implemented. The original interactive provider setting remains unchanged.
+
+Remaining gate: resolve the live visual extraction output-budget failure, complete all supplied-source page jobs, deeply validate/publish, repeat an unchanged cached rebuild and verify real D01/D02-related hybrid searches. `python -m backend.ingest build` resumes compatible caches. F02 is not marked complete.
+
+### 2026-10-17 — LLMTech extraction checkpoint
+
+The authorized LLMTech run obtained extraction responses for all 64 PDF pages. Progress is saved in `knowledge/saved_extraction_64/`, including source blocks, all 64 hash-checked images, model responses, 149 deduplicated evidence records, 19 workbook rows, seven notes, an unpublished inspection report and explicit resume instructions. At checkpoint time, 59 page stages are complete; S03 pages 12, 15, 16, 17 and S04 page 6 require retry/verification or bibliography handling. There are 75 eligible passages before publication and 67 flagged records. Source-image inspection caught legend and unit errors missed by the model verifier; explicit exclusions are retained in `knowledge/source_checks.json`. No complete corpus/index is published. The live process was stopped to preserve the checkpoint when the user reported limited Codex usage. Latest backend regression suite: 66 passed; frontend typecheck/build passed. Continue with the checkpoint README; F02 remains unfinished.
+
+### 2026-10-17 — Resume checkpoint at 5% remaining Codex usage
+
+Work stopped at the user's request to record progress. No background extraction process remains running. Preserve the earlier 64-page snapshot as an unpublished historical checkpoint.
+
+Completed and saved:
+
+- [x] LLMTech Qwen provider integration, provider-specific credentials/request settings, bounded retries, quota handling and runtime-only public trial credential loading.
+- [x] All 64 source pages, images and received extraction responses saved in `knowledge/saved_extraction_64/`; all 19 method rows and seven notes preserved.
+- [x] Numerical quantity guards, rejected-empty-cache recovery, supported-annotation selection for duplicate source spans, and source-image inspection exclusions implemented.
+- [x] Verification prompt checks legend colors, printed units and band assignments; exact source blocks can contain multiple subheadings.
+- [x] Bibliography handling now recognizes numbered continuations, ACS headers, acknowledgments, author contributions and conflicts of interest. Classification normalization leaves retained source text untouched. This latest fix is saved and will load on the next build.
+- [x] Latest regression suite: **69 passed** in 15.34 seconds; evidence: `outputs/ingest/tests_complete.xml`. Earlier frontend typecheck/build passed. Browser verification was not completed in this resume.
+- [x] Interrupted stage: `knowledge/.staging/0f44ae8e71ea4694879f80ff0fad1df4/`, containing all 64 raw pages. **55 complete response bundles matching the current verification fingerprint** remain in `outputs/ingest/cache/`. This is a cache count, not final corpus validation. The stage status file may still say `running` because the process was stopped externally; the actual process is stopped.
+
+Remaining checkpoints, in order:
+
+1. Resume without `--refresh`. Current-verification bundles are missing for **S03 p.15; S04 pp.1–6; S05 pp.1–2**. Most need verification of an existing extraction. The bibliography fix should resolve reference-only pages. The earlier snapshot used the previous verification prompt, explaining its different completion count.
+2. Inspect remaining failures and key S02 figures on slides 6–10, 13–16 and 18. Keep uncertain/incorrect records excluded. Existing source checks exclude a reversed Raman legend and unsupported wavelength unit/band mapping. Do not imply human review or AFS approval.
+3. Build local BGE embeddings, **Qdrant** and BM25 indexes, run deep source/table/artifact/index validation, then publish atomically. **`knowledge/current.json` does not exist; no complete corpus is published.**
+4. Repeat an unchanged cached build; compare evidence IDs/revisions and corpus version. Verify powder/API and opaque-dairy hybrid searches and excluded-source boundaries.
+5. Verify the published report, images and readiness in the browser; update live validation evidence, README and F02 checkboxes only after success. F03 onward remain separate future work.
+
+Resume from the project root:
+
+```powershell
+.\.venv\Scripts\python.exe -m backend.ingest build --provider llmtech --public-trial
+```
+
+After successful publication:
+
+```powershell
+.\.venv\Scripts\python.exe -m backend.ingest validate
+.\.venv\Scripts\python.exe -m backend.ingest build --provider llmtech --public-trial
+.\.venv\Scripts\python.exe -m backend.ingest search --query "powder blend active pharmaceutical ingredient concentration"
+.\.venv\Scripts\python.exe -m backend.ingest search --query "opaque dairy fat protein"
+.\.venv\Scripts\python.exe -m backend.ingest report
+```
+
+Keep existing caches and the saved snapshot. Interactive Groq configuration remains unchanged. LLMTech is temporary; check its documented shutdown date before a later resume. F02 remains unfinished until publication, reproducibility, real retrieval and browser checks pass.

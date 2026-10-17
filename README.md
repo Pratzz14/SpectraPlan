@@ -4,9 +4,9 @@ SpectraPlan is a planned AI assistant for the first technical assessment of indu
 
 ## Project status
 
-**F01 is complete:** a FastAPI readiness API, a React status page and a structured Groq provider adapter are implemented. Both local services and their development API connection have been verified. On 2026-10-17, Groq `qwen/qwen3.8-27b` returned a live structured response that passed local schema and content validation.
+**F01 is complete; F02 ingestion is implemented (live corpus validation recorded below):** a FastAPI readiness API, a React status page and a structured Groq provider adapter are implemented. Both local services and their development API connection have been verified. On 2026-10-17, Groq `qwen/qwen3.8-27b` returned a live structured response that passed local schema and content validation.
 
-The reviewed corpus, enquiry extraction, assessment pipeline and evaluation runner are future increments. Missing corpus readiness is expected until F02.
+F02 adds source inventory, page-aware Qwen extraction and verification, workbook import, a manual inspection report, and Qdrant + BM25 search. Enquiry extraction, assessment generation and evaluation remain future increments. Corpus readiness requires a successfully published build.
 
 ## Local setup
 
@@ -49,6 +49,8 @@ Environment variables override the root `.env`. Relative paths resolve from the 
 | Variable | Default / purpose |
 |---|---|
 | `GROQ_API_KEY` | Backend-only key; supply locally in `.env` or the environment |
+| `LLMTECH_API_KEY` | Backend-only LLMTech key; ingestion can explicitly use the documented public trial |
+| `PROVIDER_NAME` | `groq` or `llmtech`; CLI ingestion override leaves interactive configuration unchanged |
 | `PROVIDER_BASE_URL` | `https://api.groq.com/openai/v1` |
 | `PROVIDER_MODEL` | `qwen/qwen3.8-27b` |
 | `PROVIDER_REASONING_EFFORT` | `medium`; configurable for later extraction/reasoning stages |
@@ -75,8 +77,10 @@ Connection failures, timeouts, HTTP 429 and HTTP 5xx have bounded retries with 1
   "corpus": {
     "status": "missing",
     "version": null,
-    "approved_passages": 0,
-    "approved_methods": 0
+    "eligible_passages": 0,
+    "eligible_methods": 0,
+    "flagged_records": 0,
+    "human_verified_records": 0
   },
   "provider": {
     "name": "groq",
@@ -88,7 +92,7 @@ Connection failures, timeouts, HTTP 429 and HTTP 5xx have bounded retries with 1
 
 `ready` means local configuration and corpus prerequisites are present; it does not verify provider access or scientific correctness. `provider.configured` only indicates a non-placeholder key. Health checks never contact Groq, return credentials or expose local paths.
 
-Corpus status is `missing`, `unreadable`, `invalid`, `empty` or `ready`. The foundation checks readable JSON, unique evidence IDs, source/revision consistency, required location fields and approved-record counts. It expects a manifest with `corpus_version` and `sources`, page-aware JSONL passages, and a JSON array of reviewed method rows. Both approved passages and method rows are required for local corpus readiness. F02 will generate and review these artifacts; no placeholder corpus is supplied, and these checks do not replace source review or later scientific validation.
+Corpus status is `missing`, `unreadable`, `invalid`, `empty` or `ready`. Readiness validates the published generation, checksums, source locations, eligible-record membership and matching Qdrant/BM25 metadata without calling a model. Evidence revisions are independent of the aggregate corpus version. Searchable records pass automated checks; human verification is optional. Neither status implies AFS approval.
 
 ### Verify the provider separately
 
@@ -153,7 +157,7 @@ The assistant supports expert review. Its recommendations are hypotheses to test
 | Interface | React, TypeScript, Vite and Tailwind |
 | API and validation | Python 3.11+, FastAPI and Pydantic v2 |
 | Document ingestion | PyMuPDF and openpyxl |
-| Retrieval | BM25 with local JSON/JSONL evidence and a structured method table |
+| Retrieval | Local Qdrant + BM25 with BGE-small embeddings and canonical JSON/JSONL evidence |
 | Generation | Configurable model provider with structured responses, bounded retries and local validation |
 
 The backend will run extraction, retrieval, synthesis and validation. API credentials will remain on the backend. External retrieval is disabled by default in the MVP design.
@@ -162,7 +166,7 @@ The backend will run extraction, retrieval, synthesis and validation. API creden
 
 The supplied AFS PDFs and method comparison workbook are the primary technical references. Source locations must remain traceable to PDF pages, slides or workbook rows. Business materials and research demonstrations retain their original scope.
 
-Organizer-supplied original files are not included in this repository. The local source location, `knowledge/original_sources/`, is ignored by Git and can be changed with `SOURCE_DIR`. Corpus rebuild instructions will be added with F02.
+Organizer-supplied original files are not included in this repository. The local source location, `knowledge/original_sources/`, is ignored by Git and can be changed with `SOURCE_DIR`. See the F02 commands below.
 
 Development scenarios **D01–D08** and organizer worked answers are used for development and review, separately from technical retrieval. Final scenarios **H01–H06** must run through the general application pipeline. Their answers must be generated without manual editing or case-specific hardcoding.
 
@@ -177,3 +181,43 @@ Automated backend checks cover configuration, readiness, local structured-output
 Original SpectraPlan project content is available under the [MIT License](LICENSE).
 
 Third-party AFS materials, research papers and any excerpts or figures derived from them retain their respective rights and are not relicensed by this repository's MIT License.
+
+## F02 — Knowledge extraction and inspection
+
+Run from the repository root with the configured backend-only Groq key:
+
+```powershell
+.\.venv\Scripts\python.exe -m backend.ingest pilot
+.\.venv\Scripts\python.exe -m backend.ingest build
+.\.venv\Scripts\python.exe -m backend.ingest validate
+.\.venv\Scripts\python.exe -m backend.ingest report
+.\.venv\Scripts\python.exe -m backend.ingest search --query "powder blend API concentration"
+.\.venv\Scripts\python.exe -m backend.ingest search --query "opaque dairy fat protein"
+```
+
+The pilot processes S01 p.10 and S02 p.6 and prints an **unpublished** HTML report location. A full build processes all 64 pages from S01–S05, imports 19 workbook rows and seven notes, and publishes only after validation and indexing succeed. Text and rendered page images are sent to Groq for extraction and separate verification. The supplied S06 URL is stored without fetching its website. Development examples, final evaluation inputs, the challenge brief, unknown files and business context never enter technical retrieval.
+
+The extractor uses strict JSON schemas and versioned prompts in `backend/prompts/`. Qwen selects source block IDs; code copies original text and records quote offsets and page bounds. Visual transcriptions carry a labeled region and remain distinct from verbatim text. Structured facts and quantities retain exact supporting quotes. Ambiguous or unsupported candidates are inspectable but excluded from search.
+
+No approval workflow is required. After a successful build, open **Inspect extracted knowledge** in the application or [the report endpoint](http://127.0.0.1:5173/api/knowledge/report). `report` prints the standalone HTML location, which also works locally with the adjacent page assets. Filter by source, physical PDF page, content kind, validation status or retrieval eligibility. Inspect the passage, facts, source image with highlighted regions, workbook cells, original notes and complete provenance. Records default to `human_review_status="not_reviewed"`; automated validation does not establish scientific accuracy.
+
+### Models, limits and storage
+
+- Extraction and verification: Groq `qwen/qwen3.8-27b`. F02 uses `reasoning_effort="none"` and a configurable compact output ceiling to accommodate this account's output-token limit; the interactive F01 provider setting remains unchanged. `INGEST_MAX_OUTPUT_TOKENS=1000` and `INGEST_CONCURRENCY=1` are conservative defaults. Increase the output ceiling when the provider account supports it. An incomplete structured response is rejected, never silently repaired or published.
+- Embeddings: local `BAAI/bge-small-en-v1.5` through FastEmbed, 384 dimensions, cosine similarity. The first use downloads public model files to `outputs/embedding_models/`; their checksums are captured in each index manifest. Source content is embedded locally. Each segment is explicitly checked below the model's 512-token limit, including its heading. Long indivisible sentences fail clearly rather than truncate.
+- Retrieval: up to 20 BM25 candidates and 20 Qdrant candidates, fused with reciprocal rank fusion (`k=60`) into at most eight unique evidence records. A domain-only synonym map covers terms such as MIR/FTIR and moisture/water. Results are candidates for a later assessment stage, not scientific endorsements. No cross-encoder reranker is used.
+- Qdrant: persistent local Python-client mode, no Docker/cloud account. The CLI opens and closes the active database per search. Do not access one local database from multiple processes simultaneously. Each build creates a separate generation; API report routes use versioned assets, so a rebuild cannot mix source images between reports.
+
+### Rebuild and failure behavior
+
+`build` reuses content-addressed extraction and verification caches. Source hashes, schema and prompt hashes, extraction version, rendered-image hash, provider settings and output contents determine provenance and revisions. `build --refresh` explicitly reruns model stages and creates a new revision when outputs differ. Identical cached builds retain evidence IDs, record revisions and corpus version. Evidence IDs use source/page/content identity; workbook IDs use sheet/row and retain S01 Table 1 p.6 as the underlying citation. Qualitative ratings and optical path/depth remain source values, not equipment guarantees or remote fiber lengths.
+
+Canonical data lives in `knowledge/versions/<corpus-version>/`. `knowledge/current.json` is replaced atomically only when extraction, validation, report creation and both indexes finish successfully. Root-level `source_manifest.json`, `passages.jsonl`, `methods.json`, `method_notes.json` and `validation_report.json` are convenience exports; readers use the version pointer. Prior generations survive failed builds. Working stages remain under `knowledge/.staging/`, with sanitized failure diagnostics; completed model stages remain cached under `outputs/ingest/cache/`. Rerun the same build to resume. Rate limits receive bounded waits; exhausted waits or schema failures leave the published corpus untouched.
+
+Originals, model binaries, page images, raw extraction caches and Qdrant binaries are local rebuildable artifacts. Keep the original-source folder available when validating or rebuilding. Generated evidence and manifests remain trackable. Their third-party source rights remain unchanged.
+
+See [the pipeline contract](docs/knowledge_pipeline.md) for exact outputs, interfaces, validation and current live-run status.
+
+### F02 live validation status (2026-10-17)
+
+The pipeline implementation, local embedding/vector/lexical component checks, backend tests, frontend build and desktop/mobile browser checks pass. A real S01 p.10 passage passes extraction and separate source verification. S02 slide 6 still returns Groq `json_validate_failed` under the compact output budget after the bounded retry. The full technical corpus is **not published**, and readiness correctly remains missing. `outputs/ingest/live_validation.json` records the failure and unpublished report path. The implementation plan keeps the live completion gate open. Use `build` to resume cached stages after resolving the provider output-budget issue.

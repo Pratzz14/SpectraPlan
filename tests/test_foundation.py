@@ -12,6 +12,7 @@ from backend.health import inspect_corpus
 from backend.main import create_app
 from backend.provider import Provider, ProviderError, _retry_delay
 from backend.smoke_provider import run_smoke
+from tests.corpus_fixture import make_corpus
 
 
 def settings(**overrides):
@@ -47,18 +48,7 @@ def invoke(handler, **options):
 
 
 def write_corpus(directory: Path, *, approved=True, revision="corpus-v1"):
-    directory.mkdir(parents=True, exist_ok=True)
-    (directory / "source_manifest.json").write_text(json.dumps({
-        "corpus_version": "corpus-v1", "sources": [{"source_id": "S01"}]
-    }), encoding="utf-8")
-    common = {"source_id": "S01", "page": 6, "revision": revision,
-              "approval_status": "approved" if approved else "unreviewed"}
-    (directory / "passages.jsonl").write_text(json.dumps({
-        **common, "evidence_id": "S01:p6:c1", "file_name": "test.pdf", "text": "Synthetic test evidence only."
-    }) + "\n", encoding="utf-8")
-    (directory / "methods.json").write_text(json.dumps([{
-        **common, "evidence_id": "S01:p6:row1", "method": "NIR", "geometry": "reflection"
-    }]), encoding="utf-8")
+    make_corpus(directory, eligible=approved, revision=revision)
 
 
 def test_configuration_env_precedence_and_paths(tmp_path, monkeypatch):
@@ -98,7 +88,8 @@ def test_health_is_free_and_secret_free(tmp_path, monkeypatch):
     data = response.json()
     assert data["service"] == "running" and not data["ready"]
     assert data["provider"]["configured"]
-    assert data["corpus"] == {"status": "missing", "version": None, "approved_passages": 0, "approved_methods": 0}
+    assert data["corpus"] == {"status": "missing", "version": None, "eligible_passages": 0, "eligible_methods": 0,
+                              "flagged_records": 0, "human_verified_records": 0}
     assert "test-secret" not in response.text and str(tmp_path) not in response.text
 
 
@@ -108,15 +99,17 @@ def test_health_requires_provider_and_corpus(tmp_path):
         data = health_response(settings(corpus_dir=tmp_path, groq_api_key=key)).json()
         assert data["ready"] is ready
         assert data["corpus"]["version"] == "corpus-v1"
-        assert data["corpus"]["approved_passages"] == 1
-        assert data["corpus"]["approved_methods"] == 1
+        assert data["corpus"]["eligible_passages"] == 1
+        assert data["corpus"]["eligible_methods"] == 19
 
 
-def test_corpus_unreviewed_and_revision_mismatch(tmp_path):
+def test_corpus_excluded_membership_and_independent_content_revision(tmp_path):
     write_corpus(tmp_path, approved=False)
-    assert inspect_corpus(tmp_path).status == "empty"
-    write_corpus(tmp_path, revision="wrong-revision")
     assert inspect_corpus(tmp_path).status == "invalid"
+    # A record revision is independent of the aggregate corpus version.
+    fresh = tmp_path / "fresh"
+    write_corpus(fresh, revision="independent-content-revision")
+    assert inspect_corpus(fresh).status == "ready"
 
 
 @pytest.mark.parametrize("filename", ["source_manifest.json", "passages.jsonl", "methods.json"])
@@ -158,6 +151,29 @@ def test_provider_request_and_local_validation():
 
     result = invoke(handle)
     assert result == Extraction(sample_phase="powder", target="moisture")
+
+
+def test_llmtech_uses_its_own_key_and_request_fields():
+    def handle(request):
+        assert request.headers["authorization"] == "Bearer llmtech-test-secret"
+        payload = json.loads(request.content)
+        assert payload["chat_template_kwargs"] == {"enable_thinking": False}
+        assert "reasoning_format" not in payload and "reasoning_effort" not in payload
+        return httpx.Response(200, json=completion())
+    assert not settings(provider_name="llmtech").provider_configured
+    result = invoke(handle, provider_name="llmtech", llmtech_api_key="llmtech-test-secret")
+    assert result.sample_phase == "powder"
+
+
+def test_llmtech_exhausted_credit_fails_without_retry():
+    calls = []
+    def handle(request):
+        calls.append(request)
+        return httpx.Response(402, json={"error": {"message": "private quota details"}})
+    with pytest.raises(ProviderError) as caught:
+        invoke(handle, provider_name="llmtech", llmtech_api_key="llmtech-test-secret")
+    assert caught.value.daily_limit and caught.value.upstream_status == 402
+    assert len(calls) == 1 and "private" not in str(caught.value)
 
 
 @pytest.mark.parametrize("data", [

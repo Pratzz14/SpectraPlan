@@ -1,0 +1,22 @@
+[
+  {
+    "evidence_id": "S02:p016:fig:97819eb2769a0eea",
+    "source_sha256": "f273a85e771c8907d6560a31ea6f7c9915d8ba8bae95cac06d751cc0ca843cee",
+    "image_sha256": "206e21dd831130905ac2372b52bcce849cb30d15fd414e2851733c67227424a1",
+    "checked_by": "Codex source-image inspection",
+    "outcome": "excluded",
+    "reason": "The Raman legend colors are reversed: the original identifies the gray curve as Raman Standard Probe and the black curve as Raman Multispectral Probe.",
+    "human_review": false,
+    "afs_approval": false
+  },
+  {
+    "evidence_id": "S02:p018:fig:fe0be3520e6e6957",
+    "source_sha256": "f273a85e771c8907d6560a31ea6f7c9915d8ba8bae95cac06d751cc0ca843cee",
+    "image_sha256": "27696e190aaf052ac74c2c4e45a6dfcb05947ed5574ddb1ca739dcd016a4be03",
+    "checked_by": "Codex source-image inspection",
+    "outcome": "excluded",
+    "reason": "The source graphic does not print a wavelength unit; the transcription adds [um] and assigns the grouped analyte list to only part of its displayed band grouping.",
+    "human_review": false,
+    "afs_approval": false
+  }
+]

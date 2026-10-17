@@ -36,7 +36,7 @@ The user can inspect citations and download the generated JSON. Editing the enqu
 - No prediction of real concentrations from spectra, unless real data is supplied in a separate future feature.
 - No invented detection limits, accuracies, probe specifications, costs, sample results, or clinical readiness claims.
 - No enterprise auth, multi-user accounts, extensive audit workflows, database migrations, PDF report creation, or cloud deployment requirement.
-- No multi-agent framework, complex vector infrastructure, or unsupervised crawling.
+- No multi-agent framework, hosted vector infrastructure, or unsupervised crawling. Local Qdrant is used for the small supplied corpus.
 - No requirement to name an exact vendor probe model when the supplied evidence does not establish its suitability.
 
 ---
@@ -154,8 +154,8 @@ For 12 hours, **backend-directed retrieval is the reliable default**. A model-se
 2. Visually verify any diagram, table or plot used to support a claim, especially **S02 visual facts** from slides 6–10, 13–16 and 18. Distinguish verbatim text from reviewed figure transcriptions; preserve labels, units, legends, page and figure location. Do not infer detection limits or accuracy from a plotted example.
 3. Split primarily by heading, then into coherent passages ~150–350 words with minimal overlap. Do not split numerical values away from labels/units.
 4. Convert the XLSX to structured method rows, preserving original qualitative values and citation `S01 Table 1 (p.6)`. Preserve workbook sheet/row provenance and the `notes` sheet: the 19 method/geometry rows are a transcription for AFS review, not verified product specifications. Optical path/depth values describe measurement geometry; they are not remote fiber lengths or guaranteed penetration depths for a new sample.
-5. Mark reviewed passages with source ID, page, excerpt or figure transcription, evidence scope (general method, application example, research demonstration or business context), optional tags, revision, and `approval_status="approved"`. Here, approval means project review against the source, not AFS approval of a recommendation. Keep unreviewed passages out of the active index.
-6. Build a local BM25 index. Target 4–8 relevant evidence records per assessment when available, with keyword broadening once if necessary. Never pad the result with irrelevant passages to meet a count.
+5. Record source ID, page, excerpt or figure transcription, evidence scope, tags and independent content revision. Use `validation_status="passed"` or `"flagged"`, `human_review_status="not_reviewed"` by default, and a separate `retrieval_eligible` boolean. Passing automated checks permits technical retrieval without mandatory approval. Business context and flagged or rejected records remain excluded. Optional human verification and automated validation never imply AFS approval.
+6. Build local Qdrant and BM25 indexes over eligible technical evidence. Use local BGE-small-en-v1.5 embeddings, cosine similarity and reciprocal rank fusion (k=60), retrieving at most eight distinct evidence records. Never pad results to meet a count.
 7. Do **not** index development answers, final evaluation text, instructions to the assistant, or unsourced synthetic claims as scientific evidence.
 
 **Canonical passage shape:**
@@ -172,7 +172,9 @@ For 12 hours, **backend-directed retrieval is the reliable default**. A model-se
   "evidence_scope": "application_example",
   "revision": "corpus-v1",
   "tags": ["NIR", "Raman", "powder", "API"],
-  "approval_status": "approved"
+  "validation_status": "passed",
+  "human_review_status": "not_reviewed",
+  "retrieval_eligible": true
 }
 ```
 
@@ -418,7 +420,7 @@ One responsive page; no authentication or routing required.
 
 ### 9.1 Retrieval
 
-- Use deterministic BM25 over source passages. Build keyword queries from each context's target, matrix, process type, requested method and important uncertainties. A small documented domain synonym map is allowed (for example, MIR/mid-infrared/FTIR); it must not reference D/H case IDs or match whole scenario wording.
+- Use hybrid Qdrant + BM25 over eligible technical source evidence. Build keyword queries from each context's target, matrix, process type, requested method and important uncertainties. A small documented domain synonym map is allowed (for example, MIR/mid-infrared/FTIR); it must not reference D/H case IDs or match whole scenario wording.
 - Provide a secondary structured lookup over the XLSX-derived methods table to shortlist possible methods/geometries, treating qualitative values as guidance rather than acceptance criteria.
 - Merge and deduplicate, targeting 4–8 meaningful evidence records with source identifiers when available; eight is the cap, not a minimum requirement.
 - Balance the evidence budget across distinct contexts and decisions: application, geometry, hardware compatibility and evidence scope where relevant. Retrieve limitations as well as favorable examples. If eight records cannot support every proposed claim, narrow the answer or expose a coverage gap rather than claiming unexamined support.
@@ -638,3 +640,8 @@ Hybrid semantic/lexical retrieval, fully verified hardware/specification catalog
 7. **Document any incomplete or intentionally deferred features honestly** in the README and demo.
 
 **Guiding principle:** SpectraPlan helps an expert answer *“What should we test first, why, and what missing information could change that decision?”* It does not claim to deliver a finished, experimentally validated sensor design.
+
+
+## F02 implementation contract amendment (2026-10-17)
+
+The implemented F02 contract supersedes earlier mandatory approval and BM25-only wording. See `docs/knowledge_pipeline.md`: automated source checks, optional human verification, compact Qwen extraction plus separate verification, exact workbook import, local BGE/Qdrant and BM25, versioned publication and an inspection report. Remaining mentions of reviewed evidence mean source-grounded evidence with explicit validation and human-review metadata; they do not restore an approval workflow.

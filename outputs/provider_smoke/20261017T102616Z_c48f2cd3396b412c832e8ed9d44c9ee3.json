@@ -1,0 +1,20 @@
+{
+  "run_id": "c48f2cd3396b412c832e8ed9d44c9ee3",
+  "generated_at": "2026-10-17T10:26:15.239658+00:00",
+  "provider": "groq",
+  "model": "qwen/qwen3.8-27b",
+  "settings": {
+    "reasoning_effort": "medium",
+    "strict_json_schema": true,
+    "call_timeout_s": 30.0,
+    "deadline_s": 90.0,
+    "max_retries": 2,
+    "max_completion_tokens": 2048
+  },
+  "outcome": "passed",
+  "validated_response": {
+    "sample_phase": "powder",
+    "target": "moisture"
+  },
+  "error": null
+}

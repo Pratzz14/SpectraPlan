@@ -1,0 +1,32 @@
+{
+  "status": "incomplete_not_published",
+  "model": "qwen/qwen3.8-27b",
+  "source_page_count": 64,
+  "pilot_pages": [
+    {
+      "source_id": "S01",
+      "page": 10,
+      "records": 1,
+      "eligible": 1
+    },
+    {
+      "source_id": "S02",
+      "page": 6,
+      "status": "provider_json_generation_failed"
+    }
+  ],
+  "failed_run": "knowledge/.staging/571cab242bb04e71ac288a1b51b8bc8f",
+  "failures": [
+    {
+      "source_id": "S02",
+      "page": 6,
+      "code": "provider_request_rejected",
+      "upstream_status": 400,
+      "upstream_code": "json_validate_failed",
+      "message": "Provider rejected the request or structured-output schema."
+    }
+  ],
+  "human_verified": 0,
+  "published": false,
+  "next_command": ".\\.venv\\Scripts\\python.exe -m backend.ingest build"
+}

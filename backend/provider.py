@@ -1,4 +1,4 @@
-"""Structured Groq adapter with one shared deadline and sanitized failures."""
+"""Structured provider adapter with one shared deadline and sanitized failures."""
 
 import asyncio
 import json
@@ -6,7 +6,7 @@ import math
 import time
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
-from typing import TypeVar
+from typing import TypeVar, TypedDict
 
 import httpx
 from pydantic import BaseModel, ValidationError
@@ -16,11 +16,20 @@ from backend.config import Settings
 ResponseModel = TypeVar("ResponseModel", bound=BaseModel)
 
 
+class Message(TypedDict):
+    role: str
+    content: str | list[dict]
+
+
 class ProviderError(Exception):
-    def __init__(self, code: str, message: str, http_status: int = 503):
+    def __init__(self, code: str, message: str, http_status: int = 503, *, upstream_status: int | None = None,
+                 upstream_code: str | None = None):
         super().__init__(message)
         self.code = code
         self.http_status = http_status
+        self.upstream_status = upstream_status
+        self.upstream_code = upstream_code
+        self.daily_limit = False
 
 
 def _retry_delay(response: httpx.Response | None, attempt: int) -> float:
@@ -41,10 +50,11 @@ class Provider:
     def __init__(self, settings: Settings, *, transport: httpx.AsyncBaseTransport | None = None):
         self.settings = settings
         self.transport = transport
+        self.last_usage: dict = {}
 
     async def structured(
         self,
-        messages: list[dict[str, str]],
+        messages: list[Message],
         response_model: type[ResponseModel],
         *,
         deadline: float | None = None,
@@ -58,7 +68,7 @@ class Provider:
         """
         config = self.settings
         if not config.provider_configured:
-            raise ProviderError("provider_not_configured", "Set GROQ_API_KEY on the backend.")
+            raise ProviderError("provider_not_configured", f"Set {config.provider_name.upper()}_API_KEY on the backend.")
         stop_at = min(
             math.inf if deadline is None else deadline,
             time.monotonic() + config.request_deadline_s,
@@ -69,8 +79,6 @@ class Provider:
         payload = {
             "model": config.provider_model,
             "messages": messages,
-            "reasoning_effort": config.provider_reasoning_effort,
-            "reasoning_format": "hidden",
             "stream": False,
             "max_completion_tokens": max_completion_tokens or config.provider_max_completion_tokens,
             "response_format": {
@@ -82,11 +90,15 @@ class Provider:
                 },
             },
         }
+        if config.provider_name == "llmtech":
+            payload["chat_template_kwargs"] = {"enable_thinking": False}
+        else:
+            payload.update(reasoning_effort=config.provider_reasoning_effort, reasoning_format="hidden")
         try:
             async with asyncio.timeout(remaining):
                 async with httpx.AsyncClient(
                     transport=self.transport, follow_redirects=False,
-                    headers={"Authorization": f"Bearer {config.groq_api_key.get_secret_value().strip()}"},
+                    headers={"Authorization": f"Bearer {config.provider_api_key.get_secret_value().strip()}"},
                 ) as client:
                     for attempt in range(config.provider_max_retries + 1):
                         response = None
@@ -108,11 +120,36 @@ class Provider:
                         else:
                             if response.status_code in {401, 403}:
                                 raise ProviderError("provider_authentication", "Provider rejected authentication or model access.")
+                            if response.status_code == 402:
+                                failure = ProviderError("provider_daily_limit", "Provider quota or balance is exhausted.", upstream_status=402)
+                                failure.daily_limit = True
+                                raise failure
                             if response.status_code != 429 and response.status_code < 500:
                                 if response.status_code != 200:
-                                    raise ProviderError("provider_request_rejected", "Provider rejected the request or structured-output schema.")
-                                return self._validate(response, response_model)
-                            failure = ProviderError("provider_unavailable", "Provider rate limit or service failure.")
+                                    try:
+                                        raw_code = response.json().get("error", {}).get("code")
+                                    except (ValueError, AttributeError):
+                                        raw_code = None
+                                    safe_code = raw_code if isinstance(raw_code, str) and raw_code in {"json_validate_failed", "invalid_request_error", "schema_validation_error",
+                                                                          "model_not_found", "rate_limit_exceeded"} else None
+                                    raise ProviderError("provider_request_rejected", "Provider rejected the request or structured-output schema.",
+                                                        upstream_status=response.status_code, upstream_code=safe_code)
+                                result = self._validate(response, response_model)
+                                usage = response.json().get("usage", {})
+                                self.last_usage = {k: usage[k] for k in ("prompt_tokens", "completion_tokens", "total_tokens")
+                                                   if isinstance(usage.get(k), int)} if isinstance(usage, dict) else {}
+                                return result
+                            failure = ProviderError("provider_unavailable", f"Provider returned HTTP {response.status_code} (rate limit or service failure).",
+                                                    upstream_status=response.status_code)
+                            if response.status_code == 429:
+                                try:
+                                    message = response.json().get("error", {}).get("message", "")
+                                    failure.daily_limit = any(marker in message for marker in ("(TPD)", "(ITPD)", "(OTPD)", "tokens per day", "requests per day"))
+                                except (ValueError, AttributeError, TypeError):
+                                    pass
+                                if failure.daily_limit:
+                                    failure.code = "provider_daily_limit"
+                                    raise failure
                         if attempt == config.provider_max_retries:
                             raise failure from None
                         delay = _retry_delay(response, attempt)
@@ -142,4 +179,11 @@ class Provider:
                 raise ValueError("Missing JSON content")
             return response_model.model_validate_json(content, strict=True)
         except (ValueError, TypeError, KeyError, IndexError, ValidationError, json.JSONDecodeError):
-            raise ProviderError("provider_invalid_response", "Provider response failed local validation.", 502) from None
+            error = ProviderError("provider_invalid_response", "Provider response failed local validation.", 502)
+            # Retain only model content for an explicit local ingestion diagnostic, never headers/error bodies.
+            try:
+                error.invalid_content = response.json()["choices"][0]["message"]["content"]
+                error.finish_reason = response.json()["choices"][0].get("finish_reason")
+            except (ValueError, TypeError, KeyError, IndexError):
+                pass
+            raise error from None

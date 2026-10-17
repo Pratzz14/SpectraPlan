@@ -1,0 +1,8 @@
+{
+  "tests": 61,
+  "failures": 0,
+  "errors": 0,
+  "status": "passed",
+  "junit": "outputs/ingest/tests.xml",
+  "scope": "Mocked provider and synthetic corpus; separate live/component results retained"
+}

@@ -47,3 +47,21 @@ Desktop.ini
 
 # Keep reviewed corpus files and required evaluation outputs trackable.
 # Do not ignore knowledge/*.json, knowledge/*.jsonl or outputs/ globally.
+
+# Rebuildable ingestion working data and local model binaries
+/outputs/embedding_models/
+/outputs/ingest/cache/
+/knowledge/.staging/
+/knowledge/versions/*/qdrant/
+/knowledge/versions/*/assets/
+/knowledge/versions/*/raw_pages.json
+/knowledge/versions/*/review.html
+
+# Keep the local source checkpoint while committing only its summary and instructions.
+/knowledge/saved_extraction_64/*
+!/knowledge/saved_extraction_64/README.md
+!/knowledge/saved_extraction_64/checkpoint.json
+/outputs/ingest/pytest*/
+/outputs/ingest/live_partial_records.json
+/outputs/ingest/retry_llmtech_pages.py
+/outputs/ingest/save_checkpoint.py

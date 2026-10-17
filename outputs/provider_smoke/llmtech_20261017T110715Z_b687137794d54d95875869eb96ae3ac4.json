@@ -1,0 +1,220 @@
+{
+  "run_id": "b687137794d54d95875869eb96ae3ac4",
+  "generated_at": "2026-10-17T11:07:05.543137+00:00",
+  "provider": "llmtech",
+  "endpoint": "https://api.llmtech.eu/v1",
+  "requested_model": "nvidia/Qwen3.8-27B-NVFP4",
+  "data_scope": "Synthetic text and a generated synthetic diagram only; no AFS content",
+  "production_configuration_changed": false,
+  "tests": [
+    {
+      "test": "strict_text_extraction",
+      "http_status": 200,
+      "elapsed_s": 0.31,
+      "requested_max_completion_tokens": 4096,
+      "outcome": "schema_valid",
+      "returned_model": "qwen38",
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 62,
+        "total_tokens": 79,
+        "completion_tokens": 17,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "validated_response": {
+        "sample_phase": "powder",
+        "target": "moisture"
+      }
+    },
+    {
+      "test": "actual_ingestion_schema_with_synthetic_image",
+      "http_status": 200,
+      "elapsed_s": 7.2,
+      "requested_max_completion_tokens": 4096,
+      "outcome": "schema_valid",
+      "returned_model": "qwen38",
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 982,
+        "total_tokens": 1779,
+        "completion_tokens": 797,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": {
+            "image": 544
+          }
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "validated_response": {
+        "text_groups": [
+          {
+            "section": "Synthetic Sample and Target",
+            "evidence_scope": "research_demonstration",
+            "block_ids": [
+              "b001"
+            ],
+            "facts": [
+              {
+                "category": "sample",
+                "statement": "The synthetic sample is a powder with a target of moisture.",
+                "support_quotes": [
+                  "Synthetic sample: powder. Target: moisture."
+                ],
+                "quantities": [
+                  {
+                    "label": "Sample type",
+                    "value": "powder",
+                    "unit": "text",
+                    "kind": "sample_count",
+                    "source_quote": "Synthetic sample: powder"
+                  },
+                  {
+                    "label": "Target",
+                    "value": "moisture",
+                    "unit": "text",
+                    "kind": "spectral_range",
+                    "source_quote": "Target: moisture."
+                  }
+                ]
+              }
+            ],
+            "tags": [
+              "synthetic-data",
+              "test-fixture"
+            ]
+          }
+        ],
+        "figures": [
+          {
+            "section": "Synthetic Test Diagram",
+            "evidence_scope": "business_context",
+            "region": {
+              "x0": 0.0,
+              "y0": 0.05,
+              "x1": 1.0,
+              "y1": 0.95,
+              "label": "SYNTHETIC TEST DIAGRAM"
+            },
+            "transcription": "SYNTHETIC TEST DIAGRAM. Invented test ranges; not equipment specifications. Silica test band: 400-2400 nm. PIR test band: 3-16 um.",
+            "interpretation": "The diagram labels two invented wavelength bands: a silica band and a PIR band. It explicitly states these are test ranges, not equipment specifications.",
+            "facts": [
+              {
+                "category": "sample",
+                "statement": "The diagram lists an invented silica test band and PIR test band, not equipment specs.",
+                "support_quotes": [
+                  "Invented test ranges; not equipment specifications."
+                ],
+                "quantities": [
+                  {
+                    "label": "Silica test band",
+                    "value": "400-2400",
+                    "unit": "nm",
+                    "kind": "spectral_range",
+                    "source_quote": "Silica test band: 400-2400 nm"
+                  },
+                  {
+                    "label": "PIR test band",
+                    "value": "3-16",
+                    "unit": "um",
+                    "kind": "spectral_range",
+                    "source_quote": "PIR test band: 3-16 um"
+                  }
+                ]
+              }
+            ],
+            "tags": [
+              "synthetic-data",
+              "test-fixture",
+              "wavelength-bands"
+            ],
+            "issues": [
+              "Data is explicitly marked as synthetic/invented test data, not real equipment specifications."
+            ]
+          }
+        ],
+        "empty_reason": null,
+        "issues": [
+          "All data is marked as synthetic test data."
+        ]
+      }
+    },
+    {
+      "test": "actual_verification_schema_with_synthetic_image",
+      "http_status": 200,
+      "elapsed_s": 1.75,
+      "requested_max_completion_tokens": 2048,
+      "outcome": "schema_valid",
+      "returned_model": "qwen38",
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 1460,
+        "total_tokens": 1595,
+        "completion_tokens": 135,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": {
+            "image": 544
+          }
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "validated_response": {
+        "verdicts": [
+          {
+            "candidate_index": 0,
+            "status": "supported",
+            "reason": "The candidate accurately transcribes the text from block b001. It correctly identifies the sample type as powder and the target as moisture, matching the source evidence without adding unsupported interpretations."
+          },
+          {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "The figure transcription correctly reflects the visible text in the diagram, including the title, disclaimer, and the two wavelength bands (silica 400-2400 nm and PIR 3-16 um). The scope is correctly limited to test data."
+          }
+        ]
+      }
+    }
+  ],
+  "outcome": "passed",
+  "key_source": "public_documented_trial",
+  "verification_statuses": [
+    "supported",
+    "supported"
+  ],
+  "test_scope": "API/schema/vision compatibility, not acceptance of all extracted scientific fields",
+  "semantic_observations": [
+    {
+      "group": 0,
+      "issue": "Text value misclassified as numerical quantity",
+      "value": "powder"
+    },
+    {
+      "group": 0,
+      "issue": "Quantity unit absent from its supporting quote",
+      "unit": "text"
+    },
+    {
+      "group": 0,
+      "issue": "Text value misclassified as numerical quantity",
+      "value": "moisture"
+    },
+    {
+      "group": 0,
+      "issue": "Quantity unit absent from its supporting quote",
+      "unit": "text"
+    }
+  ]
+}

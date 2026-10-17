@@ -15,6 +15,8 @@ class Settings(BaseSettings):
     )
 
     groq_api_key: SecretStr = SecretStr("")
+    llmtech_api_key: SecretStr = SecretStr("")
+    provider_name: Literal["groq", "llmtech"] = "groq"
     provider_base_url: str = "https://api.groq.com/openai/v1"
     provider_model: str = "qwen/qwen3.8-27b"
     provider_reasoning_effort: Literal["none", "default", "low", "medium", "high"] = "medium"
@@ -25,8 +27,12 @@ class Settings(BaseSettings):
     source_dir: Path = Path("knowledge/original_sources")
     corpus_dir: Path = Path("knowledge")
     smoke_output_dir: Path = Path("outputs/provider_smoke")
+    ingest_cache_dir: Path = Path("outputs/ingest/cache")
+    embedding_cache_dir: Path = Path("outputs/embedding_models")
+    ingest_concurrency: int = Field(default=1, ge=1, le=4)
+    ingest_max_output_tokens: int = Field(default=1000, ge=256, le=16384)
 
-    @field_validator("source_dir", "corpus_dir", "smoke_output_dir")
+    @field_validator("source_dir", "corpus_dir", "smoke_output_dir", "ingest_cache_dir", "embedding_cache_dir")
     @classmethod
     def resolve_path(cls, value: Path) -> Path:
         return value.resolve() if value.is_absolute() else (PROJECT_ROOT / value).resolve()
@@ -56,8 +62,12 @@ class Settings(BaseSettings):
         return value.strip()
 
     @property
+    def provider_api_key(self) -> SecretStr:
+        return self.llmtech_api_key if self.provider_name == "llmtech" else self.groq_api_key
+
+    @property
     def provider_configured(self) -> bool:
-        key = self.groq_api_key.get_secret_value().strip()
+        key = self.provider_api_key.get_secret_value().strip()
         return bool(key) and key.lower() not in {
             "your_groq_api_key_here", "replace_me", "placeholder"
         }
