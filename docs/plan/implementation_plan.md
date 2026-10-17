@@ -1,7 +1,7 @@
 # SpectraPlan Iterative Implementation Plan
 
 **Based on:** [Technical specification v1.1](spec.md)\
-**Status:** Planned; implementation has not started\
+**Status:** F01 complete, including live-provider verification; F02 next\
 **Structure:** Main feature → tasks → subtasks\
 **Target:** A working, source-grounded spectroscopy assessment app with reproducible evaluation outputs.
 
@@ -11,7 +11,7 @@ Work through the main features in order. Each task has a stable ID so you can re
 
 At the end of each iteration, record the files changed, checks performed, remaining issues and next task in the progress log. Keep a feature unfinished if its completion gate has not passed. Distinguish source inspection, automated tests, live model calls and browser verification; one does not establish the others.
 
-The specification remains the authority for contracts and behavior. This plan breaks that work into increments; it does not introduce permission to change scientific requirements or fabricate missing evidence. All implementation items below begin unchecked.
+The specification remains the authority for contracts and behavior. This plan breaks that work into increments; it does not introduce permission to change scientific requirements or fabricate missing evidence. Checkmarks below reflect recorded implementation evidence; unresolved gates remain open.
 
 ## Implementation sequence
 
@@ -39,24 +39,26 @@ The timeboxes are the specification's proposed 12-hour budget, not guaranteed es
 **Spec:** Sections 4, 7 and 11.\
 **Primary files:** `backend/main.py`, `frontend/`, `requirements.txt`, `.env.example`, `.gitignore`, `README.md`.
 
-- [ ] **F01.1 — Establish the project structure**
-  - [ ] Inspect the existing workspace and applicable instructions; preserve existing files and initialize Git if needed.
-  - [ ] Create the backend, frontend, knowledge, evaluation, outputs and tests directories described in the specification.
-  - [ ] Configure Python dependencies and a React/TypeScript/Vite/Tailwind application; record the actual dependency versions and startup commands.
-  - [ ] Ignore credentials, local environment files, dependency directories and temporary artifacts while keeping required evaluation outputs eligible for version control.
+- [x] **F01.1 — Establish the project structure**
+  - [x] Inspect the existing workspace and applicable instructions; preserve existing files and initialize Git if needed.
+  - [x] Create the backend, frontend, knowledge, evaluation, outputs and tests directories described in the specification.
+  - [x] Configure Python dependencies and a React/TypeScript/Vite/Tailwind application; record the actual dependency versions and startup commands.
+  - [x] Ignore credentials, local environment files, dependency directories and temporary artifacts while keeping required evaluation outputs eligible for version control.
 
-- [ ] **F01.2 — Configure the backend and provider**
-  - [ ] Load provider endpoint, model, API key, source paths and timeout settings from backend configuration; supply placeholders in `.env.example`.
-  - [ ] Implement readiness reporting that distinguishes a running service from an unavailable corpus; never expose secrets.
-  - [ ] Add a provider adapter with bounded retries and locally validated structured responses.
-  - [ ] Run one small live structured-output smoke test and record the outcome; report a missing key or unavailable provider as an unresolved dependency.
+- [x] **F01.2 — Configure the backend and provider**
+  - [x] Load provider endpoint, model, API key, source paths and timeout settings from backend configuration; supply placeholders in `.env.example`.
+  - [x] Implement readiness reporting that distinguishes a running service from an unavailable corpus; never expose secrets.
+  - [x] Add a provider adapter with bounded retries and locally validated structured responses.
+  - [x] Run one small live structured-output smoke test and record the outcome; report a missing key or unavailable provider as an unresolved dependency.
 
-- [ ] **F01.3 — Connect the development environment**
-  - [ ] Start the backend and frontend locally and configure the development API connection.
-  - [ ] Confirm the frontend can display backend readiness without making a paid model call.
-  - [ ] Add initial setup/run instructions to the README as the commands become known.
+- [x] **F01.3 — Connect the development environment**
+  - [x] Start the backend and frontend locally and configure the development API connection.
+  - [x] Confirm the frontend can display backend readiness without making a paid model call.
+  - [x] Add initial setup/run instructions to the README as the commands become known.
 
 **Completion gate:** Both services start, frontend-to-backend communication works, and the selected provider returns a locally validated response. Missing corpus readiness is expected until F02; a mocked provider alone does not complete the live-provider gate.
+
+**Observed F01 status (2026-10-17): Complete.** Local services, readiness API, development proxy and browser checks pass. Selected provider: Groq `qwen/qwen3.8-27b`, with configurable medium reasoning and strict JSON Schema plus local Pydantic validation. After the key was supplied locally, the [successful live smoke record](../../outputs/provider_smoke/20261017T094530Z_0cb5a2339fbc465d895e14d32f6745ea.json) captured `sample_phase="powder"` and `target="moisture"`, with local schema/content validation and exit 0. The [earlier missing-key attempt](../../outputs/provider_smoke/20261017T092630Z_d3e51022e47a4ec4ab8a9cfb114b34f3.json) is preserved. Missing corpus is expected; F02–F10 remain unimplemented.
 
 ## F02 — Reviewed AFS knowledge base
 
@@ -323,6 +325,11 @@ Add one row after each implementation increment. Include the exact check/command
 
 | Date | Task IDs | Status | Files changed | Verification and outcome | Remaining issue / next task |
 |---|---|---|---|---|---|
-| — | — | Not started | — | No implementation checks performed | F01.1 |
+| 2026-10-17 | F01.1, F01.2 configuration/adapter, F01.3 | Local foundation verified; live gate open | Backend configuration/health/provider/smoke modules; frontend; pinned dependencies; `.env.example`; ignore rules; tests; README | `python -m pytest -q --basetemp=tmp/pytest-runtime`: 50 passed; `python -m pip check`: no broken requirements; `npm run build`: typecheck and Vite build passed; direct backend and Vite-proxied `/api/health`: HTTP 200, service running, ready false; ignore checks preserve required outputs | API key not supplied; F01.2 live response unresolved |
+| 2026-10-17 | F01.3 browser verification | Passed | React readiness page and Vite proxy | Installed Chrome via bundled Playwright (Browser plugin unavailable), 1440×1000 and 390×844: correct page identity, meaningful content, no framework overlay or normal console errors, loading, real proxy refresh, keyboard refresh, no horizontal overflow, simulated HTTP 503 error and recovery through the real backend. Screenshots inspected outside the repository. | Assessment workflow and scientific validation belong to later features |
+| 2026-10-17 | F01.2 live smoke attempt | Unresolved dependency | Timestamped record under `outputs/provider_smoke/` | `python -m backend.smoke_provider`: exit 1, `provider_not_configured`, no model call; run ID `d3e51022e47a4ec4ab8a9cfb114b34f3` | Supply backend-only `GROQ_API_KEY`, rerun, preserve this earlier record |
+| 2026-10-17 | F01.2 live provider verification; overall F01 gate | Complete | New timestamped smoke record; README; checklist | `python -m backend.smoke_provider`: exit 0; real Groq `qwen/qwen3.8-27b` response passes strict local schema and synthetic-fact checks (`powder`, `moisture`); run ID `0cb5a2339fbc465d895e14d32f6745ea`. Earlier missing-key record retained. Backend restarted; real browser refresh confirms provider configured, corpus missing and ready false, with no console errors. `.env` remains ignored; smoke records contain no API key. | F02 reviewed knowledge base; missing corpus readiness remains expected |
 
-**Suggested iteration request:** “Implement F01 only. Complete its subtasks, verify its completion gate, update this plan with the actual results, and report any unresolved dependency.”
+**Runner note:** Python asynchronous networking and the Vite proxy stalled inside the restricted Windows sandbox. Tests and both servers were verified outside it; a minimal traceback located the stall in Windows `socketpair` during event-loop creation. Workspace-local temporary paths resolved the separate `ensurepip` write restriction. These accommodations do not change application behavior.
+
+**Suggested next iteration request:** “Implement F02 only. Complete its subtasks, verify its completion gate, update this plan with the actual results, and report any unresolved dependency.”
