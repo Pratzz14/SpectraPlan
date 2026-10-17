@@ -65,3 +65,8 @@ Desktop.ini
 /outputs/ingest/live_partial_records.json
 /outputs/ingest/retry_llmtech_pages.py
 /outputs/ingest/save_checkpoint.py
+
+# Website snapshots keep extracted provenance trackable; raw HTML and vector binaries stay local.
+/knowledge/web/.staging/
+/knowledge/web/versions/*/html/
+/knowledge/web/versions/*/qdrant/

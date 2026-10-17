@@ -195,7 +195,7 @@ Run from the repository root with the configured backend-only provider key. The 
 .\.venv\Scripts\python.exe -m backend.ingest search --query "opaque dairy fat protein"
 ```
 
-The pilot processes S01 p.10 and S02 p.6 and prints an **unpublished** HTML report location. A full build processes all 64 pages from S01–S05, imports 19 workbook rows and seven notes, and publishes only after validation and indexing succeed. Text and rendered page images are sent to the selected ingestion provider for extraction and separate verification. The supplied S06 URL is stored without fetching its website. Development examples, final evaluation inputs, the challenge brief, unknown files and business context never enter technical retrieval.
+The pilot processes S01 p.10 and S02 p.6 and prints an **unpublished** HTML report location. A full build processes all 64 pages from S01–S05, imports 19 workbook rows and seven notes, and publishes only after validation and indexing succeed. Text and rendered page images are sent to the selected ingestion provider for extraction and separate verification. The PDF build preserves S06 as a link; the separately authorized website crawl below stores its own business-context snapshot. Development examples, final evaluation inputs, the challenge brief, unknown files and business context never enter default technical retrieval.
 
 The extractor uses strict JSON schemas and versioned prompts in `backend/prompts/`. Qwen selects source block IDs; code copies original text and records quote offsets and page bounds. Visual transcriptions carry a labeled region and remain distinct from verbatim text. Structured facts and quantities retain exact supporting quotes. Ambiguous or unsupported candidates are inspectable but excluded from search.
 
@@ -229,3 +229,24 @@ The active corpus is **`corpus-4aac882441587796afe5`**: all 64 PDF pages process
 Deep validation passes against the original sources, workbook cells, page-image hashes and Qdrant/BM25 membership. Replaying all 64 cached responses exactly reproduces the 152 published records. Representative powder/API and opaque-dairy searches exercise both retrieval branches; backend regression tests pass (69 tests). Context-aware evidence selection remains F04 work: generic search can still return biomedical material for a dairy query.
 
 `outputs/ingest/published_validation.json` records current completion checks. `outputs/ingest/live_validation.json` retains the earlier failed Groq pilot as historical evidence; it is not the active corpus status. Readiness is local configuration/index readiness, not a live provider check or scientific endorsement. F03 customer-enquiry extraction is the next feature.
+
+## Manual search and S06 website crawl
+
+For later pipeline/agent integration, see the [reusable tool contracts](docs/tool_contracts.md) and [machine-readable catalog](docs/tool_catalog.json). They document the existing bindings, exact inputs/outputs, source boundaries, errors and refresh side effects. Agent tool adapters/registration are planned; the catalog does not register them automatically.
+
+Open [the search workspace](http://127.0.0.1:5173/#search), enter keywords or a natural-language query, and choose **BM25 keywords**, **Qdrant semantic**, **Hybrid** or **Compare all**. Select the technical corpus, website context, or both. Keyword synonym expansion can be switched off for exact-term testing. Each method returns up to eight records with its own relevance score, matched words, source location, full text and provenance. Download the actual response as JSON. Scores are not confidence percentages and are not comparable across methods.
+
+BM25 performs keyword ranking without loading embeddings. Qdrant uses the same local `BAAI/bge-small-en-v1.5` model as the published corpus; hybrid combines ranks with RRF (`k=60`). Search makes no Qwen/provider calls and does not fetch live web pages. Concurrent API requests serialize local Qdrant access; avoid a separate CLI query against the same directory at the same time.
+
+The user-authorized S06 crawl follows same-origin HTML links from `https://mirphotonics.com/laboratory/`, with a maximum of 20 pages and link depth two by default. It respects robots rules, waits at least one second between normal page requests, rejects off-origin redirects, query URLs, legal/admin paths and non-HTML downloads, and caps each HTML response at 4 MiB. The current snapshot contains **10 pages and 159 text records**. It includes the laboratory, home/resources/news pages and discovered product/article pages within those bounds; it is not an exhaustive site archive. Images and linked PDFs are not crawled or transcribed.
+
+HTML is parsed locally without another LLM or new parser dependency. Navigation, scripts, forms and footers are excluded. Each retained text block has its URL, page title, section heading, HTML selector, fetch timestamp, raw-snapshot SHA-256, stable evidence ID and content revision. These are vendor/business statements, not independently validated technical evidence: stored records retain `retrieval_eligible=false` for the technical corpus and `context_search_eligible=true` for the separate website collection. Website search is an explicit dataset choice. The original PDF corpus and its version are unchanged.
+
+```powershell
+.\.venv\Scripts\python.exe -m backend.web_ingest crawl --max-pages 20 --max-depth 2
+.\.venv\Scripts\python.exe -m backend.web_ingest validate
+```
+
+`WEB_CORPUS_DIR` defaults to `knowledge/web`. Its `current.json` points to an immutable `versions/web-<hash>/` snapshot with a manifest, extracted pages, records, BM25/embedding segments and a local Qdrant index. Raw HTML and vector binaries are ignored by Git; extracted provenance remains trackable. A failed crawl/index build keeps the previous pointer. Existing BGE files must be present locally before indexing the website; the crawler uses local-only embeddings.
+
+`GET /api/search/status` reports technical and website dataset readiness. `POST /api/search` accepts `query` (1–2000 characters), `mode` (`compare`, `bm25`, `qdrant`, `hybrid`), `dataset` (`technical`, `website`, `all`), `limit` (1–8) and `expand_synonyms`. Semantic queries must fit 512 tokenizer tokens. Missing/corrupt datasets or a busy vector store return a sanitized 503; invalid inputs return 422. The manual search API does not implement customer-context extraction, assessment generation or an evidence-resolution endpoint; those remain F03–F06 work.

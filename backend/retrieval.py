@@ -29,12 +29,12 @@ def query_tokens(query: str) -> list[str]:
 
 
 class Embedder:
-    def __init__(self, cache: Path):
+    def __init__(self, cache: Path, *, local_only=False):
         from fastembed import TextEmbedding
         from tokenizers import Tokenizer
 
         cache.mkdir(parents=True, exist_ok=True)
-        self.model = TextEmbedding(model_name=EMBEDDING_MODEL, cache_dir=str(cache), threads=2)
+        self.model = TextEmbedding(model_name=EMBEDDING_MODEL, cache_dir=str(cache), threads=2, local_files_only=local_only)
         tokenizers = list(cache.rglob("tokenizer.json"))
         if len(tokenizers) != 1:
             raise ValueError("Expected one pinned embedding tokenizer in dedicated cache")

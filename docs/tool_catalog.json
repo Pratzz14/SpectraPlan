@@ -1,0 +1,140 @@
+{
+  "catalog_version": "1",
+  "status": "Implemented bindings; agent tool registration/adapters are planned, not registered",
+  "contract_document": "tool_contracts.md",
+  "tools": [
+    {
+      "name": "knowledge_search_status",
+      "binding": {
+        "kind": "http",
+        "method": "GET",
+        "path": "/api/search/status"
+      },
+      "effect": "read_only",
+      "generative_model_calls": 0,
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "knowledge_search",
+      "binding": {
+        "kind": "http",
+        "method": "POST",
+        "path": "/api/search"
+      },
+      "effect": "read_only",
+      "generative_model_calls": 0,
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "query": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Query",
+            "type": "string"
+          },
+          "mode": {
+            "default": "compare",
+            "enum": [
+              "compare",
+              "bm25",
+              "qdrant",
+              "hybrid"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "dataset": {
+            "default": "technical",
+            "enum": [
+              "technical",
+              "website",
+              "all"
+            ],
+            "title": "Dataset",
+            "type": "string"
+          },
+          "limit": {
+            "default": 6,
+            "maximum": 8,
+            "minimum": 1,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "expand_synonyms": {
+            "default": true,
+            "title": "Expand Synonyms",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "title": "SearchRequest",
+        "type": "object"
+      }
+    },
+    {
+      "name": "website_refresh",
+      "binding": {
+        "kind": "cli",
+        "module": "backend.web_ingest",
+        "command": "crawl",
+        "python": "backend.web_ingest.crawl"
+      },
+      "effect": "external_network_and_snapshot_publication",
+      "generative_model_calls": 0,
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "max_pages": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 40,
+            "default": 20
+          },
+          "max_depth": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3,
+            "default": 2
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "website_validate",
+      "binding": {
+        "kind": "cli",
+        "module": "backend.web_ingest",
+        "command": "validate"
+      },
+      "effect": "read_only",
+      "generative_model_calls": 0,
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "technical_corpus_validate",
+      "binding": {
+        "kind": "cli",
+        "module": "backend.ingest",
+        "command": "validate"
+      },
+      "effect": "read_only",
+      "generative_model_calls": 0,
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    }
+  ]
+}

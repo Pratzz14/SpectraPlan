@@ -29,10 +29,11 @@ class Settings(BaseSettings):
     smoke_output_dir: Path = Path("outputs/provider_smoke")
     ingest_cache_dir: Path = Path("outputs/ingest/cache")
     embedding_cache_dir: Path = Path("outputs/embedding_models")
+    web_corpus_dir: Path = Path("knowledge/web")
     ingest_concurrency: int = Field(default=1, ge=1, le=4)
     ingest_max_output_tokens: int = Field(default=1000, ge=256, le=16384)
 
-    @field_validator("source_dir", "corpus_dir", "smoke_output_dir", "ingest_cache_dir", "embedding_cache_dir")
+    @field_validator("source_dir", "corpus_dir", "smoke_output_dir", "ingest_cache_dir", "embedding_cache_dir", "web_corpus_dir")
     @classmethod
     def resolve_path(cls, value: Path) -> Path:
         return value.resolve() if value.is_absolute() else (PROJECT_ROOT / value).resolve()

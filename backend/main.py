@@ -1,18 +1,51 @@
 """Run from the repository root: python -m uvicorn backend.main:app --reload."""
 
 import re
+from typing import Literal
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse, RedirectResponse
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from backend.config import Settings
 from backend.health import HealthResponse, ProviderStatus, inspect_corpus
 from backend.knowledge_store import active_directory, inside, read_json
+from backend.search_service import SearchService, SearchUnavailable
+
+
+class SearchRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    query: str = Field(min_length=1, max_length=2000)
+    mode: Literal["compare", "bm25", "qdrant", "hybrid"] = "compare"
+    dataset: Literal["technical", "website", "all"] = "technical"
+    limit: int = Field(default=6, ge=1, le=8)
+    expand_synonyms: bool = True
+
+    @field_validator("query")
+    @classmethod
+    def nonblank(cls, value):
+        if not value.strip():
+            raise ValueError("Enter a search query")
+        return value.strip()
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
     config = settings if settings is not None else Settings()
     application = FastAPI(title="SpectraPlan", version="0.1.0")
+    search_service = SearchService(config)
+
+    @application.get("/api/search/status")
+    def search_status():
+        return search_service.status()
+
+    @application.post("/api/search")
+    def query_search(request: SearchRequest):
+        try:
+            return search_service.compare(**request.model_dump())
+        except SearchUnavailable as error:
+            raise HTTPException(503, str(error)) from None
+        except ValueError as error:
+            raise HTTPException(422, str(error)) from None
 
     @application.get("/api/health", response_model=HealthResponse)
     def health() -> HealthResponse:

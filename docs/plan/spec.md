@@ -645,3 +645,7 @@ Hybrid semantic/lexical retrieval, fully verified hardware/specification catalog
 ## F02 implementation contract amendment (2026-10-17)
 
 The implemented F02 contract supersedes earlier mandatory approval and BM25-only wording. See `docs/knowledge_pipeline.md`: automated source checks, optional human verification, compact Qwen extraction plus separate verification, exact workbook import, local BGE/Qdrant and BM25, versioned publication and an inspection report. Remaining mentions of reviewed evidence mean source-grounded evidence with explicit validation and human-review metadata; they do not restore an approval workflow.
+
+### Later user-authorized S06 crawl and search workbench
+
+The user explicitly requested crawling the supplied S06 website and a frontend for manually comparing BM25 and Qdrant. This authorizes bounded same-origin website fetching as a separate business-context dataset. Preserve the technical corpus boundary: website/vendor assertions are not independent technical validation or AFS approval, and default technical retrieval excludes them. The manual search interface may explicitly query website context or both datasets, exposing source locations, snapshot metadata, method-specific relevance scores and downloaded search JSON. The website parser and retrieval interface require no additional generative model. This extension does not by itself complete customer-context retrieval, assessment generation or the remaining F03–F07 contracts.

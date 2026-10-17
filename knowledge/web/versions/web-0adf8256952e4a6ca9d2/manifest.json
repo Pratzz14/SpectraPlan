@@ -1,0 +1,27 @@
+{
+  "corpus_version": "web-0adf8256952e4a6ca9d2",
+  "seed_url": "https://mirphotonics.com/laboratory/",
+  "origin": "https://mirphotonics.com",
+  "fetched_at": "2026-10-17T15:23:56.555105+00:00",
+  "extractor": "html-blocks-v1",
+  "page_count": 10,
+  "record_count": 163,
+  "skipped": [],
+  "policy": {
+    "max_pages": 20,
+    "max_depth": 2,
+    "same_origin_only": true,
+    "robots_respected": true,
+    "request_delay_s": 1,
+    "technical_corpus_modified": false,
+    "qwen_calls": 0
+  },
+  "artifacts": {
+    "pages.json": "a8bff4a8e8c7517ac0856d2fccc4f5f34bcfecedc444bdfb24e76378b737b7d3",
+    "records.json": "aa85a98b2103d977700d880dec16f9388a66f39d901788f001b51968c187cdc9",
+    "robots.txt": "0379e3194cb730808986258793008a1221ad7bd182353eac0f532837c007d03c",
+    "segments.json": "b70d9d5b158cc761362c2bd69b3285fbff8ada4423c7b58fc1b9ffc0f2c66db1",
+    "bm25.json": "734fba92942667d1c928c567f319e09f98fd284ec6dbeaa1e8caebc3d0cb67c9",
+    "index_manifest.json": "5a5d0547fc3c10f1b8d47202914c9a48ea736e3d056af492f4e5172cb8be617a"
+  }
+}

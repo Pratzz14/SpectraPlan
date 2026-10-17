@@ -409,3 +409,28 @@ Keep existing caches and the saved snapshot. Interactive Groq configuration rema
 - [x] Evidence, the active pointer, canonical manifests, embedding segments and BM25 data are included in the cleanup commit. Credentials, originals, source images, raw pages, HTML reports, model binaries and Qdrant binaries remain ignored and local. A fresh checkout must rebuild from separately supplied originals before readiness/search can pass.
 
 The current completion receipt is `outputs/ingest/published_validation.json`. It records deep validation, a cached rebuild with live model calls disabled, stable corpus/evidence revisions, real hybrid searches and post-search index validation. Historical pilot receipts remain unchanged. The interactive provider remains Groq; the published corpus records the LLMTech ingestion provider. Context-aware evidence selection, the evidence API and the assessment workflow remain future features.
+
+### 2026-10-17 — User-authorized website crawl and manual retrieval workbench
+
+Added a separately versioned S06 website snapshot and a frontend for manually testing retrieval. The published technical corpus remains `corpus-4aac882441587796afe5` with unchanged evidence and eligibility. This is a retrieval diagnostic interface, not the F07 customer-assessment workflow.
+
+- [x] Crawl `https://mirphotonics.com/laboratory/` and discovered same-origin HTML pages under robots rules, a 20-page/depth-two bound, request pacing, redirect/size checks and non-HTML/legal/admin exclusions. Current snapshot: `web-a7d9d24faab7300545eb`, **10 pages and 159 text records**, stored under `knowledge/web/` with URL, heading, HTML location, fetch timestamp, raw HTML hash, evidence ID and revision.
+- [x] Keep website records as business context (`retrieval_eligible=false`, separate context-search eligibility), independently indexed in local Qdrant/BM25. The technical search dataset remains the default. HTML extraction and searches make zero Qwen calls and introduce no new generative model or parser dependency.
+- [x] Add `GET /api/search/status` and validated `POST /api/search`: independent BM25, independent Qdrant, hybrid or comparison; technical/website/both datasets; optional keyword synonyms; limit 1–8; source metadata, raw relevance scores, matched words and best semantic segment. BM25 does not load embeddings. A shared lock serializes API vector-store access; missing embeddings/corrupt stores are distinct from invalid query input.
+- [x] Add the search workbench at `http://127.0.0.1:5173/#search`: query form, method/dataset/limit selectors, three ranking columns, business-context badges, provenance expansion, source links, empty/loading/error states and exact response JSON download.
+- [x] TypeScript/production build passes. **74 backend tests pass** in the final regression run (`tmp/search_web_tests.xml`). Coverage includes HTML extraction, URL/robots boundaries, snapshot integrity and stable IDs, technical/business isolation, independent search branches, concurrent Qdrant requests, query validation and embedding failures. Both the technical corpus and website snapshot pass validation after real browser queries.
+- [x] Edge/Playwright browser checks at 1440×1000 and 390×844 cover real rankings for every mode, website-only/both datasets, source provenance, exact JSON download, synonyms off, keyword empty state, simulated 503/recovery and concurrent semantic requests. No unexpected console errors, framework overlay or mobile horizontal overflow. Detailed receipt/screenshots are outside Git; Browser plugin unavailable.
+
+Primary files: `backend/web_ingest.py`, `backend/search_service.py`, `backend/main.py`, `frontend/src/SearchWorkbench.tsx`, `frontend/src/api.ts`, `tests/test_search_web.py`. Configuration adds `WEB_CORPUS_DIR`. Raw HTML and local vector binaries remain ignored; no existing checkpoint or original supplied file was overwritten. These changes are not committed automatically.
+
+F03 remains next. F04 still needs context-based query formation, balanced evidence ledgers, bounded additional searches and the evidence-resolution endpoint. The manual comparison tool does not establish those completion gates or validate vendor claims.
+
+### 2026-10-17 — Reusable tool contract documentation
+
+At the user's request, documented the implemented capabilities for later pipeline/agent use in `docs/tool_contracts.md` and `docs/tool_catalog.json`, linked from the README and pipeline contract.
+
+- [x] Catalog the existing search-status, knowledge-search, website-refresh, website-validation and technical-corpus-validation bindings.
+- [x] Preserve the exact search input schema from `backend.main.SearchRequest`, mode/dataset defaults, output/provenance fields, score semantics and HTTP error mapping.
+- [x] Document read-only search separately from network/write-producing crawl refresh; include CLI/Python bindings, crawl bounds, local dependencies, concurrency and timeout limitations.
+- [x] Record source-scope rules and the requirement to resolve current snapshot versions at runtime rather than hardcoding checkpoint values.
+- [ ] Add agent tool registration/adapters when implementing the later assessment orchestration. No tools are registered merely by adding this documentation; no runtime behavior changed in this documentation step.

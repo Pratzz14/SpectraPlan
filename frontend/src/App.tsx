@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { fetchHealth } from './api'
 import type { HealthResponse } from './api'
+import SearchWorkbench from './SearchWorkbench'
 
 const corpusLabels: Record<HealthResponse['corpus']['status'], string> = {
   missing: 'Awaiting source preparation',
@@ -53,10 +54,11 @@ export default function App() {
           <span className="text-xs font-medium uppercase tracking-[0.15em] text-[#56685f]">Local workspace</span>
         </div>
       </header>
-      <main className="mx-auto max-w-5xl px-6 py-12 sm:px-10 sm:py-20">
-        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-[#48745c]">Process spectroscopy · First assessment</p>
-        <h1 className="max-w-2xl text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">A foundation for informed measurement decisions.</h1>
-        <p className="mt-5 max-w-xl text-base leading-7 text-[#56685f]">SpectraPlan will help turn customer enquiries into source-grounded measurement concepts and feasibility experiments.</p>
+      <main className="mx-auto max-w-7xl px-6 py-10 sm:px-10 sm:py-12">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#48745c]">Process spectroscopy · Knowledge workspace</p>
+        <h1 className="max-w-3xl text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">Explore sources. Compare search results.</h1>
+        <p className="mt-4 max-w-2xl text-sm leading-6 text-[#56685f]">Inspect the extracted evidence and test keyword, semantic and combined retrieval against the technical corpus and website context.</p>
+        <SearchWorkbench />
 
         <section aria-labelledby="status-heading" aria-busy={loading} className="mt-12 rounded-2xl border border-[#dce3db] bg-white p-6 sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-4">

@@ -1,0 +1,2172 @@
+[
+  {
+    "url": "https://mirphotonics.com/laboratory/",
+    "title": "The Laboratory - Mir Photonics",
+    "sha256": "06b4c2c3b48d8abfe36b7dc2f77e22bb699caf5ae52195021e95d416f596d847",
+    "html_file": "html/9fad987f16460d6ee0d7.html",
+    "fetched_at": "2026-10-17T15:35:29.060816+00:00",
+    "depth": 0,
+    "blocks": [
+      {
+        "block_id": "b0001",
+        "tag": "h1",
+        "text": "Mir Photonics' Multispectral Laboratory of Optical Analysis Methods",
+        "heading": "Mir Photonics' Multispectral Laboratory of Optical Analysis Methods",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0002",
+        "tag": "p",
+        "text": "“Mir Photonics” LLC has developed an innovative universal optical multispectral laboratory — a comprehensive collection of specially selected optical spectral equipment designed to solve a wide variety of scientific, educational, and industrial problems. The laboratory concept, described in detail in this paper, also features a new technique for spectral analysis based on an inter-spectral chemometric approach.",
+        "heading": "Mir Photonics' Multispectral Laboratory of Optical Analysis Methods",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0003",
+        "tag": "p",
+        "text": "The laboratory is focused on modern analytical research, including the online analysis using fiber optic cables and probes.",
+        "heading": "Mir Photonics' Multispectral Laboratory of Optical Analysis Methods",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0004",
+        "tag": "h1",
+        "text": "The Power of Optical Spectral Analysis",
+        "heading": "The Power of Optical Spectral Analysis",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0005",
+        "tag": "p",
+        "text": "Optical spectral analysis holds a special place among physicochemical methods for studying substances and materials. This method is based on measuring the result of the interaction of electromagnetic radiation with a sample across a wide range of wavelengths, from hard ultraviolet to far infrared light. Optical analysis is often the optimal choice because it is:",
+        "heading": "The Power of Optical Spectral Analysis",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0006",
+        "tag": "li",
+        "text": "Fast .",
+        "heading": "The Power of Optical Spectral Analysis",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0007",
+        "tag": "li",
+        "text": "Non-destructive .",
+        "heading": "The Power of Optical Spectral Analysis",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0008",
+        "tag": "li",
+        "text": "Extremely flexible in organizing measurements.",
+        "heading": "The Power of Optical Spectral Analysis",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0009",
+        "tag": "li",
+        "text": "Not requiring mandatory sample preparation .",
+        "heading": "The Power of Optical Spectral Analysis",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0010",
+        "tag": "p",
+        "text": "A noticeable trend in optical spectroscopy is the increased use of fiber optic solutions . Fiber optic probes and cells can be built into reactors and production lines, enabling online analysis on site and providing results in near real time. Thanks to achievements in photonics, optics, and micromechanical engineering, the development of specialized analyzers, known as Optical Multisensor Systems (OMS) , is actively underway.",
+        "heading": "The Power of Optical Spectral Analysis",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0011",
+        "tag": "h1",
+        "text": "Advantages of the Integrated Multispectral Approach",
+        "heading": "Advantages of the Integrated Multispectral Approach",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0012",
+        "tag": "p",
+        "text": "The ability to purchase an entire spectral laboratory at once, rather than element by element, provides significant benefits.",
+        "heading": "Advantages of the Integrated Multispectral Approach",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0013",
+        "tag": "p",
+        "text": "Synergy of Spectral Methods",
+        "heading": "Advantages of the Integrated Multispectral Approach",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0014",
+        "tag": "p",
+        "text": "Different spectral methods provide information about the chemistry and morphology of the sample (concentrations, distribution, particle sizes), but this information can vary greatly. For complex, real-world samples — such as oil, milk, process media, or biological tissue — the information supplied by a single method is often insufficient due to the complexity of multicomponent mixtures or overlapping phenomena (absorption, scattering, fluorescence).",
+        "heading": "Advantages of the Integrated Multispectral Approach",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(3)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0015",
+        "tag": "p",
+        "text": "The multispectral optical analysis approach involves combining two or more spectral methods to achieve a synergistic effect, allowing for the solution of problems that individual methods cannot fully address. This synergy is based on combining heterogeneous information:",
+        "heading": "Advantages of the Integrated Multispectral Approach",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(4)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0016",
+        "tag": "li",
+        "text": "Complementary Chemical Information: For example, combining vibrational IR and Raman spectra provides more structural information.",
+        "heading": "Advantages of the Integrated Multispectral Approach",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0017",
+        "tag": "li",
+        "text": "Morphological Information: Relevant in the analysis of milk (particle size).",
+        "heading": "Advantages of the Integrated Multispectral Approach",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0018",
+        "tag": "li",
+        "text": "Depth Information: As seen in the analysis of biological tissue samples by IR and NIR spectroscopy using fiber-optic probes.",
+        "heading": "Advantages of the Integrated Multispectral Approach",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0019",
+        "tag": "p",
+        "text": "Examples of successful combinations include NIR spectroscopy with fluorescence spectroscopy for determining biomass content during yeast fermentation, and the combination of NIR and IR spectroscopy for determining tumor boundaries in medical diagnostics.",
+        "heading": "Advantages of the Integrated Multispectral Approach",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(5)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0020",
+        "tag": "h1",
+        "text": "Optimized for Various Applications",
+        "heading": "Optimized for Various Applications",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0021",
+        "tag": "p",
+        "text": "The integrated laboratory set is pre-designed and well-integrated, taking into account the mutual compatibility of instruments and software.",
+        "heading": "Optimized for Various Applications",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0022",
+        "tag": "h2",
+        "text": "Educational Use",
+        "heading": "Educational Use",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0023",
+        "tag": "h2",
+        "text": "Scientific Research",
+        "heading": "Scientific Research",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0024",
+        "tag": "h2",
+        "text": "Industrial Use",
+        "heading": "Industrial Use",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0025",
+        "tag": "h2",
+        "text": "Raman Spectrometer",
+        "heading": "Raman Spectrometer",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0026",
+        "tag": "h2",
+        "text": "Mid-IR FTIR Spectrometer",
+        "heading": "Mid-IR FTIR Spectrometer",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0027",
+        "tag": "h2",
+        "text": "NIR Spectrometer",
+        "heading": "NIR Spectrometer",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0028",
+        "tag": "h1",
+        "text": "Hardware and Software Components",
+        "heading": "Hardware and Software Components",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0029",
+        "tag": "p",
+        "text": "The multispectral laboratory is equipped with instruments covering a wide range of analytical needs, focusing on fiber optic interfaces and online measurements.",
+        "heading": "Hardware and Software Components",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0030",
+        "tag": "h2",
+        "text": "Spectrometer for Fluorescence Analysis",
+        "heading": "Spectrometer for Fluorescence Analysis",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0031",
+        "tag": "h2",
+        "text": "Thermogravimetric Humidity Analyzer",
+        "heading": "Thermogravimetric Humidity Analyzer",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0032",
+        "tag": "h2",
+        "text": "Chemometrics Software",
+        "heading": "Chemometrics Software",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0033",
+        "tag": "h2",
+        "text": "UV and Visible Spectrometer",
+        "heading": "UV and Visible Spectrometer",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0034",
+        "tag": "h2",
+        "text": "Our Partners",
+        "heading": "Our Partners",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(6) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0035",
+        "tag": "h2",
+        "text": "Let's Talk",
+        "heading": "Let's Talk",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(7) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0036",
+        "tag": "h2",
+        "text": "Grow your business with us",
+        "heading": "Grow your business with us",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(7) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      },
+      {
+        "block_id": "b0037",
+        "tag": "p",
+        "text": "Discuss your application, technical requirements, or collaboration ideas directly with our team. Schedule a short call to explore how our fiber technologies can support your research or industrial needs.",
+        "heading": "Grow your business with us",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(7) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/laboratory/"
+      }
+    ]
+  },
+  {
+    "url": "https://mirphotonics.com/",
+    "title": "Mir Photonics - Spectroscopy and Fiber Technologies",
+    "sha256": "61d49dc16617dac5ae9393b23c231bea9948978fc213bc9d59cca9d948bf20f2",
+    "html_file": "html/8dbf2394c1d1664ce175.html",
+    "fetched_at": "2026-10-17T15:35:29.060816+00:00",
+    "depth": 1,
+    "blocks": [
+      {
+        "block_id": "b0001",
+        "tag": "h1",
+        "text": "Shaping Spectroscopy's Future with Cutting-Edge Fiber Technologies",
+        "heading": "Shaping Spectroscopy's Future with Cutting-Edge Fiber Technologies",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0002",
+        "tag": "p",
+        "text": "From 300 nm to 16 µm : Pioneering Fiber Innovations Worldwide",
+        "heading": "Shaping Spectroscopy's Future with Cutting-Edge Fiber Technologies",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0003",
+        "tag": "h2",
+        "text": "Optical Multispectral Laboratory",
+        "heading": "Optical Multispectral Laboratory",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0004",
+        "tag": "p",
+        "text": "Mir Photonics LLC presents the Universal Optical Multispectral Laboratory (OML) for advanced analytical research. Our curated spectrometer collection spans UV, visible, and near/mid-IR analysis, catering to diverse scientific and industrial applications. Explore online analysis capabilities through fiber optics for gaseous, liquid, and solid samples.",
+        "heading": "Optical Multispectral Laboratory",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0005",
+        "tag": "h4",
+        "text": "Our Products",
+        "heading": "Our Products",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h4:nth-of-type(1)",
+        "anchor": "productssection",
+        "location_url": "https://mirphotonics.com/#productssection"
+      },
+      {
+        "block_id": "b0006",
+        "tag": "h2",
+        "text": "Multispectral Laboratory of Optical Analysis Methods",
+        "heading": "Multispectral Laboratory of Optical Analysis Methods",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": "productssection",
+        "location_url": "https://mirphotonics.com/#productssection"
+      },
+      {
+        "block_id": "b0007",
+        "tag": "h2",
+        "text": "Aluminum Coated Silica Fibers",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": "productssection",
+        "location_url": "https://mirphotonics.com/#productssection"
+      },
+      {
+        "block_id": "b0008",
+        "tag": "p",
+        "text": "Our self-manufactured Al-coated fibers are ideal for high-temperature, vacuum, and harsh environments. They offer a transmission range of 220 to 2400 nm.",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": "productssection",
+        "location_url": "https://mirphotonics.com/#productssection"
+      },
+      {
+        "block_id": "b0009",
+        "tag": "h2",
+        "text": "Copper Coated Silica Fibers",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": "productssection",
+        "location_url": "https://mirphotonics.com/#productssection"
+      },
+      {
+        "block_id": "b0010",
+        "tag": "p",
+        "text": "Cu-alloy coated fibers offer superior mechanical strength and improved fatigue resistance over polymer-coated fibers. They have a transmission range of 220 to 2400 nm, depending on the choice of UV or NIR silica fiber core.",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": "productssection",
+        "location_url": "https://mirphotonics.com/#productssection"
+      },
+      {
+        "block_id": "b0011",
+        "tag": "h2",
+        "text": "Let's Talk",
+        "heading": "Let's Talk",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0012",
+        "tag": "h2",
+        "text": "Grow your business with us",
+        "heading": "Grow your business with us",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0013",
+        "tag": "p",
+        "text": "Discuss your application, technical requirements, or collaboration ideas directly with our team. Schedule a short call to explore how our fiber technologies can support your research or industrial needs.",
+        "heading": "Grow your business with us",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0014",
+        "tag": "h4",
+        "text": "Solutions",
+        "heading": "Solutions",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > h4:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0015",
+        "tag": "p",
+        "text": "Enhance your chemical production with remote process monitoring using MIR Photonics’ flexible fiber optic probes . Save time and optimize workflow without sampling.",
+        "heading": "Solutions",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0016",
+        "tag": "h2",
+        "text": "Spectroscopy in Lab",
+        "heading": "Spectroscopy in Lab",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0017",
+        "tag": "p",
+        "text": "Explore the future of chemical analysis with our advanced chemometric solutions. Harnessing state-of-the-art statistical methods, we transform raw data into actionable insights , driving efficiency and precision across diverse industries.",
+        "heading": "Spectroscopy in Lab",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0018",
+        "tag": "h2",
+        "text": "Chemometrics based Software Solutions",
+        "heading": "Chemometrics based Software Solutions",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0019",
+        "tag": "p",
+        "text": "Simplify Reaction Analysis with flexible light guides for in-line spectroscopic measurements. Real-time analysis in lab reactors saves time and uncovers process details, enhancing research results .",
+        "heading": "Chemometrics based Software Solutions",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0020",
+        "tag": "h2",
+        "text": "Spectroscopy in Industry",
+        "heading": "Spectroscopy in Industry",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0021",
+        "tag": "h2",
+        "text": "Discover our high-end solutions for your fiber optic needs.",
+        "heading": "Discover our high-end solutions for your fiber optic needs.",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0022",
+        "tag": "p",
+        "text": "We offer solutions for the medical and chemical industries, incorporating machine learning and neural network components. Our focus is on creating software that optimizes data analysis and supports predictive modeling for better decision-making.",
+        "heading": "Discover our high-end solutions for your fiber optic needs.",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0023",
+        "tag": "h2",
+        "text": "Machine Learning based Software Solutions",
+        "heading": "Machine Learning based Software Solutions",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0024",
+        "tag": "p",
+        "text": "Save energy and time with flexible fiber optics for radiation delivery in challenging research areas. Illuminate and detect small objects, conduct biological sample research in reactors, vacuum and pressurized chambers effortlessly .",
+        "heading": "Machine Learning based Software Solutions",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0025",
+        "tag": "h2",
+        "text": "Gas and Vapor Monitoring",
+        "heading": "Gas and Vapor Monitoring",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0026",
+        "tag": "p",
+        "text": "Maximize safety and convenience in your research with our novel strategy of flexible beam delivery for lasers, including QCL. Avoid the risks of open laser beams in the lab and position samples and systems effortlessly.",
+        "heading": "Gas and Vapor Monitoring",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0027",
+        "tag": "h2",
+        "text": "Laser Beam Delivery",
+        "heading": "Laser Beam Delivery",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/"
+      },
+      {
+        "block_id": "b0028",
+        "tag": "h4",
+        "text": "About our company",
+        "heading": "About our company",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > h4:nth-of-type(1)",
+        "anchor": "aboutsection",
+        "location_url": "https://mirphotonics.com/#aboutsection"
+      },
+      {
+        "block_id": "b0029",
+        "tag": "p",
+        "text": "Mir Photonics LLC , founded in Armenia, is a leading provider of aluminum- and copper-coated optical fibers, fiber-optic cables, and bundles for applications in high-temperature, vacuum, and harsh-environment conditions.",
+        "heading": "About our company",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": "aboutsection",
+        "location_url": "https://mirphotonics.com/#aboutsection"
+      },
+      {
+        "block_id": "b0030",
+        "tag": "p",
+        "text": "Specializing in precision fiber spectroscopy for laboratory and industrial applications, we focus on driving innovation and exploring new use cases across a wide range of fields.",
+        "heading": "About our company",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(2)",
+        "anchor": "aboutsection",
+        "location_url": "https://mirphotonics.com/#aboutsection"
+      },
+      {
+        "block_id": "b0031",
+        "tag": "p",
+        "text": "Our solutions deliver efficiency and practicality for spectroscopy techniques, optical design, and system integration.",
+        "heading": "About our company",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(3)",
+        "anchor": "aboutsection",
+        "location_url": "https://mirphotonics.com/#aboutsection"
+      },
+      {
+        "block_id": "b0032",
+        "tag": "p",
+        "text": "Partner with us to leverage established and emerging technologies to propel your business forward.",
+        "heading": "About our company",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(4)",
+        "anchor": "aboutsection",
+        "location_url": "https://mirphotonics.com/#aboutsection"
+      },
+      {
+        "block_id": "b0033",
+        "tag": "h4",
+        "text": "Contact",
+        "heading": "Contact",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > h4:nth-of-type(1)",
+        "anchor": "contactsection",
+        "location_url": "https://mirphotonics.com/#contactsection"
+      },
+      {
+        "block_id": "b0034",
+        "tag": "h4",
+        "text": "Have questions? Reach out to us anytime.",
+        "heading": "Have questions? Reach out to us anytime.",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h4:nth-of-type(1)",
+        "anchor": "contactsection",
+        "location_url": "https://mirphotonics.com/#contactsection"
+      },
+      {
+        "block_id": "b0035",
+        "tag": "h3",
+        "text": "+ 374 96 522863",
+        "heading": "+ 374 96 522863",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > h3:nth-of-type(1)",
+        "anchor": "contactsection",
+        "location_url": "https://mirphotonics.com/#contactsection"
+      },
+      {
+        "block_id": "b0036",
+        "tag": "h3",
+        "text": "info@mirphotonics.com",
+        "heading": "info@mirphotonics.com",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > h3:nth-of-type(1)",
+        "anchor": "contactsection",
+        "location_url": "https://mirphotonics.com/#contactsection"
+      }
+    ]
+  },
+  {
+    "url": "https://mirphotonics.com/news/",
+    "title": "News & Events - Mir Photonics",
+    "sha256": "b56ceab443f44021c2c2a60f8382150accddbed5fd4f74c5cc52eb3015c45ce2",
+    "html_file": "html/ba8a7a3211b00436600e.html",
+    "fetched_at": "2026-10-17T15:35:29.060816+00:00",
+    "depth": 1,
+    "blocks": [
+      {
+        "block_id": "b0001",
+        "tag": "h1",
+        "text": "News & Events",
+        "heading": "News & Events",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/news/"
+      },
+      {
+        "block_id": "b0002",
+        "tag": "h4",
+        "text": "14th Winter Symposium on Chemometrics (WSC)",
+        "heading": "14th Winter Symposium on Chemometrics (WSC)",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h4:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/news/"
+      },
+      {
+        "block_id": "b0003",
+        "tag": "p",
+        "text": "We are excited to share that this year Mir Photonics LLC was a co-organizer of the international scientific symposium on chemometrics (WSC), which was successfully held in beautiful Tsaghkadzor, Armenia",
+        "heading": "14th Winter Symposium on Chemometrics (WSC)",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/news/"
+      }
+    ]
+  },
+  {
+    "url": "https://mirphotonics.com/resources/",
+    "title": "Resources - Mir Photonics",
+    "sha256": "3706535e8a8b9fa7c50c9a1c16f704d64d693c2e2e3ada6b224475953f137dd9",
+    "html_file": "html/da29e4ffcdf60c28c7dd.html",
+    "fetched_at": "2026-10-17T15:35:29.060816+00:00",
+    "depth": 1,
+    "blocks": [
+      {
+        "block_id": "b0001",
+        "tag": "h1",
+        "text": "Resources",
+        "heading": "Resources",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/resources/"
+      },
+      {
+        "block_id": "b0002",
+        "tag": "p",
+        "text": "Welcome to the MIR Photonics Resource Center—your guide to advances in mid-infrared spectroscopy. Our library connects optical theory with real-world lab use, from in-line reaction analysis to selecting fiber optic ATR probes for molecular fingerprinting.",
+        "heading": "Resources",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/resources/"
+      },
+      {
+        "block_id": "b0003",
+        "tag": "p",
+        "text": "Explore technical resources on harsh-environment fibers, including aluminum- and copper-coated silica, built for extreme temperatures and vacuum conditions. Learn about multispectral setups and chemometrics integration to support real-time process monitoring and innovation in MIR photonics.",
+        "heading": "Resources",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/resources/"
+      },
+      {
+        "block_id": "b0004",
+        "tag": "h4",
+        "text": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C",
+        "heading": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h4:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/resources/"
+      },
+      {
+        "block_id": "b0005",
+        "tag": "p",
+        "text": "Extended Thermal Performance Study and Optical Loss Analysis Introduction: Pushing the Limits of High-Temperature Optical Fibers The purpose of this study is to answer the question of whether the aluminum-coated",
+        "heading": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/resources/"
+      },
+      {
+        "block_id": "b0006",
+        "tag": "h4",
+        "text": "Optical Multisensor Systems in Analytical Spectroscopy – A. Yu. Bogomolov",
+        "heading": "Optical Multisensor Systems in Analytical Spectroscopy – A. Yu. Bogomolov",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h4:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/resources/"
+      },
+      {
+        "block_id": "b0007",
+        "tag": "p",
+        "text": "A review of works in developing optical multisensor systems, a new class of specialized spectroscopic analyzers, is presented. The development and use of such systems for analyzing food products, monitoring",
+        "heading": "Optical Multisensor Systems in Analytical Spectroscopy – A. Yu. Bogomolov",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/resources/"
+      },
+      {
+        "block_id": "b0008",
+        "tag": "h4",
+        "text": "Multispectral Laboratory of Optical Analysis Methods",
+        "heading": "Multispectral Laboratory of Optical Analysis Methods",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > h4:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/resources/"
+      },
+      {
+        "block_id": "b0009",
+        "tag": "p",
+        "text": "This paper describes in detail the concept of an innovative multispectral laboratory, as well as new methods for the spectral analysis of liquids, solids, and gases based on an inter",
+        "heading": "Multispectral Laboratory of Optical Analysis Methods",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/resources/"
+      }
+    ]
+  },
+  {
+    "url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/",
+    "title": "Aluminum Coated Silica Fibers - Mir Photonics",
+    "sha256": "ae62e7c83de6d36ae97a18141fd4d2cd3ac0e0b4bcf76777db708c0c8ba85cd5",
+    "html_file": "html/7acb8d14b39cb32d1a05.html",
+    "fetched_at": "2026-10-17T15:35:29.060816+00:00",
+    "depth": 2,
+    "blocks": [
+      {
+        "block_id": "b0001",
+        "tag": "h2",
+        "text": "Aluminum Coated Silica Fibers",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/"
+      },
+      {
+        "block_id": "b0002",
+        "tag": "p",
+        "text": "Main features:",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/"
+      },
+      {
+        "block_id": "b0003",
+        "tag": "li",
+        "text": "Operating up to 450°C",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/"
+      },
+      {
+        "block_id": "b0004",
+        "tag": "li",
+        "text": "Impressive mechanical strength and flexibility",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/"
+      },
+      {
+        "block_id": "b0005",
+        "tag": "li",
+        "text": "No outgassing in high vacuum environments",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/"
+      },
+      {
+        "block_id": "b0006",
+        "tag": "li",
+        "text": "Solderable for connector integration (epoxy-free choice)",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/"
+      },
+      {
+        "block_id": "b0007",
+        "tag": "li",
+        "text": "Efficient heat dissipation with metal coating",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/"
+      },
+      {
+        "block_id": "b0008",
+        "tag": "li",
+        "text": "Compatible with sterilization methods: Steaming, ETO, steam, e-beam, or gamma.",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/"
+      },
+      {
+        "block_id": "b0009",
+        "tag": "p",
+        "text": "Mir Photonics’ Aluminum Coated Silica Fibers stand as the premier choice for applications that demand exceptional reliability under high temperatures, high vacuum, and other extreme environmental conditions. Designed for use where conventional polymer-coated fibers fail, these fibers deliver stable optical performance even in harsh industrial, scientific, and aerospace environments. Their aluminum coating enables efficient thermal management while ensuring long-term durability in applications exposed to heat, radiation, or aggressive sterilization processes.",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": "e-n-tab-content-1641099071",
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/#e-n-tab-content-1641099071"
+      },
+      {
+        "block_id": "b0010",
+        "tag": "p",
+        "text": "These aluminum-coated fibers retain all the inherent benefits of standard silica-silica fibers, including excellent optical clarity, low attenuation, and chemical inertness. At the same time, the metallic coating significantly enhances mechanical strength and fatigue resistance, offering superior protection against micro-bending, vibration, and repeated mechanical stress. Compared to polymer-coated alternatives, aluminum-coated fibers exhibit far greater longevity and structural stability, making them ideal for demanding installations where maintenance or replacement is difficult or costly.",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(2)",
+        "anchor": "e-n-tab-content-1641099071",
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/#e-n-tab-content-1641099071"
+      },
+      {
+        "block_id": "b0011",
+        "tag": "p",
+        "text": "With a broad optical transmission range from 220 to 2400 nm, these fibers support a wide variety of applications, depending on whether UV or NIR silica fiber cores are selected. This versatility makes them suitable for spectroscopy, sensing, medical, and industrial laser systems. Remarkably, they maintain consistent performance across an extreme temperature range from cryogenic conditions as low as –270°C up to continuous operation at 450°C. In addition, they tolerate humidity levels up to 100%, ensuring reliable operation in both vacuum environments and moisture-rich settings without degradation of optical or mechanical properties.",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(3)",
+        "anchor": "e-n-tab-content-1641099071",
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/#e-n-tab-content-1641099071"
+      },
+      {
+        "block_id": "b0012",
+        "tag": "table",
+        "text": "Specification of standard Al-coated fibers Core/ Cladding material Step Index Pure Fused Silica Core / Fluorine Doped Silica Cladding Graded Index Germanium Doped Fused Silica Core / Pure Fused Silica Fiber core diameters, μm Single mode: 2.5 – 9; Multimode: 50; 62.5; 100; 200; 400; 600; 800; 1000 Al coating thickness, μm 15 – 150 (depending on fiber diameter) Standard Numerical Aperture (NA) 0.22 ± 0.02 Available Numerical Aperture (NA) 0.12 ± 0.02 | 0.26 ± 0.02 Min operating temperature, °C -270 Max operating temperature, °C 450 Humidity Range Up to 100% Minimal bending radius (long term) 200 x fiber outer diameter Minimal bending radius (short term) 100 x fiber outer diameter Tensile strength (short gauge), GPa 3.5 – 6 Two point bending strength, GPa >10 Static fatigue parameter >100",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > table:nth-of-type(1)",
+        "anchor": "tablepress-alcoatedsilicafibers1",
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/#tablepress-alcoatedsilicafibers1"
+      },
+      {
+        "block_id": "b0013",
+        "tag": "table",
+        "text": "Parameters of standard Al-coated fibers Code Type Core, μm Cladding, μm Coating AI, μm NA 100/110 Al Step Index Multimode 100 ± 2 110 ± 2.2 140 ± 7 0.22 200/220 Al Step Index Multimode 200 ± 4 220 ± 4.4 300 ± 15 0.22 400/440 Al Step Index Multimode 400 ± 8 440 ± 8.8 560 ± 28 0.22 600/660 Al Step Index Multimode 600 ± 12 660 ± 13.2 825 ± 41.25 0.22 50/125 Al Graded Index Multimode 50 ± 1 125 ± 2.5 165 ± 3.3 0.22 SM-Al Step Index Single Mode, wavelength cut-off from 320nm up to 1300nm",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > table:nth-of-type(1)",
+        "anchor": "tablepress-alcoatedsilicafibers2",
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/#tablepress-alcoatedsilicafibers2"
+      },
+      {
+        "block_id": "b0014",
+        "tag": "li",
+        "text": "Aluminum Coated Silica Fibers Datasheet",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+        "anchor": "e-n-tab-content-1641099073",
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/#e-n-tab-content-1641099073"
+      },
+      {
+        "block_id": "b0015",
+        "tag": "p",
+        "text": "High temperature environment",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": "e-n-tab-content-1641099075",
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/#e-n-tab-content-1641099075"
+      },
+      {
+        "block_id": "b0016",
+        "tag": "p",
+        "text": "Harsh Chemical environment",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(2)",
+        "anchor": "e-n-tab-content-1641099075",
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/#e-n-tab-content-1641099075"
+      },
+      {
+        "block_id": "b0017",
+        "tag": "p",
+        "text": "Nuclear radiation resistant devices",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(3)",
+        "anchor": "e-n-tab-content-1641099075",
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/#e-n-tab-content-1641099075"
+      },
+      {
+        "block_id": "b0018",
+        "tag": "p",
+        "text": "Down-hole sensing for oil and gas industry",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(4)",
+        "anchor": "e-n-tab-content-1641099075",
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/#e-n-tab-content-1641099075"
+      },
+      {
+        "block_id": "b0019",
+        "tag": "p",
+        "text": "High Power Laser delivery",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(5)",
+        "anchor": "e-n-tab-content-1641099075",
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/#e-n-tab-content-1641099075"
+      },
+      {
+        "block_id": "b0020",
+        "tag": "p",
+        "text": "Medical applications",
+        "heading": "Aluminum Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(6)",
+        "anchor": "e-n-tab-content-1641099075",
+        "location_url": "https://mirphotonics.com/products/aluminum-coated-silica-fibers/#e-n-tab-content-1641099075"
+      }
+    ]
+  },
+  {
+    "url": "https://mirphotonics.com/products/copper-coated-silica-fibers/",
+    "title": "Copper Coated Silica Fibers - Mir Photonics",
+    "sha256": "2f9e1a9b27de2faf1f129d19ce3f4fde29d4359148166b3ae63b0d7944046387",
+    "html_file": "html/2f4654b4192bf47f8be1.html",
+    "fetched_at": "2026-10-17T15:35:29.060816+00:00",
+    "depth": 2,
+    "blocks": [
+      {
+        "block_id": "b0001",
+        "tag": "h2",
+        "text": "Copper Coated Silica Fibers",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/"
+      },
+      {
+        "block_id": "b0002",
+        "tag": "p",
+        "text": "Main features:",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/"
+      },
+      {
+        "block_id": "b0003",
+        "tag": "li",
+        "text": "Operating at temperatures up to 600°C (valid for non-oxidizing atmospheres)",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/"
+      },
+      {
+        "block_id": "b0004",
+        "tag": "li",
+        "text": "Outstanding mechanical strength and flexibility",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/"
+      },
+      {
+        "block_id": "b0005",
+        "tag": "li",
+        "text": "Zero outgassing in high vacuum environments",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/"
+      },
+      {
+        "block_id": "b0006",
+        "tag": "li",
+        "text": "Solderable for connector integration (epoxy-free option)",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/"
+      },
+      {
+        "block_id": "b0007",
+        "tag": "li",
+        "text": "Efficient heat dissipation with metal coating",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/"
+      },
+      {
+        "block_id": "b0008",
+        "tag": "li",
+        "text": "Sterilization compatibility: Steaming, ETO, steam, e-beam, or gamma",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/"
+      },
+      {
+        "block_id": "b0009",
+        "tag": "p",
+        "text": "Mir Photonics’ Copper-alloy Coated Silica Fibers represent the pinnacle of fiber technology for applications exposed to extreme conditions, including very high temperatures, high vacuum, and harsh or demanding operational environments. Engineered to perform where conventional fiber solutions reach their limits, these fibers combine excellent optical stability with robust thermal and mechanical performance, making them well suited for industrial, scientific, and aerospace use cases.",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": "e-n-tab-content-1641099071",
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/#e-n-tab-content-1641099071"
+      },
+      {
+        "block_id": "b0010",
+        "tag": "p",
+        "text": "These copper-alloy coated fibers retain all the key advantages of traditional silica-silica fibers, such as low optical loss, chemical stability, and consistent transmission characteristics. In addition, the metallic coating provides substantial improvements in mechanical strength and durability, as well as increased resistance to fatigue and mechanical stress when compared to polymer-coated fibers. This results in improved reliability and extended service life in applications involving vibration, repeated handling, or elevated thermal loads.",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(2)",
+        "anchor": "e-n-tab-content-1641099071",
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/#e-n-tab-content-1641099071"
+      },
+      {
+        "block_id": "b0011",
+        "tag": "p",
+        "text": "Their optical transmission spans a wide range from 220 to 2400 nm, depending on the choice of UV or NIR silica fiber cores, enabling use across a broad spectrum of optical and spectroscopic applications. Notably, these fibers maintain reliable performance across an extreme temperature range, from cryogenic levels down to –270°C up to continuous operation at temperatures as high as 600°C, while also tolerating humidity levels of up to 100% without compromising optical or mechanical integrity.",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(3)",
+        "anchor": "e-n-tab-content-1641099071",
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/#e-n-tab-content-1641099071"
+      },
+      {
+        "block_id": "b0012",
+        "tag": "table",
+        "text": "Specification of Cu-alloy coated Fibers Core/ Cladding material Step Index Pure Fused Silica Core / Fluorine Doped Silica Cladding Graded Index Germanium Doped Fused Silica Core / Pure Fused Silica Fiber core diameters, μm 9; 50; 62.5; 100; 200; 400; 600 Cu-alloy coating thickness, μm 15 – 50 (depending on fiber diameter) Standard Numerical Aperture (NA) 0.22 ± 0.02 Available Numerical Aperture (NA) 0.12 ± 0.02 0.26 ± 0.02 Min operating temperature, °C -270 Max operating temperature, °C 600 Humidity Range Up to 100% Minimal bending radius (long term) 200 x fiber outer diameter Minimal bending radius (short term) 100 x fiber outer diameter Tensile strength (short gauge), GPa 3.5 – 6 Two point bending strength, GPa >10 Static fatigue parameter >100",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > table:nth-of-type(1)",
+        "anchor": "tablepress-cucoatedsilicafibers1",
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/#tablepress-cucoatedsilicafibers1"
+      },
+      {
+        "block_id": "b0013",
+        "tag": "table",
+        "text": "Parameters of standard Cu-alloy coated Fibers Code Type Core, μm Cladding, μm Coating Cu, μm NA 100/110 Cu Step Index Multimode 100 ± 2% 110 ± 2% 145 ± 5% 0.22 200/220 Cu Step Index Multimode 200 ± 2% 220 ± 2% 270 ± 5% 0.22 400/440 Cu Step Index Multimode 400 ± 2% 440 ± 2% 535 ± 5% 0.22 600/660 Cu Step Index Multimode 600 ± 2% 660 ± 2% 745 ± 5% 0.22 50/125 Cu Graded Index Multimode 50 ± 2% 125 ± 2% 165 ± 2% 0.22 9/125 Cu Single mode 9 ± 5% 125 ± 5% 165 ± 2% 0.13",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > table:nth-of-type(1)",
+        "anchor": "tablepress-cucoatedsilicafibers2",
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/#tablepress-cucoatedsilicafibers2"
+      },
+      {
+        "block_id": "b0014",
+        "tag": "li",
+        "text": "Copper Coated Silica Fibers Datasheet",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+        "anchor": "e-n-tab-content-1641099073",
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/#e-n-tab-content-1641099073"
+      },
+      {
+        "block_id": "b0015",
+        "tag": "p",
+        "text": "High temperature environments",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": "e-n-tab-content-1641099075",
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/#e-n-tab-content-1641099075"
+      },
+      {
+        "block_id": "b0016",
+        "tag": "p",
+        "text": "Harsh Chemical environments",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(2)",
+        "anchor": "e-n-tab-content-1641099075",
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/#e-n-tab-content-1641099075"
+      },
+      {
+        "block_id": "b0017",
+        "tag": "p",
+        "text": "Nuclear radiation resistant devices",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(3)",
+        "anchor": "e-n-tab-content-1641099075",
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/#e-n-tab-content-1641099075"
+      },
+      {
+        "block_id": "b0018",
+        "tag": "p",
+        "text": "Down-hole sensing for oil and gas industry",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(4)",
+        "anchor": "e-n-tab-content-1641099075",
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/#e-n-tab-content-1641099075"
+      },
+      {
+        "block_id": "b0019",
+        "tag": "p",
+        "text": "High Power Laser delivery",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(5)",
+        "anchor": "e-n-tab-content-1641099075",
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/#e-n-tab-content-1641099075"
+      },
+      {
+        "block_id": "b0020",
+        "tag": "p",
+        "text": "Medical applications",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(6)",
+        "anchor": "e-n-tab-content-1641099075",
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/#e-n-tab-content-1641099075"
+      },
+      {
+        "block_id": "b0021",
+        "tag": "p",
+        "text": "Soldered fiber bundles",
+        "heading": "Copper Coated Silica Fibers",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(7)",
+        "anchor": "e-n-tab-content-1641099075",
+        "location_url": "https://mirphotonics.com/products/copper-coated-silica-fibers/#e-n-tab-content-1641099075"
+      }
+    ]
+  },
+  {
+    "url": "https://mirphotonics.com/2024/03/12/14th-winter-symposium-on-chemometrics-wsc/",
+    "title": "14th Winter Symposium on Chemometrics (WSC) - Mir Photonics",
+    "sha256": "98bc3e28e1cbc56909446fee1f11cff2c6064cd62c296dadfbf7f7ce536fed3e",
+    "html_file": "html/38c6cd57de94a88e5b24.html",
+    "fetched_at": "2026-10-17T15:35:29.060816+00:00",
+    "depth": 2,
+    "blocks": [
+      {
+        "block_id": "b0001",
+        "tag": "h1",
+        "text": "14th Winter Symposium on Chemometrics (WSC)",
+        "heading": "14th Winter Symposium on Chemometrics (WSC)",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2024/03/12/14th-winter-symposium-on-chemometrics-wsc/"
+      },
+      {
+        "block_id": "b0002",
+        "tag": "li",
+        "text": "March 12, 2024",
+        "heading": "14th Winter Symposium on Chemometrics (WSC)",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2024/03/12/14th-winter-symposium-on-chemometrics-wsc/"
+      },
+      {
+        "block_id": "b0003",
+        "tag": "p",
+        "text": "We are excited to share that this year Mir Photonics LLC was a co-organizer of the international scientific symposium on chemometrics (WSC), which was successfully held in beautiful Tsaghkadzor, Armenia from February 26 to March 1, 2024.",
+        "heading": "14th Winter Symposium on Chemometrics (WSC)",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2024/03/12/14th-winter-symposium-on-chemometrics-wsc/"
+      },
+      {
+        "block_id": "b0004",
+        "tag": "p",
+        "text": "Alongside us, LightSpex and American Elements sponsored the event, contributing to its success.",
+        "heading": "14th Winter Symposium on Chemometrics (WSC)",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2024/03/12/14th-winter-symposium-on-chemometrics-wsc/"
+      },
+      {
+        "block_id": "b0005",
+        "tag": "p",
+        "text": "WSC covered a wide range of important topics in chemometrics, including new algorithms, applications in quantitative and qualitative analysis, Process Analytical Technology (PAT), experimental design, image analysis, and many others. Our goal was to blend theoretical aspects with practical data analysis, making it relevant for everyone.",
+        "heading": "14th Winter Symposium on Chemometrics (WSC)",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(3)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2024/03/12/14th-winter-symposium-on-chemometrics-wsc/"
+      },
+      {
+        "block_id": "b0006",
+        "tag": "p",
+        "text": "This event was a great opportunity for experts from academia and industry to meet, share ideas, and discuss future fruitful collaborations. The WSC conference aims to spread knowledge about chemometrics and build connections between scientists and the industry.",
+        "heading": "14th Winter Symposium on Chemometrics (WSC)",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(4)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2024/03/12/14th-winter-symposium-on-chemometrics-wsc/"
+      },
+      {
+        "block_id": "b0007",
+        "tag": "p",
+        "text": "What sets this conference apart is its social and cultural program, making it not just a scientific event but also a unique experience for attendees.",
+        "heading": "14th Winter Symposium on Chemometrics (WSC)",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(5)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2024/03/12/14th-winter-symposium-on-chemometrics-wsc/"
+      },
+      {
+        "block_id": "b0008",
+        "tag": "p",
+        "text": "Thanks to everyone involved for making the 14th Winter Symposium on Chemometrics a memorable and valuable event – and we are looking forward to seeing you next year!",
+        "heading": "14th Winter Symposium on Chemometrics (WSC)",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(6)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2024/03/12/14th-winter-symposium-on-chemometrics-wsc/"
+      }
+    ]
+  },
+  {
+    "url": "https://mirphotonics.com/2026/03/19/multispectral-laboratory/",
+    "title": "Multispectral Laboratory of Optical Analysis Methods",
+    "sha256": "20201622bbaaf49cefc8df138fe67f331c22193ccf8e27b55828fa5c43fe3f0d",
+    "html_file": "html/180267854db0c671fdb2.html",
+    "fetched_at": "2026-10-17T15:35:29.060816+00:00",
+    "depth": 2,
+    "blocks": [
+      {
+        "block_id": "b0001",
+        "tag": "h1",
+        "text": "Multispectral Laboratory of Optical Analysis Methods",
+        "heading": "Multispectral Laboratory of Optical Analysis Methods",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/19/multispectral-laboratory/"
+      },
+      {
+        "block_id": "b0002",
+        "tag": "li",
+        "text": "March 19, 2026",
+        "heading": "Multispectral Laboratory of Optical Analysis Methods",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/19/multispectral-laboratory/"
+      },
+      {
+        "block_id": "b0003",
+        "tag": "p",
+        "text": "This paper describes in detail the concept of an innovative multispectral laboratory, as well as new methods for the spectral analysis of liquids, solids, and gases based on an inter spectral chemometric approach. It is intended for researchers in educational and scientific laboratories.",
+        "heading": "Multispectral Laboratory of Optical Analysis Methods",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/19/multispectral-laboratory/"
+      },
+      {
+        "block_id": "b0004",
+        "tag": "p",
+        "text": "The multispectral laboratory concept is presented by MIR Photonics LLC, acting as a system integrator that combines spectrometers, fiber optic probes, and chemometric methods into complete analytical solutions.",
+        "heading": "Multispectral Laboratory of Optical Analysis Methods",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/19/multispectral-laboratory/"
+      },
+      {
+        "block_id": "b0005",
+        "tag": "p",
+        "text": "The multimodal fiber optic probes used in these systems are developed and manufactured by art photonics GmbH (Berlin, Germany), a global OEM supplier of fiber optic sensing solutions covering the spectral range from UV to Mid IR. art photonics provides both standard products and customer specific probe designs, including multimodal and application tailored solutions.",
+        "heading": "Multispectral Laboratory of Optical Analysis Methods",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(3)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/19/multispectral-laboratory/"
+      },
+      {
+        "block_id": "b0006",
+        "tag": "p",
+        "text": "This user manual was developed by “Mir photonics” and is intended for use by researchers of educational and scientific laboratories.",
+        "heading": "Multispectral Laboratory of Optical Analysis Methods",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(4)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/19/multispectral-laboratory/"
+      }
+    ]
+  },
+  {
+    "url": "https://mirphotonics.com/2026/03/19/optical-multisensor-systems-in-analytical-spectroscopy-a-yu-bogomolov/",
+    "title": "Optical Multisensor Systems in Analytical Spectroscopy – A. Yu. Bogomolov - Mir Photonics",
+    "sha256": "7c29caead7c5a47c46faff56d954aa14e5b9f5c6f035ed46cc300416e518953b",
+    "html_file": "html/58149f6941f30d2b8dd2.html",
+    "fetched_at": "2026-10-17T15:35:29.060816+00:00",
+    "depth": 2,
+    "blocks": [
+      {
+        "block_id": "b0001",
+        "tag": "h1",
+        "text": "Optical Multisensor Systems in Analytical Spectroscopy – A. Yu. Bogomolov",
+        "heading": "Optical Multisensor Systems in Analytical Spectroscopy – A. Yu. Bogomolov",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/19/optical-multisensor-systems-in-analytical-spectroscopy-a-yu-bogomolov/"
+      },
+      {
+        "block_id": "b0002",
+        "tag": "li",
+        "text": "March 19, 2026",
+        "heading": "Optical Multisensor Systems in Analytical Spectroscopy – A. Yu. Bogomolov",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/19/optical-multisensor-systems-in-analytical-spectroscopy-a-yu-bogomolov/"
+      },
+      {
+        "block_id": "b0003",
+        "tag": "p",
+        "text": "A review of works in developing optical multisensor systems, a new class of specialized spectroscopic analyzers, is presented. The development and use of such systems for analyzing food products, monitoring of pharmaceutical production processes, in biotechnology, medical diagnostics, and ecology are considered on practical examples.",
+        "heading": "Optical Multisensor Systems in Analytical Spectroscopy – A. Yu. Bogomolov",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/19/optical-multisensor-systems-in-analytical-spectroscopy-a-yu-bogomolov/"
+      }
+    ]
+  },
+  {
+    "url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/",
+    "title": "Aluminum-Coated Silica Fibers at Temperatures up to 450°C",
+    "sha256": "db194524e14b7dd9e1830a28b2df365a827255f2c309f907f299d4646c178702",
+    "html_file": "html/4405881bfdb7ec2a9b47.html",
+    "fetched_at": "2026-10-17T15:35:29.060816+00:00",
+    "depth": 2,
+    "blocks": [
+      {
+        "block_id": "b0001",
+        "tag": "h1",
+        "text": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C",
+        "heading": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0002",
+        "tag": "li",
+        "text": "March 26, 2026",
+        "heading": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0003",
+        "tag": "p",
+        "text": "Extended Thermal Performance Study and Optical Loss Analysis",
+        "heading": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0004",
+        "tag": "p",
+        "text": "Introduction: Pushing the Limits of High-Temperature Optical Fibers",
+        "heading": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0005",
+        "tag": "p",
+        "text": "The purpose of this study is to answer the question of whether the aluminum-coated silica fibers produced by Mir Photonics can successfully operate at a temperature of 450°C.",
+        "heading": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(3)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0006",
+        "tag": "p",
+        "text": "High-temperature optical fibers are critical in industries such as energy, aerospace, industrial processing, and sensing in harsh environments. In these applications, reliable performance under extreme thermal conditions is not just beneficial – it is essential. Aluminum-coated silica fibers are widely used in such environments due to their mechanical strength, resistance to harsh conditions, and ability to maintain optical performance at elevated temperatures.",
+        "heading": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(4)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0007",
+        "tag": "p",
+        "text": "However, despite their advantages, there is a notable limitation in the industry:",
+        "heading": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(5)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0008",
+        "tag": "p",
+        "text": "Currently, most manufacturers of aluminum-coated silica fibers specify a maximum operating temperature of 400°C, and there is limited available data on performance at higher temperatures such as 450°C.",
+        "heading": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(6)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0009",
+        "tag": "p",
+        "text": "This limitation raises an important question: Can aluminum-coated optical fibers perform reliably beyond the commonly accepted 400°C threshold?",
+        "heading": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(7)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0010",
+        "tag": "h2",
+        "text": "Closing the Knowledge Gap in High -Temperature Fiber Performance",
+        "heading": "Closing the Knowledge Gap in High -Temperature Fiber Performance",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0011",
+        "tag": "p",
+        "text": "At Mir Photonics, we decided to fill this gap and measure the optical losses of the Al-coated fiber at a temperature of 450°C, using the fibers for sufficiently long-term operation.",
+        "heading": "Closing the Knowledge Gap in High -Temperature Fiber Performance",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(8)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0012",
+        "tag": "p",
+        "text": "This study is designed not only to test performance at higher temperatures but also to evaluate long-term stability, which is often overlooked in short-duration experiments. By extending both temperature and exposure time, we aim to provide meaningful insights into real-world operating conditions.",
+        "heading": "Closing the Knowledge Gap in High -Temperature Fiber Performance",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(9)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0013",
+        "tag": "h2",
+        "text": "Fiber Design and Material Characteristics",
+        "heading": "Fiber Design and Material Characteristics",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0014",
+        "tag": "p",
+        "text": "The fiber under study was drawn from a quartz preform ( pure silica core/ fluoride dopped silica cladding ) with a low hydroxyl content (Low OH¯) , manufactured according to Mir Photonics ‘ high-quality fiber production standards.",
+        "heading": "Fiber Design and Material Characteristics",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(10)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0015",
+        "tag": "p",
+        "text": "The choice of materials is critical for high-temperature operation:",
+        "heading": "Fiber Design and Material Characteristics",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(11)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0016",
+        "tag": "li",
+        "text": "Pure silica core ensures low intrinsic attenuation",
+        "heading": "Fiber Design and Material Characteristics",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0017",
+        "tag": "li",
+        "text": "Fluorine-doped silica cladding improves optical confinement",
+        "heading": "Fiber Design and Material Characteristics",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0018",
+        "tag": "li",
+        "text": "Low OH¯ content minimizes absorption peaks, especially in infrared regions",
+        "heading": "Fiber Design and Material Characteristics",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0019",
+        "tag": "p",
+        "text": "The parameters of the fiber were as follow: : core diameter 300 µm, cladding diameter 330 µm, aluminum coating thickness 20 µm.",
+        "heading": "Fiber Design and Material Characteristics",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(12)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0020",
+        "tag": "p",
+        "text": "These dimensions are typical for robust, large-core fibers used in demanding environments where both mechanical durability and stable signal transmission are required.",
+        "heading": "Fiber Design and Material Characteristics",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(13)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0021",
+        "tag": "h2",
+        "text": "Thermal Preparation and Testing Conditions",
+        "heading": "Thermal Preparation and Testing Conditions",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(3)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0022",
+        "tag": "p",
+        "text": "The Al-coated optical fiber were rewound onto a spool and heated to 450°C. After reaching 450°C, the fiber were held for 20 hours.",
+        "heading": "Thermal Preparation and Testing Conditions",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(14)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0023",
+        "tag": "p",
+        "text": "This step simulates real operational conditions where fibers are often coiled or deployed in constrained geometries. The extended exposure time of 20 hours allows for observation of both immediate and gradual thermal effects on optical performance.",
+        "heading": "Thermal Preparation and Testing Conditions",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(15)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0024",
+        "tag": "h2",
+        "text": "Experimental Setup for Optical Loss Measurement",
+        "heading": "Experimental Setup for Optical Loss Measurement",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(4)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0025",
+        "tag": "p",
+        "text": "Fig.1 Schematic diagram of the optical loss measurement setup",
+        "heading": "Experimental Setup for Optical Loss Measurement",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(16)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0026",
+        "tag": "p",
+        "text": "Experimental setup consisted of AL coated fiber (1), which was placed in a high temperature furnace (2). This fiber was fused (3) with additional same optical fiber (4) to get fixed mode structure. Optical losses were measured both using a spectrum analyzer (5), operating at wavelengths of 600 – 1650 nm, and an optical time domain reflectometer ( OTDR ) (6), measuring backscatter losses at a wavelength of 1300 nm. The measurement was selected using an optical switch (7).",
+        "heading": "Experimental Setup for Optical Loss Measurement",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(17)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0027",
+        "tag": "p",
+        "text": "This setup ensures:",
+        "heading": "Experimental Setup for Optical Loss Measurement",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(18)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0028",
+        "tag": "li",
+        "text": "Accurate spectral loss characterization across a wide wavelength range",
+        "heading": "Experimental Setup for Optical Loss Measurement",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(2) > li:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0029",
+        "tag": "li",
+        "text": "Reliable backscatter measurement using OTDR",
+        "heading": "Experimental Setup for Optical Loss Measurement",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(2) > li:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0030",
+        "tag": "li",
+        "text": "Stable mode propagation via fiber fusion",
+        "heading": "Experimental Setup for Optical Loss Measurement",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(2) > li:nth-of-type(3)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0031",
+        "tag": "p",
+        "text": "Such a dual-measurement approach increases confidence in the results and allows for cross-validation of optical loss data.",
+        "heading": "Experimental Setup for Optical Loss Measurement",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(19)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0032",
+        "tag": "h2",
+        "text": "Measurement Methodology",
+        "heading": "Measurement Methodology",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(5)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0033",
+        "tag": "p",
+        "text": "The optical losses of the fiber were measured: a) after fiber rewinding (free coil), b) after annealing at 180°C (15min) and c) after thermal test at 450°C (20 hours).",
+        "heading": "Measurement Methodology",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(20)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0034",
+        "tag": "p",
+        "text": "This stepwise approach allows us to isolate different contributing factors:",
+        "heading": "Measurement Methodology",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(21)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0035",
+        "tag": "li",
+        "text": "Mechanical stress from rewinding",
+        "heading": "Measurement Methodology",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(3) > li:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0036",
+        "tag": "li",
+        "text": "Structural changes from annealing",
+        "heading": "Measurement Methodology",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(3) > li:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0037",
+        "tag": "li",
+        "text": "Long-term thermal degradation at high temperature",
+        "heading": "Measurement Methodology",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(3) > li:nth-of-type(3)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0038",
+        "tag": "h2",
+        "text": "Optical Loss Behavior: Initial and Annealed States",
+        "heading": "Optical Loss Behavior: Initial and Annealed States",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(6)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0039",
+        "tag": "p",
+        "text": "Fig.2 Optical losses vs wavelength (free coil; after annealing, after thermal test @ 450°C).",
+        "heading": "Optical Loss Behavior: Initial and Annealed States",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(22)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0040",
+        "tag": "p",
+        "text": "Optical losses immediately after fiber rewinding were < 30 dB/km (green line), however after annealing fiber at 180°C for 15min losses as usual dropped (blue line) and became less than 5 dB/km.",
+        "heading": "Optical Loss Behavior: Initial and Annealed States",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(23)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0041",
+        "tag": "p",
+        "text": "This significant reduction in loss highlights an important phenomenon in metal-coated fibers:",
+        "heading": "Optical Loss Behavior: Initial and Annealed States",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(24)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0042",
+        "tag": "li",
+        "text": "Rewinding introduces microbending losses",
+        "heading": "Optical Loss Behavior: Initial and Annealed States",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(4) > li:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0043",
+        "tag": "li",
+        "text": "Annealing relieves internal stresses and improves performance",
+        "heading": "Optical Loss Behavior: Initial and Annealed States",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(4) > li:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0044",
+        "tag": "p",
+        "text": "At a wavelength λ = 1389 nm the pick observed which is due to the diffusion of hydroxyl groups from the quartz cladding into the core of the fiber.",
+        "heading": "Optical Loss Behavior: Initial and Annealed States",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(25)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0045",
+        "tag": "p",
+        "text": "This OH¯ absorption peak is a known characteristic in silica fibers and serves as an indicator of material composition and diffusion processes.",
+        "heading": "Optical Loss Behavior: Initial and Annealed States",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(26)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0046",
+        "tag": "h2",
+        "text": "Understanding Microbending Loss Reduction",
+        "heading": "Understanding Microbending Loss Reduction",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(7)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0047",
+        "tag": "p",
+        "text": "The reason for the reduction in microbending losses at temperature 180°C is the recrystallization annealing of the metal coating, as a result of which a new structure of the metal coating without defects is formed.",
+        "heading": "Understanding Microbending Loss Reduction",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(27)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0048",
+        "tag": "p",
+        "text": "This insight is particularly valuable for industrial applications:",
+        "heading": "Understanding Microbending Loss Reduction",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(28)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0049",
+        "tag": "li",
+        "text": "Aluminum coating undergoes structural reorganization",
+        "heading": "Understanding Microbending Loss Reduction",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(5) > li:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0050",
+        "tag": "li",
+        "text": "Defects are reduced, improving mechanical uniformity",
+        "heading": "Understanding Microbending Loss Reduction",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(5) > li:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0051",
+        "tag": "li",
+        "text": "Optical performance stabilizes",
+        "heading": "Understanding Microbending Loss Reduction",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(5) > li:nth-of-type(3)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0052",
+        "tag": "p",
+        "text": "Annealing, therefore, is not just a preparation step—it is a performance optimization process.",
+        "heading": "Understanding Microbending Loss Reduction",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(29)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0053",
+        "tag": "h2",
+        "text": "High-Temperature Exposure at 450°C",
+        "heading": "High-Temperature Exposure at 450°C",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(8)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0054",
+        "tag": "p",
+        "text": "Fig.3 Thermal induced optical loss (dB/km) vs wavelength (nm)",
+        "heading": "High-Temperature Exposure at 450°C",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(30)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0055",
+        "tag": "p",
+        "text": "The optical losses of the fiber changed when it was heated to 450°C for: 7 min, 92 min and 1066 min.",
+        "heading": "High-Temperature Exposure at 450°C",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(31)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0056",
+        "tag": "p",
+        "text": "Monitoring the fiber at multiple time intervals allows us to track:",
+        "heading": "High-Temperature Exposure at 450°C",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(32)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0057",
+        "tag": "li",
+        "text": "Immediate thermal effects",
+        "heading": "High-Temperature Exposure at 450°C",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(6) > li:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0058",
+        "tag": "li",
+        "text": "Intermediate stabilization",
+        "heading": "High-Temperature Exposure at 450°C",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(6) > li:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0059",
+        "tag": "li",
+        "text": "Long-term degradation trends",
+        "heading": "High-Temperature Exposure at 450°C",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(6) > li:nth-of-type(3)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0060",
+        "tag": "h2",
+        "text": "Long-Term Thermal Performance Results",
+        "heading": "Long-Term Thermal Performance Results",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(9)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0061",
+        "tag": "p",
+        "text": "When the exposure time is increased to 20 hours at 450°C, the optical losses reach 10 dB/km = 800 nm) and 15 dB/km = 1300 nm.",
+        "heading": "Long-Term Thermal Performance Results",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(33)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0062",
+        "tag": "p",
+        "text": "These results demonstrate that:",
+        "heading": "Long-Term Thermal Performance Results",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(34)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0063",
+        "tag": "li",
+        "text": "Optical losses increase with prolonged exposure",
+        "heading": "Long-Term Thermal Performance Results",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(7) > li:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0064",
+        "tag": "li",
+        "text": "The increase remains within a manageable range",
+        "heading": "Long-Term Thermal Performance Results",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(7) > li:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0065",
+        "tag": "li",
+        "text": "Performance degradation is gradual rather than catastrophic",
+        "heading": "Long-Term Thermal Performance Results",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(7) > li:nth-of-type(3)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0066",
+        "tag": "h2",
+        "text": "Final Conclusion: Can Aluminum-Coated Fibers Operate at 450°C?",
+        "heading": "Final Conclusion: Can Aluminum-Coated Fibers Operate at 450°C?",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(10)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0067",
+        "tag": "p",
+        "text": "It was shown that Mir Photonics aluminum-coated silica fiber can be successfully used at T = 450°C for 20 hours with a slight increase in optical loss.",
+        "heading": "Final Conclusion: Can Aluminum-Coated Fibers Operate at 450°C?",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(35)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0068",
+        "tag": "p",
+        "text": "This finding is significant for the fiber optics industry:",
+        "heading": "Final Conclusion: Can Aluminum-Coated Fibers Operate at 450°C?",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(36)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0069",
+        "tag": "li",
+        "text": "It challenges the commonly stated 400°C limit",
+        "heading": "Final Conclusion: Can Aluminum-Coated Fibers Operate at 450°C?",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(8) > li:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0070",
+        "tag": "li",
+        "text": "It provides experimental evidence for higher temperature operation",
+        "heading": "Final Conclusion: Can Aluminum-Coated Fibers Operate at 450°C?",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(8) > li:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0071",
+        "tag": "li",
+        "text": "It supports the use of aluminum-coated fibers in more extreme environments",
+        "heading": "Final Conclusion: Can Aluminum-Coated Fibers Operate at 450°C?",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(8) > li:nth-of-type(3)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0072",
+        "tag": "h2",
+        "text": "Implications for Industry Applications",
+        "heading": "Implications for Industry Applications",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(11)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0073",
+        "tag": "p",
+        "text": "The ability to operate at 450°C opens new opportunities in:",
+        "heading": "Implications for Industry Applications",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(37)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0074",
+        "tag": "li",
+        "text": "High-temperature industrial sensing",
+        "heading": "Implications for Industry Applications",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(9) > li:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0075",
+        "tag": "li",
+        "text": "Oil & gas downhole monitoring",
+        "heading": "Implications for Industry Applications",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(9) > li:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0076",
+        "tag": "li",
+        "text": "Aerospace and defense systems",
+        "heading": "Implications for Industry Applications",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(9) > li:nth-of-type(3)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0077",
+        "tag": "li",
+        "text": "Power generation and turbine monitoring",
+        "heading": "Implications for Industry Applications",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(9) > li:nth-of-type(4)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0078",
+        "tag": "p",
+        "text": "In these environments, even a modest extension of temperature capability can significantly expand operational possibilities.",
+        "heading": "Implications for Industry Applications",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(38)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0079",
+        "tag": "h2",
+        "text": "Why This Study Matters",
+        "heading": "Why This Study Matters",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(12)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0080",
+        "tag": "p",
+        "text": "This study does more than present experimental results—it contributes to a broader understanding of:",
+        "heading": "Why This Study Matters",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(39)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0081",
+        "tag": "li",
+        "text": "Thermal behavior of metal-coated optical fibers",
+        "heading": "Why This Study Matters",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(10) > li:nth-of-type(1)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0082",
+        "tag": "li",
+        "text": "Long-term stability under extreme conditions",
+        "heading": "Why This Study Matters",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(10) > li:nth-of-type(2)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0083",
+        "tag": "li",
+        "text": "Material science of aluminum coatings",
+        "heading": "Why This Study Matters",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(10) > li:nth-of-type(3)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0084",
+        "tag": "p",
+        "text": "By addressing a gap in existing data, it provides valuable guidance for engineers, researchers, and system designers.",
+        "heading": "Why This Study Matters",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(40)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0085",
+        "tag": "h2",
+        "text": "Final Thoughts",
+        "heading": "Final Thoughts",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(13)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0086",
+        "tag": "p",
+        "text": "The results confirm that aluminum-coated silica fibers are more capable than previously documented. While optical losses do increase at higher temperatures, the performance remains stable enough for many demanding applications.",
+        "heading": "Final Thoughts",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(41)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      },
+      {
+        "block_id": "b0087",
+        "tag": "p",
+        "text": "This work by Mir Photonics’ demonstrates the importance of pushing beyond established limits and validating material performance through rigorous testing.",
+        "heading": "Final Thoughts",
+        "selector": "html:nth-of-type(1) > body:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(42)",
+        "anchor": null,
+        "location_url": "https://mirphotonics.com/2026/03/26/aluminum-coated-silica-fibers-at-450/"
+      }
+    ]
+  }
+]

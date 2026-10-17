@@ -1,0 +1,1143 @@
+[
+  {
+    "id": "3b6df15a-0179-5dbe-84b4-1369a89b4ce0",
+    "evidence_id": "S06:web:8c0d3f240be7754f3f83",
+    "segment": 0,
+    "text": "Mir Photonics' Multispectral Laboratory of Optical Analysis Methods\n“Mir Photonics” LLC has developed an innovative universal optical multispectral laboratory — a comprehensive collection of specially selected optical spectral equipment designed to solve a wide variety of scientific, educational, and industrial problems.\n\nThe laboratory concept, described in detail in this paper, also features a new technique for spectral analysis based on an inter-spectral chemometric approach.",
+    "token_count": 87
+  },
+  {
+    "id": "7b286988-39c3-5c6b-abab-6e6133039511",
+    "evidence_id": "S06:web:5e1741131b225368290a",
+    "segment": 0,
+    "text": "Mir Photonics' Multispectral Laboratory of Optical Analysis Methods\nThe laboratory is focused on modern analytical research, including the online analysis using fiber optic cables and probes.",
+    "token_count": 36
+  },
+  {
+    "id": "1f653358-41b1-5c7b-a480-c1f25d0d662a",
+    "evidence_id": "S06:web:7c902f5eb42216a4705c",
+    "segment": 0,
+    "text": "The Power of Optical Spectral Analysis\nOptical spectral analysis holds a special place among physicochemical methods for studying substances and materials.\n\nThis method is based on measuring the result of the interaction of electromagnetic radiation with a sample across a wide range of wavelengths, from hard ultraviolet to far infrared light.\n\nOptical analysis is often the optimal choice because it is:",
+    "token_count": 70
+  },
+  {
+    "id": "44a886dc-b62e-570a-8de1-8f06559289be",
+    "evidence_id": "S06:web:220f4da7700dcbf54a4f",
+    "segment": 0,
+    "text": "The Power of Optical Spectral Analysis\nNon-destructive .",
+    "token_count": 12
+  },
+  {
+    "id": "5fba1fa5-f4cb-5f76-a7f9-46b5f259cc7e",
+    "evidence_id": "S06:web:814ed38dd2f322b7818e",
+    "segment": 0,
+    "text": "The Power of Optical Spectral Analysis\nExtremely flexible in organizing measurements.",
+    "token_count": 14
+  },
+  {
+    "id": "51f0a2af-9558-5628-98e3-42a1e3a672b0",
+    "evidence_id": "S06:web:c3d79cde198a15c66c5a",
+    "segment": 0,
+    "text": "The Power of Optical Spectral Analysis\nNot requiring mandatory sample preparation .",
+    "token_count": 14
+  },
+  {
+    "id": "ad6d8d55-fddd-55bb-83b4-3445f36b8316",
+    "evidence_id": "S06:web:11ae9c05912d635e1f60",
+    "segment": 0,
+    "text": "The Power of Optical Spectral Analysis\nA noticeable trend in optical spectroscopy is the increased use of fiber optic solutions .\n\nFiber optic probes and cells can be built into reactors and production lines, enabling online analysis on site and providing results in near real time.\n\nThanks to achievements in photonics, optics, and micromechanical engineering, the development of specialized analyzers, known as Optical Multisensor Systems (OMS) , is actively underway.",
+    "token_count": 90
+  },
+  {
+    "id": "2808713b-6b77-5156-b715-a20252429b73",
+    "evidence_id": "S06:web:a6cb229fd30d6d08be4c",
+    "segment": 0,
+    "text": "Advantages of the Integrated Multispectral Approach\nThe ability to purchase an entire spectral laboratory at once, rather than element by element, provides significant benefits.",
+    "token_count": 32
+  },
+  {
+    "id": "38d240fc-c499-5a88-ba5b-28bb624be275",
+    "evidence_id": "S06:web:2cd04a2f36d4e3eb81ba",
+    "segment": 0,
+    "text": "Advantages of the Integrated Multispectral Approach\nSynergy of Spectral Methods",
+    "token_count": 16
+  },
+  {
+    "id": "1e67056e-b2aa-5a08-a9b0-28f0f0268a84",
+    "evidence_id": "S06:web:1c725590457903f380bd",
+    "segment": 0,
+    "text": "Advantages of the Integrated Multispectral Approach\nDifferent spectral methods provide information about the chemistry and morphology of the sample (concentrations, distribution, particle sizes), but this information can vary greatly.\n\nFor complex, real-world samples — such as oil, milk, process media, or biological tissue — the information supplied by a single method is often insufficient due to the complexity of multicomponent mixtures or overlapping phenomena (absorption, scattering, fluorescence).",
+    "token_count": 94
+  },
+  {
+    "id": "6e2c0b1e-b0bc-5b9d-8964-e83ee3c94175",
+    "evidence_id": "S06:web:472ae6b42976d579cbe5",
+    "segment": 0,
+    "text": "Advantages of the Integrated Multispectral Approach\nThe multispectral optical analysis approach involves combining two or more spectral methods to achieve a synergistic effect, allowing for the solution of problems that individual methods cannot fully address.\n\nThis synergy is based on combining heterogeneous information:",
+    "token_count": 61
+  },
+  {
+    "id": "8fa725f8-7eaf-5ca0-b588-11274ce0acdb",
+    "evidence_id": "S06:web:7a70d4f136fd05a464c7",
+    "segment": 0,
+    "text": "Advantages of the Integrated Multispectral Approach\nComplementary Chemical Information: For example, combining vibrational IR and Raman spectra provides more structural information.",
+    "token_count": 31
+  },
+  {
+    "id": "0e0c427e-409c-5355-a340-b39187e4ffc7",
+    "evidence_id": "S06:web:3db3496e37f216721d79",
+    "segment": 0,
+    "text": "Advantages of the Integrated Multispectral Approach\nMorphological Information: Relevant in the analysis of milk (particle size).",
+    "token_count": 25
+  },
+  {
+    "id": "c5c175dc-6939-584d-92a8-634682cf1ec9",
+    "evidence_id": "S06:web:58ab19fce66d24c0d7b2",
+    "segment": 0,
+    "text": "Advantages of the Integrated Multispectral Approach\nDepth Information: As seen in the analysis of biological tissue samples by IR and NIR spectroscopy using fiber-optic probes.",
+    "token_count": 36
+  },
+  {
+    "id": "ac46f26e-cc29-58a2-8009-5a0b9e1f1616",
+    "evidence_id": "S06:web:7d2966e81592f9907ef9",
+    "segment": 0,
+    "text": "Advantages of the Integrated Multispectral Approach\nExamples of successful combinations include NIR spectroscopy with fluorescence spectroscopy for determining biomass content during yeast fermentation, and the combination of NIR and IR spectroscopy for determining tumor boundaries in medical diagnostics.",
+    "token_count": 51
+  },
+  {
+    "id": "9300d96c-962b-54b4-b0b2-c563b193c588",
+    "evidence_id": "S06:web:cc87f86024d013e4542e",
+    "segment": 0,
+    "text": "Optimized for Various Applications\nThe integrated laboratory set is pre-designed and well-integrated, taking into account the mutual compatibility of instruments and software.",
+    "token_count": 32
+  },
+  {
+    "id": "a3776f6a-5ed9-5457-8066-118d6335c1c0",
+    "evidence_id": "S06:web:33db3b4a59044c94e441",
+    "segment": 0,
+    "text": "Hardware and Software Components\nThe multispectral laboratory is equipped with instruments covering a wide range of analytical needs, focusing on fiber optic interfaces and online measurements.",
+    "token_count": 33
+  },
+  {
+    "id": "5c40c577-1c0e-5ace-9293-733583f19817",
+    "evidence_id": "S06:web:c8c92b8f530686dff62f",
+    "segment": 0,
+    "text": "Grow your business with us\nDiscuss your application, technical requirements, or collaboration ideas directly with our team.\n\nSchedule a short call to explore how our fiber technologies can support your research or industrial needs.",
+    "token_count": 40
+  },
+  {
+    "id": "b8527933-ae8c-5d8e-b669-e3978a2c41c0",
+    "evidence_id": "S06:web:91bcd00f4c1e60c65259",
+    "segment": 0,
+    "text": "Shaping Spectroscopy's Future with Cutting-Edge Fiber Technologies\nFrom 300 nm to 16 µm : Pioneering Fiber Innovations Worldwide",
+    "token_count": 25
+  },
+  {
+    "id": "d6c15ca6-bc6c-53ee-88a3-620b1452841c",
+    "evidence_id": "S06:web:7e6779f2168a7f6ffa48",
+    "segment": 0,
+    "text": "Optical Multispectral Laboratory\nMir Photonics LLC presents the Universal Optical Multispectral Laboratory (OML) for advanced analytical research.\n\nOur curated spectrometer collection spans UV, visible, and near/mid-IR analysis, catering to diverse scientific and industrial applications.\n\nExplore online analysis capabilities through fiber optics for gaseous, liquid, and solid samples.",
+    "token_count": 74
+  },
+  {
+    "id": "f7b71664-8636-5e42-a28c-0d2efe3e9cb0",
+    "evidence_id": "S06:web:139f31c15069ad2853f1",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nOur self-manufactured Al-coated fibers are ideal for high-temperature, vacuum, and harsh environments.\n\nThey offer a transmission range of 220 to 2400 nm.",
+    "token_count": 40
+  },
+  {
+    "id": "9efdae72-74fd-5fb8-87b7-4b6ff4825473",
+    "evidence_id": "S06:web:9d1e16337d047bd485cc",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nCu-alloy coated fibers offer superior mechanical strength and improved fatigue resistance over polymer-coated fibers.\n\nThey have a transmission range of 220 to 2400 nm, depending on the choice of UV or NIR silica fiber core.",
+    "token_count": 52
+  },
+  {
+    "id": "87e06953-4d35-5e39-91cb-b5456bc35525",
+    "evidence_id": "S06:web:a756556818c44b5748a2",
+    "segment": 0,
+    "text": "Grow your business with us\nDiscuss your application, technical requirements, or collaboration ideas directly with our team.\n\nSchedule a short call to explore how our fiber technologies can support your research or industrial needs.",
+    "token_count": 40
+  },
+  {
+    "id": "99936fd5-e7b6-5c45-93f3-0ed3fe7eb5ed",
+    "evidence_id": "S06:web:b8f2fab81df2a1b14466",
+    "segment": 0,
+    "text": "Solutions\nEnhance your chemical production with remote process monitoring using MIR Photonics’ flexible fiber optic probes .\n\nSave time and optimize workflow without sampling.",
+    "token_count": 33
+  },
+  {
+    "id": "4997f472-8814-5815-8bce-ccdf9c885c9e",
+    "evidence_id": "S06:web:366e273e1c9185d3b5fc",
+    "segment": 0,
+    "text": "Spectroscopy in Lab\nExplore the future of chemical analysis with our advanced chemometric solutions.\n\nHarnessing state-of-the-art statistical methods, we transform raw data into actionable insights , driving efficiency and precision across diverse industries.",
+    "token_count": 48
+  },
+  {
+    "id": "52919a58-7843-5cda-bfbe-24b80bd2192f",
+    "evidence_id": "S06:web:1c00ce061b6e4b6dda2d",
+    "segment": 0,
+    "text": "Chemometrics based Software Solutions\nSimplify Reaction Analysis with flexible light guides for in-line spectroscopic measurements.\n\nReal-time analysis in lab reactors saves time and uncovers process details, enhancing research results .",
+    "token_count": 45
+  },
+  {
+    "id": "a9f758ba-a6a0-58a9-921f-d5d3b19781fa",
+    "evidence_id": "S06:web:cc8f69cd6688e79dd20d",
+    "segment": 0,
+    "text": "Discover our high-end solutions for your fiber optic needs.\nWe offer solutions for the medical and chemical industries, incorporating machine learning and neural network components.\n\nOur focus is on creating software that optimizes data analysis and supports predictive modeling for better decision-making.",
+    "token_count": 55
+  },
+  {
+    "id": "aa8e8073-a419-5c9e-acc7-a7c57a0959a6",
+    "evidence_id": "S06:web:54b9b70c57f693dff3ba",
+    "segment": 0,
+    "text": "Machine Learning based Software Solutions\nSave energy and time with flexible fiber optics for radiation delivery in challenging research areas.\n\nIlluminate and detect small objects, conduct biological sample research in reactors, vacuum and pressurized chambers effortlessly .",
+    "token_count": 45
+  },
+  {
+    "id": "e5922480-dea2-57db-a441-548a5683a5bd",
+    "evidence_id": "S06:web:157630d8c98115ac22f2",
+    "segment": 0,
+    "text": "Gas and Vapor Monitoring\nMaximize safety and convenience in your research with our novel strategy of flexible beam delivery for lasers, including QCL.\n\nAvoid the risks of open laser beams in the lab and position samples and systems effortlessly.",
+    "token_count": 45
+  },
+  {
+    "id": "3694982b-9705-53f8-bcab-aea115e0e0d1",
+    "evidence_id": "S06:web:d052b5f5359f0ebc4ab2",
+    "segment": 0,
+    "text": "About our company\nMir Photonics LLC , founded in Armenia, is a leading provider of aluminum- and copper-coated optical fibers, fiber-optic cables, and bundles for applications in high-temperature, vacuum, and harsh-environment conditions.",
+    "token_count": 50
+  },
+  {
+    "id": "2f9b26f2-e030-57c8-a336-f5abb51c26e4",
+    "evidence_id": "S06:web:3a72fdd3d390f65adf48",
+    "segment": 0,
+    "text": "About our company\nSpecializing in precision fiber spectroscopy for laboratory and industrial applications, we focus on driving innovation and exploring new use cases across a wide range of fields.",
+    "token_count": 33
+  },
+  {
+    "id": "2d605e0d-65a8-5307-8906-d5ae3c8639e3",
+    "evidence_id": "S06:web:1544fc7140580e211395",
+    "segment": 0,
+    "text": "About our company\nOur solutions deliver efficiency and practicality for spectroscopy techniques, optical design, and system integration.",
+    "token_count": 23
+  },
+  {
+    "id": "b5248282-95cc-5c4c-836a-dddabbac1d12",
+    "evidence_id": "S06:web:c4e4a27ca53c4b8c9110",
+    "segment": 0,
+    "text": "About our company\nPartner with us to leverage established and emerging technologies to propel your business forward.",
+    "token_count": 21
+  },
+  {
+    "id": "f3a9458e-8d5b-529d-b3d2-c7e0bbd0532e",
+    "evidence_id": "S06:web:0be7b1d7abd0da3356d1",
+    "segment": 0,
+    "text": "14th Winter Symposium on Chemometrics (WSC)\nWe are excited to share that this year Mir Photonics LLC was a co-organizer of the international scientific symposium on chemometrics (WSC), which was successfully held in beautiful Tsaghkadzor, Armenia",
+    "token_count": 60
+  },
+  {
+    "id": "770a2cdd-93fe-50c3-ac38-0a83df9ed1d3",
+    "evidence_id": "S06:web:65ca049f8b5c62e9ab77",
+    "segment": 0,
+    "text": "Resources\nWelcome to the MIR Photonics Resource Center—your guide to advances in mid-infrared spectroscopy.\n\nOur library connects optical theory with real-world lab use, from in-line reaction analysis to selecting fiber optic ATR probes for molecular fingerprinting.",
+    "token_count": 54
+  },
+  {
+    "id": "5cbf3a81-ef10-57f1-bd51-ffe07a0c9114",
+    "evidence_id": "S06:web:9c13b1cafc06869da1f3",
+    "segment": 0,
+    "text": "Resources\nExplore technical resources on harsh-environment fibers, including aluminum- and copper-coated silica, built for extreme temperatures and vacuum conditions.\n\nLearn about multispectral setups and chemometrics integration to support real-time process monitoring and innovation in MIR photonics.",
+    "token_count": 58
+  },
+  {
+    "id": "2ba871f9-1c6d-59ed-b26a-515e95a5f230",
+    "evidence_id": "S06:web:29c28a014331ae05759e",
+    "segment": 0,
+    "text": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C\nExtended Thermal Performance Study and Optical Loss Analysis Introduction: Pushing the Limits of High-Temperature Optical Fibers The purpose of this study is to answer the question of whether the aluminum-coated",
+    "token_count": 53
+  },
+  {
+    "id": "7751bb0c-f08c-5a2c-b96f-0318a9d0dd58",
+    "evidence_id": "S06:web:c5afde30af5d17ece656",
+    "segment": 0,
+    "text": "Optical Multisensor Systems in Analytical Spectroscopy – A. Yu. Bogomolov\nA review of works in developing optical multisensor systems, a new class of specialized spectroscopic analyzers, is presented.\n\nThe development and use of such systems for analyzing food products, monitoring",
+    "token_count": 57
+  },
+  {
+    "id": "b3f7d29f-6bb0-5fb7-a85f-cd9987809ce9",
+    "evidence_id": "S06:web:c0c8ed0ea508c33aac8b",
+    "segment": 0,
+    "text": "Multispectral Laboratory of Optical Analysis Methods\nThis paper describes in detail the concept of an innovative multispectral laboratory, as well as new methods for the spectral analysis of liquids, solids, and gases based on an inter",
+    "token_count": 47
+  },
+  {
+    "id": "5d7ced07-7409-585c-a76c-2ef2322514ce",
+    "evidence_id": "S06:web:58174d720b590bdaa8f2",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nOperating up to 450°C",
+    "token_count": 13
+  },
+  {
+    "id": "555ab5f6-78af-55de-a9c7-1d9a78ce629b",
+    "evidence_id": "S06:web:d2cbe96af4ea5486c998",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nImpressive mechanical strength and flexibility",
+    "token_count": 12
+  },
+  {
+    "id": "9204de34-15fe-5a84-902d-e88d48489a78",
+    "evidence_id": "S06:web:10482a1635a453ca5d69",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nNo outgassing in high vacuum environments",
+    "token_count": 15
+  },
+  {
+    "id": "06411ecc-fee6-515f-ba11-c685c819e6df",
+    "evidence_id": "S06:web:dc0ddbaa5773006057b5",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nSolderable for connector integration (epoxy-free choice)",
+    "token_count": 21
+  },
+  {
+    "id": "e462d2b6-75ce-53af-9044-5c199d6eeb3c",
+    "evidence_id": "S06:web:8e459615f89c2a34ccbc",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nEfficient heat dissipation with metal coating",
+    "token_count": 16
+  },
+  {
+    "id": "6b5463f3-d4c6-5070-8b02-827b11a88155",
+    "evidence_id": "S06:web:53c2d7aa92e5f08d74b0",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nCompatible with sterilization methods: Steaming, ETO, steam, e-beam, or gamma.",
+    "token_count": 28
+  },
+  {
+    "id": "806be1dd-7bdb-51ab-9822-74027e97615c",
+    "evidence_id": "S06:web:e1090c6dd28d33a93012",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nMir Photonics’ Aluminum Coated Silica Fibers stand as the premier choice for applications that demand exceptional reliability under high temperatures, high vacuum, and other extreme environmental conditions.\n\nDesigned for use where conventional polymer-coated fibers fail, these fibers deliver stable optical performance even in harsh industrial, scientific, and aerospace environments.\n\nTheir aluminum coating enables efficient thermal management while ensuring long-term durability in applications exposed to heat, radiation, or aggressive sterilization processes.",
+    "token_count": 98
+  },
+  {
+    "id": "3d78ec2b-3432-572a-9097-31e54fcbbdc8",
+    "evidence_id": "S06:web:ec85c7012df7a1b0bedb",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nThese aluminum-coated fibers retain all the inherent benefits of standard silica-silica fibers, including excellent optical clarity, low attenuation, and chemical inertness.\n\nAt the same time, the metallic coating significantly enhances mechanical strength and fatigue resistance, offering superior protection against micro-bending, vibration, and repeated mechanical stress.\n\nCompared to polymer-coated alternatives, aluminum-coated fibers exhibit far greater longevity and structural stability, making them ideal for demanding installations where maintenance or replacement is difficult or costly.",
+    "token_count": 108
+  },
+  {
+    "id": "49a371c2-82ec-5f44-b39e-dd385dbee59c",
+    "evidence_id": "S06:web:251a7f9686ec65bde93f",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nWith a broad optical transmission range from 220 to 2400 nm, these fibers support a wide variety of applications, depending on whether UV or NIR silica fiber cores are selected.\n\nThis versatility makes them suitable for spectroscopy, sensing, medical, and industrial laser systems.\n\nRemarkably, they maintain consistent performance across an extreme temperature range from cryogenic conditions as low as –270°C up to continuous operation at 450°C.\n\nIn addition, they tolerate humidity levels up to 100%, ensuring reliable operation in both vacuum environments and moisture-rich settings without degradation of optical or mechanical properties.",
+    "token_count": 124
+  },
+  {
+    "id": "831e5bf6-15bd-556d-b1fa-50390edf11b5",
+    "evidence_id": "S06:web:518724cacf4b147fe676",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nSpecification of standard Al-coated fibers Core/ Cladding material Step Index Pure Fused Silica Core / Fluorine Doped Silica Cladding Graded Index Germanium Doped Fused Silica Core / Pure Fused Silica Fiber core diameters, μm Single mode: 2.5 – 9; Multimode: 50; 62.5; 100; 200; 400; 600; 800; 1000 Al coating thickness, μm 15 – 150 (depending on fiber diameter) Standard Numerical Aperture (NA) 0.22 ± 0.02 Available Numerical Aperture (NA) 0.12 ± 0.02 | 0.26 ± 0.02 Min operating temperature, °C -270 Max operating temperature, °C 450 Humidity Range Up to 100% Minimal bending radius (long term) 200 x fiber outer diameter Minimal bending radius (short term) 100 x fiber outer diameter Tensile strength (short gauge), GPa 3.5 – 6 Two point bending strength, GPa >10 Static fatigue parameter >100",
+    "token_count": 209
+  },
+  {
+    "id": "7450a425-669b-574d-aeb5-b0c0489ac0c3",
+    "evidence_id": "S06:web:f59ea1693cba39dfbe7d",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nParameters of standard Al-coated fibers Code Type Core, μm Cladding, μm Coating AI, μm NA 100/110 Al Step Index Multimode 100 ± 2 110 ± 2.2 140 ± 7 0.22 200/220 Al Step Index Multimode 200 ± 4 220 ± 4.4 300 ± 15 0.22 400/440 Al Step Index Multimode 400 ± 8 440 ± 8.8 560 ± 28 0.22 600/660 Al Step Index Multimode 600 ± 12 660 ± 13.2 825 ± 41.25 0.22 50/125 Al Graded Index Multimode 50 ± 1 125 ± 2.5 165 ± 3.3 0.22 SM-Al Step Index Single Mode, wavelength cut-off from 320nm up to 1300nm",
+    "token_count": 172
+  },
+  {
+    "id": "8ff85e2c-29a2-5f45-94ac-3157914607b2",
+    "evidence_id": "S06:web:8a4734ca69466abde468",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nAluminum Coated Silica Fibers Datasheet",
+    "token_count": 15
+  },
+  {
+    "id": "2ae87815-f2a6-5fc8-8ef9-5f37b7685d6b",
+    "evidence_id": "S06:web:1776810e39edc0aecd28",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nHigh temperature environment",
+    "token_count": 10
+  },
+  {
+    "id": "674289c2-6dca-5d4b-a4bc-b8c2bd46dded",
+    "evidence_id": "S06:web:da70e144c7c38a625040",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nHarsh Chemical environment",
+    "token_count": 10
+  },
+  {
+    "id": "03946442-fd82-5244-95fe-9fe0c4eef099",
+    "evidence_id": "S06:web:0a2faff3c2620f533cf8",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nNuclear radiation resistant devices",
+    "token_count": 11
+  },
+  {
+    "id": "bc2a1cb9-3578-5b73-847a-1d2cfdd8fe15",
+    "evidence_id": "S06:web:ee6bb03bfe6d0fa90401",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nDown-hole sensing for oil and gas industry",
+    "token_count": 16
+  },
+  {
+    "id": "6129261b-9313-53a6-9fbc-aa13f2664c5d",
+    "evidence_id": "S06:web:491bfe2f368c296eafcb",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nHigh Power Laser delivery",
+    "token_count": 11
+  },
+  {
+    "id": "db22e804-47d4-5934-a430-bf501bc1ecff",
+    "evidence_id": "S06:web:8824979d0dd6018a1fa1",
+    "segment": 0,
+    "text": "Aluminum Coated Silica Fibers\nMedical applications",
+    "token_count": 9
+  },
+  {
+    "id": "ffe0f47b-f4b8-5245-bd72-81fa60d7b867",
+    "evidence_id": "S06:web:f0e56d7c02f71f1a5208",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nOperating at temperatures up to 600°C (valid for non-oxidizing atmospheres)",
+    "token_count": 26
+  },
+  {
+    "id": "b37dfb80-df65-5543-85c4-bceca3c23759",
+    "evidence_id": "S06:web:fba67796fbe2bbac291d",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nOutstanding mechanical strength and flexibility",
+    "token_count": 12
+  },
+  {
+    "id": "13a33224-2b8c-5b13-b3b1-6b1df6f922ec",
+    "evidence_id": "S06:web:39285cefa8e3ddd1edab",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nZero outgassing in high vacuum environments",
+    "token_count": 15
+  },
+  {
+    "id": "e1102eda-c874-5f06-aa2a-9a9553e70fd8",
+    "evidence_id": "S06:web:b6444cdc92802bc10080",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nSolderable for connector integration (epoxy-free option)",
+    "token_count": 21
+  },
+  {
+    "id": "ad296877-0604-54fe-b67d-b3debdcb028e",
+    "evidence_id": "S06:web:4702e27b0fc46a2715aa",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nEfficient heat dissipation with metal coating",
+    "token_count": 16
+  },
+  {
+    "id": "a1b0e47d-0715-559a-8da0-64cfff556feb",
+    "evidence_id": "S06:web:182c18d1947a3704ba1b",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nSterilization compatibility: Steaming, ETO, steam, e-beam, or gamma",
+    "token_count": 25
+  },
+  {
+    "id": "9adc3ea0-9207-520e-8d8e-20d47e3e90b2",
+    "evidence_id": "S06:web:215eb6a42c2233245eb2",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nMir Photonics’ Copper-alloy Coated Silica Fibers represent the pinnacle of fiber technology for applications exposed to extreme conditions, including very high temperatures, high vacuum, and harsh or demanding operational environments.\n\nEngineered to perform where conventional fiber solutions reach their limits, these fibers combine excellent optical stability with robust thermal and mechanical performance, making them well suited for industrial, scientific, and aerospace use cases.",
+    "token_count": 84
+  },
+  {
+    "id": "363acc62-fce9-5302-838d-59be5b9100a7",
+    "evidence_id": "S06:web:9f7c3116971935aa9e6b",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nThese copper-alloy coated fibers retain all the key advantages of traditional silica-silica fibers, such as low optical loss, chemical stability, and consistent transmission characteristics.\n\nIn addition, the metallic coating provides substantial improvements in mechanical strength and durability, as well as increased resistance to fatigue and mechanical stress when compared to polymer-coated fibers.\n\nThis results in improved reliability and extended service life in applications involving vibration, repeated handling, or elevated thermal loads.",
+    "token_count": 98
+  },
+  {
+    "id": "d06788de-ff94-5af7-a33b-9adc57ca2583",
+    "evidence_id": "S06:web:dcaa5821368143e96aa5",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nTheir optical transmission spans a wide range from 220 to 2400 nm, depending on the choice of UV or NIR silica fiber cores, enabling use across a broad spectrum of optical and spectroscopic applications.\n\nNotably, these fibers maintain reliable performance across an extreme temperature range, from cryogenic levels down to –270°C up to continuous operation at temperatures as high as 600°C, while also tolerating humidity levels of up to 100% without compromising optical or mechanical integrity.",
+    "token_count": 105
+  },
+  {
+    "id": "edaaa755-72f8-59f6-8627-c836df39a3a6",
+    "evidence_id": "S06:web:7787fdb84d2e20d79448",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nSpecification of Cu-alloy coated Fibers Core/ Cladding material Step Index Pure Fused Silica Core / Fluorine Doped Silica Cladding Graded Index Germanium Doped Fused Silica Core / Pure Fused Silica Fiber core diameters, μm 9; 50; 62.5; 100; 200; 400; 600 Cu-alloy coating thickness, μm 15 – 50 (depending on fiber diameter) Standard Numerical Aperture (NA) 0.22 ± 0.02 Available Numerical Aperture (NA) 0.12 ± 0.02 0.26 ± 0.02 Min operating temperature, °C -270 Max operating temperature, °C 600 Humidity Range Up to 100% Minimal bending radius (long term) 200 x fiber outer diameter Minimal bending radius (short term) 100 x fiber outer diameter Tensile strength (short gauge), GPa 3.5 – 6 Two point bending strength, GPa >10 Static fatigue parameter >100",
+    "token_count": 195
+  },
+  {
+    "id": "9c88cc31-a473-5e4a-9ad4-75bc423db1c5",
+    "evidence_id": "S06:web:a7290b10be5895992cdf",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nParameters of standard Cu-alloy coated Fibers Code Type Core, μm Cladding, μm Coating Cu, μm NA 100/110 Cu Step Index Multimode 100 ± 2% 110 ± 2% 145 ± 5% 0.22 200/220 Cu Step Index Multimode 200 ± 2% 220 ± 2% 270 ± 5% 0.22 400/440 Cu Step Index Multimode 400 ± 2% 440 ± 2% 535 ± 5% 0.22 600/660 Cu Step Index Multimode 600 ± 2% 660 ± 2% 745 ± 5% 0.22 50/125 Cu Graded Index Multimode 50 ± 2% 125 ± 2% 165 ± 2% 0.22 9/125 Cu Single mode 9 ± 5% 125 ± 5% 165 ± 2% 0.13",
+    "token_count": 175
+  },
+  {
+    "id": "b0108b85-3d39-5bd1-983a-e26fb68162ed",
+    "evidence_id": "S06:web:4c67cf3486c20a17486c",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nCopper Coated Silica Fibers Datasheet",
+    "token_count": 15
+  },
+  {
+    "id": "8f59354c-c22f-5261-9122-24b2a9fea3f5",
+    "evidence_id": "S06:web:6f0e9c15f844ed312cfb",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nHigh temperature environments",
+    "token_count": 10
+  },
+  {
+    "id": "ed7cb0e1-7d1a-5659-a0fd-ebc5c37ddec7",
+    "evidence_id": "S06:web:f4a7e8b8431e68de589f",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nHarsh Chemical environments",
+    "token_count": 10
+  },
+  {
+    "id": "b6992fb3-772a-5995-8ba4-02fe4ee649ed",
+    "evidence_id": "S06:web:9d5c784a1ca1cc3daca7",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nNuclear radiation resistant devices",
+    "token_count": 11
+  },
+  {
+    "id": "ee14ae12-fa8e-5aac-a943-d1fc34901a90",
+    "evidence_id": "S06:web:b4e4f0182ce3ae65dc17",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nDown-hole sensing for oil and gas industry",
+    "token_count": 16
+  },
+  {
+    "id": "c67bfd15-57eb-5ae3-a878-54a689dfbd83",
+    "evidence_id": "S06:web:642c2a9edca0a0441ef1",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nHigh Power Laser delivery",
+    "token_count": 11
+  },
+  {
+    "id": "3557a587-da24-596d-8813-6ec48ef06b29",
+    "evidence_id": "S06:web:7bfad720a4103374c981",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nMedical applications",
+    "token_count": 9
+  },
+  {
+    "id": "787e0db5-e7bf-5db8-81b1-9ffd4aa574c8",
+    "evidence_id": "S06:web:507ec664f2df66b3b22a",
+    "segment": 0,
+    "text": "Copper Coated Silica Fibers\nSoldered fiber bundles",
+    "token_count": 11
+  },
+  {
+    "id": "6cc9e320-465b-5cb2-92d2-b68780489209",
+    "evidence_id": "S06:web:7d84acee81bb8894f40a",
+    "segment": 0,
+    "text": "14th Winter Symposium on Chemometrics (WSC)\nWe are excited to share that this year Mir Photonics LLC was a co-organizer of the international scientific symposium on chemometrics (WSC), which was successfully held in beautiful Tsaghkadzor, Armenia from February 26 to March 1, 2024.",
+    "token_count": 70
+  },
+  {
+    "id": "dc86790e-d592-5983-b768-546a5257d399",
+    "evidence_id": "S06:web:bd5767f8c46e4da2a301",
+    "segment": 0,
+    "text": "14th Winter Symposium on Chemometrics (WSC)\nAlongside us, LightSpex and American Elements sponsored the event, contributing to its success.",
+    "token_count": 32
+  },
+  {
+    "id": "6507f54f-a617-589f-b38e-9b9c7a5830f7",
+    "evidence_id": "S06:web:36f3c5e2a9bf98b7f458",
+    "segment": 0,
+    "text": "14th Winter Symposium on Chemometrics (WSC)\nWSC covered a wide range of important topics in chemometrics, including new algorithms, applications in quantitative and qualitative analysis, Process Analytical Technology (PAT), experimental design, image analysis, and many others.\n\nOur goal was to blend theoretical aspects with practical data analysis, making it relevant for everyone.",
+    "token_count": 77
+  },
+  {
+    "id": "2aebe7ab-8a56-590b-bcf2-d2ac1ba8c227",
+    "evidence_id": "S06:web:5caf127bfb607eb7bde6",
+    "segment": 0,
+    "text": "14th Winter Symposium on Chemometrics (WSC)\nThis event was a great opportunity for experts from academia and industry to meet, share ideas, and discuss future fruitful collaborations.\n\nThe WSC conference aims to spread knowledge about chemometrics and build connections between scientists and the industry.",
+    "token_count": 61
+  },
+  {
+    "id": "aad9cdb8-9218-51e1-8231-f7da81169e21",
+    "evidence_id": "S06:web:dc2d07bb322432417c21",
+    "segment": 0,
+    "text": "14th Winter Symposium on Chemometrics (WSC)\nWhat sets this conference apart is its social and cultural program, making it not just a scientific event but also a unique experience for attendees.",
+    "token_count": 41
+  },
+  {
+    "id": "5115c47e-dd67-59f3-8f39-aaefc51c889f",
+    "evidence_id": "S06:web:4c58d5c65bb434c6467b",
+    "segment": 0,
+    "text": "14th Winter Symposium on Chemometrics (WSC)\nThanks to everyone involved for making the 14th Winter Symposium on Chemometrics a memorable and valuable event – and we are looking forward to seeing you next year!",
+    "token_count": 46
+  },
+  {
+    "id": "1f12e874-0b20-5a97-a86e-1658405bfc80",
+    "evidence_id": "S06:web:82b16673f1815f3165e5",
+    "segment": 0,
+    "text": "14th Winter Symposium on Chemometrics (WSC)\nshare this post:",
+    "token_count": 18
+  },
+  {
+    "id": "c277be0a-b1c7-5a9c-9580-4f1303108ac6",
+    "evidence_id": "S06:web:fd07f0ba315e9841bbb3",
+    "segment": 0,
+    "text": "Multispectral Laboratory of Optical Analysis Methods\nThis paper describes in detail the concept of an innovative multispectral laboratory, as well as new methods for the spectral analysis of liquids, solids, and gases based on an inter spectral chemometric approach.\n\nIt is intended for researchers in educational and scientific laboratories.",
+    "token_count": 64
+  },
+  {
+    "id": "1874e680-84a5-5d73-a10a-eefac0fd65f9",
+    "evidence_id": "S06:web:bd7d4a2ddc8cfff641ea",
+    "segment": 0,
+    "text": "Multispectral Laboratory of Optical Analysis Methods\nThe multispectral laboratory concept is presented by MIR Photonics LLC, acting as a system integrator that combines spectrometers, fiber optic probes, and chemometric methods into complete analytical solutions.",
+    "token_count": 55
+  },
+  {
+    "id": "47e8f1be-ead4-5dd6-9ce5-885c096f9866",
+    "evidence_id": "S06:web:eb2d4a04bdaeb997df1d",
+    "segment": 0,
+    "text": "Multispectral Laboratory of Optical Analysis Methods\nThe multimodal fiber optic probes used in these systems are developed and manufactured by art photonics GmbH (Berlin, Germany), a global OEM supplier of fiber optic sensing solutions covering the spectral range from UV to Mid IR. art photonics provides both standard products and customer specific probe designs, including multimodal and application tailored solutions.",
+    "token_count": 80
+  },
+  {
+    "id": "50778552-ec8d-5774-8444-e6af715535b0",
+    "evidence_id": "S06:web:ac6277296422cbfe1148",
+    "segment": 0,
+    "text": "Multispectral Laboratory of Optical Analysis Methods\nThis user manual was developed by “Mir photonics” and is intended for use by researchers of educational and scientific laboratories.",
+    "token_count": 35
+  },
+  {
+    "id": "c70a43bd-4423-505e-a39a-9f88c52940e5",
+    "evidence_id": "S06:web:95305bb9aa991e167e22",
+    "segment": 0,
+    "text": "Multispectral Laboratory of Optical Analysis Methods\nshare this post:",
+    "token_count": 15
+  },
+  {
+    "id": "e7132d1b-2a2b-57ce-b614-1dbd77110c73",
+    "evidence_id": "S06:web:eb2180a7b666de386a46",
+    "segment": 0,
+    "text": "Optical Multisensor Systems in Analytical Spectroscopy – A. Yu. Bogomolov\nA review of works in developing optical multisensor systems, a new class of specialized spectroscopic analyzers, is presented.\n\nThe development and use of such systems for analyzing food products, monitoring of pharmaceutical production processes, in biotechnology, medical diagnostics, and ecology are considered on practical examples.",
+    "token_count": 77
+  },
+  {
+    "id": "a0fef8f6-e557-534c-9670-ec4d9d1250d6",
+    "evidence_id": "S06:web:d5498ff4f88c73ed5fca",
+    "segment": 0,
+    "text": "Optical Multisensor Systems in Analytical Spectroscopy – A. Yu. Bogomolov\nshare this post:",
+    "token_count": 22
+  },
+  {
+    "id": "12452270-4043-530d-80eb-86fd7e155323",
+    "evidence_id": "S06:web:32cac7cbb9ddf6d5c325",
+    "segment": 0,
+    "text": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C\nExtended Thermal Performance Study and Optical Loss Analysis",
+    "token_count": 26
+  },
+  {
+    "id": "4124cf9b-c088-5122-bade-e88e85355209",
+    "evidence_id": "S06:web:5f89d1209ea825a6a668",
+    "segment": 0,
+    "text": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C\nIntroduction: Pushing the Limits of High-Temperature Optical Fibers",
+    "token_count": 29
+  },
+  {
+    "id": "2bfc68ef-26f2-59d0-8650-9cdb82384e27",
+    "evidence_id": "S06:web:c3cbb3fc6deebfa5c55e",
+    "segment": 0,
+    "text": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C\nThe purpose of this study is to answer the question of whether the aluminum-coated silica fibers produced by Mir Photonics can successfully operate at a temperature of 450°C.",
+    "token_count": 53
+  },
+  {
+    "id": "aee7cf70-ffbd-58b5-9a6c-d4dfc1eb94d1",
+    "evidence_id": "S06:web:57f3a1d3c12b52d8b766",
+    "segment": 0,
+    "text": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C\nHigh-temperature optical fibers are critical in industries such as energy, aerospace, industrial processing, and sensing in harsh environments.\n\nIn these applications, reliable performance under extreme thermal conditions is not just beneficial – it is essential.\n\nAluminum-coated silica fibers are widely used in such environments due to their mechanical strength, resistance to harsh conditions, and ability to maintain optical performance at elevated temperatures.",
+    "token_count": 94
+  },
+  {
+    "id": "e7981cc3-b186-5098-ae58-4f341c2a4892",
+    "evidence_id": "S06:web:b193222f0b3527bd09bd",
+    "segment": 0,
+    "text": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C\nHowever, despite their advantages, there is a notable limitation in the industry:",
+    "token_count": 33
+  },
+  {
+    "id": "683bab40-3268-565a-b4d3-b06f21c2f41e",
+    "evidence_id": "S06:web:217e011d8b2a23abde07",
+    "segment": 0,
+    "text": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C\nCurrently, most manufacturers of aluminum-coated silica fibers specify a maximum operating temperature of 400°C, and there is limited available data on performance at higher temperatures such as 450°C.",
+    "token_count": 56
+  },
+  {
+    "id": "4f7def7d-c02c-5350-b3bc-40dc216a8e73",
+    "evidence_id": "S06:web:a34d336b088f116c48c1",
+    "segment": 0,
+    "text": "Mir Photonics Aluminum-Coated Silica Fibers at Temperatures up to 450°C\nThis limitation raises an important question: Can aluminum-coated optical fibers perform reliably beyond the commonly accepted 400°C threshold?",
+    "token_count": 44
+  },
+  {
+    "id": "6f647405-6a6b-5d77-8fb7-8e6979f38a24",
+    "evidence_id": "S06:web:7f1ad886d6af533fa893",
+    "segment": 0,
+    "text": "Closing the Knowledge Gap in High -Temperature Fiber Performance\nAt Mir Photonics, we decided to fill this gap and measure the optical losses of the Al-coated fiber at a temperature of 450°C, using the fibers for sufficiently long-term operation.",
+    "token_count": 52
+  },
+  {
+    "id": "82a5d294-685d-5493-b842-492b0904fa41",
+    "evidence_id": "S06:web:b53491224e76b43dc0d0",
+    "segment": 0,
+    "text": "Closing the Knowledge Gap in High -Temperature Fiber Performance\nThis study is designed not only to test performance at higher temperatures but also to evaluate long-term stability, which is often overlooked in short-duration experiments.\n\nBy extending both temperature and exposure time, we aim to provide meaningful insights into real-world operating conditions.",
+    "token_count": 64
+  },
+  {
+    "id": "941f1665-aed0-52c0-8287-7dffccde43d2",
+    "evidence_id": "S06:web:16d75d97c9420322ed8c",
+    "segment": 0,
+    "text": "Fiber Design and Material Characteristics\nThe fiber under study was drawn from a quartz preform ( pure silica core/ fluoride dopped silica cladding ) with a low hydroxyl content (Low OH¯) , manufactured according to Mir Photonics ‘ high-quality fiber production standards.",
+    "token_count": 60
+  },
+  {
+    "id": "16082d8f-f329-57ea-9ea0-8ab7257696ec",
+    "evidence_id": "S06:web:072ed5ce3ec43add5dbb",
+    "segment": 0,
+    "text": "Fiber Design and Material Characteristics\nThe choice of materials is critical for high-temperature operation:",
+    "token_count": 19
+  },
+  {
+    "id": "3019acc0-2b7e-5e9e-8748-499ccf825aa2",
+    "evidence_id": "S06:web:09a17485b0f59df0238d",
+    "segment": 0,
+    "text": "Fiber Design and Material Characteristics\nPure silica core ensures low intrinsic attenuation",
+    "token_count": 17
+  },
+  {
+    "id": "5c92332f-fc62-5af8-89e9-be23a8bc7a61",
+    "evidence_id": "S06:web:7ef63f757765513caf31",
+    "segment": 0,
+    "text": "Fiber Design and Material Characteristics\nFluorine-doped silica cladding improves optical confinement",
+    "token_count": 20
+  },
+  {
+    "id": "a0ee6b6a-4534-5a25-a64d-1714c41353a5",
+    "evidence_id": "S06:web:831b62098a0ad20e4e34",
+    "segment": 0,
+    "text": "Fiber Design and Material Characteristics\nLow OH¯ content minimizes absorption peaks, especially in infrared regions",
+    "token_count": 19
+  },
+  {
+    "id": "ea985142-4ca7-5639-b8e9-e7974eeff3ee",
+    "evidence_id": "S06:web:e8d9ec341aa092989635",
+    "segment": 0,
+    "text": "Fiber Design and Material Characteristics\nThe parameters of the fiber were as follow: : core diameter 300 µm, cladding diameter 330 µm, aluminum coating thickness 20 µm.",
+    "token_count": 37
+  },
+  {
+    "id": "fb48e83c-b87b-534e-aa3e-ebe6c41cd220",
+    "evidence_id": "S06:web:4e9fc10bb3601569509f",
+    "segment": 0,
+    "text": "Fiber Design and Material Characteristics\nThese dimensions are typical for robust, large-core fibers used in demanding environments where both mechanical durability and stable signal transmission are required.",
+    "token_count": 35
+  },
+  {
+    "id": "0d65b4ac-b809-53bd-82ad-8c4e7b717006",
+    "evidence_id": "S06:web:aafb45bc4da1f7a26856",
+    "segment": 0,
+    "text": "Thermal Preparation and Testing Conditions\nThe Al-coated optical fiber were rewound onto a spool and heated to 450°C.\n\nAfter reaching 450°C, the fiber were held for 20 hours.",
+    "token_count": 42
+  },
+  {
+    "id": "b22a1fc5-b2f0-542b-bd1a-1833a3e35d7b",
+    "evidence_id": "S06:web:8f4ac090dc238e16ef51",
+    "segment": 0,
+    "text": "Thermal Preparation and Testing Conditions\nThis step simulates real operational conditions where fibers are often coiled or deployed in constrained geometries.\n\nThe extended exposure time of 20 hours allows for observation of both immediate and gradual thermal effects on optical performance.",
+    "token_count": 48
+  },
+  {
+    "id": "a40aaa83-97e8-5173-aa12-d7ef5a26dfd0",
+    "evidence_id": "S06:web:dec942b800b30bb8059a",
+    "segment": 0,
+    "text": "Experimental Setup for Optical Loss Measurement\nFig.1 Schematic diagram of the optical loss measurement setup",
+    "token_count": 21
+  },
+  {
+    "id": "9c8bf0cd-c95f-5dc9-b697-cf171bd66a61",
+    "evidence_id": "S06:web:3b52b87a7f03ef2be177",
+    "segment": 0,
+    "text": "Experimental Setup for Optical Loss Measurement\nExperimental setup consisted of AL coated fiber (1), which was placed in a high temperature furnace (2).\n\nThis fiber was fused (3) with additional same optical fiber (4) to get fixed mode structure.\n\nOptical losses were measured both using a spectrum analyzer (5), operating at wavelengths of 600 – 1650 nm, and an optical time domain reflectometer ( OTDR ) (6), measuring backscatter losses at a wavelength of 1300 nm.\n\nThe measurement was selected using an optical switch (7).",
+    "token_count": 114
+  },
+  {
+    "id": "203d9efa-285f-5554-b611-dc0f8264c473",
+    "evidence_id": "S06:web:1f5ed56d95d6cf642259",
+    "segment": 0,
+    "text": "Experimental Setup for Optical Loss Measurement\nThis setup ensures:",
+    "token_count": 12
+  },
+  {
+    "id": "1ebfea31-a23f-5b80-9778-21ef6479e0aa",
+    "evidence_id": "S06:web:6d9377fb9b505c46b76c",
+    "segment": 0,
+    "text": "Experimental Setup for Optical Loss Measurement\nAccurate spectral loss characterization across a wide wavelength range",
+    "token_count": 17
+  },
+  {
+    "id": "0edc2f3e-18b8-59ce-b150-81ee0244336d",
+    "evidence_id": "S06:web:41f78a3927f50d0f58ed",
+    "segment": 0,
+    "text": "Experimental Setup for Optical Loss Measurement\nReliable backscatter measurement using OTDR",
+    "token_count": 16
+  },
+  {
+    "id": "014f6d89-b6fd-5a38-b8ed-582a7cf05598",
+    "evidence_id": "S06:web:c2516a11d7052d5fbdfd",
+    "segment": 0,
+    "text": "Experimental Setup for Optical Loss Measurement\nStable mode propagation via fiber fusion",
+    "token_count": 14
+  },
+  {
+    "id": "5fc1427d-ff88-52f4-877b-b073110a1b3e",
+    "evidence_id": "S06:web:740067ce9933f0a815c9",
+    "segment": 0,
+    "text": "Experimental Setup for Optical Loss Measurement\nSuch a dual-measurement approach increases confidence in the results and allows for cross-validation of optical loss data.",
+    "token_count": 30
+  },
+  {
+    "id": "50918e52-7cd5-5859-bc3a-85e1d0aad1e4",
+    "evidence_id": "S06:web:6c1d24a67cfb7d374d87",
+    "segment": 0,
+    "text": "Measurement Methodology\nThe optical losses of the fiber were measured: a) after fiber rewinding (free coil), b) after annealing at 180°C (15min) and c) after thermal test at 450°C (20 hours).",
+    "token_count": 53
+  },
+  {
+    "id": "516fbd4c-1116-5ebb-8e0c-146a79725d02",
+    "evidence_id": "S06:web:04d087a8acbe9166470d",
+    "segment": 0,
+    "text": "Measurement Methodology\nThis stepwise approach allows us to isolate different contributing factors:",
+    "token_count": 16
+  },
+  {
+    "id": "2dce67de-3c51-5e2d-b2fa-9842f038c8ae",
+    "evidence_id": "S06:web:701da4e7a538f5ebb621",
+    "segment": 0,
+    "text": "Measurement Methodology\nMechanical stress from rewinding",
+    "token_count": 10
+  },
+  {
+    "id": "fad14133-a5da-5717-8354-443def1a2dd5",
+    "evidence_id": "S06:web:6b7f55266d3b32520381",
+    "segment": 0,
+    "text": "Measurement Methodology\nStructural changes from annealing",
+    "token_count": 9
+  },
+  {
+    "id": "8dc8b941-514a-5464-aa7d-59a98e023ebf",
+    "evidence_id": "S06:web:9ac94055a94274a2f4ff",
+    "segment": 0,
+    "text": "Measurement Methodology\nLong-term thermal degradation at high temperature",
+    "token_count": 12
+  },
+  {
+    "id": "4d2bf717-69c7-57c4-a04e-f1bdd6e11148",
+    "evidence_id": "S06:web:78aaf13e0621edec7185",
+    "segment": 0,
+    "text": "Optical Loss Behavior: Initial and Annealed States\nFig.2 Optical losses vs wavelength (free coil; after annealing, after thermal test @ 450°C).",
+    "token_count": 36
+  },
+  {
+    "id": "b0e61971-5841-5e0d-8bc4-9228bc5578f5",
+    "evidence_id": "S06:web:910921f80f5cf523faca",
+    "segment": 0,
+    "text": "Optical Loss Behavior: Initial and Annealed States\nOptical losses immediately after fiber rewinding were < 30 dB/km (green line), however after annealing fiber at 180°C for 15min losses as usual dropped (blue line) and became less than 5 dB/km.",
+    "token_count": 60
+  },
+  {
+    "id": "6f33923e-1af5-5fba-a5a8-6afd5c6ef6ff",
+    "evidence_id": "S06:web:9d7223e7470f95da32d8",
+    "segment": 0,
+    "text": "Optical Loss Behavior: Initial and Annealed States\nThis significant reduction in loss highlights an important phenomenon in metal-coated fibers:",
+    "token_count": 27
+  },
+  {
+    "id": "81a636a1-f770-5afb-bd21-81991cb36dac",
+    "evidence_id": "S06:web:9b674cef98dbbf499e9a",
+    "segment": 0,
+    "text": "Optical Loss Behavior: Initial and Annealed States\nRewinding introduces microbending losses",
+    "token_count": 20
+  },
+  {
+    "id": "8de98bbf-58e0-56ed-9ef0-83795c059690",
+    "evidence_id": "S06:web:a0d7fa4998a518d16f1d",
+    "segment": 0,
+    "text": "Optical Loss Behavior: Initial and Annealed States\nAnnealing relieves internal stresses and improves performance",
+    "token_count": 21
+  },
+  {
+    "id": "1dd04e89-a85d-5c98-af12-11d8c4fe38a2",
+    "evidence_id": "S06:web:868b38f8bccbe4c4facb",
+    "segment": 0,
+    "text": "Optical Loss Behavior: Initial and Annealed States\nAt a wavelength λ = 1389 nm the pick observed which is due to the diffusion of hydroxyl groups from the quartz cladding into the core of the fiber.",
+    "token_count": 46
+  },
+  {
+    "id": "a028317d-625e-5dc5-8ad6-406f8c023aae",
+    "evidence_id": "S06:web:d5384dbc15bccce8e53d",
+    "segment": 0,
+    "text": "Optical Loss Behavior: Initial and Annealed States\nThis OH¯ absorption peak is a known characteristic in silica fibers and serves as an indicator of material composition and diffusion processes.",
+    "token_count": 36
+  },
+  {
+    "id": "22f238b0-0a0c-5eaf-a2fe-bb3cd5fe95f0",
+    "evidence_id": "S06:web:6105d26ab798bb93f75a",
+    "segment": 0,
+    "text": "Understanding Microbending Loss Reduction\nThe reason for the reduction in microbending losses at temperature 180°C is the recrystallization annealing of the metal coating, as a result of which a new structure of the metal coating without defects is formed.",
+    "token_count": 53
+  },
+  {
+    "id": "e7e7a824-8ccc-5884-ad4d-04ebad6bf2d2",
+    "evidence_id": "S06:web:880646f51dbf2e340a0b",
+    "segment": 0,
+    "text": "Understanding Microbending Loss Reduction\nThis insight is particularly valuable for industrial applications:",
+    "token_count": 17
+  },
+  {
+    "id": "9666ccbc-c137-5af9-bedc-40bc372b92d4",
+    "evidence_id": "S06:web:c96c8d86d28ec2056bd2",
+    "segment": 0,
+    "text": "Understanding Microbending Loss Reduction\nAluminum coating undergoes structural reorganization",
+    "token_count": 13
+  },
+  {
+    "id": "7ed42d35-d3f6-541d-8b9b-d8b86c6f5a07",
+    "evidence_id": "S06:web:d123c265fc95dfd8ceac",
+    "segment": 0,
+    "text": "Understanding Microbending Loss Reduction\nDefects are reduced, improving mechanical uniformity",
+    "token_count": 16
+  },
+  {
+    "id": "0cb5bab8-fef2-5cc2-a5f1-49b25adc8137",
+    "evidence_id": "S06:web:7b69862612448f2407fd",
+    "segment": 0,
+    "text": "Understanding Microbending Loss Reduction\nOptical performance stabilizes",
+    "token_count": 12
+  },
+  {
+    "id": "daee0671-7add-5896-a543-5a0689a80ea7",
+    "evidence_id": "S06:web:425e0f4059b4b93be623",
+    "segment": 0,
+    "text": "Understanding Microbending Loss Reduction\nAnnealing, therefore, is not just a preparation step—it is a performance optimization process.",
+    "token_count": 27
+  },
+  {
+    "id": "93edd0a4-e51b-5a4a-9e2a-3b3588f9a407",
+    "evidence_id": "S06:web:fdf97bb86f800044c119",
+    "segment": 0,
+    "text": "High-Temperature Exposure at 450°C\nFig.3 Thermal induced optical loss (dB/km) vs wavelength (nm)",
+    "token_count": 27
+  },
+  {
+    "id": "66f34cf7-3e9a-57f7-9b10-f33956e039cf",
+    "evidence_id": "S06:web:f7fc55bc6a055b1aa500",
+    "segment": 0,
+    "text": "High-Temperature Exposure at 450°C\nThe optical losses of the fiber changed when it was heated to 450°C for: 7 min, 92 min and 1066 min.",
+    "token_count": 37
+  },
+  {
+    "id": "fd221b8b-5579-562b-b97b-f0c576f073aa",
+    "evidence_id": "S06:web:34068fc2520618a6f97d",
+    "segment": 0,
+    "text": "High-Temperature Exposure at 450°C\nMonitoring the fiber at multiple time intervals allows us to track:",
+    "token_count": 22
+  },
+  {
+    "id": "ce1746eb-c2e4-5328-9503-b84f747fdfb3",
+    "evidence_id": "S06:web:3f275adc1b6fedd0effb",
+    "segment": 0,
+    "text": "High-Temperature Exposure at 450°C\nImmediate thermal effects",
+    "token_count": 13
+  },
+  {
+    "id": "83a8602e-a23a-5467-be54-5768c7feef4d",
+    "evidence_id": "S06:web:85f6e0fabb8b2fceb5e8",
+    "segment": 0,
+    "text": "High-Temperature Exposure at 450°C\nIntermediate stabilization",
+    "token_count": 12
+  },
+  {
+    "id": "b8875a0e-175e-583c-8c1c-65711b77d342",
+    "evidence_id": "S06:web:d61a3e1c1c156b6d5ed4",
+    "segment": 0,
+    "text": "High-Temperature Exposure at 450°C\nLong-term degradation trends",
+    "token_count": 15
+  },
+  {
+    "id": "c0eabf52-afc1-509d-be1f-e763efcd9be5",
+    "evidence_id": "S06:web:6b8161f51c2a766fb095",
+    "segment": 0,
+    "text": "Long-Term Thermal Performance Results\nWhen the exposure time is increased to 20 hours at 450°C, the optical losses reach 10 dB/km = 800 nm) and 15 dB/km = 1300 nm.",
+    "token_count": 43
+  },
+  {
+    "id": "c587bd9c-0166-5f69-acda-a7afd6f52998",
+    "evidence_id": "S06:web:3ece38820f89027c6476",
+    "segment": 0,
+    "text": "Long-Term Thermal Performance Results\nThese results demonstrate that:",
+    "token_count": 13
+  },
+  {
+    "id": "d93d3f1a-1d1b-52ba-96c5-96b5ef2e1fee",
+    "evidence_id": "S06:web:d772523c884bb49c8378",
+    "segment": 0,
+    "text": "Long-Term Thermal Performance Results\nOptical losses increase with prolonged exposure",
+    "token_count": 14
+  },
+  {
+    "id": "578784dd-afee-5840-90ae-52345da4e47a",
+    "evidence_id": "S06:web:97db50636ea394b2c01f",
+    "segment": 0,
+    "text": "Long-Term Thermal Performance Results\nThe increase remains within a manageable range",
+    "token_count": 16
+  },
+  {
+    "id": "21045665-6001-5a5b-aefe-b26c74c7ff23",
+    "evidence_id": "S06:web:a713c624c435ae4899d9",
+    "segment": 0,
+    "text": "Long-Term Thermal Performance Results\nPerformance degradation is gradual rather than catastrophic",
+    "token_count": 15
+  },
+  {
+    "id": "af251250-1ecf-551e-a34e-ade36eb40708",
+    "evidence_id": "S06:web:6fcc5a672b58a59895bc",
+    "segment": 0,
+    "text": "Final Conclusion: Can Aluminum-Coated Fibers Operate at 450°C?\nIt was shown that Mir Photonics aluminum-coated silica fiber can be successfully used at T = 450°C for 20 hours with a slight increase in optical loss.",
+    "token_count": 50
+  },
+  {
+    "id": "93980500-8912-51bd-8c51-187eea7c81be",
+    "evidence_id": "S06:web:b7842fc30aa82156beef",
+    "segment": 0,
+    "text": "Final Conclusion: Can Aluminum-Coated Fibers Operate at 450°C?\nThis finding is significant for the fiber optics industry:",
+    "token_count": 26
+  },
+  {
+    "id": "ddce3cc3-7dd9-5e43-b05f-4544467be2d6",
+    "evidence_id": "S06:web:a306390588a8d149b299",
+    "segment": 0,
+    "text": "Final Conclusion: Can Aluminum-Coated Fibers Operate at 450°C?\nIt challenges the commonly stated 400°C limit",
+    "token_count": 25
+  },
+  {
+    "id": "e63d6075-10dd-585d-b4f6-20aea41b5c4b",
+    "evidence_id": "S06:web:e527c5bd7711ef1e722e",
+    "segment": 0,
+    "text": "Final Conclusion: Can Aluminum-Coated Fibers Operate at 450°C?\nIt provides experimental evidence for higher temperature operation",
+    "token_count": 24
+  },
+  {
+    "id": "82d4860c-157e-5f44-b32a-9ed7745d82b1",
+    "evidence_id": "S06:web:b443b8114395a094fb04",
+    "segment": 0,
+    "text": "Final Conclusion: Can Aluminum-Coated Fibers Operate at 450°C?\nIt supports the use of aluminum-coated fibers in more extreme environments",
+    "token_count": 29
+  },
+  {
+    "id": "89a2d8d2-a2b8-5529-969a-8a1bb75c8cb1",
+    "evidence_id": "S06:web:d7f221772209020bccb2",
+    "segment": 0,
+    "text": "Implications for Industry Applications\nThe ability to operate at 450°C opens new opportunities in:",
+    "token_count": 19
+  },
+  {
+    "id": "890c73f2-5ca9-52b7-9496-4c52227128c5",
+    "evidence_id": "S06:web:1a0bfa2d8f8d9cbabeb4",
+    "segment": 0,
+    "text": "Implications for Industry Applications\nHigh-temperature industrial sensing",
+    "token_count": 11
+  },
+  {
+    "id": "8300c81b-478f-5b80-9a24-c7dcac3c52f4",
+    "evidence_id": "S06:web:2a8f35285959639eb57c",
+    "segment": 0,
+    "text": "Implications for Industry Applications\nOil & gas downhole monitoring",
+    "token_count": 12
+  },
+  {
+    "id": "9d6aa93d-e168-5d8d-8851-e54887e9234d",
+    "evidence_id": "S06:web:76b1f3641d62d9cba4cc",
+    "segment": 0,
+    "text": "Implications for Industry Applications\nAerospace and defense systems",
+    "token_count": 10
+  },
+  {
+    "id": "c4634ac6-91fb-5af3-b31d-447d0d6ba2e6",
+    "evidence_id": "S06:web:a69308c58eb0fc51aaa8",
+    "segment": 0,
+    "text": "Implications for Industry Applications\nPower generation and turbine monitoring",
+    "token_count": 11
+  },
+  {
+    "id": "add0765c-57ad-5e1a-81b9-e7e8258e1b34",
+    "evidence_id": "S06:web:80fb9f06a588e2953cef",
+    "segment": 0,
+    "text": "Implications for Industry Applications\nIn these environments, even a modest extension of temperature capability can significantly expand operational possibilities.",
+    "token_count": 23
+  },
+  {
+    "id": "bc99135d-f1e0-5b88-b322-b76fe1373658",
+    "evidence_id": "S06:web:134b55d81b1b0457c62a",
+    "segment": 0,
+    "text": "Why This Study Matters\nThis study does more than present experimental results—it contributes to a broader understanding of:",
+    "token_count": 23
+  },
+  {
+    "id": "99dcc6c4-04ce-5d21-8fb6-1e4e0d4559d0",
+    "evidence_id": "S06:web:aaeb310673d23cdaec62",
+    "segment": 0,
+    "text": "Why This Study Matters\nThermal behavior of metal-coated optical fibers",
+    "token_count": 14
+  },
+  {
+    "id": "99877586-02c8-5cdf-9a87-5bf6bfeb8dfd",
+    "evidence_id": "S06:web:75882d8ede13a3b77eb7",
+    "segment": 0,
+    "text": "Why This Study Matters\nLong-term stability under extreme conditions",
+    "token_count": 13
+  },
+  {
+    "id": "1a8070f4-51cf-5d87-a82f-105fe85826c0",
+    "evidence_id": "S06:web:38faa48ab5e6d392ab7f",
+    "segment": 0,
+    "text": "Why This Study Matters\nMaterial science of aluminum coatings",
+    "token_count": 12
+  },
+  {
+    "id": "1e5d6288-c329-5c2b-a9b3-ff0bb23da28a",
+    "evidence_id": "S06:web:2e48c1ccdbf9e431abaa",
+    "segment": 0,
+    "text": "Why This Study Matters\nBy addressing a gap in existing data, it provides valuable guidance for engineers, researchers, and system designers.",
+    "token_count": 27
+  },
+  {
+    "id": "725a4eec-a20a-530a-b662-41c086edf3d8",
+    "evidence_id": "S06:web:f7fd8d18aad4b8d2f76a",
+    "segment": 0,
+    "text": "Final Thoughts\nThe results confirm that aluminum-coated silica fibers are more capable than previously documented.\n\nWhile optical losses do increase at higher temperatures, the performance remains stable enough for many demanding applications.",
+    "token_count": 40
+  },
+  {
+    "id": "53a4a0ba-985f-5fdb-a64d-b289de804ff1",
+    "evidence_id": "S06:web:0f82d8cddb7426ead6e1",
+    "segment": 0,
+    "text": "Final Thoughts\nThis work by Mir Photonics’ demonstrates the importance of pushing beyond established limits and validating material performance through rigorous testing.",
+    "token_count": 28
+  },
+  {
+    "id": "6f7d36d4-d3fe-5851-a26f-569331e4e2dc",
+    "evidence_id": "S06:web:6b028b63e9bc4acc43ee",
+    "segment": 0,
+    "text": "Final Thoughts\nshare this post:",
+    "token_count": 8
+  }
+]
