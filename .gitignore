@@ -48,6 +48,15 @@ Desktop.ini
 # Keep reviewed corpus files and required evaluation outputs trackable.
 # Do not ignore knowledge/*.json, knowledge/*.jsonl or outputs/ globally.
 
+# Routine diagnostic runs stay local; explicitly retain source-reviewed run records.
+/outputs/assessment/[0-9]*.json
+!/outputs/assessment/20261017T204318Z_3ebb9b193319407aa703eca6dd222209.json
+/outputs/extraction/[0-9]*.json
+!/outputs/extraction/20261017T162638Z_eca1681faa1948bd9a0b11aacd0c05e3.json
+!/outputs/extraction/20261017T162839Z_2d073001ae594680b250652ae122a62c.json
+/outputs/retrieval/[0-9]*.json
+!/outputs/retrieval/20261017T172345052038Z.json
+
 # Rebuildable ingestion working data and local model binaries
 /outputs/embedding_models/
 /outputs/ingest/cache/

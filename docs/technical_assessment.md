@@ -50,7 +50,7 @@ Synthesis makes one attempt, without automatic content repair or provider fallba
 .\.venv\Scripts\python.exe -m backend.smoke_assessment --provider llmtech --public-trial
 ```
 
-The diagnostic runner defaults to D01 and D02 from the development enquiry fixture, runs every stage freshly, and saves timestamped records under `outputs/assessment/`. Use repeatable `--case D01` or `--case D02` to select cases. Its run-only defaults are a 180-second pipeline deadline and a 60-second provider-call timeout; `--request-deadline-s` and `--call-timeout-s` can change these within existing settings bounds.
+The diagnostic runner defaults to D01 and D02 from the development enquiry fixture, runs every stage freshly, and saves timestamped records under `outputs/assessment/`. Routine timestamped runs are ignored by Git; source-reviewed records are retained through explicit `.gitignore` exceptions alongside their review receipts. Use repeatable `--case D01` or `--case D02` to select cases. Its run-only defaults are a 180-second pipeline deadline and a 60-second provider-call timeout; `--request-deadline-s` and `--call-timeout-s` can change these within existing settings bounds.
 
 The LLMTech override uses `nvidia/Qwen3.8-27B-NVFP4`. The explicit public-trial flag retrieves the documented trial only if no backend LLMTech key is configured. Saved provider settings are unchanged. Corpus evidence is sent to the selected provider for synthesis; credentials remain backend-only. Failures retain successfully completed stage outputs and sanitized diagnostics separately from successful assessments.
 
