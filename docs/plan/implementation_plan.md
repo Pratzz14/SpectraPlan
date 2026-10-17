@@ -1,7 +1,7 @@
 # SpectraPlan Iterative Implementation Plan
 
 **Based on:** [Technical specification v1.1](spec.md)\
-**Status:** F02 checkpointed at user request; 64 source pages saved, publication gate remains open\
+**Status:** F01–F02 complete; corpus published and validated; F03 customer enquiry extraction is next\
 **Structure:** Main feature → tasks → subtasks\
 **Target:** A working, source-grounded spectroscopy assessment app with reproducible evaluation outputs.
 
@@ -58,31 +58,35 @@ The timeboxes are the specification's proposed 12-hour budget, not guaranteed es
 
 **Completion gate:** Both services start, frontend-to-backend communication works, and the selected provider returns a locally validated response. Missing corpus readiness is expected until F02; a mocked provider alone does not complete the live-provider gate.
 
-**Observed F01 status (2026-10-17): Complete.** Local services, readiness API, development proxy and browser checks pass. Selected provider: Groq `qwen/qwen3.8-27b`, with configurable medium reasoning and strict JSON Schema plus local Pydantic validation. After the key was supplied locally, the [successful live smoke record](../../outputs/provider_smoke/20261017T094530Z_0cb5a2339fbc465d895e14d32f6745ea.json) captured `sample_phase="powder"` and `target="moisture"`, with local schema/content validation and exit 0. The [earlier missing-key attempt](../../outputs/provider_smoke/20261017T092630Z_d3e51022e47a4ec4ab8a9cfb114b34f3.json) is preserved. Missing corpus is expected; F02–F10 remain unimplemented.
+**Observed F01 status (2026-10-17): Complete.** Local services, readiness API, development proxy and browser checks pass. Selected provider: Groq `qwen/qwen3.8-27b`, with configurable medium reasoning and strict JSON Schema plus local Pydantic validation. After the key was supplied locally, the [successful live smoke record](../../outputs/provider_smoke/20261017T094530Z_0cb5a2339fbc465d895e14d32f6745ea.json) captured `sample_phase="powder"` and `target="moisture"`, with local schema/content validation and exit 0. The [earlier missing-key attempt](../../outputs/provider_smoke/20261017T092630Z_d3e51022e47a4ec4ab8a9cfb114b34f3.json) is preserved. The corpus was missing at this earlier milestone; F02 is now published as recorded below. F03 onward remain future work.
 
 ## F02 — Source-grounded AFS knowledge base
 
-**Outcome:** Reproducible technical evidence with source locations, automated validation and optional manual verification. No mandatory approval workflow.**Spec:** Section 5 and `docs/knowledge_pipeline.md`.**Primary files:** `backend/ingest.py`, `knowledge/source_manifest.json`, `knowledge/passages.jsonl`, `knowledge/methods.json`.
+**Outcome:** Reproducible technical evidence with source locations, automated validation and optional manual verification. No mandatory approval workflow.\
+**Spec:** Section 5 and `docs/knowledge_pipeline.md`.\
+**Primary files:** `backend/ingest.py`, `knowledge/source_manifest.json`, `knowledge/passages.jsonl`, `knowledge/methods.json`.
 
 - [x] **F02.1 — Inventory and separate materials**
   - [x] Map S01–S06 and T01 to exact filenames; compute hashes, PDF page counts and workbook dimensions.
   - [x] Exclude development, evaluation, challenge and unknown content from technical retrieval.
   - [x] Classify S05/S06 as business context and use configurable source locations.
-- [ ] **F02.2 — Implement page-level extraction and source checks**
+- [x] **F02.2 — Implement page-level extraction and source checks**
   - [x] Extract exact source blocks, render pages, retain 1-based page locations and quotation offsets.
   - [x] Add versioned Qwen extraction/verification prompts with strict schemas and separate figure transcriptions.
   - [x] Separate automated validation, human verification and technical retrieval eligibility.
-  - [ ] Complete the live 64-page corpus build and inspect representative text and high-value S02 figures.
+  - [x] Complete the live 64-page corpus build and inspect representative text and high-value S02 figures.
 - [x] **F02.3 — Import the method table**
   - [x] Preserve all 19 rows, nine columns and seven notes, with workbook sheet/row and S01 Table 1 p.6 provenance.
   - [x] Preserve qualitative ratings, optical depth/path and fiber-length distinctions.
-- [ ] **F02.4 — Verify end-to-end ingestion**
+- [x] **F02.4 — Verify end-to-end ingestion**
   - [x] Test locations, stable IDs, caching, method rows, exclusions, report escaping and atomic publication.
   - [x] Implement local BGE embeddings, token checks, Qdrant, BM25 and RRF search.
   - [x] Document rebuild commands and manual inspection without an approval step.
-  - [ ] Verify full live corpus, unchanged-source rebuild and representative real hybrid searches.
+  - [x] Verify full live corpus, unchanged-source rebuild and representative real hybrid searches.
 
 **Completion gate:** Every active record resolves to its source and passes defined automated checks; all workbook data and notes survive; ambiguous and excluded records are inspectable; and the published corpus/index revisions agree. Human verification is optional and never implies AFS approval. Keep the live gate open until it is evidenced.
+
+**Observed F02 status (2026-10-17): Complete.** The LLMTech ingestion override resumed the saved checkpoint, retried S04 p.5 verification, processed all 64 pages, imported 19 method rows and seven notes, built local BGE/Qdrant/BM25 indexes, and atomically published `corpus-4aac882441587796afe5`. Validation passed with 152 passages, 81 eligible passages, 19 eligible methods, 63 flagged records and zero human-verified records. Representative powder/API and opaque-dairy searches returned records from both BM25 and Qdrant. An unchanged cached rebuild preserved the corpus version and evidence IDs/revisions. The embedded Qdrant store must not be queried concurrently because its local file lock is single-client. The evaluation scenario file remains intentionally excluded from F02 and is an F09 input.
 
 ## F03 — Customer enquiry extraction
 
@@ -323,13 +327,16 @@ Add one row after each implementation increment. Include the exact check/command
 | 2026-10-17 | F01.3 browser verification | Passed | React readiness page and Vite proxy | Installed Chrome via bundled Playwright (Browser plugin unavailable), 1440×1000 and 390×844: correct page identity, meaningful content, no framework overlay or normal console errors, loading, real proxy refresh, keyboard refresh, no horizontal overflow, simulated HTTP 503 error and recovery through the real backend. Screenshots inspected outside the repository. | Assessment workflow and scientific validation belong to later features |
 | 2026-10-17 | F01.2 live smoke attempt | Unresolved dependency | Timestamped record under `outputs/provider_smoke/` | `python -m backend.smoke_provider`: exit 1, `provider_not_configured`, no model call; run ID `d3e51022e47a4ec4ab8a9cfb114b34f3` | Supply backend-only `GROQ_API_KEY`, rerun, preserve this earlier record |
 | 2026-10-17 | F01.2 live provider verification; overall F01 gate | Complete | New timestamped smoke record; README; checklist | `python -m backend.smoke_provider`: exit 0; real Groq `qwen/qwen3.8-27b` response passes strict local schema and synthetic-fact checks (`powder`, `moisture`); run ID `0cb5a2339fbc465d895e14d32f6745ea`. Earlier missing-key record retained. Backend restarted; real browser refresh confirms provider configured, corpus missing and ready false, with no console errors. `.env` remains ignored; smoke records contain no API key. | F02 reviewed knowledge base; missing corpus readiness remains expected |
+| 2026-10-17 | F02.2, F02.4 | Complete | `backend/ingest.py`, `backend/retrieval.py`, published `knowledge/versions/corpus-4aac882441587796afe5`, `README.md`, this plan | `python -m backend.ingest build --provider llmtech --public-trial`: all 64 pages processed and publication passed; `python -m backend.ingest validate`: passed; representative powder/API and opaque-dairy searches returned both `bm25` and `qdrant` branches; `python -m backend.ingest report`: report rendered; unchanged cached rebuild preserved corpus version and evidence IDs/revisions; backend `pytest`: 69 passed; frontend `npm run build`: passed | F03 customer enquiry extraction is next. The missing final-evaluation scenario file is intentionally excluded from F02 and remains an F09 dependency |
 
 **Runner note:** Python asynchronous networking and the Vite proxy stalled inside the restricted Windows sandbox. Tests and both servers were verified outside it; a minimal traceback located the stall in Windows `socketpair` during event-loop creation. Workspace-local temporary paths resolved the separate `ensurepip` write restriction. These accommodations do not change application behavior.
 
-**Suggested next iteration request:** “Implement F02 only. Complete its subtasks, verify its completion gate, update this plan with the actual results, and report any unresolved dependency.”
+**Suggested next iteration request:** “Implement F03 customer enquiry extraction using the published F02 corpus. Verify the F03 completion gate, update this plan and report unresolved dependencies. Reuse the existing search infrastructure when continuing F04.”
 
 
 ### 2026-10-17 — F02 implementation and bounded live validation
+
+**Historical checkpoint, superseded by the completed F02 milestone above.** The failures and open gates below describe the earlier Groq pilot, not the current published corpus.
 
 Implemented the ingestion CLI, strict Qwen text/visual extraction and separate verification contracts, exact source anchors, immutable generations with atomic publication, workbook import, the inspection report and local Qdrant/BM25 search. Updated readiness fields and frontend language to separate automated eligibility from optional human verification; no approval workflow is required. Added the pipeline contract and rebuild instructions.
 
@@ -345,9 +352,13 @@ Remaining gate: resolve the live visual extraction output-budget failure, comple
 
 ### 2026-10-17 — LLMTech extraction checkpoint
 
+**Historical checkpoint, superseded by the published corpus.** Preserve its saved files as a record of the interrupted run.
+
 The authorized LLMTech run obtained extraction responses for all 64 PDF pages. Progress is saved in `knowledge/saved_extraction_64/`, including source blocks, all 64 hash-checked images, model responses, 149 deduplicated evidence records, 19 workbook rows, seven notes, an unpublished inspection report and explicit resume instructions. At checkpoint time, 59 page stages are complete; S03 pages 12, 15, 16, 17 and S04 page 6 require retry/verification or bibliography handling. There are 75 eligible passages before publication and 67 flagged records. Source-image inspection caught legend and unit errors missed by the model verifier; explicit exclusions are retained in `knowledge/source_checks.json`. No complete corpus/index is published. The live process was stopped to preserve the checkpoint when the user reported limited Codex usage. Latest backend regression suite: 66 passed; frontend typecheck/build passed. Continue with the checkpoint README; F02 remains unfinished.
 
 ### 2026-10-17 — Resume checkpoint at 5% remaining Codex usage
+
+**Historical checkpoint, superseded by the published corpus.** Its pending page counts and missing-pointer status were accurate when work stopped; they are not outstanding F02 tasks now.
 
 Work stopped at the user's request to record progress. No background extraction process remains running. Preserve the earlier 64-page snapshot as an unpublished historical checkpoint.
 
@@ -386,3 +397,15 @@ After successful publication:
 ```
 
 Keep existing caches and the saved snapshot. Interactive Groq configuration remains unchanged. LLMTech is temporary; check its documented shutdown date before a later resume. F02 remains unfinished until publication, reproducibility, real retrieval and browser checks pass.
+
+### 2026-10-17 — F02 cleanup and published-report verification
+
+**Current milestone: F02 is complete; F03 is next.** Reconciled the README, pipeline contract and plan header with `corpus-4aac882441587796afe5`. Earlier Groq failures and low-usage checkpoints are explicitly historical; their raw reports and responses are preserved. The checkpoint README now points to the published report.
+
+- [x] Published corpus retained: 64 pages, 152 passages, 81 searchable passages, 19 method rows, seven notes, 111 embedding segments, 63 flagged records and zero human-verified records. Source checks do not imply AFS approval.
+- [x] Browser flow verified: local application → status refresh → **Inspect extracted knowledge** → published version. Microsoft Edge via Playwright at 1440×1000 and 390×844; Browser plugin unavailable. Page identity, meaningful content, no framework overlay, no relevant console errors and no horizontal mobile overflow pass.
+- [x] Report interactions verified: 19 method rows with nine columns and S01 Table 1 p.6 provenance; all seven notes; 100 searchable records including methods; excluded business content and known source-image mismatches; empty search state; 64 raw-page choices and rendered source preview. All 64 source-image routes return HTTP 200 JPEGs. Screenshots and detailed browser receipt are stored outside the repository.
+- [x] Local frontend dependencies restored with `npm ci` from the unchanged lockfile. TypeScript/production build passes. No application code, model settings, extraction prompts or record eligibility rules changed in cleanup.
+- [x] Evidence, the active pointer, canonical manifests, embedding segments and BM25 data are included in the cleanup commit. Credentials, originals, source images, raw pages, HTML reports, model binaries and Qdrant binaries remain ignored and local. A fresh checkout must rebuild from separately supplied originals before readiness/search can pass.
+
+The current completion receipt is `outputs/ingest/published_validation.json`. It records deep validation, a cached rebuild with live model calls disabled, stable corpus/evidence revisions, real hybrid searches and post-search index validation. Historical pilot receipts remain unchanged. The interactive provider remains Groq; the published corpus records the LLMTech ingestion provider. Context-aware evidence selection, the evidence API and the assessment workflow remain future features.

@@ -1,5 +1,7 @@
 # Saved extraction checkpoint
 
+**Historical snapshot:** F02 has since been completed and published as `corpus-4aac882441587796afe5`. Open [the current published report](../versions/corpus-4aac882441587796afe5/review.html) or run `python -m backend.ingest report` from the project root. Counts and pending pages below describe this earlier snapshot only; its report and model responses are preserved unchanged.
+
 Saved on 2026-10-17 to preserve progress with limited remaining Codex usage.
 
 - All 64 PDF pages: original extracted blocks, source locations, rendered images and verified image hashes.

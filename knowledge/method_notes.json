@@ -1,0 +1,44 @@
+[
+  {
+    "source_id": "T01",
+    "sheet": "notes",
+    "row": 1,
+    "text": "Source: \"Multispectral Laboratory of Optical Analysis Methods\", Table 1, page 6 (file S01)."
+  },
+  {
+    "source_id": "T01",
+    "sheet": "notes",
+    "row": 2,
+    "text": "Transcribed from the rendered page because PDF text extraction interleaves the columns."
+  },
+  {
+    "source_id": "T01",
+    "sheet": "notes",
+    "row": 3,
+    "text": "\"mu\" in the original means micrometres; written here as \"um\"."
+  },
+  {
+    "source_id": "T01",
+    "sheet": "notes",
+    "row": 4,
+    "text": "Merged cells of the original are expanded, so each row is independent."
+  },
+  {
+    "source_id": "T01",
+    "sheet": "notes",
+    "row": 5,
+    "text": "sensitivity / selectivity / cost are the original qualitative ratings (low / average / high), not measured values."
+  },
+  {
+    "source_id": "T01",
+    "sheet": "notes",
+    "row": 6,
+    "text": "\"ATR probe*\" carries an asterisk in the original; no footnote is printed on that page."
+  },
+  {
+    "source_id": "T01",
+    "sheet": "notes",
+    "row": 7,
+    "text": "Status: transcription for AFS review. Ratings are the source document's, not an AFS product specification."
+  }
+]

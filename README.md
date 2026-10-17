@@ -4,9 +4,9 @@ SpectraPlan is a planned AI assistant for the first technical assessment of indu
 
 ## Project status
 
-**F01 is complete; F02 ingestion is implemented (live corpus validation recorded below):** a FastAPI readiness API, a React status page and a structured Groq provider adapter are implemented. Both local services and their development API connection have been verified. On 2026-10-17, Groq `qwen/qwen3.8-27b` returned a live structured response that passed local schema and content validation.
+**F01 and F02 are complete:** a FastAPI readiness API, a React status page and structured provider adapters are implemented. Both local services and their development API connection have been verified. On 2026-10-17, Groq `qwen/qwen3.8-27b` returned a live structured response that passed local schema and content validation, and the complete 64-page F02 corpus was published and validated.
 
-F02 adds source inventory, page-aware Qwen extraction and verification, workbook import, a manual inspection report, and Qdrant + BM25 search. Enquiry extraction, assessment generation and evaluation remain future increments. Corpus readiness requires a successfully published build.
+F02 adds source inventory, page-aware Qwen extraction and verification, workbook import, a manual inspection report, and Qdrant + BM25 search. The active corpus is `corpus-4aac882441587796afe5`, with 152 passages, 81 retrieval-eligible passages, 19 method rows and 63 flagged records. Enquiry extraction, assessment generation and evaluation remain future increments.
 
 ## Local setup
 
@@ -184,29 +184,31 @@ Third-party AFS materials, research papers and any excerpts or figures derived f
 
 ## F02 — Knowledge extraction and inspection
 
-Run from the repository root with the configured backend-only Groq key:
+Run from the repository root with the configured backend-only provider key. The verified published build used the documented LLMTech public-trial ingestion override; interactive provider configuration remains unchanged:
 
 ```powershell
-.\.venv\Scripts\python.exe -m backend.ingest pilot
-.\.venv\Scripts\python.exe -m backend.ingest build
+.\.venv\Scripts\python.exe -m backend.ingest pilot --provider llmtech --public-trial
+.\.venv\Scripts\python.exe -m backend.ingest build --provider llmtech --public-trial
 .\.venv\Scripts\python.exe -m backend.ingest validate
 .\.venv\Scripts\python.exe -m backend.ingest report
 .\.venv\Scripts\python.exe -m backend.ingest search --query "powder blend API concentration"
 .\.venv\Scripts\python.exe -m backend.ingest search --query "opaque dairy fat protein"
 ```
 
-The pilot processes S01 p.10 and S02 p.6 and prints an **unpublished** HTML report location. A full build processes all 64 pages from S01–S05, imports 19 workbook rows and seven notes, and publishes only after validation and indexing succeed. Text and rendered page images are sent to Groq for extraction and separate verification. The supplied S06 URL is stored without fetching its website. Development examples, final evaluation inputs, the challenge brief, unknown files and business context never enter technical retrieval.
+The pilot processes S01 p.10 and S02 p.6 and prints an **unpublished** HTML report location. A full build processes all 64 pages from S01–S05, imports 19 workbook rows and seven notes, and publishes only after validation and indexing succeed. Text and rendered page images are sent to the selected ingestion provider for extraction and separate verification. The supplied S06 URL is stored without fetching its website. Development examples, final evaluation inputs, the challenge brief, unknown files and business context never enter technical retrieval.
 
 The extractor uses strict JSON schemas and versioned prompts in `backend/prompts/`. Qwen selects source block IDs; code copies original text and records quote offsets and page bounds. Visual transcriptions carry a labeled region and remain distinct from verbatim text. Structured facts and quantities retain exact supporting quotes. Ambiguous or unsupported candidates are inspectable but excluded from search.
 
 No approval workflow is required. After a successful build, open **Inspect extracted knowledge** in the application or [the report endpoint](http://127.0.0.1:5173/api/knowledge/report). `report` prints the standalone HTML location, which also works locally with the adjacent page assets. Filter by source, physical PDF page, content kind, validation status or retrieval eligibility. Inspect the passage, facts, source image with highlighted regions, workbook cells, original notes and complete provenance. Records default to `human_review_status="not_reviewed"`; automated validation does not establish scientific accuracy.
 
+The current standalone report is [the published corpus report](knowledge/versions/corpus-4aac882441587796afe5/review.html). The earlier `knowledge/saved_extraction_64/review.html` is a historical, unpublished checkpoint and does not show the final counts. The report and adjacent images are generated local files; rebuild them after a fresh checkout.
+
 ### Models, limits and storage
 
-- Extraction and verification: Groq `qwen/qwen3.8-27b`. F02 uses `reasoning_effort="none"` and a configurable compact output ceiling to accommodate this account's output-token limit; the interactive F01 provider setting remains unchanged. `INGEST_MAX_OUTPUT_TOKENS=1000` and `INGEST_CONCURRENCY=1` are conservative defaults. Increase the output ceiling when the provider account supports it. An incomplete structured response is rejected, never silently repaired or published.
+- Extraction and verification: configurable Qwen provider. The published F02 build used LLMTech `nvidia/Qwen3.8-27B-NVFP4`, an 8192-token extraction ceiling, up to 2048 verification tokens and two concurrent page jobs. Groq retains its separate conservative defaults and pacing; interactive F01 provider settings remain unchanged. An incomplete structured response is rejected, never silently repaired or published.
 - Embeddings: local `BAAI/bge-small-en-v1.5` through FastEmbed, 384 dimensions, cosine similarity. The first use downloads public model files to `outputs/embedding_models/`; their checksums are captured in each index manifest. Source content is embedded locally. Each segment is explicitly checked below the model's 512-token limit, including its heading. Long indivisible sentences fail clearly rather than truncate.
 - Retrieval: up to 20 BM25 candidates and 20 Qdrant candidates, fused with reciprocal rank fusion (`k=60`) into at most eight unique evidence records. A domain-only synonym map covers terms such as MIR/FTIR and moisture/water. Results are candidates for a later assessment stage, not scientific endorsements. No cross-encoder reranker is used.
-- Qdrant: persistent local Python-client mode, no Docker/cloud account. The CLI opens and closes the active database per search. Do not access one local database from multiple processes simultaneously. Each build creates a separate generation; API report routes use versioned assets, so a rebuild cannot mix source images between reports.
+- Qdrant: persistent local Python-client mode, no Docker/cloud account. The CLI opens and closes the active database per search. Do not access one local database from multiple processes simultaneously; concurrent searches contend for the local lock. Each build creates a separate generation; API report routes use versioned assets, so a rebuild cannot mix source images between reports.
 
 ### Rebuild and failure behavior
 
@@ -216,8 +218,14 @@ Canonical data lives in `knowledge/versions/<corpus-version>/`. `knowledge/curre
 
 Originals, model binaries, page images, raw extraction caches and Qdrant binaries are local rebuildable artifacts. Keep the original-source folder available when validating or rebuilding. Generated evidence and manifests remain trackable. Their third-party source rights remain unchanged.
 
+A fresh checkout includes the published evidence, manifests, segments and BM25 data, but requires a local rebuild before readiness or search can pass: source images, raw pages, the HTML report, model files and Qdrant binaries are deliberately excluded from Git. Rebuild with the separately supplied originals and the selected provider. An existing local cache avoids repeating successful model stages; `--refresh` intentionally reruns them.
+
 See [the pipeline contract](docs/knowledge_pipeline.md) for exact outputs, interfaces, validation and current live-run status.
 
 ### F02 live validation status (2026-10-17)
 
-The pipeline implementation, local embedding/vector/lexical component checks, backend tests, frontend build and desktop/mobile browser checks pass. A real S01 p.10 passage passes extraction and separate source verification. S02 slide 6 still returns Groq `json_validate_failed` under the compact output budget after the bounded retry. The full technical corpus is **not published**, and readiness correctly remains missing. `outputs/ingest/live_validation.json` records the failure and unpublished report path. The implementation plan keeps the live completion gate open. Use `build` to resume cached stages after resolving the provider output-budget issue.
+The active corpus is **`corpus-4aac882441587796afe5`**: all 64 PDF pages processed, 152 passages, 81 eligible passages, 19 eligible method rows, seven notes, 111 embedding segments and 63 flagged records excluded from retrieval. Human-verified records remain zero; no AFS approval is implied.
+
+Deep validation passes against the original sources, workbook cells, page-image hashes and Qdrant/BM25 membership. Replaying all 64 cached responses exactly reproduces the 152 published records. Representative powder/API and opaque-dairy searches exercise both retrieval branches; backend regression tests pass (69 tests). Context-aware evidence selection remains F04 work: generic search can still return biomedical material for a dairy query.
+
+`outputs/ingest/published_validation.json` records current completion checks. `outputs/ingest/live_validation.json` retains the earlier failed Groq pilot as historical evidence; it is not the active corpus status. Readiness is local configuration/index readiness, not a live provider check or scientific endorsement. F03 customer-enquiry extraction is the next feature.

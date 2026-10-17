@@ -23,7 +23,7 @@ Qwen source content is processed as evidence, never executed as instructions. Ge
 
 ## Rate limits and reproducibility
 
-The configured account reports Qwen limits of 30 requests/minute, 1,000 requests/day, 8,000 tokens/minute and 200,000 tokens/day. Actual API rejection messages additionally distinguish 7,000 input TPM and 1,000 output TPM. F02 uses compact block references, `reasoning_effort="none"`, `INGEST_MAX_OUTPUT_TOKENS=1000`, sequential page processing by default, and pacing based on returned token usage. The F01 interactive reasoning setting remains unchanged.
+The earlier Groq account reported Qwen limits of 30 requests/minute, 1,000 requests/day, 8,000 tokens/minute and 200,000 tokens/day; rejection messages distinguished 7,000 input TPM and 1,000 output TPM. Groq ingestion defaults to compact block references, `reasoning_effort="none"`, `INGEST_MAX_OUTPUT_TOKENS=1000`, sequential page processing and usage-based pacing. These are Groq defaults, not the settings of the published LLMTech build. The LLMTech override uses the larger budgets and two concurrent page jobs described below. The F01 interactive configuration remains unchanged.
 
 Transient provider retries retain their shared per-request deadline. Ingestion may additionally wait 60 seconds for token refill, with bounded attempts. An explicit single retry is allowed for provider `json_validate_failed`; it repeats the request without repairing content. Daily-budget and authentication failures stop further live requests in the build. Failed pages remain incomplete and cannot cause publication. Increase the output ceiling only when the account supports it. Larger limits are not required to run local validators or inspect existing artifacts.
 
@@ -85,4 +85,12 @@ Open the application's **Inspect extracted knowledge** link or the printed local
 
 Automated tests use synthetic fixtures and mocked providers: source boundaries, page numbering, all method rows and notes, exact/whitespace-preserving anchors, quantities, review independence, cache reuse, verdict completeness, checksum failures, index membership, token limits, publication and safe report/API handling. They do not prove real-source extraction quality.
 
-`outputs/ingest/local_retrieval_validation.json` records a real local BGE/Qdrant/BM25 component run on synthetic evidence. `outputs/ingest/frontend_qa.json` records browser readiness checks. The implementation plan's live-source gate remains open until a complete supplied-source build, deep validation, stable cached rebuild and representative real searches have succeeded. Record actual live results in the progress log; do not infer F02 completion from unit tests or a two-page pilot.
+`outputs/ingest/local_retrieval_validation.json` records the earlier local BGE/Qdrant/BM25 component run on synthetic evidence. `outputs/ingest/frontend_qa.json` records earlier browser readiness checks. Those receipts do not by themselves prove real-source extraction quality; the complete live-source result is recorded below. The earlier pilot and interrupted checkpoint files remain unchanged as historical evidence.
+
+### Published F02 result (2026-10-17)
+
+The live-source gate has now passed for `corpus-4aac882441587796afe5`. All 64 source pages are processed, with 152 passages, 81 eligible passages, all 19 method rows and seven notes, 111 embedding segments, 63 flagged records and zero human-verified records. Deep validation and representative real hybrid searches pass. An audit replay of all 64 cached extraction/verification responses reproduces the published records exactly without model calls. See `outputs/ingest/published_validation.json` and the current section of the implementation plan.
+
+The saved 64-page checkpoint and earlier Groq pilot receipts remain historical records. Their incomplete counts do not describe the active generation. Publication validates the defined source and index contracts; it does not establish arbitrary scientific claims or AFS approval. Context-aware evidence balancing and the evidence API remain F04 work.
+
+Published evidence, manifests, lexical data and embedding segments are committed. Originals, model binaries, Qdrant binaries, source images, raw pages and HTML reports remain local and ignored. A fresh checkout must rebuild from the supplied originals before validation, readiness or search can succeed. Do not run concurrent queries against the same embedded Qdrant directory.
