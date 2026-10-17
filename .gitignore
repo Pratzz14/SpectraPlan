@@ -1,0 +1,47 @@
+# Local credentials and environment configuration
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Python environments, caches and packaging
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.coverage
+.coverage.*
+htmlcov/
+
+# Frontend dependencies, build output and tooling caches
+node_modules/
+dist/
+build/
+.vite/
+coverage/
+*.tsbuildinfo
+
+# Local logs, temporary files and browser test artifacts
+*.log
+tmp/
+temp/
+playwright-report/
+test-results/
+
+# Organizer-supplied originals are provided separately
+/knowledge/original_sources/
+
+# OS and local editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+*.swp
+*.swo
+
+# Keep reviewed corpus files and required evaluation outputs trackable.
+# Do not ignore knowledge/*.json, knowledge/*.jsonl or outputs/ globally.
