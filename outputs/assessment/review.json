@@ -1,0 +1,126 @@
+{
+  "generated_at": "2026-10-17T20:47:10.614987+00:00",
+  "review_status": "agent_source_comparison_completed",
+  "development_only": true,
+  "f05_gate": "passed_for_inspected_development_cases",
+  "review_scope": "Agent comparison of original enquiry text and pinned S01/T01 source records; not independent human/scientific validation or AFS approval",
+  "diagnostic_record": "20261017T204318Z_3ebb9b193319407aa703eca6dd222209.json",
+  "diagnostic_sha256": "c0417a4cb4f92b71c6a4cde77f8c631321a979784391cf3723407b723eb5f0a9",
+  "pipeline_version": "assessment-development-v1",
+  "prompt_versions": {
+    "extraction": "extraction-v7",
+    "synthesis": "synthesis-v8"
+  },
+  "provider": "llmtech",
+  "requested_model": "nvidia/Qwen3.8-27B-NVFP4",
+  "corpus_versions": [
+    "corpus-4aac882441587796afe5"
+  ],
+  "code_sha256": {
+    "backend/agent.py": "28e23b23282fef0715fed68f7ba16d471aa27ef82882359097995aaca0f0e2cc",
+    "backend/models.py": "f4298afd17a1dc67aa1c0fab81598383db536c51f472861eadb50ad277d804b4",
+    "backend/provider.py": "c099d23012c8300bb8c85fb12f3ee1051262b3dc8b0d9f7453876ea1616aa861",
+    "backend/config.py": "07cc63f06f96279aae602fcda995aab86492973ecc108406c964b2dfd29d6c77",
+    "backend/smoke_assessment.py": "d68a1e5c74700b077ecb0450ddeaaf46a8def34eb7c131a16fc0d8afa26cdfd7",
+    "backend/prompts/assessment_synthesis.txt": "0ca0e70eda4c34c3cc6b55a02ce87276879dd242104e8a6eb7579f8290bbc8c8",
+    "tests/test_assessment.py": "843681cd20962c261a2d378fed743ee18f06354f8702675c3d09e15f370eba27"
+  },
+  "automated_checks": {
+    "command": ".venv/Scripts/python.exe -m pytest -q --basetemp tmp/f05-release-check",
+    "passed": 191,
+    "assessment_tests": 46,
+    "diff_check": "git diff --check",
+    "environment": "Windows; socket-enabled execution; project-local test directory"
+  },
+  "live_command": ".venv/Scripts/python.exe -m backend.smoke_assessment --provider llmtech --public-trial",
+  "cases": [
+    {
+      "case_id": "D01",
+      "decision_status": "provisional",
+      "methods": [
+        "NIR",
+        "Raman"
+      ],
+      "questions": 5,
+      "cited_evidence_ids": [
+        "S01:p005:txt:ee0eed1e1fed5e85",
+        "S01:p015:txt:3fa6d0000254f55e"
+      ],
+      "ledger_records": 5,
+      "facts_sha256": "976cc6dd5f4e879574071e20cbd6e553aac62bd1ddf5eed264ddbb3510bd24bf",
+      "assessment_sha256": "0d070f62f6a1933c3747a10831b32060f3913b3eaa54465e2505f3ef07aee090",
+      "resolved_evidence_sha256": "7e692ca7f8f14f55e5b868d567930edf8d880af838630cbedf01e0b7faf5c2de",
+      "stage_elapsed_s": {
+        "extraction": 5.85999999998603,
+        "retrieval": 4.828000000008615,
+        "synthesis": 18.15600000001723
+      },
+      "checks": [
+        "exact input/provenance quotes",
+        "request-bound prompt/schema hashes",
+        "all ledger records equal pinned corpus resolution",
+        "source index equals cited ID union",
+        "context and evidence membership",
+        "assertions equal source excerpts or explicit gaps",
+        "unknown coverage remains undetermined",
+        "independent batch/run validation proposal"
+      ]
+    },
+    {
+      "case_id": "D02",
+      "decision_status": "provisional",
+      "methods": [
+        "NIR"
+      ],
+      "questions": 4,
+      "cited_evidence_ids": [
+        "S01:p017:txt:03613ea0cb0945fb",
+        "S01:p018:txt:250c09c5fdb749b3"
+      ],
+      "ledger_records": 4,
+      "facts_sha256": "ac8cfa443737e4e48521d7761081b999db10f6761984bdb814c69e4f4bde025a",
+      "assessment_sha256": "ed87af37d6bc2c5f07a702e72574f9b7757d58e320e2406184f12a8121d18511",
+      "resolved_evidence_sha256": "6a0f74607de7172382d866fed2af0a678a3d583615d30208c1085a32035af0ee",
+      "stage_elapsed_s": {
+        "extraction": 6.48399999999674,
+        "retrieval": 0.14100000000325963,
+        "synthesis": 11.75
+      },
+      "checks": [
+        "exact input/provenance quotes",
+        "request-bound prompt/schema hashes",
+        "all ledger records equal pinned corpus resolution",
+        "source index equals cited ID union",
+        "context and evidence membership",
+        "assertions equal source excerpts or explicit gaps",
+        "unknown coverage remains undetermined",
+        "independent batch/run validation proposal"
+      ]
+    }
+  ],
+  "inspection_findings": [
+    "D01 conditionally compares NIR diffuse reflection and Raman probes in the feed frame. S01 pp.14-15 supplies the API/powder application and measurement concepts; p.5 supplies general method context; T01 rows 9/13 remain in the ledger as qualitative geometry/comparison guidance.",
+    "D01 separates the sourced 785 nm Raman excitation from an unknown Raman shift/coverage interval. No nominal NIR wavelength band or customer equipment coverage is invented.",
+    "D01 questions cover API identity/range, acceptable error, response time, installation conditions and reference-assay details. Examples inside questions are requests for clarification, not asserted customer facts or established reference methods.",
+    "D02 chooses a conditional NIR diffuse-reflection concept for opaque concentrated milk, supported by S01 p.17. It retains p.18 transmission limitations rather than inventing a dilute customer stream.",
+    "D02 questions cover response time, error, composition range and reference assays; temperature/texture variability remains in the customer facts and proposed samples.",
+    "Both experiments use representative acceptable/off-spec material, independent aligned laboratory references, individual-method comparisons and held-out independent batches/runs. Combination is proposed only if it improves the client-defined decision.",
+    "Assertions retain source scope and exact excerpt text; assumptions and all sample choices are hypotheses/proposals. Neither result approves hardware or promises performance."
+  ],
+  "general_corrections": [
+    "Versioned extraction-v7 reinforces contiguous exact quotes, capitalization, preserved phrases and separation of concentration/appearance from sample phase; extraction validation was not weakened.",
+    "Versioned synthesis-v8 constrains assertion text, reference IDs, method families, independent-unit validation and source-available spectral intervals in the provider schema, with local reference/excerpt checks.",
+    "Known/unknown range variants and separate labeled Raman quantities prevent excitation, penetration depth and unsupported nominal bands being substituted for coverage.",
+    "Absent Raman quantities become null-only schema fields; unreachable definitions are removed to avoid the provider grammar rejecting impossible child schemas.",
+    "Backend assembly labels experiment proposals, aligns references and compares individual methods before any combination."
+  ],
+  "limitations": [
+    "This is an F05 development result. F06 comprehensive validation, synthesis repair, feasibility completion and public assessment API remain unimplemented.",
+    "Excerpt identity and citation membership do not prove scientific entailment, relevance, completeness, correct semantic role or equipment compatibility. Summary, questions, assumptions and configuration concepts still require expert review.",
+    "Question reasons are deliberately conservative and sometimes generic. Repeated source excerpts can appear in limitations/risks; semantic ranking and editorial deduplication remain refinement work.",
+    "Method-family, spectral-band, limitation and experimental-unit selection rules are conservative project heuristics, not physical validation or a substitute for expert judgment.",
+    "Full-suite testing encountered a transient Windows/OneDrive file replacement permission failure; the final fresh-directory full suite passed all 191 tests.",
+    "Earlier failed and superseded live outputs are retained; their schema/reference success must not be confused with the accepted source-compared record.",
+    "No public assessment endpoint, frontend assessment flow, deployment, physical measurements or independent human review were performed."
+  ]
+}

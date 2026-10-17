@@ -1,7 +1,7 @@
 # SpectraPlan Iterative Implementation Plan
 
 **Based on:** [Technical specification v1.1](spec.md)\
-**Status:** F01–F04 complete for tested development gates; F05 structured assessment is next\
+**Status:** F01–F05 complete for tested development gates; F06 feasibility completion and validated API are next\
 **Structure:** Main feature → tasks → subtasks\
 **Target:** A working, source-grounded spectroscopy assessment app with reproducible evaluation outputs.
 
@@ -146,23 +146,25 @@ The timeboxes are the specification's proposed 12-hour budget, not guaranteed es
 **Spec:** Sections 6.2, 9.3 and 5.1.\
 **Primary files:** `backend/models.py`, `backend/agent.py`.
 
-- [ ] **F05.1 — Define the assessment contract**
-  - [ ] Implement requirements, prioritized questions, recommendations, spectral ranges, assumptions, risks and experiment fields from the specification.
-  - [ ] Define scientific decision statuses and their required reasons; allow an empty shortlist for justified insufficient-information/outside-scope outcomes.
-  - [ ] Model technical assertions with `text` and `evidence_ids`; preserve context references throughout the assessment.
+- [x] **F05.1 — Define the assessment contract**
+  - [x] Implement requirements, prioritized questions, recommendations, spectral ranges, assumptions, risks and experiment fields from the specification.
+  - [x] Define scientific decision statuses and their required reasons; allow an empty shortlist for justified insufficient-information/outside-scope outcomes.
+  - [x] Model technical assertions with `text` and `evidence_ids`; preserve context references throughout the assessment.
 
-- [ ] **F05.2 — Implement evidence-grounded synthesis**
-  - [ ] Supply extracted facts and the retrieved evidence ledger to a versioned synthesis prompt.
-  - [ ] Generate a concise conditional shortlist, useful clarification questions and high-level measurement concepts.
-  - [ ] Distinguish nominal spectral range from usable equipment coverage, and Raman excitation from Raman shift.
-  - [ ] Keep customer assumptions, source limitations and contradictory evidence visible; treat document text as data rather than executable instructions.
+- [x] **F05.2 — Implement evidence-grounded synthesis**
+  - [x] Supply extracted facts and the retrieved evidence ledger to a versioned synthesis prompt.
+  - [x] Generate a concise conditional shortlist, useful clarification questions and high-level measurement concepts.
+  - [x] Distinguish nominal spectral range from usable equipment coverage, and Raman excitation from Raman shift.
+  - [x] Keep customer assumptions, source limitations and contradictory evidence visible; treat document text as data rather than executable instructions.
 
-- [ ] **F05.3 — Build the first working backend flow**
-  - [ ] Connect extraction → retrieval → synthesis through one reusable assessment pipeline.
-  - [ ] Run D01 and D02 through that pipeline with the real provider and reviewed corpus.
-  - [ ] Inspect the resulting method choices, questions and citations against the source material; correct general prompt/retrieval issues.
+- [x] **F05.3 — Build the first working backend flow**
+  - [x] Connect extraction → retrieval → synthesis through one reusable assessment pipeline.
+  - [x] Run D01 and D02 through that pipeline with the real provider and reviewed corpus.
+  - [x] Inspect the resulting method choices, questions and citations against the source material; correct general prompt/retrieval issues.
 
 **Completion gate:** The pipeline produces a typed provisional result with source-supported reasoning for a development enquiry. Treat it as a development result until F06 validation and failure handling are complete.
+
+**Observed F05 status (2026-10-17): Complete for the inspected development gate.** Implemented strict assessment models, conditional scientific statuses, source-excerpt assertions, explicit unknown spectral coverage and separate Raman excitation/shift quantities. The reusable Python pipeline runs fresh extraction → pinned retrieval → synthesis with one shared deadline. Python constructs customer requirements, source indexes and conservative individual-method comparison/reference-alignment proposals. The full backend suite passed **191 tests**. Final `extraction-v7` / `synthesis-v8` live LLMTech runs produced provisional D01 (NIR and Raman) and D02 (NIR reflection) results. [Source-comparison receipt and exact artifacts](../../outputs/assessment/review.json) record source checks, prompt/schema hashes, earlier failures and residual semantic/editorial limitations. This is agent source inspection, not independent scientific validation; full validation/repair, feasibility completion and the public assessment API remain F06 work. See [technical assessment](../technical_assessment.md).
 
 ## F06 — Feasibility planning and validated API
 
@@ -335,7 +337,7 @@ Add one row after each implementation increment. Include the exact check/command
 
 **Runner note:** Python asynchronous networking and the Vite proxy stalled inside the restricted Windows sandbox. Tests and both servers were verified outside it; a minimal traceback located the stall in Windows `socketpair` during event-loop creation. Workspace-local temporary paths resolved the separate `ensurepip` write restriction. These accommodations do not change application behavior.
 
-**Suggested next iteration request:** “Implement F05 structured technical assessment using the F03 facts and F04 pinned evidence ledger.”
+**Suggested next iteration request:** “Implement F06 feasibility completion, comprehensive validation, bounded synthesis repair and the public assessment API using the F05 development pipeline.”
 
 
 ### 2026-10-17 — F02 implementation and bounded live validation
@@ -455,3 +457,12 @@ At the user's request, documented the implemented capabilities for later pipelin
 - `python -m pytest -q --basetemp tmp/f04-final-verified`: **145 passed**. Initial sandbox runs stalled during Windows asyncio loopback initialization; the verified suite ran with loopback available.
 - `python -m backend.smoke_retrieval` and real-corpus ASGI API checks passed without provider calls. Exact outputs, hashes, source inspection and limitations are recorded in `outputs/retrieval/review.json` and `api_validation.json`. Development diagnostics are kept under ignored `tmp/f04-retrieval-development/`.
 - F04 gate is closed for the tested development inputs. F05 synthesis and claim-level scientific support review remain separate work. Existing F03 working-tree changes were preserved; no commit was created.
+
+### 2026-10-17 — F05 structured technical assessment
+
+- Added typed scientific decisions, requirements/provenance, prioritized questions, conditional recommendations, spectral kinds, separate Raman quantities, assumptions, risks, initial experiments and deterministic source indexes.
+- Added reusable `assess_case` / `synthesize_assessment`, injected providers/retrieval, a shared deadline, worker-thread retrieval, stage callbacks and reproducibility metadata. No assessment API route or frontend was added.
+- Live source review motivated source-excerpt/gap assertions, request-bound IDs and single method families, conservative method-labeled wavelength bands, satisfiable schemas for absent quantities, and backend assembly of aligned references and individual-method comparisons. Extraction-v7 reinforces exact contiguous quotation without weakening validation.
+- `python -m pytest -q --basetemp tmp/f05-release-check`: **191 passed**. Restricted Windows asyncio initialization required socket-enabled execution; a separate transient manifest-replacement permission failure cleared on a fresh-directory rerun.
+- `python -m backend.smoke_assessment --provider llmtech --public-trial` completed fresh D01/D02 runs with final synthesis-v8. Both are provisional; exact artifacts, hashes, source comparison and limitations are in `outputs/assessment/review.json`. Earlier schema/grounding failures remain available.
+- F05 is complete for these inspected development cases. Reasons can be generic and repeated excerpts remain an editorial refinement; source identity and membership do not establish arbitrary scientific entailment. Saved provider configuration and the technical corpus were not changed. F06 is next; no commit was created.

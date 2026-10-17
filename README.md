@@ -1,14 +1,16 @@
 # SpectraPlan
 
-SpectraPlan is a planned AI assistant for the first technical assessment of industrial spectroscopy enquiries. It will help an Art Fiber Systems (AFS) expert identify missing information, compare promising measurement approaches and design an initial feasibility experiment using the supplied AFS materials.
+SpectraPlan is an AI assistant in development for the first technical assessment of industrial spectroscopy enquiries. It helps an Art Fiber Systems (AFS) expert identify missing information, compare promising measurement approaches and design an initial feasibility experiment using the supplied AFS materials.
 
 ## Project status
 
-**F01–F04 are complete for their tested development gates:** a FastAPI readiness API, a React status page, structured provider adapters, backend enquiry extraction, and context-aware hybrid evidence retrieval are implemented. Both local services and their development API connection have been verified. On 2026-10-17, Groq `qwen/qwen3.8-27b` returned the initial live provider smoke response, the complete 64-page F02 corpus was published and validated, and F03 extraction was checked with LLMTech.
+**F01–F05 are complete for their tested development gates:** a FastAPI readiness API, a React status page, structured provider adapters, backend enquiry extraction, context-aware hybrid evidence retrieval and a typed development assessment pipeline are implemented. Both local services and their development API connection have been verified. On 2026-10-17, Groq `qwen/qwen3.8-27b` returned the initial live provider smoke response, the complete 64-page F02 corpus was published and validated, and F03 extraction was checked with LLMTech.
 
-F02 adds source inventory, page-aware Qwen extraction and verification, workbook import, a manual inspection report, and Qdrant + BM25 search. The active corpus is `corpus-4aac882441587796afe5`, with 152 passages, 81 retrieval-eligible passages, 19 method rows and 63 flagged records. F03 adds typed enquiry extraction and `POST /api/extract`, with exact input provenance, separate streams, explicit unknowns and attributed customer claims. Assessment generation and full evaluation remain future increments. See [customer extraction](docs/customer_extraction.md) for its API, provider options and checks.
+F02 adds source inventory, page-aware Qwen extraction and verification, workbook import, a manual inspection report, and Qdrant + BM25 search. The active corpus is `corpus-4aac882441587796afe5`, with 152 passages, 81 retrieval-eligible passages, 19 method rows and 63 flagged records. F03 adds typed enquiry extraction and `POST /api/extract`, with exact input provenance, separate streams, explicit unknowns and attributed customer claims. See [customer extraction](docs/customer_extraction.md) for its API, provider options and checks.
 
 F04 adds `POST /api/retrieve` and revision-pinned `GET /api/evidence/{evidence_id}`. It combines BM25, local BGE/Qdrant semantic search and structured method lookup into at most eight evidence records, exposing selection reasons, scores, context coverage and remaining gaps. See [evidence retrieval](docs/evidence_retrieval.md) for the API, semantic threshold, single follow-up budget and verification records.
+
+F05 provides a reusable Python assessment pipeline with conditional method choices, clarification questions, source excerpts, explicit unknowns and an initial comparison experiment. Saved development results include the complete evidence ledger and run metadata. See [technical assessment](docs/technical_assessment.md) for the Python interface and live diagnostic command. The complete assessment API, assessment interface and full evaluation are subsequent increments.
 
 ## Local setup
 
@@ -61,6 +63,7 @@ Environment variables override the root `.env`. Relative paths resolve from the 
 | `PROVIDER_MAX_RETRIES` | 2 retries, at most 3 attempts |
 | `PROVIDER_MAX_COMPLETION_TOKENS` | 4096; the small smoke test uses 2048 |
 | `EXTRACTION_MAX_COMPLETION_TOKENS` | 3072; F03 output ceiling, also capped by the provider ceiling |
+| `SYNTHESIS_MAX_COMPLETION_TOKENS` | 4096; assessment output ceiling, also capped by the provider ceiling |
 | `SOURCE_DIR` | `knowledge/original_sources` |
 | `CORPUS_DIR` | `knowledge` |
 | `SMOKE_OUTPUT_DIR` | `outputs/provider_smoke` |
@@ -140,6 +143,7 @@ Pop-Location
 |---|---|
 | [Technical specification](docs/plan/spec.md) | Product scope, source handling, data contracts, architecture and acceptance criteria |
 | [Implementation plan](docs/plan/implementation_plan.md) | Ten ordered features with task/subtask checklists, dependencies, completion gates and a progress log |
+| [Technical assessment](docs/technical_assessment.md) | Development pipeline, assessment contract, source support and live checks |
 
 Continue using the implementation plan's task checklists and progress log. The proposed MVP budget is 12 hours; it is a project planning choice.
 

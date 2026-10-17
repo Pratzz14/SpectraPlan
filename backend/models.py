@@ -2,7 +2,9 @@
 
 from typing import Annotated, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+
+from backend.retrieval_models import RetrievalResult
 
 Text = Annotated[str, Field(min_length=1)]
 StatementKind = Literal["reported_fact", "requested_outcome", "proposed_approach", "customer_claim"]
@@ -64,3 +66,187 @@ class CaseFacts(FactModel):
 class ExtractionRequest(FactModel):
     # Preserve the original text, including whitespace, for quote membership checks.
     description: str = Field(min_length=1, max_length=20000)
+
+
+class Assertion(FactModel):
+    text: Text
+    evidence_ids: list[Text] = Field(default_factory=list, description=(
+        "Supporting IDs from the supplied ledger. Empty only for explicit missing information, "
+        "an evidence gap or a labeled proposal, never a technical capability claim."))
+
+
+class SourceAssertion(Assertion):
+    evidence_ids: list[Text] = Field(min_length=1)
+
+
+class LimitationAssertion(Assertion):
+    """A source limitation or an explicitly unverified aspect of the enquiry."""
+
+
+class RamanExcitation(SourceAssertion):
+    text: Text = Field(pattern=r"^[0-9]+(?:\.[0-9]+)?\s*nm$")
+
+
+class RamanShift(SourceAssertion):
+    text: Text = Field(pattern=r"^[0-9]+(?:\.[0-9]+)?\s*(?:-|–|—|to)\s*[0-9]+(?:\.[0-9]+)?\s*cm(?:\^-?1|-1|⁻¹)$")
+
+
+class SpectralRange(Assertion):
+    kind: Literal["nominal_method_range", "source_configuration_range", "undetermined"]
+    interval: Text | None = Field(default=None, description=(
+        "Actual source-backed nominal or configuration coverage interval with units; null when unavailable. "
+        "A laser excitation wavelength is not a coverage interval."))
+    raman_excitation: RamanExcitation | None = Field(default=None, description="Separately labeled source-backed Raman excitation wavelength, or null")
+    raman_shift: RamanShift | None = Field(default=None, description="Separately labeled source-backed Raman shift coverage, or null")
+
+    @model_validator(mode="after")
+    def require_range_support(self):
+        if self.kind != "undetermined" and not self.evidence_ids:
+            raise ValueError("A determined spectral range requires source evidence")
+        if (self.kind == "undetermined") != (self.interval is None):
+            raise ValueError("Use undetermined with interval=null when no coverage interval is supplied")
+        for quantity in (self.raman_excitation, self.raman_shift):
+            if quantity is not None and not quantity.evidence_ids:
+                raise ValueError("Raman excitation and shift values require their own source evidence")
+        return self
+
+
+class UndeterminedSpectralRange(SpectralRange):
+    kind: Literal["undetermined"]
+    interval: None
+
+
+class DeterminedSpectralRange(SpectralRange):
+    kind: Literal["nominal_method_range", "source_configuration_range"]
+    interval: Text = Field(
+        pattern=r"^[0-9]+(?:\.[0-9]+)?\s*(?:-|–|—|to)\s*[0-9]+(?:\.[0-9]+)?\s*(?:nm|[uµμ]m|cm(?:\^-?1|-1|⁻¹))$",
+        description="Two source-backed numeric bounds and units, e.g. lower-upper nm or lower-upper cm^-1. A technique name is not an interval.")
+
+
+class ClarificationQuestion(FactModel):
+    priority: int = Field(ge=1)
+    context_ids: list[Text] = Field(default_factory=list)
+    question: Text
+    reason: Assertion
+    affects: list[Text] = Field(default_factory=list)
+
+
+class Recommendation(FactModel):
+    context_ids: list[Text] = Field(min_length=1)
+    method: Text
+    geometry: Text | None
+    measurement_location: Text | None
+    spectral_range: UndeterminedSpectralRange | DeterminedSpectralRange
+    rationale: SourceAssertion
+    assumptions: list[Text] = Field(default_factory=list)
+    limitations: list[LimitationAssertion] = Field(default_factory=list)
+    status: Literal["worth_testing", "conditional_on_clarification"]
+
+    @model_validator(mode="after")
+    def require_support_and_explanation(self):
+        if not self.rationale.evidence_ids:
+            raise ValueError("A recommendation rationale requires source evidence")
+        if (self.geometry is None or self.measurement_location is None) and not self.limitations:
+            raise ValueError("Unspecified geometry/location requires an explanation in limitations")
+        return self
+
+
+class AssessmentRisk(LimitationAssertion):
+    context_ids: list[Text] = Field(default_factory=list)
+
+
+class Experiment(FactModel):
+    """Proposed study design, not measured results or confirmed requirements."""
+
+    context_ids: list[Text] = Field(default_factory=list)
+    objective: Text
+    samples: list[Text] = Field(min_length=1)
+    measurements: list[Text] = Field(min_length=1)
+    comparisons: list[Text] = Field(default_factory=list)
+    validation: Text
+    decision_criteria: Text
+    open_items: list[Text] = Field(default_factory=list)
+
+
+class Requirement(FactModel):
+    context_id: Text | None
+    field: Text
+    field_path: Text
+    value: Text
+    origin: Literal["customer"] = "customer"
+    input_quote: Text
+
+
+class Requirements(FactModel):
+    stated: list[Requirement] = Field(default_factory=list)
+    unknowns: list[Text] = Field(default_factory=list)
+
+
+class SourceReference(FactModel):
+    evidence_id: Text
+    citation: Text
+    source_id: Text
+    file_name: Text
+    source_sha256: Text
+    page: int | None
+    sheet: Text | None
+    row: int | None
+    revision: Text
+    corpus_version: Text
+    evidence_url: Text
+
+
+class AssessmentContent(FactModel):
+    decision_status: Literal["provisional", "insufficient_information", "outside_supported_scope"]
+    decision_reason: Text
+    case_summary: Text
+    clarification_questions: list[ClarificationQuestion] = Field(default_factory=list)
+    recommendations: list[Recommendation] = Field(default_factory=list)
+    risks: list[AssessmentRisk] = Field(default_factory=list)
+    experiment: Experiment
+
+    @model_validator(mode="after")
+    def require_actionable_decision(self):
+        if self.decision_status == "provisional" and not self.recommendations:
+            raise ValueError("A provisional assessment requires a supported recommendation")
+        if not self.recommendations and not self.clarification_questions:
+            raise ValueError("An empty shortlist requires useful clarification questions")
+        return self
+
+
+class Assessment(AssessmentContent):
+    requirements: Requirements
+    source_index: list[SourceReference] = Field(default_factory=list)
+
+
+class AssessmentMetadata(FactModel):
+    run_id: Text
+    generated_at: Text
+    pipeline_version: Text
+    provider: Text
+    model: Text
+    returned_models: dict[str, str | None]
+    endpoint: Text
+    corpus_version: Text
+    retrieval_version: Text
+    prompt_versions: dict[str, str]
+    prompt_sha256: dict[str, str]
+    schema_sha256: dict[str, str]
+    stage_elapsed_s: dict[str, float]
+    last_successful_call_usage: dict[str, dict[str, int]]
+    call_timeout_s: float
+    request_deadline_s: float
+    provider_max_retries: int
+    provider_max_completion_tokens: int
+    extraction_max_completion_tokens: int
+    synthesis_max_completion_tokens: int
+    synthesis_temperature: float
+
+
+class DevelopmentAssessmentResult(FactModel):
+    development_only: Literal[True] = True
+    facts: CaseFacts
+    retrieval: RetrievalResult
+    assessment: Assessment
+    metadata: AssessmentMetadata
+    warnings: list[Text] = Field(default_factory=list)

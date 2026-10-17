@@ -51,6 +51,7 @@ class Provider:
         self.settings = settings
         self.transport = transport
         self.last_usage: dict = {}
+        self.last_model: str | None = None
 
     async def structured(
         self,
@@ -59,6 +60,7 @@ class Provider:
         *,
         deadline: float | None = None,
         max_completion_tokens: int | None = None,
+        temperature: float | None = None,
     ) -> ResponseModel:
         """Deadline is an absolute time.monotonic() value supplied by the caller.
 
@@ -90,6 +92,10 @@ class Provider:
                 },
             },
         }
+        if temperature is not None:
+            if not math.isfinite(temperature) or not 0 <= temperature <= 2:
+                raise ValueError("temperature must be finite and between 0 and 2")
+            payload["temperature"] = temperature
         if config.provider_name == "llmtech":
             payload["chat_template_kwargs"] = {"enable_thinking": False}
         else:
@@ -138,6 +144,8 @@ class Provider:
                                 usage = response.json().get("usage", {})
                                 self.last_usage = {k: usage[k] for k in ("prompt_tokens", "completion_tokens", "total_tokens")
                                                    if isinstance(usage.get(k), int)} if isinstance(usage, dict) else {}
+                                returned_model = response.json().get("model")
+                                self.last_model = returned_model if isinstance(returned_model, str) else None
                                 return result
                             failure = ProviderError("provider_unavailable", f"Provider returned HTTP {response.status_code} (rate limit or service failure).",
                                                     upstream_status=response.status_code)
