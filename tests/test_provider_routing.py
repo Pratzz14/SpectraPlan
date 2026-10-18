@@ -218,7 +218,7 @@ def test_lifespan_checks_automatically_and_health_only_reads_cache(tmp_path, mon
                 for _ in range(2):
                     health = (await client.get("/api/health")).json()
                     assert health["provider"]["selected"] == "llmtech"
-                    assert health["provider"]["candidates"][0]["status"] == "working"
+                    assert next(p for p in health["provider"]["candidates"] if p["name"] == "llmtech")["status"] == "working"
     asyncio.run(run())
     assert len(calls) == 1
 
@@ -234,7 +234,7 @@ def test_ingestion_fingerprint_tracks_both_provider_profiles():
     first = pipeline_fingerprint(config())
     second = pipeline_fingerprint(config(groq_model="different-model"))
     assert first != second and first["provider"] == "auto"
-    assert {p["name"] for p in first["provider_profiles"]} == {"groq", "llmtech"}
+    assert {p["name"] for p in first["provider_profiles"]} == {"gemini", "groq", "llmtech"}
 
 
 def test_assessment_records_provider_switch_between_stages(monkeypatch):

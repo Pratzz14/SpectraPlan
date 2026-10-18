@@ -1,6 +1,7 @@
 import ExternalLinkIcon from './components/ExternalLinkIcon'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { fetchKnowledgeInspection } from './api'
+import { fetchGeminiComparison, fetchKnowledgeInspection } from './api'
+import type { GeminiComparison } from './api'
 import { readable } from './assessment'
 import { recordTitle, sourcePageFor, sourcePageUrl } from './knowledge'
 import type { KnowledgeInspection, KnowledgeRecord, SourcePage } from './knowledge'
@@ -25,13 +26,20 @@ export default function ExtractedKnowledge({ initialEvidence = '' }: { initialEv
   const [tab, setTab] = useState<'text' | 'page' | 'provenance'>('text')
   const [pageChoice, setPageChoice] = useState('auto')
   const [attempt, setAttempt] = useState(0)
+  const [gemini, setGemini] = useState<GeminiComparison | null>(null)
+  const [geminiError, setGeminiError] = useState<string | null>(null)
   const recordButtons = useRef(new Map<string, HTMLButtonElement>())
   useEffect(() => {
     const controller = new AbortController()
     setLoading(true); setError(null)
-    void fetchKnowledgeInspection(controller.signal).then(value => { if (!controller.signal.aborted) setData(value) })
+    void fetchKnowledgeInspection(controller.signal).then(value => {
+      if (!controller.signal.aborted) setData(value)
+    })
       .catch(failure => { if (!controller.signal.aborted) setError(failure instanceof Error ? failure.message : 'Cannot load extracted knowledge.') })
       .finally(() => { if (!controller.signal.aborted) setLoading(false) })
+    setGeminiError(null)
+    void fetchGeminiComparison(controller.signal).then(value => { if (!controller.signal.aborted) setGemini(value) })
+      .catch(failure => { if (!controller.signal.aborted) { setGemini(null); setGeminiError(failure instanceof Error ? failure.message : 'Comparison unavailable.') } })
     return () => controller.abort()
   }, [attempt])
   useEffect(() => { if (initialEvidence) { setSelected(initialEvidence); setQuery(''); setSource(''); setKind(''); setStatus(''); setEligible(''); setPageNumber(''); setPageChoice('auto') } }, [initialEvidence])
@@ -42,7 +50,7 @@ export default function ExtractedKnowledge({ initialEvidence = '' }: { initialEv
   const page = pageChoice === 'auto' ? autoPage : data?.pages[Number(pageChoice)]
   const imageUrl = data && autoPage ? sourcePageUrl(data, autoPage) : undefined
   function selectRecord(id: string) { setSelected(id); setPageChoice('auto') }
-  return <div className="split-workspace knowledge-workspace">
+  return <div className="knowledge-page"><div className="gemini-panel">{gemini ? <><div><h2>Gemini extraction comparison</h2><p>{gemini.succeeded}/{gemini.source_count} sources succeeded with {gemini.model}.</p></div><details><summary>View Gemini results</summary><div className="gemini-results">{gemini.results.map(result => <article key={result.source_id}><h3>{result.source_id} · {result.file_name}</h3>{result.gemini ? <><h4>Facts</h4><ul>{result.gemini.facts.map((fact, i) => <li key={i}>{fact}</li>)}</ul><h4>Claims</h4><ul>{result.gemini.claims.map((claim, i) => <li key={i}>{claim}</li>)}</ul><h4>Unknowns</h4><ul>{result.gemini.unknowns.map((unknown, i) => <li key={i}>{unknown}</li>)}</ul><small>Locations: {result.gemini.source_locations.join(', ')}</small></> : <p className="flagged">Error: {result.error?.code}</p>}</article>)}</div></details></> : <p>{geminiError ?? 'Gemini comparison not available. Run the comparison command and refresh this page.'} <button type="button" className="text-button" onClick={() => setAttempt(a => a + 1)}>Retry comparison</button></p>}</div><div className="split-workspace knowledge-workspace">
     <aside className="workspace-rail records-rail" aria-label="Knowledge filters">
       <div className="rail-controls"><h1>Records</h1><label className="visually-hidden" htmlFor="record-query">Search extracted text</label><input id="record-query" type="search" placeholder="Search extracted text" value={query} onChange={e => setQuery(e.target.value)} />
         <div className="filter-pair"><label>Source<select aria-label="Source" value={source} onChange={e => setSource(e.target.value)}><option value="">All sources</option>{[...new Set(data?.records.map(r => r.source_id) ?? [])].map(id => <option key={id}>{id}</option>)}</select></label><label>Content<select aria-label="Content" value={kind} onChange={e => setKind(e.target.value)}><option value="">All content</option><option value="verbatim_text">Text</option><option value="figure_transcription">Figure transcription</option><option value="method_row">Workbook</option></select></label></div>
@@ -74,5 +82,5 @@ export default function ExtractedKnowledge({ initialEvidence = '' }: { initialEv
           {tab === 'provenance' ? <dl className="fact-list">{Object.entries({ 'Evidence ID': record.evidence_id, 'Corpus version': data.manifest.corpus_version, Revision: record.revision, 'Source SHA-256': record.source_sha256, 'Source filename': record.file_name }).map(([key, value]) => <div key={key}><dt>{key}</dt><dd>{value}</dd></div>)}</dl> : null}
         </div></> : !error ? <p className="empty-workspace" role="status">{loading ? 'Loading extracted knowledge…' : 'Select a matching source record.'}</p> : null}
     </section>
-  </div>
+  </div></div>
 }

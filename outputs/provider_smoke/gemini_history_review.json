@@ -1,0 +1,203 @@
+{
+  "generated_at": "2026-10-18T08:59:53.802483+00:00",
+  "scope": "Gemini-first routing, durable enquiry history and explainability; review of current working tree",
+  "automated_tests": {
+    "backend_full": {
+      "passed": 289,
+      "failed": 0
+    },
+    "frontend": {
+      "passed": 17,
+      "failed": 0
+    },
+    "frontend_build": "passed",
+    "git_diff_check": "passed",
+    "configured_key_scan": "passed",
+    "targeted_extraction_and_history": {
+      "passed": 24,
+      "failed": 0
+    },
+    "source_page_validation": "Tested semantic validation feedback, bounded repair and fallback with synthetic provider responses",
+    "targeted_source_ingestion": {
+      "passed": 18,
+      "failed": 0
+    },
+    "targeted_native_gemini_provider": {
+      "passed": 8,
+      "failed": 0
+    },
+    "targeted_comparison_cli": {
+      "passed": 9,
+      "failed": 0
+    }
+  },
+  "live_provider_check": {
+    "content": "Synthetic powder/moisture statement only; no development enquiry or corpus sent",
+    "outcome": "passed via llmtech Qwen fallback",
+    "gemini": "provider_daily_limit",
+    "returned_model": "qwen38",
+    "record": "20261018T084855Z_bf1f3380f89242bf8bbeaba51fa921b3.json"
+  },
+  "browser_check": {
+    "url": "http://127.0.0.1:4181/",
+    "browser": "installed Chrome through Playwright; Browser plugin unavailable",
+    "providers_and_evidence": "synthetic fixtures; real API and isolated SQLite history",
+    "viewports": [
+      [
+        1440,
+        1000
+      ],
+      [
+        390,
+        844
+      ]
+    ],
+    "passed": [
+      "analysis and clarification round linkage",
+      "reload and reopen saved enquiry",
+      "round selection",
+      "answer restoration",
+      "lazy trace and JSON export",
+      "optional comparison failure retains knowledge records",
+      "no runtime console errors or framework overlays",
+      "desktop actions fit viewport",
+      "no mobile horizontal overflow"
+    ]
+  },
+  "published_corpus": {
+    "version": "corpus-4aac882441587796afe5",
+    "local_validation": "passed",
+    "changed": false
+  },
+  "remaining_live_checks": {
+    "gemini_generation": "Current account is daily-quota-limited; retry the comparison and Gemini-specific validation after quota or account access is restored",
+    "full_corpus_rebuild": "Not published; the validated existing corpus is preserved and the live source pilot remains staged"
+  },
+  "code_sha256": {
+    "backend/agent.py": "39172d4b5ef398aaf226d8c7378b88e2c394c21d787d9f4d5d7f68792a8db5cf",
+    "backend/config.py": "2c3517186714fce2c48618684bce82fb1381aaba83d9c50afa1725c4bb8b6e66",
+    "backend/explainability.py": "38a426d5079f3a48d454f8bc8b4a1db2aba61fc4867b632a978db76ee7c48947",
+    "backend/gemini_extraction.py": "7d5332dc98d4ed2bfd31f585d7444df78e773d4f4c428feec056d2598629d9c9",
+    "backend/gemini_provider.py": "7e55206fd483306d04c7ecd4b28628df6b9261819342a0b2d5340c0893c6bad0",
+    "backend/health.py": "0e3a67194ae2b0afd1b75a542a7d3c361729ce35b5097e089532114f05869756",
+    "backend/ingest.py": "3e3c8075344fc983ba5b80d7dcfed4bf97f1fd34ab1bf913129f27d81414b4bf",
+    "backend/knowledge_store.py": "9154b1fc294319688a7f7067ddc7dfc07f6c7e2add707fae961950a368e9c640",
+    "backend/main.py": "b1433c0a12a37a7ae612415936889022e987c48abd9e02a29c1d69d24cf0f686",
+    "backend/models.py": "7ae27c708377e3ac7a6adb8864b7927d03c1518276522fe89011908ed95a5942",
+    "backend/provider.py": "de23562dbf7506e44a708029bb2c438de614cc1c2baafb644ce71dedab611fd2",
+    "backend/provider_routing.py": "514f4e21047ff0a18bd407854880aa7b2ffdedc2127750c925e26892347a3a75",
+    "backend/provider_setup.py": "9db466cdb4f3829c969429ae57a03653583a9c985b5cbc4471e8009b72be3c99",
+    "backend/retrieval.py": "ebe7a38beb85a0925fc0538975779b1fb1590b22d2718b990c50e54d4be846e9",
+    "backend/retrieval_models.py": "2850cf1e81f21fee573c55906973f37779f18353ae49f4644539bc078694dc0c",
+    "backend/smoke_assessment.py": "835cae2ab1c38c9aef071965961ac61b67958d28a688f6d7ea8b6760186a58bd",
+    "backend/smoke_extraction.py": "4ffb9cba33324441990c089f06c56b6313d3eb64d801abbab9c9626d898d331e",
+    "backend/smoke_gemini_extraction.py": "079247db18e628309284a15a22f9e029d116da740d58141be11a9a882dc2e7f9",
+    "backend/smoke_provider.py": "a071dc72f19513a200bd30141e448aaef6b27a96257020f7a3558d7051cb05c6",
+    "frontend/src/ExtractedKnowledge.tsx": "9c316171d2b2f78d1d128186e115a365ce02ac98ce7ee69e4876f3998096d77f",
+    "frontend/src/api.ts": "a859f13d950e9d3f3d715c75631022ecf07efe2a7d7a49f070356354b00bd39a",
+    "frontend/src/assessment.ts": "44a76e5fdfb729ef941a5f02a2729b292fe87f59ea4353074f43a3cde4e2de70",
+    "frontend/src/components/AssessmentPage.tsx": "718a6de16b6c76d4313f7450128d5383b466b6b9c81021f84026c2cf3c9063f1",
+    "frontend/src/components/AssessmentResults.tsx": "09fd01ba0838b625cdf0e9df6704d172cc3ad32e78d34680905fa2eeff82e98b",
+    "frontend/src/components/EnquiryHistory.tsx": "fa58643f01b20cf1240e6c1c0c45200acfbe4bfd834b2a0cdb5e0e4ca4f4cc96",
+    "frontend/src/components/EvidenceDrawer.tsx": "5d5485283eeff14f128eab1401898618a7fcf95350cc8fb405628b235be70186",
+    "frontend/src/workspace.css": "3c6b544646464b0d3be18e2a01510e67d9f244ceba56c1c987b4c16dc6d03aa5"
+  },
+  "scientific_validation": "Not independently validated; mechanical provenance and runtime tests do not establish spectroscopy performance",
+  "updated_at": "2026-10-18T09:08:12.299980+00:00",
+  "external_data_approval": "User explicitly approved D01/D02 development enquiries and supplied source documents/excerpts/images for live Gemini/Qwen validation in this chat",
+  "live_assessments": {
+    "record": "outputs/assessment/20261018T090656Z_cd1dd2c041224e4cba0c9514fcf3abd8.json",
+    "cases": [
+      {
+        "case_id": "D01",
+        "run_status": "complete",
+        "decision_status": "provisional",
+        "elapsed_s": 32.84399999998277,
+        "request_deadline_s": 90.0,
+        "call_timeout_s": 30.0,
+        "stage_providers": {
+          "extraction": {
+            "provider": "llmtech",
+            "model": "nvidia/Qwen3.8-27B-NVFP4",
+            "endpoint": "https://api.llmtech.eu/v1",
+            "returned_model": "qwen38"
+          },
+          "synthesis": {
+            "provider": "llmtech",
+            "model": "nvidia/Qwen3.8-27B-NVFP4",
+            "endpoint": "https://api.llmtech.eu/v1",
+            "returned_model": "qwen38"
+          }
+        },
+        "run_id": "1fc1440cee7b4832849256f11a8a6b11",
+        "queries": 2,
+        "source_files": [
+          "AFS_method_comparison_table.xlsx",
+          "S01_Multispectral_Laboratory.pdf"
+        ],
+        "clarification_questions": 4
+      },
+      {
+        "case_id": "D02",
+        "run_status": "complete",
+        "decision_status": "provisional",
+        "elapsed_s": 25.937000000005355,
+        "request_deadline_s": 90.0,
+        "call_timeout_s": 30.0,
+        "stage_providers": {
+          "extraction": {
+            "provider": "llmtech",
+            "model": "nvidia/Qwen3.8-27B-NVFP4",
+            "endpoint": "https://api.llmtech.eu/v1",
+            "returned_model": "qwen38"
+          },
+          "synthesis": {
+            "provider": "llmtech",
+            "model": "nvidia/Qwen3.8-27B-NVFP4",
+            "endpoint": "https://api.llmtech.eu/v1",
+            "returned_model": "qwen38"
+          }
+        },
+        "run_id": "2d0ae036cfce42728a7f41bf4a5c2476",
+        "queries": 2,
+        "source_files": [
+          "AFS_method_comparison_table.xlsx",
+          "S01_Multispectral_Laboratory.pdf"
+        ],
+        "clarification_questions": 5
+      }
+    ]
+  },
+  "live_source_pilot": {
+    "status": "passed",
+    "directory": "knowledge/.staging/7b7bca2eb048486ea09a8ef1e823aa31",
+    "pages": [
+      [
+        "S01",
+        10
+      ],
+      [
+        "S02",
+        6
+      ]
+    ],
+    "records": 7,
+    "eligible_records": 3,
+    "providers": [
+      "llmtech",
+      "groq"
+    ],
+    "active_corpus_changed": false
+  },
+  "original_source_comparison": {
+    "status": "executed_provider_quota_exhausted",
+    "source_count": 7,
+    "succeeded": 0,
+    "errors": 7,
+    "error_codes": [
+      "provider_daily_limit"
+    ],
+    "workbook_cell_values_verified": true,
+    "previous_artifact_backup": "20261018T090423Z_previous_gemini_comparison.json"
+  }
+}

@@ -16,8 +16,13 @@ class Settings(BaseSettings):
 
     groq_api_key: SecretStr = SecretStr("")
     llmtech_api_key: SecretStr = SecretStr("")
-    provider_name: Literal["auto", "groq", "llmtech"] = "auto"
-    provider_order: str = "llmtech,groq"
+    gemini_api_key: SecretStr = SecretStr("")
+    gemini_model: str = "models/gemini-3.8-flash"
+    gemini_base_url: str = "https://generativelanguage.googleapis.com"
+    gemini_max_output_tokens: int = Field(default=2048, ge=128, le=65536)
+    gemini_thinking_level: Literal["low", "medium", "high"] = "medium"
+    provider_name: Literal["auto", "gemini", "groq", "llmtech"] = "auto"
+    provider_order: str = "gemini,llmtech,groq"
     groq_base_url: str = "https://api.groq.com/openai/v1"
     groq_model: str = "qwen/qwen3.8-27b"
     llmtech_base_url: str = "https://api.llmtech.eu/v1"
@@ -41,18 +46,19 @@ class Settings(BaseSettings):
     source_dir: Path = Path("knowledge/original_sources")
     corpus_dir: Path = Path("knowledge")
     smoke_output_dir: Path = Path("outputs/provider_smoke")
+    explainability_db_path: Path = Path("outputs/assessment/explainability.sqlite")
     ingest_cache_dir: Path = Path("outputs/ingest/cache")
     embedding_cache_dir: Path = Path("outputs/embedding_models")
     web_corpus_dir: Path = Path("knowledge/web")
     ingest_concurrency: int = Field(default=1, ge=1, le=4)
     ingest_max_output_tokens: int = Field(default=1000, ge=256, le=16384)
 
-    @field_validator("source_dir", "corpus_dir", "smoke_output_dir", "ingest_cache_dir", "embedding_cache_dir", "web_corpus_dir")
+    @field_validator("source_dir", "corpus_dir", "smoke_output_dir", "explainability_db_path", "ingest_cache_dir", "embedding_cache_dir", "web_corpus_dir")
     @classmethod
     def resolve_path(cls, value: Path) -> Path:
         return value.resolve() if value.is_absolute() else (PROJECT_ROOT / value).resolve()
 
-    @field_validator("provider_base_url", "groq_base_url", "llmtech_base_url")
+    @field_validator("provider_base_url", "groq_base_url", "llmtech_base_url", "gemini_base_url")
     @classmethod
     def validate_base_url(cls, value: str | None) -> str | None:
         from urllib.parse import urlsplit
@@ -71,7 +77,7 @@ class Settings(BaseSettings):
             raise ValueError("Use an HTTP(S) base URL without credentials, query or fragment")
         return value.rstrip("/")
 
-    @field_validator("provider_model", "groq_model", "llmtech_model")
+    @field_validator("provider_model", "groq_model", "llmtech_model", "gemini_model")
     @classmethod
     def nonblank_model(cls, value: str | None) -> str | None:
         if value is None:
@@ -84,8 +90,11 @@ class Settings(BaseSettings):
     @classmethod
     def valid_order(cls, value: str) -> str:
         names = [v.strip().lower() for v in value.split(",")]
-        if sorted(names) != ["groq", "llmtech"]:
-            raise ValueError("PROVIDER_ORDER must contain llmtech and groq exactly once")
+        # Upgrade existing two-provider configuration without editing local keys.
+        if sorted(names) == ["groq", "llmtech"]:
+            names.insert(0, "gemini")
+        if sorted(names) != ["gemini", "groq", "llmtech"]:
+            raise ValueError("PROVIDER_ORDER must contain gemini, llmtech and groq exactly once")
         return ",".join(names)
 
     @model_validator(mode="after")
@@ -102,7 +111,7 @@ class Settings(BaseSettings):
         return self.provider_order.split(",") if self.provider_name == "auto" else [self.provider_name]
 
     def for_provider(self, name: str) -> "Settings":
-        if name not in {"groq", "llmtech", "auto"}:
+        if name not in {"gemini", "groq", "llmtech", "auto"}:
             raise ValueError("Unknown provider mode")
         values = self.model_dump()
         values.update(provider_name=name, provider_base_url=None, provider_model=None)
@@ -114,13 +123,17 @@ class Settings(BaseSettings):
     def usable_key(value: SecretStr) -> bool:
         key = value.get_secret_value().strip().lower()
         return bool(key) and key not in {
-            "your_groq_api_key_here", "your_llmtech_api_key_here", "your_key_here", "replace_me", "placeholder"
+            "your_groq_api_key_here", "your_llmtech_api_key_here", "your_gemini_api_key_here", "local-only-key", "your_key_here", "replace_me", "placeholder"
         }
 
     @property
     def provider_api_key(self) -> SecretStr:
-        return self.llmtech_api_key if self.provider_name == "llmtech" else self.groq_api_key
+        return getattr(self, f"{self.provider_name}_api_key") if self.provider_name != "auto" else getattr(self, f"{self.provider_names[0]}_api_key")
 
     @property
     def provider_configured(self) -> bool:
         return any(self.usable_key(getattr(self, f"{name}_api_key")) for name in self.provider_names)
+
+    @property
+    def gemini_configured(self) -> bool:
+        return self.usable_key(self.gemini_api_key)

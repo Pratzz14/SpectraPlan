@@ -26,7 +26,7 @@ def with_public_trial(settings: Settings) -> Settings:
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--mode", choices=["auto", "llmtech", "groq"], default="auto")
+    parser.add_argument("--mode", choices=["auto", "gemini", "llmtech", "groq"], default="auto")
     parser.add_argument("--public-trial", action="store_true", help="Fill a missing LLMTech key from its documented public trial")
     parser.add_argument("--check", action="store_true", help="Make a small synthetic live structured-output check")
     args = parser.parse_args()

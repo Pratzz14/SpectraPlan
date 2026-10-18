@@ -68,7 +68,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--case", action="append", dest="cases", help="D01, D02, multi_stream, capability_claim, ambiguous_units; repeatable")
     parser.add_argument("--output-dir", type=Path, default=PROJECT_ROOT / "outputs/extraction")
-    parser.add_argument("--provider", choices=["auto", "groq", "llmtech"], help="Explicit run-only override; saved configuration is unchanged")
+    parser.add_argument("--provider", choices=["auto", "gemini", "groq", "llmtech"], help="Explicit run-only override; saved configuration is unchanged")
     parser.add_argument("--public-trial", action="store_true", help="Use LLMTech's documented public trial only if no LLMTech key is configured")
     args = parser.parse_args()
     try:

@@ -1,6 +1,7 @@
 """Local dense retrieval plus lexical BM25, fused at evidence-record level."""
 
 import importlib.metadata
+from contextvars import ContextVar
 import re
 import threading
 import time
@@ -20,6 +21,7 @@ EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
 QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
 COLLECTION = "afs_evidence"
 SEARCH_LOCK = threading.RLock()
+RETRIEVAL_EVENTS = ContextVar("retrieval_events", default=None)
 # Domain synonyms, independent of any development or final scenario.
 SYNONYMS = {"mir": ["mid", "infrared", "ftir"], "ftir": ["mir", "infrared"],
             "nir": ["near", "infrared"], "atr": ["attenuated", "total", "reflection"],
@@ -346,6 +348,14 @@ class CaseRetrievalService:
 
     def _search(self, snapshot, client, trace, fields, documents, by_segment, deadline):
         _check_deadline(deadline)
+        trace.bm25_tokens = query_tokens(trace.query)
+        trace.embedding_input = QUERY_PREFIX + trace.query
+        sink = RETRIEVAL_EVENTS.get()
+        if sink:
+            sink({"stage":"retrieval", "event_type":"search_started", "payload":{
+                "corpus_version":snapshot.version, "collection":COLLECTION,
+                "embedding_model":EMBEDDING_MODEL, "embedding_fingerprint":getattr(self.embedder,"fingerprint",None),
+                "query":trace.model_dump(mode="json")}})
         lexical = lexical_candidates(documents, trace.query)
         vector = self.embedder.vectors([trace.query], query=True)[0]
         _check_deadline(deadline)
@@ -365,6 +375,15 @@ class CaseRetrievalService:
         bm25 = dict(lexical)
         lexical_ranks = {eid: i for i, (eid, _) in enumerate(lexical, 1)}
         dense_ranks = {eid: i for i, eid in enumerate(dense, 1)}
+        def branch_row(eid, score, rank):
+            record = snapshot.records[eid]
+            return {"evidence_id": eid, "source_id": record["source_id"], "file_name": record["file_name"],
+                    "score": score, "rank": rank}
+        trace.branch_rankings = {
+            "bm25": [branch_row(eid, score, rank) for rank, (eid, score) in enumerate(lexical, 1)],
+            "qdrant": [branch_row(eid, value[0], dense_ranks[eid]) for eid, value in dense.items()],
+            "hybrid": [branch_row(eid, score, rank) for rank, (eid, score) in
+                       enumerate(fuse(list(bm25), list(dense), limit=40), 1)]}
         focus = set(_meaningful(" ".join(v for values in fields.values() for v in values)))
         for eid, score in fuse(list(bm25), list(dense), limit=40):
             record = snapshot.records[eid]
@@ -381,9 +400,12 @@ class CaseRetrievalService:
                 dense_rank=dense_ranks.get(eid), rrf_score=score, matched_terms=matched,
                 matching_segment=dense.get(eid, (None, None))[1])
             trace.candidates.append(CandidateDecision(evidence_id=eid, admitted=admitted, match=match,
+                source_id=record["source_id"], file_name=record["file_name"],
                 reason=("meaningful_keyword_match" if lexical_ok else "semantic_threshold") if admitted
                 else "requires_structured_context_match" if record["content_kind"] == "method_row"
                 else "no_relevant_facet" if lexical_ok or semantic_ok else "below_relevance_gate"))
+        if sink:
+            sink({"stage":"retrieval", "event_type":"search_finished", "payload":trace.model_dump(mode="json")})
 
     def _method_lookup(self, snapshot, context, fields, queries):
         text = " ".join(v for values in fields.values() for v in values)
@@ -436,6 +458,7 @@ class CaseRetrievalService:
         diverse += [c for c in ordered if c not in diverse]
         for rank, (eid, _, matched) in enumerate(diverse[:3], 1):
             trace.candidates.append(CandidateDecision(evidence_id=eid, admitted=True, reason="structured_method_or_sample_match",
+                source_id=snapshot.records[eid]["source_id"], file_name=snapshot.records[eid]["file_name"],
                 match=EvidenceMatch(query_id=trace.query_id, context_id=context.context_id, facets=["geometry"],
                     admission="structured", rrf_score=1 / (60 + rank), matched_terms=matched)))
         return trace

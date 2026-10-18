@@ -1,6 +1,7 @@
 """Structured provider adapter with one shared deadline and sanitized failures."""
 
 import asyncio
+import copy
 import json
 import math
 import time
@@ -47,7 +48,7 @@ def _retry_delay(response: httpx.Response | None, attempt: int) -> float:
 
 
 class Provider:
-    def __init__(self, settings: Settings, *, transport: httpx.AsyncBaseTransport | None = None):
+    def __init__(self, settings: Settings, *, transport: httpx.AsyncBaseTransport | None = None, gemini_client=None):
         self.settings = settings
         self.transport = transport
         self.last_usage: dict = {}
@@ -55,10 +56,31 @@ class Provider:
         self.repair_counts: dict[str, int] = {}
         self.current_settings = settings
         self.attempts: list[dict] = []
-        self.stage: str | None = None
+        self.trace_events: list[dict] = []
+        self.stage: str | None = "provider"
+        self.on_event = None
+        self.gemini_client = gemini_client
         if settings.provider_name == "auto" and (settings._provider_router is None or settings._provider_router.settings is not settings):
             from backend.provider_routing import ProviderRouter
             settings._provider_router = ProviderRouter(settings)
+
+    def emit(self, event_type, payload):
+        event = {"stage": self.stage or "provider", "event_type": event_type,
+                 "created_at": datetime.now(timezone.utc).isoformat(), "payload": copy.deepcopy(payload)}
+        self.trace_events.append(event)
+        if self.on_event is not None:
+            self.on_event(event)
+
+    def reject_stage(self, errors, *, exhausted=False):
+        self.emit("validation_failed", {"errors": errors, "exhausted": exhausted,
+                                        **self.identity()})
+        if exhausted and self.settings.provider_name == "auto":
+            self.settings._provider_router.mark(self.current_settings.provider_name, False, "stage_invalid_response")
+            return any(name != self.current_settings.provider_name and
+                       self.settings.usable_key(getattr(self.settings, f"{name}_api_key")) and
+                       self.settings._provider_router.states.get(name, {}).get("code") != "stage_invalid_response"
+                       for name in self.settings.provider_names)
+        return False
 
     def identity(self):
         config = self.current_settings
@@ -67,13 +89,16 @@ class Provider:
 
     async def _probe(self, config, deadline):
         from backend.provider_routing import AvailabilityProbe
-        candidate = config.model_copy(update={"provider_max_retries": 0, "provider_reasoning_effort": "none"})
-        direct = Provider(candidate, transport=self.transport)
+        candidate = config.model_copy(update={"provider_max_retries": 0, "provider_reasoning_effort": "none",
+                                              "gemini_thinking_level": "low"})
+        direct = Provider(candidate, transport=self.transport, gemini_client=self.gemini_client)
+        direct.stage = self.stage or "availability"
+        direct.on_event = self.on_event
         started = time.monotonic()
         error = None
         try:
             result = await direct.structured([{"role": "user", "content": 'Return exactly {"ok": true}.'}],
-                AvailabilityProbe, deadline=deadline, max_completion_tokens=128, temperature=0)
+                AvailabilityProbe, deadline=deadline, max_completion_tokens=512 if config.provider_name == "gemini" else 128, temperature=0)
             if not result.ok:
                 raise ProviderError("provider_probe_failed", "Provider failed the structured availability probe.")
         except ProviderError as caught:
@@ -83,6 +108,7 @@ class Provider:
             error = "provider_timeout"
             raise
         finally:
+            self.trace_events.extend(direct.trace_events)
             self.attempts.append({"stage": self.stage, "purpose": "probe", "provider": config.provider_name,
                 "model": config.provider_model, "endpoint": config.provider_base_url,
                 "outcome": "failed" if error else "passed", "error_code": error,
@@ -116,7 +142,9 @@ class Provider:
                 tried.add(candidate.provider_name)
                 # One payload attempt per provider avoids spending the entire
                 # deadline on a failing provider's transport retries.
-                direct = Provider(candidate.model_copy(update={"provider_max_retries": 0}), transport=self.transport)
+                direct = Provider(candidate.model_copy(update={"provider_max_retries": 0}), transport=self.transport,
+                                  gemini_client=self.gemini_client)
+                direct.stage, direct.on_event = self.stage, self.on_event
                 started = time.monotonic()
                 failure = None
                 try:
@@ -138,6 +166,7 @@ class Provider:
                     failure = "provider_timeout"
                     raise
                 finally:
+                    self.trace_events.extend(direct.trace_events)
                     self.current_settings = candidate
                     self.last_model = direct.last_model
                     if direct.last_usage:
@@ -170,105 +199,116 @@ class Provider:
         config = self.settings
         if not config.provider_configured:
             raise ProviderError("provider_not_configured", f"Set {config.provider_name.upper()}_API_KEY on the backend.")
-        stop_at = min(
-            math.inf if deadline is None else deadline,
-            time.monotonic() + config.request_deadline_s,
-        )
-        remaining = stop_at - time.monotonic()
-        if remaining <= 0:
-            raise ProviderError("provider_timeout", "Provider request deadline expired.", 504)
-        payload = {
-            "model": config.provider_model,
-            "messages": messages,
-            "stream": False,
-            "max_completion_tokens": max_completion_tokens or config.provider_max_completion_tokens,
-            "response_format": {
-                "type": "json_schema",
-                "json_schema": {
-                    "name": response_model.__name__,
-                    "strict": True,
-                    "schema": response_model.model_json_schema(),
-                },
-            },
-        }
-        if temperature is not None:
-            if not math.isfinite(temperature) or not 0 <= temperature <= 2:
-                raise ValueError("temperature must be finite and between 0 and 2")
-            payload["temperature"] = temperature
-        if config.provider_name == "llmtech":
-            payload["chat_template_kwargs"] = {"enable_thinking": False}
+        stop_at = min(deadline if deadline is not None else math.inf,
+                      time.monotonic() + config.request_deadline_s)
+        max_tokens = max_completion_tokens or config.provider_max_completion_tokens
+        if config.provider_name == "gemini":
+            from backend.gemini_provider import interaction_payload
+            payload = interaction_payload(messages, response_model.model_json_schema(), config, max_tokens)
         else:
-            payload.update(reasoning_effort=config.provider_reasoning_effort, reasoning_format="hidden")
-        try:
-            async with asyncio.timeout(remaining):
-                async with httpx.AsyncClient(
-                    transport=self.transport, follow_redirects=False,
-                    headers={"Authorization": f"Bearer {config.provider_api_key.get_secret_value().strip()}"},
-                ) as client:
-                    for attempt in range(config.provider_max_retries + 1):
-                        response = None
-                        failure = ProviderError("provider_unavailable", "Provider is unavailable.")
-                        call_budget = min(config.provider_call_timeout_s, stop_at - time.monotonic())
-                        if call_budget <= 0:
-                            raise TimeoutError
+            payload = {"model": config.provider_model, "messages": messages, "stream": False,
+                "max_completion_tokens": max_tokens, "response_format": {"type": "json_schema",
+                "json_schema": {"name": response_model.__name__, "strict": True,
+                                "schema": response_model.model_json_schema()}}}
+            if temperature is not None:
+                if not math.isfinite(temperature) or not 0 <= temperature <= 2:
+                    raise ValueError("temperature must be finite and between 0 and 2")
+                payload["temperature"] = temperature
+            if config.provider_name == "llmtech":
+                payload["chat_template_kwargs"] = {"enable_thinking": False}
+            else:
+                payload.update(reasoning_effort=config.provider_reasoning_effort, reasoning_format="hidden")
+        for attempt in range(config.provider_max_retries + 1):
+            budget = min(config.provider_call_timeout_s, stop_at - time.monotonic())
+            if budget <= 0:
+                raise ProviderError("provider_timeout", "Provider request deadline expired.", 504)
+            started = time.monotonic()
+            request_record = {**self.identity(), "attempt": attempt, "request": payload}
+            self.emit("provider_request", request_record)
+            response = None
+            try:
+                async with asyncio.timeout(budget):
+                    if config.provider_name == "gemini":
+                        from backend.gemini_provider import create_interaction, response_content
                         try:
-                            # asyncio also bounds the whole attempt, including streamed body reads.
-                            async with asyncio.timeout(call_budget):
-                                response = await client.post(
-                                    f"{config.provider_base_url}/chat/completions",
-                                    json=payload, timeout=call_budget,
-                                )
-                        except (httpx.TimeoutException, TimeoutError):
-                            failure = ProviderError("provider_timeout", "Provider call timed out.", 504)
-                        except httpx.TransportError:
-                            failure = ProviderError("provider_unavailable", "Cannot connect to provider.")
-                        else:
-                            if response.status_code in {401, 403}:
-                                raise ProviderError("provider_authentication", "Provider rejected authentication or model access.")
-                            if response.status_code == 402:
-                                failure = ProviderError("provider_daily_limit", "Provider quota or balance is exhausted.", upstream_status=402)
-                                failure.daily_limit = True
-                                raise failure
-                            if response.status_code != 429 and response.status_code < 500:
-                                if response.status_code != 200:
-                                    try:
-                                        raw_code = response.json().get("error", {}).get("code")
-                                    except (ValueError, AttributeError):
-                                        raw_code = None
-                                    safe_code = raw_code if isinstance(raw_code, str) and raw_code in {"json_validate_failed", "invalid_request_error", "schema_validation_error",
-                                                                          "model_not_found", "rate_limit_exceeded"} else None
-                                    raise ProviderError("provider_request_rejected", "Provider rejected the request or structured-output schema.",
-                                                        upstream_status=response.status_code, upstream_code=safe_code)
-                                try:
-                                    response_data = response.json()
-                                except ValueError:
-                                    response_data = None
-                                returned_model = response_data.get("model") if isinstance(response_data, dict) else None
-                                self.last_model = returned_model if isinstance(returned_model, str) and returned_model.strip() else None
-                                result = self._validate(response, response_model)
-                                usage = response.json().get("usage", {})
-                                self.last_usage = {k: usage[k] for k in ("prompt_tokens", "completion_tokens", "total_tokens")
-                                                   if isinstance(usage.get(k), int)} if isinstance(usage, dict) else {}
-                                return result
-                            failure = ProviderError("provider_unavailable", f"Provider returned HTTP {response.status_code} (rate limit or service failure).",
-                                                    upstream_status=response.status_code)
-                            if response.status_code == 429:
-                                try:
-                                    message = response.json().get("error", {}).get("message", "")
-                                    failure.daily_limit = any(marker in message for marker in ("(TPD)", "(ITPD)", "(OTPD)", "tokens per day", "requests per day"))
-                                except (ValueError, AttributeError, TypeError):
-                                    pass
-                                if failure.daily_limit:
-                                    failure.code = "provider_daily_limit"
-                                    raise failure
-                        if attempt == config.provider_max_retries:
-                            raise failure from None
-                        delay = _retry_delay(response, attempt)
-                        if time.monotonic() + delay >= stop_at:
-                            raise TimeoutError
-                        await asyncio.sleep(delay)
-        except TimeoutError:
-            raise ProviderError("provider_timeout", "Provider request deadline expired.", 504) from None
+                            reply = await create_interaction(payload, config, budget, self.gemini_client)
+                        except (TimeoutError, httpx.TimeoutException, asyncio.CancelledError):
+                            raise
+                        except Exception as error:
+                            status = getattr(error, "status_code", None) or getattr(error, "code", None)
+                            code = ("provider_authentication" if status in {401, 403} else
+                                    "provider_daily_limit" if getattr(error, "daily_limit", False) else
+                                    "provider_request_rejected" if status in {400, 404, 422} else
+                                    "provider_unavailable")
+                            raise ProviderError(code, "Gemini request failed.", upstream_status=status if isinstance(status, int) else None) from None
+                        text, model, usage, status = response_content(reply)
+                        self.last_model, self.last_usage = model or config.provider_model, usage
+                        response = httpx.Response(200, json={"model": self.last_model,
+                            "choices": [{"finish_reason": "stop" if status == "completed" else "incomplete",
+                                         "message": {"content": text}}]})
+                    else:
+                        async with httpx.AsyncClient(transport=self.transport, follow_redirects=False,
+                            headers={"Authorization": f"Bearer {config.provider_api_key.get_secret_value().strip()}"}) as client:
+                            response = await client.post(f"{config.provider_base_url}/chat/completions",
+                                                         json=payload, timeout=budget)
+                        if response.status_code != 200:
+                            status = response.status_code
+                            safe_code = None
+                            daily = status == 402
+                            try:
+                                upstream = response.json().get("error", {})
+                                raw_code = upstream.get("code")
+                                if raw_code in {"json_validate_failed", "invalid_request_error", "schema_validation_error", "model_not_found", "rate_limit_exceeded"}:
+                                    safe_code = raw_code
+                                message = upstream.get("message", "")
+                                daily |= status == 429 and any(marker in message for marker in
+                                    ("(TPD)", "(ITPD)", "(OTPD)", "tokens per day", "requests per day"))
+                            except (ValueError, AttributeError, TypeError):
+                                pass
+                            code = ("provider_authentication" if status in {401, 403} else
+                                    "provider_daily_limit" if daily else
+                                    "provider_unavailable" if status == 429 or status >= 500 else "provider_request_rejected")
+                            error = ProviderError(code, f"Provider returned HTTP {status}.", upstream_status=status, upstream_code=safe_code)
+                            error.daily_limit = daily
+                            raise error
+                        try:
+                            data = response.json()
+                        except ValueError:
+                            data = {}
+                        returned_model = data.get("model") if isinstance(data, dict) else None
+                        self.last_model = returned_model if isinstance(returned_model, str) and returned_model.strip() else None
+                        usage = data.get("usage", {}) if isinstance(data, dict) else {}
+                        self.last_usage = {key: usage[key] for key in ("prompt_tokens", "completion_tokens", "total_tokens")
+                                           if isinstance(usage, dict) and isinstance(usage.get(key), int)}
+                    try:
+                        raw = response.json().get("choices", [{}])[0].get("message", {}).get("content")
+                    except (ValueError, AttributeError, IndexError, TypeError):
+                        raw = response.text
+                    if raw is None:
+                        raw = response.text
+                    self.emit("provider_response", {**self.identity(), "attempt": attempt,
+                        "raw_content": raw, "usage": self.last_usage, "elapsed_s": time.monotonic() - started})
+                    result = self._validate(response, response_model)
+                    self.emit("provider_validated", {**self.identity(), "validated_output": result.model_dump(mode="json")})
+                    return result
+            except asyncio.CancelledError:
+                self.emit("provider_error", {**self.identity(), "code": "cancelled", "elapsed_s": time.monotonic() - started})
+                raise
+            except (TimeoutError, httpx.TimeoutException):
+                failure = ProviderError("provider_timeout", "Provider call timed out.", 504)
+            except httpx.TransportError:
+                failure = ProviderError("provider_unavailable", "Cannot connect to provider.")
+            except ProviderError as caught:
+                failure = caught
+            self.emit("provider_error", {**self.identity(), "attempt": attempt, "code": failure.code,
+                "upstream_status": failure.upstream_status, "validation_errors": getattr(failure, "validation_errors", []),
+                "elapsed_s": time.monotonic() - started})
+            if (attempt == config.provider_max_retries or failure.code not in {"provider_timeout", "provider_unavailable"}):
+                raise failure from None
+            delay = _retry_delay(response, attempt)
+            if time.monotonic() + delay >= stop_at:
+                raise ProviderError("provider_timeout", "Provider request deadline expired.", 504)
+            await asyncio.sleep(delay)
         raise AssertionError("Unreachable retry state")
 
     @staticmethod

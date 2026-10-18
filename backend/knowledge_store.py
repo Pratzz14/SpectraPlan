@@ -4,6 +4,8 @@ import hashlib
 import json
 import os
 import re
+import zipfile
+from xml.etree import ElementTree
 from pathlib import Path
 from uuid import uuid4
 
@@ -129,6 +131,79 @@ def extract_pages(source_dir: Path, sources: list[dict], destination: Path) -> l
                               "width": page.rect.width, "height": page.rect.height, "blocks": blocks,
                               "image": image, "image_sha256": file_hash(image_path), "needs_vision": needs_vision})
     return pages
+
+
+def _docx_blocks(path: Path) -> list[dict]:
+    """Extract paragraphs and table cells without rewriting source text."""
+    namespace = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
+    with zipfile.ZipFile(path) as archive:
+        root = ElementTree.fromstring(archive.read("word/document.xml"))
+    blocks = []
+    for node_index, node in enumerate(root.findall(".//w:body/*", namespace), 1):
+        if node.tag.endswith("}p"):
+            text = "".join(t.text or "" for t in node.findall(".//w:t", namespace))
+            if text.strip():
+                blocks.append({"block_id": f"b{len(blocks) + 1:03}", "text": text, "raw_text": text,
+                               "location": f"paragraph:{len(blocks) + 1}"})
+        elif node.tag.endswith("}tbl"):
+            for row_no, row in enumerate(node.findall("./w:tr", namespace), 1):
+                cells = ["".join(t.text or "" for t in cell.findall(".//w:t", namespace)).strip()
+                         for cell in row.findall("./w:tc", namespace)]
+                text = "\t".join(cells).strip()
+                if text:
+                    blocks.append({"block_id": f"b{len(blocks) + 1:03}", "text": text, "raw_text": text,
+                                   "location": f"table:{node_index}/row:{row_no}"})
+    return blocks
+
+
+def _xlsx_blocks(path: Path) -> list[dict]:
+    blocks = []
+    book = openpyxl.load_workbook(path, read_only=True, data_only=False)
+    try:
+        for sheet in book.worksheets:
+            for row in sheet.iter_rows():
+                values = ["" if cell.value is None else str(cell.value) for cell in row]
+                if not any(value.strip() for value in values):
+                    continue
+                text = "\t".join(values)
+                blocks.append({"block_id": f"b{len(blocks) + 1:03}", "text": text, "raw_text": text,
+                               "location": f"sheet:{sheet.title}!{row[0].row}"})
+    finally:
+        book.close()
+    return blocks
+
+
+def extract_original_documents(source_dir: Path, sources: list[dict]) -> list[dict]:
+    """Return deterministic, reviewable text payloads for original files.
+
+    The existing page/image extraction remains available for the ingestion model.
+    This text-oriented view lets comparison tools use the same original PDF,
+    DOCX, and XLSX inputs while retaining exact source locations.
+    """
+    documents = []
+    for source in sources:
+        path = source_dir / source["file_name"]
+        suffix = path.suffix.casefold()
+        if suffix == ".pdf":
+            blocks = []
+            with pymupdf.open(path) as pdf:
+                for page_no, page in enumerate(pdf, 1):
+                    for block in page.get_text("blocks", sort=True):
+                        if block[6] == 0 and block[4].strip():
+                            text = block[4].replace("\r\n", "\n").replace("\r", "\n")
+                            blocks.append({"block_id": f"b{len(blocks) + 1:03}", "text": text,
+                                           "raw_text": block[4], "location": f"page:{page_no}"})
+        elif suffix == ".docx":
+            blocks = _docx_blocks(path)
+        elif suffix == ".xlsx":
+            blocks = _xlsx_blocks(path)
+        else:
+            continue
+        documents.append({"source_id": source["source_id"], "file_name": source["file_name"],
+                          "source_sha256": source["sha256"], "role": source["role"],
+                          "format": suffix[1:], "blocks": blocks,
+                          "block_count": len(blocks)})
+    return documents
 
 
 def anchored_quote(text: str, quote: str) -> str | None:

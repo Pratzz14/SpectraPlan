@@ -245,6 +245,33 @@ def test_ingestion_daily_limit_stops_further_requests(monkeypatch):
     assert transport.provider.calls == 1
 
 
+def test_ingestion_semantic_failure_repairs_then_uses_fallback(monkeypatch):
+    from types import SimpleNamespace
+    class InvalidThenFallback:
+        calls=0
+        last_usage={}
+        current_settings=SimpleNamespace(provider_name="gemini")
+        rejected=[]
+        def __init__(self,settings):
+            pass
+        async def structured(self,*args,**kwargs):
+            self.calls+=1
+            return "invalid" if self.calls <= 2 else "valid"
+        def reject_stage(self,errors,*,exhausted=False):
+            self.rejected.append(exhausted)
+            if exhausted:
+                self.current_settings=SimpleNamespace(provider_name="llmtech")
+                return True
+            return False
+    monkeypatch.setattr("backend.ingest.Provider",InvalidThenFallback)
+    transport=IngestionTransport(Settings(_env_file=None))
+    def validate(value):
+        if value != "valid":
+            raise ValueError("Source block does not exist")
+    assert asyncio.run(transport.structured([{"role":"user","content":"synthetic source"}],PageExtraction,validate=validate)) == "valid"
+    assert transport.provider.calls == 3 and transport.provider.rejected == [False,True]
+
+
 def test_publication_switches_pointer_and_preserves_previous_on_failure(tmp_path):
     root = tmp_path / "knowledge"
     staged = root / ".staging" / "build"

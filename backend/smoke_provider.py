@@ -61,7 +61,7 @@ async def run_smoke(settings: Settings) -> tuple[dict, int]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--provider", choices=["auto", "groq", "llmtech"])
+    parser.add_argument("--provider", choices=["auto", "gemini", "groq", "llmtech"])
     parser.add_argument("--all", action="store_true", help="Test each configured provider independently with synthetic data")
     args = parser.parse_args()
     settings = Settings()

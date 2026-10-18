@@ -68,9 +68,20 @@ class ExtractionRequest(FactModel):
     description: str = Field(min_length=1, max_length=20000)
 
 
+class ClarificationAnswer(FactModel):
+    question: Text
+    context: Text
+    answer: Text
+    question_id: str | None = Field(default=None, pattern=r"^[0-9a-f]{24}$")
+    origin_run_id: str | None = Field(default=None, pattern=r"^[0-9a-f]{32}$")
+
+
 class AssessmentRequest(FactModel):
     description: str = Field(min_length=1)
     fact_overrides: None = None
+    clarification_answers: list[ClarificationAnswer] = Field(default_factory=list)
+    enquiry_id: str | None = Field(default=None, pattern=r"^[0-9a-f]{32}$")
+    parent_run_id: str | None = Field(default=None, pattern=r"^[0-9a-f]{32}$")
 
     @field_validator("description")
     @classmethod
@@ -283,9 +294,14 @@ class AssessmentMetadata(FactModel):
     synthesis_max_completion_tokens: int
     synthesis_temperature: float
     repair_counts: dict[str, int] = Field(default_factory=dict)
-    provider_mode: Literal["auto", "groq", "llmtech"] = "groq"
+    provider_mode: Literal["auto", "gemini", "groq", "llmtech"] = "groq"
+    enquiry_id: str | None = None
+    parent_run_id: str | None = None
+    round_no: int = 1
+    question_ids: list[str] = Field(default_factory=list)
     stage_providers: dict[str, dict] = Field(default_factory=dict)
     provider_attempts: list[dict] = Field(default_factory=list)
+    provider_trace: list[dict] = Field(default_factory=list)
 
 
 class DevelopmentAssessmentResult(FactModel):

@@ -13,10 +13,10 @@ class CorpusStatus(BaseModel):
     human_verified_records: int = 0
 
 class ProviderStatus(BaseModel):
-    name: Literal["auto", "groq", "llmtech"] = "auto"
+    name: Literal["auto", "gemini", "groq", "llmtech"] = "auto"
     model: str
     configured: bool
-    mode: Literal["auto", "groq", "llmtech"] = "auto"
+    mode: Literal["auto", "gemini", "groq", "llmtech"] = "auto"
     selected: str | None = None
     candidates: list[dict] = Field(default_factory=list)
 

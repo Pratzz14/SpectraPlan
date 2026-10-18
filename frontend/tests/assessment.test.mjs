@@ -6,7 +6,7 @@ import { transformWithOxc } from 'vite'
 // Use Vite's existing TS transform; no test framework or production dependency needed.
 const source = await readFile(new URL('../src/assessment.ts', import.meta.url), 'utf8')
 const { code } = await transformWithOxc(source, 'assessment.ts')
-const { isAssessmentRun, reportText, contextLabel, compactRequirements, usefulClarificationReason, composeEnquiry, clarificationKey } = await import(`data:text/javascript;base64,${Buffer.from(code).toString('base64')}`)
+const { isAssessmentRun, reportText, contextLabel, compactRequirements, usefulClarificationReason, composeEnquiry, clarificationKey, displayText, chemistWarnings } = await import(`data:text/javascript;base64,${Buffer.from(code).toString('base64')}`)
 
 function runFixture() {
   return {
@@ -28,12 +28,20 @@ test('an empty supported shortlist is a complete scientific decision and exports
   const before = JSON.stringify(run)
   assert.equal(isAssessmentRun(run), true)
   const report = reportText(run, ' Original enquiry\nwith whitespace ')
-  assert.match(report, /Run: test-run/)
+  assert.doesNotMatch(report, /Run: test-run/)
   assert.match(report, /No supported method shortlist/)
   assert.match(report, /What is the target variable/)
   assert.match(report, /Characterize the material/)
   assert.ok(report.includes(' Original enquiry\nwith whitespace '))
   assert.equal(JSON.stringify(run), before)
+})
+
+test('Gemini assessments retain enquiry lineage and question identifiers', () => {
+  const run = runFixture()
+  Object.assign(run.metadata, { provider:'gemini', provider_mode:'gemini', model:'gemini-3.8-flash',
+    enquiry_id:'enquiry', parent_run_id:'parent', round_no:2, question_ids:['question'] })
+  assert.equal(isAssessmentRun(run), true)
+  assert.equal(run.metadata.parent_run_id, 'parent')
 })
 
 test('incomplete envelopes require errors and cannot contain an assessment or orphan retrieval', () => {
@@ -86,8 +94,8 @@ test('claim references must resolve to the pinned evidence, not another revision
 
 test('identically labeled streams remain distinguishable', () => {
   const facts = { contexts: [{ context_id: 'stream_1', label: 'Liquid' }, { context_id: 'stream_2', label: 'Liquid' }] }
-  assert.equal(contextLabel(facts, ['stream_1']), 'Liquid (stream 1)')
-  assert.equal(contextLabel(facts, ['stream_2']), 'Liquid (stream 2)')
+  assert.equal(contextLabel(facts, ['stream_1']), 'Liquid (first stream)')
+  assert.equal(contextLabel(facts, ['stream_2']), 'Liquid (second stream)')
   assert.equal(contextLabel(facts, []), 'Shared / all contexts')
 })
 
@@ -140,4 +148,13 @@ test('answer identity survives question reorder but cannot leak between differen
   const q = runFixture().assessment.clarification_questions[0]
   assert.equal(clarificationKey({ ...q, context_ids: ['stream_1', 'stream_2'] }), clarificationKey({ ...q, context_ids: ['stream_2', 'stream_1'], priority: 9 }))
   assert.notEqual(clarificationKey({ ...q, context_ids: ['stream_1'] }), clarificationKey({ ...q, context_ids: ['stream_2'] }))
+})
+
+test('chemist presentation removes internal identifiers and technical diagnostics but preserves science', () => {
+  assert.equal(displayText('Proposed (stream_1): method_no T01 at /contexts/0/temperature'), 'Proposed: method the listed test at the specified requirement')
+  assert.deepEqual(chemistWarnings([
+    'The matrix may fluoresce and requires confirmation.',
+    'Semantic similarity threshold was not met.',
+    'The matrix may fluoresce and requires confirmation.',
+  ]), ['The matrix may fluoresce and requires confirmation.'])
 })

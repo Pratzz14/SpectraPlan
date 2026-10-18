@@ -46,9 +46,6 @@ class ProviderRouter:
         # Waiting for another request's probe also consumes this request's deadline.
         async with asyncio.timeout(max(0, deadline - time.monotonic())):
             async with self.lock:
-                snapshot = self.snapshot()
-                if snapshot["selected"] and snapshot["selected"] not in excluded:
-                    return self.settings.for_provider(snapshot["selected"])
                 from backend.provider import ProviderError
                 for name in self.settings.provider_names:
                     if name in excluded:

@@ -145,6 +145,25 @@ def test_combined_ledger_is_repeatable_balanced_and_traceable(local):
     assert result.model_calls == 0
 
 
+def test_search_trace_preserves_exact_inputs_branch_rankings_and_filenames(local):
+    from backend.retrieval import RETRIEVAL_EVENTS
+    _, service = local
+    seen=[]; token=RETRIEVAL_EVENTS.set(seen.append)
+    try:
+        result=service.retrieve_case(powder_case())
+    finally:
+        RETRIEVAL_EVENTS.reset(token)
+    searched=[q for q in result.queries if q.facet != "method_table"]
+    assert searched and seen[0]["event_type"] == "search_started"
+    assert any(e["event_type"] == "search_finished" for e in seen)
+    for query in searched:
+        assert query.bm25_tokens == query_tokens(query.query)
+        assert query.embedding_input == QUERY_PREFIX+query.query
+        assert set(query.branch_rankings) == {"bm25","qdrant","hybrid"}
+        assert all(row["file_name"] and row["rank"] > 0 for rows in query.branch_rankings.values() for row in rows)
+        assert all(c.file_name and c.source_id for c in query.candidates)
+
+
 def test_empty_search_is_successful_gap_and_only_one_followup(local):
     _, service = local
     facts = case({"context_id": "stream_1", "label": "unfindablezzzz", "target_analytes": ["unfindablezzzz"]},

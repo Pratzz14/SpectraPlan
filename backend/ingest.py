@@ -46,7 +46,7 @@ def pipeline_fingerprint(config: Settings) -> dict:
             "provider": config.provider_name,
             "reasoning_effort": config.provider_reasoning_effort, "max_completion_tokens": config.ingest_max_output_tokens,
             "call_timeout_s": config.provider_call_timeout_s, "deadline_s": config.request_deadline_s,
-            "max_retries": config.provider_max_retries}
+            "max_retries": config.provider_max_retries, "gemini_thinking_level": config.gemini_thinking_level}
     if config.provider_name == "auto":
         result.update(model="automatic", endpoint="automatic", provider_profiles=[{
             "name": name, "model": config.for_provider(name).provider_model,
@@ -70,19 +70,38 @@ def page_messages(page: dict, directory: Path, system: str, extra: str = "", *, 
 class IngestionTransport:
     """Long-running ingestion can wait for token replenishment; interactive calls cannot."""
     def __init__(self, settings):
-        self.provider = Provider(extraction_config(settings))
+        self.settings = extraction_config(settings)
+        self.provider = Provider(self.settings)
+        self.lock = asyncio.Lock()
         self.fatal = None
         self.next_request_at = 0.0
 
     async def structured(self, *args, **kwargs):
+        async with self.lock:
+            self.provider.stage = kwargs.pop("stage", "document_extraction")
+            return await self._structured(*args, **kwargs)
+
+    async def _structured(self, *args, **kwargs):
         if self.fatal:
             raise self.fatal
-        generation_retries = 0
+        generation_retries = {}
+        validate = kwargs.pop("validate", None)
+        stop = time.monotonic() + self.settings.request_deadline_s
+        kwargs["deadline"] = min(kwargs.get("deadline", stop), stop)
         for attempt in range(6):
             try:
                 while time.monotonic() < self.next_request_at:
-                    await asyncio.sleep(min(60, self.next_request_at - time.monotonic()))
+                    if time.monotonic() >= stop:
+                        raise ProviderError("provider_timeout", "Document extraction deadline expired.", 504)
+                    await asyncio.sleep(min(60, self.next_request_at - time.monotonic(), stop - time.monotonic()))
                 result = await self.provider.structured(*args, **kwargs)
+                if validate is not None:
+                    try:
+                        validate(result)
+                    except (ValueError, KeyError, IndexError) as validation_error:
+                        failure = ProviderError("provider_invalid_response", "Source-page output failed local validation.", 502)
+                        failure.validation_errors = [str(validation_error)]
+                        raise failure from None
                 usage = self.provider.last_usage
                 # Account-specific defaults verified from Groq's rejection messages.
                 if self.provider.current_settings.provider_name == "groq":
@@ -93,16 +112,39 @@ class IngestionTransport:
                 if error.daily_limit or error.code in {"provider_authentication", "provider_not_configured"}:
                     self.fatal = error
                     raise
-                if error.upstream_code == "json_validate_failed" and generation_retries < 1 and attempt < 5:
-                    generation_retries += 1
-                    print("Qwen returned incomplete structured JSON; retrying this stage once after token refill (no content repair).", flush=True)
-                    await asyncio.sleep(60)
-                    continue
+                if error.code == "provider_invalid_response" or error.upstream_code == "json_validate_failed":
+                    name = self.provider.current_settings.provider_name
+                    repairs = generation_retries.get(name, 0)
+                    feedback = getattr(error, "validation_errors", []) or ["Return complete JSON matching the supplied schema."]
+                    fallback = self.provider.reject_stage(feedback, exhausted=repairs >= 1)
+                    if repairs < 1:
+                        generation_retries[name] = repairs + 1
+                        args = ([*args[0], {"role":"user","content":json.dumps({"validation_errors":feedback,
+                            "instruction":"Regenerate from the original source; preserve exact source provenance."})}], *args[1:])
+                        continue
+                    if fallback:
+                        continue
+                    raise
                 if error.upstream_status != 429 or attempt == 5:
                     raise
                 delay = 2 if self.provider.current_settings.provider_name == "llmtech" else 60
                 print(f"Provider rate limit; waiting {delay} seconds before resuming this stage.", flush=True)
                 await asyncio.sleep(delay)
+
+
+def validate_page_extraction(extraction, page):
+    if not extraction.candidates and not extraction.empty_reason:
+        raise ValueError("Empty model extraction has no explanation")
+    if empty_omits_substantive(extraction, page):
+        raise ValueError("Model omitted a substantive source page")
+    allowed = {block["block_id"] for block in page["blocks"]}
+    if any(span.block_id not in allowed for candidate in extraction.candidates for span in candidate.spans):
+        raise ValueError("Selected block ID is not present on the source page")
+
+
+def validate_page_verification(verification, count):
+    if sorted(verdict.candidate_index for verdict in verification.verdicts) != list(range(count)):
+        raise ValueError("Verification must return exactly one verdict per candidate")
 
 
 def empty_omits_substantive(extraction: PageExtraction, page: dict) -> bool:
@@ -216,7 +258,8 @@ async def process_page(page: dict, directory: Path, settings: Settings, fingerpr
                     raise ValueError("Extraction prompt changed during build; restart to preserve provenance")
                 extraction = await transport.structured(page_messages(page, directory,
                     (PROMPTS / "knowledge_extract.txt").read_text(encoding="utf-8")), PageExtraction,
-                    max_completion_tokens=settings.ingest_max_output_tokens)
+                    max_completion_tokens=settings.ingest_max_output_tokens, stage="document_extraction",
+                    validate=lambda value: validate_page_extraction(value, page))
                 write_json(partial_file, {"input_key": extraction_key, "extraction": extraction.model_dump(),
                     "provider_identity": transport.provider.identity() if hasattr(transport, "provider") else None})
             if not extraction.candidates and not extraction.empty_reason:
@@ -231,7 +274,8 @@ async def process_page(page: dict, directory: Path, settings: Settings, fingerpr
                     (PROMPTS / "knowledge_verify.txt").read_text(encoding="utf-8"),
                     "\nCandidates to check:\n" + json.dumps(numbered, ensure_ascii=False),
                     include_image=bool(extraction.figures)), PageVerification,
-                    max_completion_tokens=min(2048 if settings.provider_name in {"auto", "llmtech"} else 768, settings.ingest_max_output_tokens))
+                    max_completion_tokens=min(2048 if settings.provider_name in {"auto", "llmtech"} else 768, settings.ingest_max_output_tokens), stage="document_verification",
+                    validate=lambda value: validate_page_verification(value, len(extraction.candidates)))
             else:
                 verification = PageVerification(verdicts=[])
             bundle = {"input_key": key, "pipeline": fingerprint, "created_at": utc_now(),
@@ -262,7 +306,7 @@ async def process_page(page: dict, directory: Path, settings: Settings, fingerpr
                     "extraction_key": key, "records": len(records),
                     "eligible": sum(r["retrieval_eligible"] for r in records), "empty_reason": extraction.empty_reason,
                     "issues": extraction.issues, "automated_review_only": True}
-        print(f"{page['source_id']} p.{page['page']}: {len(records)} records, {coverage['eligible']} eligible ({'cached' if cached else 'Qwen'})", flush=True)
+        print(f"{page['source_id']} p.{page['page']}: {len(records)} records, {coverage['eligible']} eligible ({'cached' if cached else 'model'})", flush=True)
         return records, coverage
 
 
@@ -367,7 +411,7 @@ def main() -> int:
     for name in ["build", "pilot"]:
         command = commands.add_parser(name)
         command.add_argument("--refresh", action="store_true", help="Explicitly rerun page extraction and verification")
-        command.add_argument("--provider", choices=["auto", "groq", "llmtech"])
+        command.add_argument("--provider", choices=["auto", "gemini", "groq", "llmtech"])
         command.add_argument("--public-trial", action="store_true", help="Fetch LLMTech's documented public trial key at runtime")
     commands.add_parser("validate")
     commands.add_parser("report")

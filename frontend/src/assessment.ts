@@ -1,6 +1,6 @@
 // Public F06 contracts. Keep the received object intact for lossless JSON export.
-export interface AssessmentRequest { description: string; fact_overrides?: null }
-export interface ClarificationAnswer { question: string; context: string; answer: string }
+export interface AssessmentRequest { description: string; fact_overrides?: null; clarification_answers?: ClarificationAnswer[]; enquiry_id?: string; parent_run_id?: string }
+export interface ClarificationAnswer { question: string; context: string; answer: string; question_id?: string | null; origin_run_id?: string | null }
 export function composeEnquiry(description: string, answers: ClarificationAnswer[]): string {
   const filled = answers.filter(item => item.answer.trim());
   return filled.length ? `${description}\n\nCustomer clarifications:\n\n${filled.map(item => `Context: ${item.context}\nQuestion: ${item.question}\nAnswer: ${item.answer}`).join('\n\n')}` : description;
@@ -86,13 +86,30 @@ export interface AssessmentMetadata {
   stage_elapsed_s: Record<string, number>; last_successful_call_usage: Record<string, Record<string, number>>;
   call_timeout_s: number; request_deadline_s: number; provider_max_retries: number; provider_max_completion_tokens: number;
   extraction_max_completion_tokens: number; synthesis_max_completion_tokens: number; synthesis_temperature: number;
-  repair_counts: Record<string, number>; provider_mode: 'auto' | 'groq' | 'llmtech';
+  repair_counts: Record<string, number>; provider_mode: 'auto' | 'gemini' | 'groq' | 'llmtech';
+  enquiry_id?: string | null; parent_run_id?: string | null; round_no?: number; question_ids?: string[];
   stage_providers: Record<string, Record<string, unknown>>; provider_attempts: Record<string, unknown>[];
 }
 export interface RunError { code: string; stage: 'extraction' | 'retrieval' | 'synthesis'; message: string; http_status: 502 | 503 | 504 }
 export interface AssessmentRun {
   run_status: 'complete' | 'incomplete'; facts: CaseFacts | null; retrieval: RetrievalResult | null;
   assessment: Assessment | null; errors: RunError[]; metadata: AssessmentMetadata; warnings: string[];
+}
+export interface EnquirySummary {
+  enquiry_id: string; original_description: string; created_at: string; updated_at: string; rounds: number; latest_run_id: string;
+}
+export interface EnquiryDetail {
+  enquiry_id: string; original_description: string;
+  runs: { run_id: string; created_at: string; status: string; round_no: number; parent_run_id: string | null }[];
+}
+export interface ExplainabilityTrace {
+  run_id: string; created_at: string; description: string; clarification_answers: ClarificationAnswer[];
+  enquiry_id: string; parent_run_id: string | null; round_no: number;
+  status: 'running' | 'complete' | 'incomplete' | 'interrupted'; draft_description: string;
+  questions: (ClarificationQuestion & { question_id: string; origin_run_id: string })[];
+  run: AssessmentRun | null;
+  legacy_run?: unknown;
+  events: { sequence: number; stage: string; event_type: string; created_at: string; payload: Record<string, unknown> }[];
 }
 
 // Small boundary validators: validate before rendering, without normalizing or stripping export data.
@@ -119,7 +136,7 @@ const retrieval = shape({ status: enumeration('ok'), corpus_version: text, retri
 const experiment = shape({ context_ids: strings, objective: text, samples: strings, measurements: strings, comparisons: strings, validation: text, decision_criteria: text, open_items: strings, variation: strings, proposed_settings: list(shape({ context_ids: strings, name: text, value: number, unit: nullText, origin: enumeration('proposed') })), validation_groups: list(shape({ context_ids: strings, independent_unit: enumeration('batch', 'run', 'specimen', 'patient', 'unresolved'), study_type: enumeration('targeted_feasibility', 'characterization') })), acceptance_criteria: list(shape({ context_id: text, metric: enumeration('required_error', 'response_time_raw', 'bias', 'robustness'), threshold: nullText, requirement_path: nullText, origin: enumeration('customer', 'unknown') })) });
 const spectralRange: Check = v => shape({ text, evidence_ids: strings, kind: enumeration('nominal_method_range', 'source_configuration_range', 'undetermined'), interval: nullText, raman_excitation: nullable(assertion), raman_shift: nullable(assertion) })(v) && object(v) && (v.kind === 'undetermined' ? v.interval === null : typeof v.interval === 'string');
 const assessment = shape({ decision_status: enumeration('provisional', 'insufficient_information', 'outside_supported_scope'), decision_reason: text, case_summary: text, requirements: shape({ stated: list(shape({ context_id: nullText, field: text, field_path: text, value: text, origin: enumeration('customer'), input_quote: text })), unknowns: strings }), clarification_questions: list(shape({ priority: number, context_ids: strings, question: text, reason: assertion, affects: strings })), recommendations: list(shape({ context_ids: strings, method: text, geometry: nullText, measurement_location: nullText, spectral_range: spectralRange, rationale: assertion, assumptions: strings, limitations: list(assertion), status: enumeration('worth_testing', 'conditional_on_clarification') })), risks: list(v => assertion(v) && shape({ context_ids: strings })(v)), experiment, source_index: list(source) });
-const metadata = shape({ run_id: text, generated_at: text, pipeline_version: text, provider: text, model: text, returned_models: dictionary(nullText), endpoint: text, corpus_version: nullText, retrieval_version: nullText, prompt_versions: dictionary(text), prompt_sha256: dictionary(text), schema_sha256: dictionary(text), stage_elapsed_s: dictionary(number), last_successful_call_usage: dictionary(dictionary(number)), call_timeout_s: number, request_deadline_s: number, provider_max_retries: number, provider_max_completion_tokens: number, extraction_max_completion_tokens: number, synthesis_max_completion_tokens: number, synthesis_temperature: number, repair_counts: dictionary(number), provider_mode: enumeration('auto', 'groq', 'llmtech'), stage_providers: dictionary(object), provider_attempts: list(object) });
+const metadata = shape({ run_id: text, generated_at: text, pipeline_version: text, provider: text, model: text, returned_models: dictionary(nullText), endpoint: text, corpus_version: nullText, retrieval_version: nullText, prompt_versions: dictionary(text), prompt_sha256: dictionary(text), schema_sha256: dictionary(text), stage_elapsed_s: dictionary(number), last_successful_call_usage: dictionary(dictionary(number)), call_timeout_s: number, request_deadline_s: number, provider_max_retries: number, provider_max_completion_tokens: number, extraction_max_completion_tokens: number, synthesis_max_completion_tokens: number, synthesis_temperature: number, repair_counts: dictionary(number), provider_mode: enumeration('auto', 'gemini', 'groq', 'llmtech'), stage_providers: dictionary(object), provider_attempts: list(object) });
 const envelope = shape({ run_status: enumeration('complete', 'incomplete'), facts: nullable(facts), retrieval: nullable(retrieval), assessment: nullable(assessment), errors: list(shape({ code: text, stage: enumeration('extraction', 'retrieval', 'synthesis'), message: text, http_status: enumeration(502, 503, 504) })), metadata, warnings: strings });
 
 export function isAssessmentRun(value: unknown): value is AssessmentRun {
@@ -142,7 +159,46 @@ export function isAssessmentRun(value: unknown): value is AssessmentRun {
   return assertions.every(a => a.evidence_ids.every(id => references.has(id) && ledger.has(id)));
 }
 
-export const readable = (value: string) => value.replaceAll('_', ' ');
+export const readable = (value: string) => value
+  .replaceAll('_', ' ')
+  .replace(/\b\w/g, character => character.toUpperCase());
+
+const technicalDiagnosticPatterns = [
+  /semantic similarity/i, /similarity threshold/i, /automated validation/i,
+  /agent inspection/i, /retrieval coverage/i, /internal source check/i,
+  /source check/i, /corpus version/i, /pipeline version/i, /prompt/i,
+  /embedding/i, /cosine score/i, /bm25/i, /rrf/i, /retrieval round/i,
+  /debug/i, /json path/i,
+];
+
+export function displayText(value: string): string {
+  return value
+    .replace(/\bProposed\s*\([^)]*\)\s*:\s*/gi, 'Proposed: ')
+    .replace(/\bstream_\d+\b/gi, 'this stream')
+    .replace(/\bmethod_no\b/gi, 'method')
+    .replace(/\bT\d{2,}\b/g, 'the listed test')
+    .replace(/\/(?:contexts|requirements|experiment)(?:\/[^)\s,;:]+)+/g, 'the specified requirement')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
+export function uniqueDisplayItems(items: string[]): string[] {
+  const seen = new Set<string>();
+  return items.map(displayText).filter(item => {
+    const key = item.toLowerCase();
+    if (!item || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+export function isTechnicalDiagnostic(value: string): boolean {
+  return technicalDiagnosticPatterns.some(pattern => pattern.test(value));
+}
+
+export function chemistWarnings(items: string[]): string[] {
+  return uniqueDisplayItems(items).filter(item => !isTechnicalDiagnostic(item));
+}
 
 const requirementLabels: Record<string, string> = {
   target_analytes: 'Measure', measurement_goals: 'Goal', sample_matrix: 'Sample', sample_phase: 'Sample',
@@ -163,7 +219,8 @@ export function compactRequirements(rows: Requirement[], contextName: string): {
       || (row.field === 'sample_matrix' && row.value.trim().toLowerCase() === contextName.trim().toLowerCase())) continue;
     const label = requirementLabel(row.field);
     const values = groups.get(label) ?? [];
-    if (!values.some(value => value.trim().toLowerCase() === row.value.trim().toLowerCase())) values.push(row.value);
+    const value = displayText(row.value);
+    if (!values.some(existing => existing.trim().toLowerCase() === value.trim().toLowerCase())) values.push(value);
     groups.set(label, values);
   }
   return Array.from(groups, ([label, values]) => ({ label, values }));
@@ -181,24 +238,26 @@ export function usefulClarificationReason(question: ClarificationQuestion): bool
 export function contextLabel(facts: CaseFacts | null, ids: string[]): string {
   return ids.length ? ids.map(id => {
     const label = facts?.contexts.find(c => c.context_id === id)?.label ?? readable(id)
-    return (facts?.contexts.filter(c => c.label === label).length ?? 0) > 1 ? `${label} (${readable(id)})` : label
+    const matches = facts?.contexts.filter(c => c.label === label) ?? []
+    const ordinal = ['first', 'second', 'third', 'fourth'][matches.findIndex(c => c.context_id === id)] ?? 'additional'
+    return matches.length > 1 ? `${label} (${ordinal} stream)` : label
   }).join(' · ') : 'Shared / all contexts';
 }
 
 export function reportText(run: AssessmentRun, description: string): string {
   const a = run.assessment;
-  const lines = ['SpectraPlan — Initial technical assessment', `Run: ${run.metadata.run_id}`, `Generated: ${run.metadata.generated_at}`, `Run status: ${run.run_status}`, '', 'Submitted enquiry', description];
-  const add = (title: string, items: string[]) => { if (items.length) lines.push('', title, ...items.map(item => `- ${item}`)); };
-  const cited = (claim: Assertion) => `${claim.text}${claim.evidence_ids.length ? ` [${claim.evidence_ids.map(id => a?.source_index.find(ref => ref.evidence_id === id)?.citation ?? id).join('; ')}]` : ''}`;
+  const lines = ['SpectraPlan — Initial technical assessment', '', 'Submitted enquiry', description];
+  const add = (title: string, items: string[]) => { const clean = uniqueDisplayItems(items); if (clean.length) lines.push('', title, ...clean.map(item => `- ${item}`)); };
+  const cited = (claim: Assertion) => `${displayText(claim.text)}${claim.evidence_ids.length ? ` [${claim.evidence_ids.map(id => a?.source_index.find(ref => ref.evidence_id === id)?.citation ?? 'Source').join('; ')}]` : ''}`;
   const scoped = (ids: string[]) => contextLabel(run.facts, ids);
   if (a) {
-    lines.push('', `Decision: ${readable(a.decision_status)}`, a.decision_reason, '', a.case_summary);
-    add('Customer-stated requirements', a.requirements.stated.map(r => `${scoped(r.context_id ? [r.context_id] : [])} · ${readable(r.field)}: ${r.value} (customer quote: “${r.input_quote}”)`));
+    lines.push('', `Decision: ${readable(a.decision_status)}`, displayText(a.decision_reason), '', displayText(a.case_summary));
+    add('Customer-stated requirements', a.requirements.stated.map(r => `${scoped(r.context_id ? [r.context_id] : [])} · ${requirementLabel(r.field)}: ${displayText(r.value)} (customer quote: “${displayText(r.input_quote)}”)`));
     add('Unknowns', a.requirements.unknowns);
     add('Clarification questions', [...a.clarification_questions].sort((x, y) => x.priority - y.priority).map(q => `Priority ${q.priority} · ${scoped(q.context_ids)}: ${q.question}${usefulClarificationReason(q) ? `\n  Why: ${cited(q.reason)}` : ''}\n  Affects: ${q.affects.join(', ') || 'Not specified'}`));
     if (!a.recommendations.length) lines.push('', 'No supported method shortlist. Resolve the questions and follow the proposed investigation.');
     for (const r of a.recommendations) {
-      lines.push('', `${r.method} · ${readable(r.status)} · ${scoped(r.context_ids)}`, `Geometry: ${r.geometry ?? 'Unknown'}`, `Measurement location: ${r.measurement_location ?? 'Unknown'}`, `Range (${readable(r.spectral_range.kind)}): ${r.spectral_range.interval ?? 'Undetermined'}`, cited(r.spectral_range), `Rationale: ${cited(r.rationale)}`);
+      lines.push('', `${displayText(r.method)} · ${readable(r.status)} · ${scoped(r.context_ids)}`, `Geometry: ${displayText(r.geometry ?? 'Unknown')}`, `Measurement location: ${displayText(r.measurement_location ?? 'Unknown')}`, `Range (${readable(r.spectral_range.kind)}): ${displayText(r.spectral_range.interval ?? 'Undetermined')}`, cited(r.spectral_range), `Rationale: ${cited(r.rationale)}`);
       if (r.spectral_range.raman_excitation) lines.push(`Raman excitation: ${cited(r.spectral_range.raman_excitation)}`);
       if (r.spectral_range.raman_shift) lines.push(`Raman shift: ${cited(r.spectral_range.raman_shift)}`);
       add('Assumptions', r.assumptions); add('Limitations', r.limitations.map(cited));
@@ -214,7 +273,7 @@ export function reportText(run: AssessmentRun, description: string): string {
     lines.push('', 'Go / no-go decision', e.decision_criteria); add('Open items', e.open_items);
     add('Cited evidence', a.source_index.map(ref => {
       const ev = run.retrieval?.evidence.find(entry => entry.evidence.evidence_id === ref.evidence_id)?.evidence;
-      return `${ref.citation} · ${ref.evidence_id} · ${ref.file_name} · ${readable(ev?.content_kind ?? '')} · ${readable(ev?.evidence_scope ?? '')}\n  ${ev?.text ?? 'Evidence unavailable'}${ev?.workbook_notes?.length ? `\n  Workbook notes: ${ev.workbook_notes.map(n => n.text).join(' ')}` : ''}`;
+      return `${ref.citation} · ${readable(ev?.content_kind ?? 'source')}\n  ${displayText(ev?.text ?? 'Evidence unavailable')}${ev?.workbook_notes?.length ? `\n  Source notes: ${ev.workbook_notes.map(n => displayText(n.text)).join(' ')}` : ''}`;
     }));
   } else {
     lines.push('', 'Incomplete run — no technical assessment was produced.');
@@ -228,8 +287,8 @@ export function reportText(run: AssessmentRun, description: string): string {
   add('Shared customer constraints', run.facts?.shared_constraints ?? []);
   add('Missing customer information', run.facts?.missing_information ?? []);
   add('Processing errors', run.errors.map(e => `${e.stage} · ${e.code}: ${e.message}`));
-  add('Warnings', [...new Set([...run.warnings, ...(run.retrieval?.warnings ?? [])])]);
+  add('Scientific warnings', chemistWarnings([...run.warnings, ...(run.retrieval?.warnings ?? [])]));
   add('Evidence gaps', run.retrieval?.gaps.map(g => `${scoped(g.context_id ? [g.context_id] : [])}: ${g.message}`) ?? []);
-  lines.push('', `Provider: ${run.metadata.provider} · ${run.metadata.model}`, `Corpus: ${run.metadata.corpus_version ?? 'Not reached'}`, `Pipeline: ${run.metadata.pipeline_version}`, '', 'Initial assessment and proposed testing only. Source checks do not establish experimental performance or clinical readiness.');
+  lines.push('', 'Initial assessment and proposed testing only. Source material does not establish experimental performance or clinical readiness.');
   return lines.join('\n');
 }

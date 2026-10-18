@@ -1,12 +1,14 @@
 """Run from the repository root: python -m uvicorn backend.main:app --reload."""
 
+import json
 import re
+import sqlite3
 import time
 from contextlib import asynccontextmanager
 from typing import Literal
 
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse, RedirectResponse, JSONResponse
+from fastapi import FastAPI, HTTPException, Query
+from fastapi.responses import FileResponse, RedirectResponse, JSONResponse, Response
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from backend.config import Settings
@@ -14,12 +16,13 @@ from backend.agent import extract_case, assess_case
 from backend.models import CaseFacts, ExtractionRequest, AssessmentRequest, AssessmentRun
 from backend.provider import Provider, ProviderError
 from backend.health import HealthResponse, ProviderStatus, inspect_corpus
-from backend.knowledge_store import active_directory, inside, read_json
+from backend.knowledge_store import active_directory, inside, read_json, inventory
 from backend.knowledge_report import inspection_data
 from backend.search_service import SearchService, SearchUnavailable
 from backend.evidence import CorpusUnavailable, EvidenceNotFound, EvidenceRevisionMismatch, ResolvedEvidence, load_snapshot
 from backend.retrieval import CaseRetrievalService, RetrievalTimeout, SEARCH_LOCK
 from backend.retrieval_models import RetrievalResult
+from backend.explainability import ExplainabilityStore, HistoryConflict, compose_description, question_id
 
 
 class SearchRequest(BaseModel):
@@ -43,6 +46,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @asynccontextmanager
     async def lifespan(application):
+        explainability_store.recover_interrupted()
         if config.provider_name == "auto" and config.provider_configured:
             try:
                 await Provider(config).check(deadline=time.monotonic() + min(
@@ -54,6 +58,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application = FastAPI(title="SpectraPlan", version="0.1.0", lifespan=lifespan)
     search_service = SearchService(config)
     retrieval_service = CaseRetrievalService(config)
+    explainability_store = ExplainabilityStore(config.explainability_db_path)
     application.state.retrieval_service = retrieval_service
 
     @application.post("/api/assess", response_model=AssessmentRun,
@@ -61,12 +66,74 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                                  502: {"model": AssessmentRun}, 503: {"model": AssessmentRun},
                                  504: {"model": AssessmentRun}})
     async def assess(request: AssessmentRequest):
-        if len(request.description) > config.assessment_max_description_chars:
-            raise HTTPException(422, {"code": "description_too_long",
-                "message": f"Description limit is {config.assessment_max_description_chars} characters."})
-        result = await assess_case(request.description, config, retrieval_service=retrieval_service)
+        answers = [answer.model_dump(mode="json") for answer in request.clarification_answers]
+        effective = compose_description(request.description, answers)
+        if len(effective) > config.assessment_max_description_chars:
+            raise HTTPException(422, {"code":"description_too_long",
+                "message":f"Enquiry including clarifications exceeds {config.assessment_max_description_chars} characters."})
+        identity = None
+        try:
+            identity = explainability_store.begin(request.description, answers,
+                enquiry_id=request.enquiry_id, parent_run_id=request.parent_run_id)
+            run_id = identity["run_id"]
+            def record_event(event):
+                explainability_store.append(run_id, event)
+            def record_stage(stage, value):
+                record_event({"stage":stage,"event_type":"validated_stage","payload":value.model_dump(mode="json")})
+            result = await assess_case(identity["effective_description"], config, retrieval_service=retrieval_service,
+                on_stage=record_stage, on_event=record_event, run_id=run_id)
+            result.metadata.enquiry_id = identity["enquiry_id"]
+            result.metadata.parent_run_id = identity["parent_run_id"]
+            result.metadata.round_no = identity["round_no"]
+            result.metadata.question_ids = [question_id(run_id, q.model_dump())
+                for q in result.assessment.clarification_questions] if result.assessment else []
+            explainability_store.finish(run_id, result.model_dump(mode="json"))
+        except HistoryConflict as error:
+            raise HTTPException(409, {"code":"history_conflict","message":str(error)}) from None
+        except (OSError, sqlite3.Error):
+            raise HTTPException(503, {"code":"explainability_unavailable",
+                "message":"Assessment history could not be stored. Retry when local storage is available."}) from None
+        except BaseException:
+            if identity:
+                explainability_store.interrupt(identity["run_id"])
+            raise
         status = result.errors[0].http_status if result.facts is None and result.errors else 200
-        return JSONResponse(result.model_dump(mode="json"), status_code=status)
+        response_payload = result.model_dump(mode="json")
+        response_payload["metadata"]["provider_trace"] = []
+        return JSONResponse(response_payload, status_code=status)
+
+    def history_read(method, *args):
+        try:
+            value = method(*args)
+        except (OSError, sqlite3.Error):
+            raise HTTPException(503, {"code":"explainability_unavailable","message":"Enquiry history is unavailable."}) from None
+        if value is None:
+            raise HTTPException(404, {"code":"history_not_found","message":"Saved history was not found."})
+        return value
+
+    @application.get("/api/assess/{run_id}/explainability")
+    def explainability(run_id: str):
+        if not re.fullmatch(r"[0-9a-f]{32}", run_id):
+            raise HTTPException(422, {"code":"invalid_run_id","message":"Invalid assessment run ID."})
+        return history_read(explainability_store.read, run_id)
+
+    @application.get("/api/enquiries")
+    def enquiries(limit: int = Query(default=50, ge=1, le=100), offset: int = Query(default=0, ge=0)):
+        return history_read(explainability_store.list_enquiries, limit, offset)
+
+    @application.get("/api/assess/{run_id}/report.pdf")
+    def saved_report(run_id: str, audience: Literal['chemist', 'trace'] = 'chemist'):
+        from backend.history_pdf import history_pdf, chemist_pdf
+        trace = explainability(run_id)
+        return Response((history_pdf if audience == 'trace' else chemist_pdf)(trace), media_type="application/pdf", headers={
+            "Content-Disposition": f'attachment; filename="spectraplan-{run_id}.pdf"',
+            "Cache-Control": "no-store"})
+
+    @application.get("/api/enquiries/{enquiry_id}")
+    def enquiry(enquiry_id: str):
+        if not re.fullmatch(r"[0-9a-f]{32}", enquiry_id):
+            raise HTTPException(422, {"code":"invalid_enquiry_id","message":"Invalid enquiry ID."})
+        return history_read(explainability_store.enquiry, enquiry_id)
 
     @application.post("/api/retrieve", response_model=RetrievalResult)
     def retrieve(facts: CaseFacts):
@@ -143,6 +210,24 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             return {**data, "artifact_base": f"/api/knowledge/versions/{version}/"}
         except (OSError, ValueError, KeyError, TypeError):
             raise HTTPException(503, "Published extracted knowledge is unavailable. Check workspace status.") from None
+
+    @application.get("/api/knowledge/gemini-comparison")
+    def gemini_comparison():
+        path = config.smoke_output_dir / "gemini_complete_comparison.json"
+        try:
+            data = read_json(path)
+            if not isinstance(data, dict) or data.get("model") != config.gemini_model or not isinstance(data.get("results"), list):
+                raise ValueError("Invalid Gemini comparison artifact")
+            if not all(isinstance(result, dict) for result in data["results"]):
+                raise ValueError("Invalid comparison source result")
+            sources = {source["source_id"]: source["sha256"] for source in inventory(config.source_dir)}
+            if (not isinstance(data.get("succeeded"), int) or
+                any(result.get("source_sha256") != sources.get(result.get("source_id")) or
+                    result.get("source_sha256") is None for result in data["results"])):
+                raise ValueError("Comparison is outdated; regenerate from current sources")
+            return data
+        except (OSError, ValueError, TypeError, json.JSONDecodeError):
+            raise HTTPException(404, "Gemini comparison is unavailable. Run the comparison command first.") from None
 
     @application.get("/api/knowledge/report", include_in_schema=False)
     def knowledge_report():

@@ -50,6 +50,8 @@ Desktop.ini
 
 # Routine diagnostic runs stay local; explicitly retain source-reviewed run records.
 /outputs/assessment/[0-9]*.json
+/outputs/assessment/explainability.sqlite*
+/outputs/test-tmp-*/
 !/outputs/assessment/20261017T204318Z_3ebb9b193319407aa703eca6dd222209.json
 !/outputs/assessment/20261018T031435Z_573cc337a2c7459cb0d31246fe0eebfe.json
 !/outputs/assessment/20261018T031140Z_5f79a57f653a4b59a57b1896af523416.json

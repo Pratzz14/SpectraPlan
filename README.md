@@ -56,6 +56,8 @@ Open [SpectraPlan](http://127.0.0.1:5173/). Vite proxies `/api` to `http://127.0
 
 A complete assessment can conclude that information is insufficient or that the request is outside the supported scope, with questions and next investigation steps. A processing failure is shown as an incomplete run with available validated facts and explicitly labeled incomplete exports. Search sources, Extracted knowledge and cached provider/corpus status remain accessible through the shared navigation. Extracted knowledge provides record filters, source-page images, provenance and separate automated/human-review labels.
 
+Saved enquiry history links the original request, clarification questions and answers, retrieval queries and rankings, and model outputs across analysis rounds. Open **History** in the top navigation to review previous enquiries, select a round, or download its full explainability trace. Use **Continue in Assessment** to reopen a case for further work. See [enquiry history](docs/explainability.md).
+
 ### Configuration
 
 Environment variables override the root `.env`. Relative paths resolve from the repository root, independently of the current working directory. Restart the backend after changing configuration. Automatic mode checks configured providers, caches a working choice and switches on availability failures within the shared deadline. See [provider selection](docs/providers.md) for setup, pinned modes and diagnostics.
@@ -64,8 +66,10 @@ Environment variables override the root `.env`. Relative paths resolve from the 
 |---|---|
 | `GROQ_API_KEY` | Backend-only key; supply locally in `.env` or the environment |
 | `LLMTECH_API_KEY` | Backend-only LLMTech key; explicit setup can fill a missing key from the public trial |
-| `PROVIDER_NAME` | `auto` (default), `groq` or `llmtech` |
-| `PROVIDER_ORDER` | `llmtech,groq`; automatic selection priority |
+| `GEMINI_API_KEY` / `GEMINI_MODEL` | Backend-only Gemini key / `models/gemini-3.8-flash` |
+| `GEMINI_THINKING_LEVEL` | `medium`; `low`, `medium` or `high` |
+| `PROVIDER_NAME` | `auto` (default), `gemini`, `groq` or `llmtech` |
+| `PROVIDER_ORDER` | `gemini,llmtech,groq`; automatic selection priority |
 | `LLMTECH_BASE_URL` / `LLMTECH_MODEL` | `https://api.llmtech.eu/v1` / `nvidia/Qwen3.8-27B-NVFP4` |
 | `GROQ_BASE_URL` / `GROQ_MODEL` | `https://api.groq.com/openai/v1` / `qwen/qwen3.8-27b` |
 | `PROVIDER_PROBE_TIMEOUT_S` | 8 seconds per synthetic availability probe |
@@ -81,6 +85,7 @@ Environment variables override the root `.env`. Relative paths resolve from the 
 | `SOURCE_DIR` | `knowledge/original_sources` |
 | `CORPUS_DIR` | `knowledge` |
 | `SMOKE_OUTPUT_DIR` | `outputs/provider_smoke` |
+| `EXPLAINABILITY_DB_PATH` | `outputs/assessment/explainability.sqlite`; local enquiry history |
 
 Groq documents [strict structured outputs](https://console.groq.com/docs/structured-outputs) for the selected model. The adapter requests a strict JSON Schema and validates content again with Pydantic. A successful response must finish normally, contain JSON matching the supplied model and pass local type/field checks. Automatic availability routing preserves strict JSON Schema and local validation. Invalid generated content uses the pipeline's bounded repair path; provider selection does not establish scientific correctness.
 
@@ -219,7 +224,7 @@ Run from the repository root with the configured backend-only provider key. The 
 
 The pilot processes S01 p.10 and S02 p.6 and prints an **unpublished** HTML report location. A full build processes all 64 pages from S01–S05, imports 19 workbook rows and seven notes, and publishes only after validation and indexing succeed. Text and rendered page images are sent to the selected ingestion provider for extraction and separate verification. The PDF build preserves S06 as a link; the separately authorized website crawl below stores its own business-context snapshot. Development examples, final evaluation inputs, the challenge brief, unknown files and business context never enter default technical retrieval.
 
-The extractor uses strict JSON schemas and versioned prompts in `backend/prompts/`. Qwen selects source block IDs; code copies original text and records quote offsets and page bounds. Visual transcriptions carry a labeled region and remain distinct from verbatim text. Structured facts and quantities retain exact supporting quotes. Ambiguous or unsupported candidates are inspectable but excluded from search.
+The extractor uses strict JSON schemas and versioned prompts in `backend/prompts/`. The selected extraction model chooses source block IDs; code copies original text and records quote offsets and page bounds. Visual transcriptions carry a labeled region and remain distinct from verbatim text. Structured facts and quantities retain exact supporting quotes. Ambiguous or unsupported candidates are inspectable but excluded from search.
 
 No approval workflow is required. After a successful build, open **Inspect extracted knowledge** in the application or [the report endpoint](http://127.0.0.1:5173/api/knowledge/report). `report` prints the standalone HTML location, which also works locally with the adjacent page assets. Filter by source, physical PDF page, content kind, validation status or retrieval eligibility. Inspect the passage, facts, source image with highlighted regions, workbook cells, original notes and complete provenance. Records default to `human_review_status="not_reviewed"`; automated validation does not establish scientific accuracy.
 
@@ -227,7 +232,7 @@ The current standalone report is [the published corpus report](knowledge/version
 
 ### Models, limits and storage
 
-- Extraction and verification: configurable Qwen provider. The published F02 build used LLMTech `nvidia/Qwen3.8-27B-NVFP4`, an 8192-token extraction ceiling, up to 2048 verification tokens and two concurrent page jobs. Pinned Groq runs retain conservative pacing. Automatic builds use the configured extraction/verification limits and retain actual provider identities in record provenance. An incomplete structured response is rejected, never silently repaired or published.
+- Extraction and verification: Gemini first, with Qwen fallback in automatic mode. The published F02 build used LLMTech `nvidia/Qwen3.8-27B-NVFP4`, an 8192-token extraction ceiling, up to 2048 verification tokens and two concurrent page jobs. Pinned Groq runs retain conservative pacing. Automatic builds use the configured extraction/verification limits and retain actual provider identities in record provenance. Incomplete structured responses remain inspectable and require bounded repair or fallback plus the same validation before publication.
 - Embeddings: local `BAAI/bge-small-en-v1.5` through FastEmbed, 384 dimensions, cosine similarity. The first use downloads public model files to `outputs/embedding_models/`; their checksums are captured in each index manifest. Source content is embedded locally. Each segment is explicitly checked below the model's 512-token limit, including its heading. Long indivisible sentences fail clearly rather than truncate.
 - Retrieval: up to 20 BM25 candidates and 20 Qdrant candidates, fused with reciprocal rank fusion (`k=60`) into at most eight unique evidence records. A domain-only synonym map covers terms such as MIR/FTIR and moisture/water. Results are candidates for a later assessment stage, not scientific endorsements. No cross-encoder reranker is used.
 - Qdrant: persistent local Python-client mode, no Docker/cloud account. The CLI opens and closes the active database per search. Do not access one local database from multiple processes simultaneously; concurrent searches contend for the local lock. Each build creates a separate generation; API report routes use versioned assets, so a rebuild cannot mix source images between reports.

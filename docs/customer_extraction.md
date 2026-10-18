@@ -70,6 +70,26 @@ The runner saves timestamped outputs under `outputs/extraction/`, including prom
 
 On 2026-10-17, all 122 backend tests passed. Final `extraction-v6` outputs for D01, D02 and the three synthetic enquiries passed mechanical checks and agent comparison against their original text using LLMTech `nvidia/Qwen3.8-27B-NVFP4`. The [review record](../outputs/extraction/review.json) identifies the exact outputs and their limitations. Earlier Groq request-size/rate-limit failures and earlier extraction defects remain available as historical diagnostics. This does not establish independent human validation or spectroscopy performance.
 
-The API defaults to `PROVIDER_NAME=auto`, selecting from configured LLMTech/Groq keys. Use `PROVIDER_NAME=llmtech` to pin LLMTech. The explicit `backend.provider_setup --public-trial --check` command can fill a missing key in local `.env`; diagnostic `--public-trial` remains a run-only option. Restart the backend after configuration changes.
+The API defaults to `PROVIDER_NAME=auto`, preferring configured Gemini, then LLMTech/Groq keys. Use `PROVIDER_NAME=llmtech` to pin LLMTech. The explicit `backend.provider_setup --public-trial --check` command can fill a missing key in local `.env`; diagnostic `--public-trial` remains a run-only option. Restart the backend after configuration changes.
 
 F05 composition uses `extraction-v7`, which reinforces contiguous quotes, original capitalization, preservation of phrases without ellipses, and the distinction between concentration/appearance and sample phase. The validation rules and one-repair limit remain in place. Its current D01/D02 full-pipeline checks are recorded in the [assessment inspection receipt](../outputs/assessment/review.json); the extraction-v6 results above remain historical evidence for the earlier five-case extraction check.
+
+## Original source formats
+
+The deterministic source layer reads PDF text blocks, DOCX paragraphs/table rows,
+and XLSX worksheet rows while preserving file hashes and source locations. PDF
+page/image extraction and the curated T01 method-table import remain unchanged.
+DOCX development material remains outside technical retrieval unless explicitly
+reviewed and admitted.
+
+The opt-in Gemini comparison command is documented in [provider selection](providers.md).
+It compares the existing deterministic baseline payload with Gemini extraction on
+the same original files; it does not silently replace the published corpus.
+
+## Gemini and enquiry history
+
+Automatic mode now prefers Gemini 3.8 Flash for extraction and synthesis, with
+LLMTech/Groq Qwen fallback. Every provider must satisfy the same quote-provenance
+and evidence checks. Clarification answers are assembled on the backend and linked
+to their originating questions in saved enquiry history. See
+[provider configuration](providers.md) and [explainability](explainability.md).

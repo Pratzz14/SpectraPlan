@@ -224,6 +224,10 @@ async def extract_case(description: str, settings: Settings | None = None, *,
             previous = getattr(error, "invalid_content", "")
             if not isinstance(previous, str):
                 previous = ""
+        if hasattr(adapter, "reject_stage"):
+            fallback = adapter.reject_stage(feedback, exhausted=bool(attempt))
+            if attempt and fallback:
+                return await extract_case(description, config, provider=adapter, deadline=stop_at)
         if attempt:
             failure = ProviderError("extraction_invalid_response", "Extraction failed schema or input-provenance validation after one repair.", 502)
             # Available only to an explicit local diagnostic runner, never the HTTP response.
@@ -521,6 +525,10 @@ async def synthesize_assessment(facts: CaseFacts, retrieval: RetrievalResult, se
             feedback = ["Return complete JSON satisfying every required schema property."]
             feedback.extend(getattr(error, "validation_errors", []))
             previous = getattr(error, "invalid_content", "")
+        if hasattr(adapter, "reject_stage"):
+            fallback = adapter.reject_stage(feedback, exhausted=bool(attempt))
+            if attempt and fallback:
+                return await synthesize_assessment(facts, retrieval, config, provider=adapter, deadline=stop_at)
         if attempt:
             failure = ProviderError("synthesis_invalid_response", "Synthesis failed validation after one repair.", 502)
             failure.validation_errors = feedback
@@ -552,7 +560,9 @@ async def synthesize_assessment(facts: CaseFacts, retrieval: RetrievalResult, se
 async def assess_case(description: str, settings: Settings | None = None, *,
                       provider: Provider | None = None, retrieval_service=None,
                       deadline: float | None = None,
-                      on_stage: Callable[[str, object], None] | None = None) -> AssessmentRun:
+                      on_stage: Callable[[str, object], None] | None = None,
+                      on_event: Callable[[dict], None] | None = None,
+                      run_id: str | None = None) -> AssessmentRun:
     """The public pipeline; expected failures retain only successfully validated stages."""
     from backend.knowledge_store import digest
     from backend.retrieval import CaseRetrievalService, RetrievalTimeout
@@ -563,10 +573,11 @@ async def assess_case(description: str, settings: Settings | None = None, *,
     if len(description) > config.assessment_max_description_chars:
         raise ValueError("Enquiry exceeds configured description limit")
     adapter = provider if provider is not None else Provider(config)
+    adapter.on_event = on_event
     adapter.repair_counts.clear()
     service = retrieval_service if retrieval_service is not None else CaseRetrievalService(config)
     stop_at = min(deadline if deadline is not None else float("inf"), time.monotonic() + config.request_deadline_s)
-    run_id, generated_at = uuid4().hex, datetime.now(timezone.utc).isoformat()
+    run_id, generated_at = run_id or uuid4().hex, datetime.now(timezone.utc).isoformat()
     timings, usage, models, identities = {}, {}, {}, {}
     schemas = {"extraction": digest(ExtractionOutput.model_json_schema())}
     facts = retrieval = assessment = None
@@ -609,7 +620,12 @@ async def assess_case(description: str, settings: Settings | None = None, *,
                 identities[stage] = adapter.identity()
             stage, started = "retrieval", time.monotonic()
             try:
-                retrieved = await asyncio.to_thread(retrieve_and_authenticate)
+                from backend.retrieval import RETRIEVAL_EVENTS
+                token = RETRIEVAL_EVENTS.set(on_event)
+                try:
+                    retrieved = await asyncio.to_thread(retrieve_and_authenticate)
+                finally:
+                    RETRIEVAL_EVENTS.reset(token)
                 completed(retrieved)
                 retrieval = retrieved
             finally:
@@ -650,7 +666,8 @@ async def assess_case(description: str, settings: Settings | None = None, *,
         extraction_max_completion_tokens=min(config.extraction_max_completion_tokens, config.provider_max_completion_tokens),
         synthesis_max_completion_tokens=min(config.synthesis_max_completion_tokens, config.provider_max_completion_tokens),
         synthesis_temperature=0.0, repair_counts=dict(adapter.repair_counts),
-        provider_mode=config.provider_name, stage_providers=identities, provider_attempts=list(adapter.attempts))
+        provider_mode=config.provider_name, stage_providers=identities, provider_attempts=list(adapter.attempts),
+        provider_trace=list(adapter.trace_events))
     return AssessmentRun(run_status="incomplete" if errors else "complete", facts=facts, retrieval=retrieval,
         assessment=assessment, errors=errors, metadata=metadata,
         warnings=[*(retrieval.warnings if retrieval else []),

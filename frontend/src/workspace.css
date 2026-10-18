@@ -113,6 +113,15 @@
 .workspace-footer { padding:18px 22px; border-top:1px solid var(--line); display:flex; justify-content:flex-end; flex:none; }
 .empty-workspace { margin:20px; color:var(--muted); font-size:14px; line-height:1.7; }
 .knowledge-workspace { grid-template-columns:minmax(300px,32fr) minmax(0,68fr); }
+.knowledge-page { display:grid; gap:16px; }
+.gemini-panel { border:1px solid #d9e4dd; border-radius:12px; padding:16px 20px; background:#f6faf7; }
+.gemini-panel h2 { margin:0; font-size:1.05rem; }
+.gemini-panel p { margin:6px 0 0; color:#56685f; }
+.gemini-results { display:grid; gap:12px; margin-top:14px; }
+.gemini-results article { border-top:1px solid #d9e4dd; padding-top:12px; }
+.gemini-results h3 { margin:0 0 8px; font-size:.95rem; }
+.gemini-results h4 { margin:8px 0 2px; font-size:.8rem; text-transform:uppercase; color:#68796f; }
+.gemini-results ul { margin:2px 0 6px; padding-left:20px; }
 .rail-controls { padding:22px 20px 12px; }
 .rail-controls label { margin:16px 0; }
 .rail-controls h1 { margin-bottom:18px; }
@@ -149,6 +158,11 @@
 .source-preview img { display:block; width:100%; height:auto; }
 .source-region { position:absolute; border:2px solid #088f9c; background:#00a0b010; pointer-events:none; }
 .source-text,.search-run-details pre,.corpus-details pre { white-space:pre-wrap; overflow-wrap:anywhere; font:12px/1.7 inherit; }
+.trace-list { display:grid; gap:10px; margin-top:12px; }
+.trace-item { padding:10px 12px; border:1px solid #e1e6ee; border-radius:5px; background:#fafcfb; }
+.trace-item p { white-space:pre-wrap; overflow-wrap:anywhere; }
+.trace-json { margin-top:8px; }
+.trace-json pre { max-height:360px; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; font:11px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; background:#f4f6f0; padding:10px; border-radius:4px; }
 @media (max-width:1100px) and (min-width:901px) { .main-content{padding-left:22px;padding-right:22px}.ranking-column{padding:0 12px}.search-result-row{gap:8px}.rank-number{width:26px;height:26px;font-size:13px}.search-workspace{grid-template-columns:minmax(245px,27fr) minmax(0,73fr)} }
 @media (max-width:900px) {
   .header-inner { padding:12px 18px 0; min-height:0; gap:10px; flex-direction:column; align-items:flex-start; }
@@ -180,4 +194,35 @@
   .inspector-tabs > button { font-size:13px; padding:10px 5px 14px; }
   .source-excerpt { padding:14px; font-size:14px; }
   .inspection-fields > div { gap:12px; }
+}
+
+.assessment-page, .history-page { height:calc(100dvh - 108px); display:flex; flex-direction:column; }
+.assessment-page > .assessment-workspace { height:auto; flex:1; min-height:0; }
+.history-page { gap:18px; }
+.history-heading { display:flex; justify-content:space-between; align-items:center; gap:20px; }
+.history-heading h1 { margin:0 0 4px; font-size:26px; }
+.history-heading p { margin:0; }
+.history-actions { display:flex; flex-wrap:wrap; gap:10px; }
+.history-workspace { height:auto; flex:1; min-height:0; }
+.history-list { height:100%; overflow:auto; }
+.history-list > p, .history-list > .secondary-button { margin:16px; }
+.history-entry { display:block; width:100%; padding:18px 20px; text-align:left; border:0; border-left:3px solid transparent; border-bottom:1px solid var(--line); background:#fff; cursor:pointer; color:var(--ink); }
+.history-entry[aria-pressed="true"] { background:#edf5f1; border-left-color:#075b4c; }
+.history-entry:hover { background:#f4f8f6; }
+.history-entry strong { font-size:14px; line-height:1.65; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+.history-entry span { display:block; margin-top:8px; font-size:12px; color:var(--muted); }
+.history-results { overflow:auto; padding:22px; }
+.history-run-controls { display:flex; flex-wrap:wrap; align-items:end; gap:14px; padding-bottom:20px; border-bottom:1px solid var(--line); }
+.history-run-controls label { display:grid; gap:6px; flex:1; min-width:180px; }
+.history-run-controls select { width:100%; }
+.history-run-controls a { text-decoration:none; }
+.history-outcome { margin:22px 0; }
+.history-outcome h2 { font-size:20px; }
+.history-results .result-panel { min-width:0; }
+@media (max-width:900px) {
+  .assessment-page, .history-page { height:auto; display:block; }
+  .assessment-page > .assessment-workspace, .history-workspace { height:auto; }
+  .history-heading { flex-wrap:wrap; margin-bottom:18px; }
+  .history-list { max-height:340px; }
+  .history-results { padding:18px; }
 }

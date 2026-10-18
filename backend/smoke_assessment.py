@@ -114,7 +114,7 @@ async def run_cases(settings: Settings, selected: set[str] | None = None, *, use
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--case", action="append", dest="cases", help="Development case ID; repeatable; defaults to D01 and D02")
-    parser.add_argument("--provider", choices=["auto", "groq", "llmtech"], help="Run-only override")
+    parser.add_argument("--provider", choices=["auto", "gemini", "groq", "llmtech"], help="Run-only override")
     parser.add_argument("--public-trial", action="store_true", help="Explicit LLMTech public trial if no backend key is configured")
     parser.add_argument("--api", action="store_true", help="Exercise POST /api/assess through ASGI with live provider/retrieval")
     parser.add_argument("--request-deadline-s", type=float, default=180)

@@ -32,6 +32,8 @@ class CandidateDecision(RetrievalModel):
     admitted: bool
     reason: str
     match: EvidenceMatch
+    source_id: str | None = None
+    file_name: str | None = None
 
 
 class QueryTrace(RetrievalModel):
@@ -45,6 +47,9 @@ class QueryTrace(RetrievalModel):
     expanded_terms: list[str] = Field(default_factory=list)
     statements: list[dict] = Field(default_factory=list)
     candidates: list[CandidateDecision] = Field(default_factory=list)
+    bm25_tokens: list[str] = Field(default_factory=list)
+    embedding_input: str | None = None
+    branch_rankings: dict[str, list[dict]] = Field(default_factory=dict)
 
 
 class LedgerEntry(RetrievalModel):

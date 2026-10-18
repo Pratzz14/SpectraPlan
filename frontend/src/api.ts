@@ -1,5 +1,5 @@
 import { isAssessmentRun } from './assessment'
-import type { AssessmentRequest, AssessmentRun, ResolvedEvidence } from './assessment'
+import type { AssessmentRequest, AssessmentRun, ExplainabilityTrace, EnquirySummary, EnquiryDetail, ResolvedEvidence } from './assessment'
 import type { KnowledgeInspection } from './knowledge'
 import { isKnowledgeInspection } from './knowledge'
 export type { AssessmentRequest, AssessmentRun } from './assessment'
@@ -21,6 +21,34 @@ export async function fetchKnowledgeInspection(signal: AbortSignal): Promise<Kno
   return data
 }
 
+export interface GeminiComparison {
+  model: string
+  source_count: number
+  succeeded: number
+  errors: number
+  comparison_note?: string
+  results: {
+    source_id: string
+    file_name: string
+    gemini: { claims: string[]; facts: string[]; unknowns: string[]; source_locations: string[] } | null
+    error: { code: string; message: string } | null
+  }[]
+}
+
+export async function fetchGeminiComparison(signal: AbortSignal): Promise<GeminiComparison | null> {
+  const response = await fetch('/api/knowledge/gemini-comparison', { signal, cache: 'no-store' })
+  if (response.status === 404) return null
+  if (!response.ok) throw new Error('Gemini comparison could not be loaded.')
+  const data = await response.json() as GeminiComparison
+  if (!data || typeof data.model !== 'string' || !Number.isInteger(data.succeeded) || !Number.isInteger(data.source_count)
+    || !Array.isArray(data.results) || !data.results.every(r => r && typeof r.source_id === 'string' && typeof r.file_name === 'string'
+      && (r.gemini === null || (r.gemini && ['facts', 'claims', 'unknowns', 'source_locations'].every(k =>
+        Array.isArray(r.gemini![k as keyof typeof r.gemini]) && (r.gemini![k as keyof typeof r.gemini] as string[]).every(v => typeof v === 'string')))))) {
+    throw new Error('Unexpected Gemini comparison response.')
+  }
+  return data
+}
+
 export async function assessEnquiry(input: AssessmentRequest, signal: AbortSignal): Promise<AssessmentRun> {
   let response: Response
   try {
@@ -31,6 +59,7 @@ export async function assessEnquiry(input: AssessmentRequest, signal: AbortSigna
     if (signal.aborted) throw error
     throw new Error('Cannot reach the assessment service. Check the backend connection and try again.')
   }
+
   let data: unknown
   try { data = await response.json() } catch {
     throw new Error(`The assessment service returned an unreadable response (HTTP ${response.status}). Please try again.`)
@@ -46,6 +75,18 @@ export async function assessEnquiry(input: AssessmentRequest, signal: AbortSigna
   throw new Error('Unexpected assessment response. No result was displayed. Please try again or check the backend version.')
 }
 
+export async function fetchExplainability(runId: string, signal: AbortSignal): Promise<ExplainabilityTrace> {
+  const response = await fetch(`/api/assess/${encodeURIComponent(runId)}/explainability`, { signal, cache: 'no-store' })
+  if (!response.ok) throw new Error(`Explainability trace could not be loaded (HTTP ${response.status}).`)
+  const data = await response.json() as ExplainabilityTrace
+  if (!data || data.run_id !== runId || !Array.isArray(data.events) || !data.events.every(e => e && typeof e.stage === 'string'
+    && typeof e.event_type === 'string' && typeof e.created_at === 'string' && Number.isInteger(e.sequence)
+    && e.payload && typeof e.payload === 'object') || !Array.isArray(data.clarification_answers) || !Array.isArray(data.questions)
+    || typeof data.enquiry_id !== 'string' || typeof data.draft_description !== 'string') throw new Error('Unexpected explainability response.')
+  if (data.run !== null && !isAssessmentRun(data.run)) return { ...data, legacy_run: data.run, run: null }
+  return data
+}
+
 export interface HealthResponse {
   service: 'running'
   ready: boolean
@@ -58,8 +99,8 @@ export interface HealthResponse {
     human_verified_records: number
   }
   provider: {
-    name: 'auto' | 'groq' | 'llmtech'; model: string; configured: boolean
-    mode: 'auto' | 'groq' | 'llmtech'; selected: string | null
+    name: 'auto' | 'gemini' | 'groq' | 'llmtech'; model: string; configured: boolean
+    mode: 'auto' | 'gemini' | 'groq' | 'llmtech'; selected: string | null
     candidates: { name: string; configured: boolean; status: 'unchecked' | 'working' | 'unavailable' | 'not_configured'; error_code: string | null }[]
   }
 }
@@ -83,9 +124,9 @@ function isHealthResponse(value: unknown): value is HealthResponse {
     && Number.isInteger(data.corpus.eligible_methods) && data.corpus.eligible_methods >= 0
     && Number.isInteger(data.corpus.flagged_records) && data.corpus.flagged_records >= 0
     && Number.isInteger(data.corpus.human_verified_records) && data.corpus.human_verified_records >= 0
-    && !!data.provider && ['auto', 'groq', 'llmtech'].includes(data.provider.name)
+    && !!data.provider && ['auto', 'gemini', 'groq', 'llmtech'].includes(data.provider.name)
     && typeof data.provider.model === 'string' && typeof data.provider.configured === 'boolean'
-    && ['auto', 'groq', 'llmtech'].includes(data.provider.mode)
+    && ['auto', 'gemini', 'groq', 'llmtech'].includes(data.provider.mode)
     && (data.provider.selected === null || typeof data.provider.selected === 'string')
     && Array.isArray(data.provider.candidates)
     && data.provider.candidates.every(p => !!p && typeof p.name === 'string' && typeof p.configured === 'boolean'
@@ -124,4 +165,22 @@ export async function queryKnowledge(input: {query: string; mode: SearchMode; da
   if (!response.ok) throw new Error(typeof data.detail === 'string' ? data.detail : 'Search failed. Check your query and dataset readiness.')
   if (typeof data.query !== 'string' || !data.rankings || !Array.isArray(data.warnings)) throw new Error('Unexpected search response.')
   return data as SearchResponse
+}
+
+export async function fetchEnquiries(signal: AbortSignal, offset = 0): Promise<EnquirySummary[]> {
+  const response = await fetch(`/api/enquiries?limit=50&offset=${offset}`, { signal, cache: 'no-store' })
+  if (!response.ok) throw new Error('Saved enquiries could not be loaded.')
+  const data = await response.json() as EnquirySummary[]
+  if (!Array.isArray(data) || !data.every(e => e && typeof e.enquiry_id === 'string' && typeof e.original_description === 'string'
+    && typeof e.latest_run_id === 'string' && Number.isInteger(e.rounds))) throw new Error('Unexpected enquiry history response.')
+  return data
+}
+
+export async function fetchEnquiry(enquiryId: string, signal: AbortSignal): Promise<EnquiryDetail> {
+  const response = await fetch(`/api/enquiries/${encodeURIComponent(enquiryId)}`, { signal, cache: 'no-store' })
+  if (!response.ok) throw new Error('Saved enquiry could not be opened.')
+  const data = await response.json() as EnquiryDetail
+  if (!data || data.enquiry_id !== enquiryId || !Array.isArray(data.runs) || !data.runs.every(r => r && typeof r.run_id === 'string'
+    && typeof r.status === 'string' && Number.isInteger(r.round_no))) throw new Error('Unexpected enquiry response.')
+  return data
 }
