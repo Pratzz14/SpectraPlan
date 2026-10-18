@@ -7,13 +7,11 @@ import argparse
 import asyncio
 import hashlib
 import json
-import re
 from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
 
 import httpx
-from pydantic import SecretStr
 
 from backend.agent import EXTRACTION_PROMPT, EXTRACTION_PROMPT_VERSION, ExtractionOutput, extract_case
 from backend.config import PROJECT_ROOT, Settings
@@ -36,8 +34,8 @@ async def run_cases(settings: Settings, selected: set[str] | None = None) -> tup
     record = {
         "run_id": uuid4().hex,
         "generated_at": datetime.now(timezone.utc).isoformat(),
-        "provider": settings.provider_name, "model": settings.provider_model,
-        "endpoint": settings.provider_base_url,
+        "provider": settings.provider_name, "model": settings.provider_model if settings.provider_name != "auto" else None,
+        "endpoint": settings.provider_base_url if settings.provider_name != "auto" else None,
         "prompt_version": EXTRACTION_PROMPT_VERSION,
         "prompt_sha256": hashlib.sha256(EXTRACTION_PROMPT.encode("utf-8")).hexdigest(),
         "schema_sha256": hashlib.sha256(json.dumps(ExtractionOutput.model_json_schema(), sort_keys=True).encode("utf-8")).hexdigest(),
@@ -61,6 +59,7 @@ async def run_cases(settings: Settings, selected: set[str] | None = None) -> tup
                                "upstream_status": error.upstream_status, "upstream_code": error.upstream_code}
             result["validation_errors"] = getattr(error, "validation_errors", [])
             result["invalid_content"] = getattr(error, "invalid_content", None)
+        result.update(provider_identity=adapter.identity(), provider_attempts=adapter.attempts)
         record["cases"].append(result)
     return record, int(failed)
 
@@ -69,27 +68,16 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--case", action="append", dest="cases", help="D01, D02, multi_stream, capability_claim, ambiguous_units; repeatable")
     parser.add_argument("--output-dir", type=Path, default=PROJECT_ROOT / "outputs/extraction")
-    parser.add_argument("--provider", choices=["groq", "llmtech"], help="Explicit run-only override; saved configuration is unchanged")
+    parser.add_argument("--provider", choices=["auto", "groq", "llmtech"], help="Explicit run-only override; saved configuration is unchanged")
     parser.add_argument("--public-trial", action="store_true", help="Use LLMTech's documented public trial only if no LLMTech key is configured")
     args = parser.parse_args()
     try:
         settings = Settings()
-        if args.provider == "llmtech":
-            settings = settings.model_copy(update={"provider_name": "llmtech", "provider_base_url": "https://api.llmtech.eu/v1",
-                                                   "provider_model": "nvidia/Qwen3.8-27B-NVFP4", "provider_call_timeout_s": 60})
-        elif args.provider == "groq":
-            settings = settings.model_copy(update={"provider_name": "groq", "provider_base_url": "https://api.groq.com/openai/v1",
-                                                   "provider_model": "qwen/qwen3.8-27b"})
+        if args.provider:
+            settings = settings.for_provider(args.provider)
         if args.public_trial:
-            if settings.provider_name != "llmtech":
-                raise ValueError("--public-trial requires the llmtech provider")
-            if not settings.llmtech_api_key.get_secret_value().strip():
-                response = httpx.get("https://llmtech.eu/docs/", timeout=30, follow_redirects=False)
-                response.raise_for_status()
-                match = re.search(r"lt-trial-[0-9a-f]+", response.text)
-                if not match:
-                    raise ValueError("LLMTech documentation no longer supplies a public trial key")
-                settings = settings.model_copy(update={"llmtech_api_key": SecretStr(match.group())})
+            from backend.provider_setup import with_public_trial
+            settings = with_public_trial(settings)
         record, code = asyncio.run(run_cases(settings, set(args.cases) if args.cases else None))
     except httpx.HTTPError:
         parser.error("Cannot retrieve LLMTech public trial configuration")

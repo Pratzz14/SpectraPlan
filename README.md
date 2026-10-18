@@ -4,13 +4,13 @@ SpectraPlan is an AI assistant in development for the first technical assessment
 
 ## Project status
 
-**F01–F05 are complete for their tested development gates:** a FastAPI readiness API, a React status page, structured provider adapters, backend enquiry extraction, context-aware hybrid evidence retrieval and a typed development assessment pipeline are implemented. Both local services and their development API connection have been verified. On 2026-10-17, Groq `qwen/qwen3.8-27b` returned the initial live provider smoke response, the complete 64-page F02 corpus was published and validated, and F03 extraction was checked with LLMTech.
+**F01–F06 are complete for their tested development gates:** a FastAPI readiness API, a React status page, structured provider adapters, backend enquiry extraction, context-aware hybrid evidence retrieval and a typed development assessment pipeline are implemented. Both local services and their development API connection have been verified. On 2026-10-17, Groq `qwen/qwen3.8-27b` returned the initial live provider smoke response, the complete 64-page F02 corpus was published and validated, and F03 extraction was checked with LLMTech.
 
 F02 adds source inventory, page-aware Qwen extraction and verification, workbook import, a manual inspection report, and Qdrant + BM25 search. The active corpus is `corpus-4aac882441587796afe5`, with 152 passages, 81 retrieval-eligible passages, 19 method rows and 63 flagged records. F03 adds typed enquiry extraction and `POST /api/extract`, with exact input provenance, separate streams, explicit unknowns and attributed customer claims. See [customer extraction](docs/customer_extraction.md) for its API, provider options and checks.
 
 F04 adds `POST /api/retrieve` and revision-pinned `GET /api/evidence/{evidence_id}`. It combines BM25, local BGE/Qdrant semantic search and structured method lookup into at most eight evidence records, exposing selection reasons, scores, context coverage and remaining gaps. See [evidence retrieval](docs/evidence_retrieval.md) for the API, semantic threshold, single follow-up budget and verification records.
 
-F05 provides a reusable Python assessment pipeline with conditional method choices, clarification questions, source excerpts, explicit unknowns and an initial comparison experiment. Saved development results include the complete evidence ledger and run metadata. See [technical assessment](docs/technical_assessment.md) for the Python interface and live diagnostic command. The complete assessment API, assessment interface and full evaluation are subsequent increments.
+F05 provides a reusable Python assessment pipeline with conditional method choices, clarification questions, source excerpts, explicit unknowns and an initial comparison experiment. Saved development results include the complete evidence ledger and run metadata. See [technical assessment](docs/technical_assessment.md) for the Python interface and live diagnostic command. F06 adds `POST /api/assess` with complete/incomplete run envelopes, stream-specific feasibility planning, mechanical validation and one bounded synthesis repair. The API and failure contracts have 236 passing backend tests, and live D01/D02 checks with LLMTech returned complete provisional results at the normal request limits. A live undefined-target check returned a complete insufficient-information result with an empty shortlist. The verification receipt distinguishes automated checks, live execution and agent source comparison. The assessment interface and full evaluation remain subsequent increments.
 
 ## Local setup
 
@@ -48,27 +48,31 @@ Open [SpectraPlan](http://127.0.0.1:5173/). Vite proxies `/api` to `http://127.0
 
 ### Configuration
 
-Environment variables override the root `.env`. Relative paths resolve from the repository root, independently of the current working directory. Restart the backend after changing configuration.
+Environment variables override the root `.env`. Relative paths resolve from the repository root, independently of the current working directory. Restart the backend after changing configuration. Automatic mode checks configured providers, caches a working choice and switches on availability failures within the shared deadline. See [provider selection](docs/providers.md) for setup, pinned modes and diagnostics.
 
 | Variable | Default / purpose |
 |---|---|
 | `GROQ_API_KEY` | Backend-only key; supply locally in `.env` or the environment |
-| `LLMTECH_API_KEY` | Backend-only LLMTech key; ingestion can explicitly use the documented public trial |
-| `PROVIDER_NAME` | `groq` or `llmtech`; CLI ingestion override leaves interactive configuration unchanged |
-| `PROVIDER_BASE_URL` | `https://api.groq.com/openai/v1` |
-| `PROVIDER_MODEL` | `qwen/qwen3.8-27b` |
+| `LLMTECH_API_KEY` | Backend-only LLMTech key; explicit setup can fill a missing key from the public trial |
+| `PROVIDER_NAME` | `auto` (default), `groq` or `llmtech` |
+| `PROVIDER_ORDER` | `llmtech,groq`; automatic selection priority |
+| `LLMTECH_BASE_URL` / `LLMTECH_MODEL` | `https://api.llmtech.eu/v1` / `nvidia/Qwen3.8-27B-NVFP4` |
+| `GROQ_BASE_URL` / `GROQ_MODEL` | `https://api.groq.com/openai/v1` / `qwen/qwen3.8-27b` |
+| `PROVIDER_PROBE_TIMEOUT_S` | 8 seconds per synthetic availability probe |
+| `PROVIDER_HEALTH_TTL_S` / `PROVIDER_FAILURE_TTL_S` | 300-second working cache / 30-second failure cooldown |
 | `PROVIDER_REASONING_EFFORT` | `medium`; configurable for later extraction/reasoning stages |
 | `PROVIDER_CALL_TIMEOUT_S` | 30 seconds per attempt |
 | `REQUEST_DEADLINE_S` | 90 seconds shared across attempts and retry delays |
 | `PROVIDER_MAX_RETRIES` | 2 retries, at most 3 attempts |
 | `PROVIDER_MAX_COMPLETION_TOKENS` | 4096; the small smoke test uses 2048 |
 | `EXTRACTION_MAX_COMPLETION_TOKENS` | 3072; F03 output ceiling, also capped by the provider ceiling |
+| `ASSESSMENT_MAX_DESCRIPTION_CHARS` | 8000; enquiry limit for `POST /api/assess` |
 | `SYNTHESIS_MAX_COMPLETION_TOKENS` | 4096; assessment output ceiling, also capped by the provider ceiling |
 | `SOURCE_DIR` | `knowledge/original_sources` |
 | `CORPUS_DIR` | `knowledge` |
 | `SMOKE_OUTPUT_DIR` | `outputs/provider_smoke` |
 
-Groq documents [strict structured outputs](https://console.groq.com/docs/structured-outputs) for the selected model. The adapter requests a strict JSON Schema and validates content again with Pydantic. A successful response must finish normally, contain JSON matching the supplied model and pass local type/field checks. There is no automatic model/format fallback or content-repair call in F01.
+Groq documents [strict structured outputs](https://console.groq.com/docs/structured-outputs) for the selected model. The adapter requests a strict JSON Schema and validates content again with Pydantic. A successful response must finish normally, contain JSON matching the supplied model and pass local type/field checks. Automatic availability routing preserves strict JSON Schema and local validation. Invalid generated content uses the pipeline's bounded repair path; provider selection does not establish scientific correctness.
 
 Connection failures, timeouts, HTTP 429 and HTTP 5xx have bounded retries with 1/2-second exponential delays or `Retry-After` (capped at 10 seconds). Each attempt and delay consumes the shared deadline; an expired deadline prevents further attempts. Authentication, request/schema rejection and invalid content return explicit sanitized errors. Future pipeline stages must pass the same absolute monotonic deadline to preserve the overall request budget.
 
@@ -143,7 +147,7 @@ Pop-Location
 |---|---|
 | [Technical specification](docs/plan/spec.md) | Product scope, source handling, data contracts, architecture and acceptance criteria |
 | [Implementation plan](docs/plan/implementation_plan.md) | Ten ordered features with task/subtask checklists, dependencies, completion gates and a progress log |
-| [Technical assessment](docs/technical_assessment.md) | Development pipeline, assessment contract, source support and live checks |
+| [Technical assessment](docs/technical_assessment.md) | Assessment API, feasibility study, validation, failure contracts and live checks |
 
 Continue using the implementation plan's task checklists and progress log. The proposed MVP budget is 12 hours; it is a project planning choice.
 
@@ -212,7 +216,7 @@ The current standalone report is [the published corpus report](knowledge/version
 
 ### Models, limits and storage
 
-- Extraction and verification: configurable Qwen provider. The published F02 build used LLMTech `nvidia/Qwen3.8-27B-NVFP4`, an 8192-token extraction ceiling, up to 2048 verification tokens and two concurrent page jobs. Groq retains its separate conservative defaults and pacing; interactive F01 provider settings remain unchanged. An incomplete structured response is rejected, never silently repaired or published.
+- Extraction and verification: configurable Qwen provider. The published F02 build used LLMTech `nvidia/Qwen3.8-27B-NVFP4`, an 8192-token extraction ceiling, up to 2048 verification tokens and two concurrent page jobs. Pinned Groq runs retain conservative pacing. Automatic builds use the configured extraction/verification limits and retain actual provider identities in record provenance. An incomplete structured response is rejected, never silently repaired or published.
 - Embeddings: local `BAAI/bge-small-en-v1.5` through FastEmbed, 384 dimensions, cosine similarity. The first use downloads public model files to `outputs/embedding_models/`; their checksums are captured in each index manifest. Source content is embedded locally. Each segment is explicitly checked below the model's 512-token limit, including its heading. Long indivisible sentences fail clearly rather than truncate.
 - Retrieval: up to 20 BM25 candidates and 20 Qdrant candidates, fused with reciprocal rank fusion (`k=60`) into at most eight unique evidence records. A domain-only synonym map covers terms such as MIR/FTIR and moisture/water. Results are candidates for a later assessment stage, not scientific endorsements. No cross-encoder reranker is used.
 - Qdrant: persistent local Python-client mode, no Docker/cloud account. The CLI opens and closes the active database per search. Do not access one local database from multiple processes simultaneously; concurrent searches contend for the local lock. Each build creates a separate generation; API report routes use versioned assets, so a rebuild cannot mix source images between reports.
@@ -235,7 +239,7 @@ The active corpus is **`corpus-4aac882441587796afe5`**: all 64 PDF pages process
 
 Deep validation passes against the original sources, workbook cells, page-image hashes and Qdrant/BM25 membership. Replaying all 64 cached responses exactly reproduces the 152 published records. Representative powder/API and opaque-dairy searches exercise both retrieval branches; backend regression tests pass (69 tests). Context-aware evidence selection remains F04 work: generic search can still return biomedical material for a dairy query.
 
-`outputs/ingest/published_validation.json` records current completion checks. `outputs/ingest/live_validation.json` retains the earlier failed Groq pilot as historical evidence; it is not the active corpus status. Readiness is local configuration/index readiness, not a live provider check or scientific endorsement. F03 customer-enquiry extraction is documented [separately](docs/customer_extraction.md).
+`outputs/ingest/published_validation.json` records current completion checks. `outputs/ingest/live_validation.json` retains the earlier failed Groq pilot as historical evidence; it is not the active corpus status. Readiness includes cached automatic provider availability and local index readiness; refreshing status makes no provider calls and is not a scientific endorsement. F03 customer-enquiry extraction is documented [separately](docs/customer_extraction.md).
 
 ## Manual search and S06 website crawl
 
@@ -256,4 +260,4 @@ HTML is parsed locally without another LLM or new parser dependency. Navigation,
 
 `WEB_CORPUS_DIR` defaults to `knowledge/web`. Its `current.json` points to an immutable `versions/web-<hash>/` snapshot with a manifest, extracted pages, records, BM25/embedding segments and a local Qdrant index. Raw HTML and vector binaries are ignored by Git; extracted provenance remains trackable. A failed crawl/index build keeps the previous pointer. Existing BGE files must be present locally before indexing the website; the crawler uses local-only embeddings.
 
-`GET /api/search/status` reports technical and website dataset readiness. `POST /api/search` accepts `query` (1–2000 characters), `mode` (`compare`, `bm25`, `qdrant`, `hybrid`), `dataset` (`technical`, `website`, `all`), `limit` (1–8) and `expand_synonyms`. Semantic queries must fit 512 tokenizer tokens. Missing/corrupt datasets or a busy vector store return a sanitized 503; invalid inputs return 422. The manual search API remains separate from `POST /api/extract`; context-based evidence retrieval, assessment generation and an evidence-resolution endpoint remain F04–F06 work.
+`GET /api/search/status` reports technical and website dataset readiness. `POST /api/search` accepts `query` (1–2000 characters), `mode` (`compare`, `bm25`, `qdrant`, `hybrid`), `dataset` (`technical`, `website`, `all`), `limit` (1–8) and `expand_synonyms`. Semantic queries must fit 512 tokenizer tokens. Missing/corrupt datasets or a busy vector store return a sanitized 503; invalid inputs return 422. The manual search API remains separate from `POST /api/extract`; context-based retrieval, assessment generation and pinned evidence resolution are available through `/api/retrieve`, `/api/assess` and `/api/evidence/{evidence_id}`.

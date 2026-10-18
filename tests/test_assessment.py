@@ -26,7 +26,7 @@ DESCRIPTION = "A powder; measure moisture."
 
 
 def config(**kwargs):
-    return Settings(_env_file=None, groq_api_key="test-secret", provider_max_retries=0, **kwargs)
+    return Settings(_env_file=None, **{"provider_name": "groq", "groq_api_key": "test-secret", "provider_max_retries": 0, **kwargs})
 
 
 def ledger(*, empty=False, **evidence_overrides):
@@ -68,7 +68,7 @@ def draft(*, empty=False):
             "measurements": ["Proposed paired spectra and independent laboratory measurements"],
             "comparisons": [], "validation": "Proposed: agree the independent experimental unit, keep related spectra together, and hold out entire independent units for evaluation.",
             "decision_criteria": "Agree customer-defined thresholds before testing.",
-            "open_items": ["Confirm laboratory reference method"]},
+            "open_items": ["Confirm laboratory reference method"], "variation": ["Proposed moisture and particle-size variation"], "proposed_settings": []},
     }
 
 
@@ -170,7 +170,7 @@ def test_rejects_dangling_evidence_and_context_references(target):
         data["risks"] = [{"context_ids": ["stream_2"], "text": "Missing requirement", "evidence_ids": []}]
     else:
         data["experiment"]["context_ids"] = ["stream_2"]
-    with pytest.raises(AssessmentValidationError):
+    with pytest.raises(ProviderError, match="after one repair"):
         invoke(data)
 
 
@@ -244,7 +244,7 @@ def test_raman_excitation_is_separate_from_coverage_and_nested_references_are_ch
     assert result.recommendations[0].spectral_range.interval is None
     assert result.recommendations[0].spectral_range.raman_excitation.evidence_ids == [EID]
     spectral["raman_excitation"]["evidence_ids"] = ["missing"]
-    with pytest.raises(AssessmentValidationError):
+    with pytest.raises(ProviderError, match="after one repair"):
         invoke(data)
     del spectral["raman_excitation"]["evidence_ids"]
     with pytest.raises(ValidationError):
@@ -293,9 +293,9 @@ def test_absent_raman_quantities_do_not_create_impossible_provider_grammars():
 def test_valid_citation_does_not_allow_an_invented_assertion():
     data = draft()
     data["recommendations"][0]["rationale"]["text"] = "This equipment guarantees the required accuracy."
-    with pytest.raises(AssessmentValidationError) as error:
+    with pytest.raises(ProviderError) as error:
         invoke(data)
-    assert any("source excerpt" in item for item in error.value.errors)
+    assert any("source excerpt" in item for item in error.value.validation_errors)
 
 
 def test_source_excerpt_cannot_borrow_a_different_records_citation():
@@ -306,42 +306,44 @@ def test_source_excerpt_cannot_borrow_a_different_records_citation():
     retrieved.evidence.append(second)
     data = draft()
     data["recommendations"][0]["rationale"]["evidence_ids"] = ["S01:p007:other"]
-    with pytest.raises(AssessmentValidationError):
+    with pytest.raises(ProviderError, match="after one repair"):
         invoke(data, retrieved=retrieved)
 
 
 def test_numeric_range_needs_literal_support_in_its_cited_record():
     data = draft()
     data["recommendations"][0]["spectral_range"].update(
-        kind="source_configuration_range", interval="100-200 nm", evidence_ids=[EID])
-    with pytest.raises(AssessmentValidationError):
+        kind="nominal_method_range", interval="100-200 nm", evidence_ids=[EID])
+    with pytest.raises(ProviderError, match="after one repair"):
         invoke(data)
     result, _ = invoke(data, retrieved=ledger(text="Synthetic powder NIR reflection screening example. Synthetic test band: 100-200 nm."))
     assert result.recommendations[0].spectral_range.interval == "100-200 nm"
     assert "usable coverage" in result.recommendations[0].spectral_range.text
 
 
-def test_individual_comparisons_and_reference_alignment_do_not_depend_on_generated_prose():
+def test_individual_comparisons_and_alignment_preserve_proposed_reference_details():
     data = draft()
     data["experiment"]["comparisons"] = ["Use only a fused model."]
-    data["experiment"]["measurements"] = ["An invented existing laboratory assay."]
+    data["experiment"]["measurements"] = ["Confirm an independent moisture assay with the customer."]
     result, _ = invoke(data)
     assert any("NIR individually" in text for text in result.experiment.comparisons)
-    assert "invented existing" not in " ".join(result.experiment.measurements)
+    assert any("independent moisture assay" in text for text in result.experiment.measurements)
+    assert all(text.startswith("Proposed: ") for text in result.experiment.measurements)
     assert any("aligned sample locations and times" in text for text in result.experiment.measurements)
     assert "entire independent units" in result.experiment.validation
 
 
 def test_synthesis_one_attempt_and_completion_ceiling():
     response = httpx.Response(200, json={"choices": [{"finish_reason": "length", "message": {"content": "{}"}}]})
-    with pytest.raises(ProviderError, match="local validation"):
+    with pytest.raises(ProviderError, match="after one repair"):
         invoke(response)
     _, calls = invoke(draft(), synthesis_max_completion_tokens=8000, provider_max_completion_tokens=4096)
     assert len(calls) == 1 and calls[0]["max_completion_tokens"] == 4096
     assert calls[0]["temperature"] == 0
 
 
-def test_full_pipeline_uses_fresh_extraction_pinned_retrieval_shared_deadline_and_stage_metadata():
+def test_full_pipeline_uses_fresh_extraction_pinned_retrieval_shared_deadline_and_stage_metadata(monkeypatch):
+    monkeypatch.setattr("backend.agent.authenticate_ledger", lambda *args: None)
     calls, deadlines, stages = [], [], []
     responses = [wire_for(powder().model_dump()), draft()]
     settings = config()
@@ -373,7 +375,7 @@ def test_full_pipeline_uses_fresh_extraction_pinned_retrieval_shared_deadline_an
         deadline=stop_at, on_stage=lambda name, value: stages.append(name)))
     assert stages == ["extraction", "retrieval", "synthesis"]
     assert deadlines == [stop_at] * 3 and len(calls) == 2
-    assert result.development_only is True
+    assert result.run_status == "complete" and result.errors == []
     assert result.metadata.returned_models == {"extraction": "actual-model", "synthesis": "actual-model"}
     assert result.metadata.last_successful_call_usage["extraction"] == {"total_tokens": 1}
     assert result.metadata.last_successful_call_usage["synthesis"] == {"total_tokens": 2}
@@ -393,9 +395,10 @@ def test_pipeline_stops_on_retrieval_failure_without_synthesis(monkeypatch):
             raise CorpusUnavailable("Synthetic missing corpus")
 
     monkeypatch.setattr(agent, "extract_case", extract)
-    with pytest.raises(CorpusUnavailable):
-        asyncio.run(assess_case(DESCRIPTION, config(), retrieval_service=Retrieval(),
-            on_stage=lambda name, value: stages.append(name)))
+    result = asyncio.run(assess_case(DESCRIPTION, config(), retrieval_service=Retrieval(),
+        on_stage=lambda name, value: stages.append(name)))
+    assert result.run_status == "incomplete" and result.assessment is None
+    assert result.errors[0].stage == "retrieval"
     assert stages == ["extraction"]
 
 

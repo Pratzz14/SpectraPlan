@@ -16,7 +16,7 @@ from tests.corpus_fixture import make_corpus
 
 
 def settings(**overrides):
-    return Settings(_env_file=None, **{"groq_api_key": "test-secret", **overrides})
+    return Settings(_env_file=None, **{"provider_name": "groq", "groq_api_key": "test-secret", **overrides})
 
 
 def health_response(config):
@@ -56,7 +56,7 @@ def test_configuration_env_precedence_and_paths(tmp_path, monkeypatch):
     env_file.write_text("GROQ_API_KEY=file-secret\nPROVIDER_MODEL=file-model\n", encoding="utf-8")
     monkeypatch.setenv("GROQ_API_KEY", "env-secret")
     monkeypatch.chdir(tmp_path)
-    config = Settings(_env_file=env_file, corpus_dir="knowledge")
+    config = Settings(_env_file=env_file, corpus_dir="knowledge", provider_name="groq")
     assert config.groq_api_key.get_secret_value() == "env-secret"
     assert config.provider_model == "file-model"
     assert config.corpus_dir == PROJECT_ROOT / "knowledge"

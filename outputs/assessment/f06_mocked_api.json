@@ -1,0 +1,1215 @@
+{
+  "verification_kind": "mocked_public_api_contract_demonstration",
+  "evidence_origin": "synthetic_unit_fixture; canonical authentication is separately covered by tests",
+  "live_provider_calls": 0,
+  "scientific_validation": "not_performed",
+  "cases": [
+    {
+      "case_id": "D01",
+      "http_status": 200,
+      "provider_calls_mocked": 2,
+      "envelope": {
+        "run_status": "complete",
+        "facts": {
+          "contexts": [
+            {
+              "context_id": "stream_1",
+              "label": "powder blend",
+              "target_analytes": [
+                "API concentration"
+              ],
+              "measurement_goals": [],
+              "sample_matrix": null,
+              "sample_phase": "powder",
+              "appearance": null,
+              "temperature": null,
+              "pressure": null,
+              "response_time_raw": null,
+              "response_time_s": null,
+              "concentration_range": null,
+              "required_error": null,
+              "reference_assays": [],
+              "process_constraints": [],
+              "missing_information": []
+            }
+          ],
+          "customer_claims_and_requests": [],
+          "shared_constraints": [],
+          "missing_information": [],
+          "fact_provenance": [
+            {
+              "field_path": "/contexts/0/label",
+              "context_ids": [
+                "stream_1"
+              ],
+              "input_quote": "We manufacture tablets from a powder blend containing an active pharmaceutical ingredient and excipients. Laboratory checks tell us whether the blend is on target, but results arrive after the material has moved through the press. We want to assess whether a fiber based measurement in the feed frame could follow API concentration changes. Our first pilot should compare reasonable measurement options before we commit to production equipment."
+            },
+            {
+              "field_path": "/contexts/0/target_analytes/0",
+              "context_ids": [
+                "stream_1"
+              ],
+              "input_quote": "We manufacture tablets from a powder blend containing an active pharmaceutical ingredient and excipients. Laboratory checks tell us whether the blend is on target, but results arrive after the material has moved through the press. We want to assess whether a fiber based measurement in the feed frame could follow API concentration changes. Our first pilot should compare reasonable measurement options before we commit to production equipment."
+            },
+            {
+              "field_path": "/contexts/0/sample_phase",
+              "context_ids": [
+                "stream_1"
+              ],
+              "input_quote": "We manufacture tablets from a powder blend containing an active pharmaceutical ingredient and excipients. Laboratory checks tell us whether the blend is on target, but results arrive after the material has moved through the press. We want to assess whether a fiber based measurement in the feed frame could follow API concentration changes. Our first pilot should compare reasonable measurement options before we commit to production equipment."
+            }
+          ]
+        },
+        "retrieval": {
+          "status": "ok",
+          "corpus_version": "corpus-test",
+          "retrieval_version": "test",
+          "ranking": "BM25 + local BGE cosine, RRF k=60; structured method lookup",
+          "semantic_min_score": 0.65,
+          "max_records": 8,
+          "search_rounds": 1,
+          "evidence": [
+            {
+              "evidence": {
+                "evidence_id": "S01:p006:test",
+                "source_id": "S01",
+                "file_name": "test.pdf",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "page": 6,
+                "section": "Synthetic evidence",
+                "text": "Synthetic powder NIR reflection screening example.",
+                "content_kind": "verbatim_text",
+                "evidence_scope": "application_example",
+                "revision": "content-v1",
+                "validation_status": "passed",
+                "human_review_status": "not_reviewed",
+                "retrieval_eligible": true,
+                "issues": [],
+                "corpus_version": "corpus-test",
+                "evidence_url": "/api/evidence/test?revision=content-v1",
+                "workbook_notes": null
+              },
+              "context_ids": [
+                "stream_1"
+              ],
+              "facets": [
+                "application"
+              ],
+              "matches": [],
+              "score": 0.1,
+              "selection_reasons": [
+                "synthetic fixture"
+              ]
+            }
+          ],
+          "queries": [],
+          "coverage": [],
+          "gaps": [],
+          "warnings": [],
+          "model_calls": 0
+        },
+        "assessment": {
+          "decision_status": "provisional",
+          "decision_reason": "A conditional screening comparison is supported.",
+          "case_summary": "powder blend (stream_1); phase: powder; targets: API concentration",
+          "clarification_questions": [
+            {
+              "priority": 1,
+              "context_ids": [
+                "stream_1"
+              ],
+              "question": "What error would be acceptable?",
+              "reason": {
+                "text": "Customer clarification is needed before finalizing the proposed feasibility study.",
+                "evidence_ids": []
+              },
+              "affects": [
+                "feasibility_plan"
+              ]
+            }
+          ],
+          "recommendations": [
+            {
+              "context_ids": [
+                "stream_1"
+              ],
+              "method": "NIR",
+              "geometry": "reflection",
+              "measurement_location": "Proposed laboratory comparison",
+              "spectral_range": {
+                "text": "Coverage interval is undetermined for the proposed configuration; usable equipment coverage remains unverified.",
+                "evidence_ids": [],
+                "kind": "undetermined",
+                "interval": null,
+                "raman_excitation": null,
+                "raman_shift": null
+              },
+              "rationale": {
+                "text": "Source excerpt (application_example): Synthetic powder NIR reflection screening example.",
+                "evidence_ids": [
+                  "S01:p006:test"
+                ]
+              },
+              "assumptions": [
+                "Representative samples can be made available."
+              ],
+              "limitations": [
+                {
+                  "text": "Not established by this assessment: usable equipment coverage for this enquiry.",
+                  "evidence_ids": []
+                }
+              ],
+              "status": "worth_testing"
+            }
+          ],
+          "risks": [],
+          "experiment": {
+            "context_ids": [
+              "stream_1"
+            ],
+            "objective": "Proposed: Proposed screening comparison",
+            "samples": [
+              "Proposed: Proposed representative batches"
+            ],
+            "measurements": [
+              "Proposed: Proposed paired spectra and independent laboratory reference assays; confirm assay details.",
+              "Proposed: pair spectra and independent laboratory references at aligned sample locations and times; confirm assay identity, uncertainty and sampling lag with the customer."
+            ],
+            "comparisons": [
+              "Proposed (stream_1): evaluate NIR individually against aligned independent laboratory reference measurements."
+            ],
+            "validation": "Proposed (stream_1): keep related scans together and hold out entire independent run units for evaluation.",
+            "decision_criteria": "Proposed: Go/no-go proposal: proceed only if evaluation on independent material meets agreed customer-defined error, bias, response time and robustness criteria. Missing thresholds remain open; inconclusive results require clarification or further characterization.",
+            "open_items": [
+              "Confirm laboratory reference method",
+              "stream_1: agree required_error acceptance threshold with the customer.",
+              "stream_1: agree response_time_raw acceptance threshold with the customer.",
+              "stream_1: agree bias acceptance threshold with the customer.",
+              "stream_1: agree robustness acceptance threshold with the customer."
+            ],
+            "variation": [
+              "Proposed: Proposed API and formulation variation."
+            ],
+            "proposed_settings": [],
+            "validation_groups": [
+              {
+                "context_ids": [
+                  "stream_1"
+                ],
+                "independent_unit": "run",
+                "study_type": "targeted_feasibility"
+              }
+            ],
+            "acceptance_criteria": [
+              {
+                "context_id": "stream_1",
+                "metric": "required_error",
+                "threshold": null,
+                "requirement_path": null,
+                "origin": "unknown"
+              },
+              {
+                "context_id": "stream_1",
+                "metric": "response_time_raw",
+                "threshold": null,
+                "requirement_path": null,
+                "origin": "unknown"
+              },
+              {
+                "context_id": "stream_1",
+                "metric": "bias",
+                "threshold": null,
+                "requirement_path": null,
+                "origin": "unknown"
+              },
+              {
+                "context_id": "stream_1",
+                "metric": "robustness",
+                "threshold": null,
+                "requirement_path": null,
+                "origin": "unknown"
+              }
+            ]
+          },
+          "requirements": {
+            "stated": [
+              {
+                "context_id": "stream_1",
+                "field": "label",
+                "field_path": "/contexts/0/label",
+                "value": "powder blend",
+                "origin": "customer",
+                "input_quote": "We manufacture tablets from a powder blend containing an active pharmaceutical ingredient and excipients. Laboratory checks tell us whether the blend is on target, but results arrive after the material has moved through the press. We want to assess whether a fiber based measurement in the feed frame could follow API concentration changes. Our first pilot should compare reasonable measurement options before we commit to production equipment."
+              },
+              {
+                "context_id": "stream_1",
+                "field": "target_analytes",
+                "field_path": "/contexts/0/target_analytes/0",
+                "value": "API concentration",
+                "origin": "customer",
+                "input_quote": "We manufacture tablets from a powder blend containing an active pharmaceutical ingredient and excipients. Laboratory checks tell us whether the blend is on target, but results arrive after the material has moved through the press. We want to assess whether a fiber based measurement in the feed frame could follow API concentration changes. Our first pilot should compare reasonable measurement options before we commit to production equipment."
+              },
+              {
+                "context_id": "stream_1",
+                "field": "sample_phase",
+                "field_path": "/contexts/0/sample_phase",
+                "value": "powder",
+                "origin": "customer",
+                "input_quote": "We manufacture tablets from a powder blend containing an active pharmaceutical ingredient and excipients. Laboratory checks tell us whether the blend is on target, but results arrive after the material has moved through the press. We want to assess whether a fiber based measurement in the feed frame could follow API concentration changes. Our first pilot should compare reasonable measurement options before we commit to production equipment."
+              }
+            ],
+            "unknowns": [
+              "Required error"
+            ]
+          },
+          "source_index": [
+            {
+              "evidence_id": "S01:p006:test",
+              "citation": "S01 p.6",
+              "source_id": "S01",
+              "file_name": "test.pdf",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "page": 6,
+              "sheet": null,
+              "row": null,
+              "revision": "content-v1",
+              "corpus_version": "corpus-test",
+              "evidence_url": "/api/evidence/test?revision=content-v1"
+            }
+          ]
+        },
+        "errors": [],
+        "metadata": {
+          "run_id": "112a1d55035241c992359d40dc5a301a",
+          "generated_at": "2026-10-18T03:16:37.320178+00:00",
+          "pipeline_version": "assessment-v3",
+          "provider": "groq",
+          "model": "qwen/qwen3.8-27b",
+          "returned_models": {
+            "extraction": "actual-model",
+            "synthesis": "actual-model"
+          },
+          "endpoint": "https://api.groq.com/openai/v1",
+          "corpus_version": "corpus-test",
+          "retrieval_version": "test",
+          "prompt_versions": {
+            "extraction": "extraction-v7",
+            "synthesis": "synthesis-v10"
+          },
+          "prompt_sha256": {
+            "extraction": "38afb3f0f002d048c5efd59aefde838b98e29c287983bdb7e4bd9c2a2d226769",
+            "synthesis": "f633b02a083aa873976d41ddc9d1e6250cd7733d6d205adb34d99ee218d96199"
+          },
+          "schema_sha256": {
+            "extraction": "9f318dbc9b6b577346ce7a962d93d4f2c34c807a611b6ed26e461e650d9d5045",
+            "synthesis": "9457f82bc4b053169c999009d3d5336cec67b66e7272cbce6be748765b99f304"
+          },
+          "stage_elapsed_s": {
+            "extraction": 0.014999999984866008,
+            "retrieval": 0.0,
+            "synthesis": 0.03200000000651926
+          },
+          "last_successful_call_usage": {
+            "extraction": {
+              "total_tokens": 1
+            },
+            "synthesis": {
+              "total_tokens": 2
+            }
+          },
+          "call_timeout_s": 30.0,
+          "request_deadline_s": 90.0,
+          "provider_max_retries": 0,
+          "provider_max_completion_tokens": 4096,
+          "extraction_max_completion_tokens": 3072,
+          "synthesis_max_completion_tokens": 4096,
+          "synthesis_temperature": 0.0,
+          "repair_counts": {
+            "extraction": 0,
+            "synthesis": 0
+          }
+        },
+        "warnings": [
+          "Mechanical validation establishes traceability, not scientific correctness; inspect source relevance and scope.",
+          "Automated checks and agent inspection do not constitute independent human or scientific validation."
+        ]
+      }
+    },
+    {
+      "case_id": "D02",
+      "http_status": 200,
+      "provider_calls_mocked": 2,
+      "envelope": {
+        "run_status": "complete",
+        "facts": {
+          "contexts": [
+            {
+              "context_id": "stream_1",
+              "label": "opaque, concentrated milk product",
+              "target_analytes": [
+                "fat",
+                "protein"
+              ],
+              "measurement_goals": [],
+              "sample_matrix": null,
+              "sample_phase": null,
+              "appearance": "opaque",
+              "temperature": null,
+              "pressure": null,
+              "response_time_raw": null,
+              "response_time_s": null,
+              "concentration_range": null,
+              "required_error": null,
+              "reference_assays": [],
+              "process_constraints": [
+                "Product temperature and texture vary during production."
+              ],
+              "missing_information": []
+            }
+          ],
+          "customer_claims_and_requests": [],
+          "shared_constraints": [],
+          "missing_information": [],
+          "fact_provenance": [
+            {
+              "field_path": "/contexts/0/label",
+              "context_ids": [
+                "stream_1"
+              ],
+              "input_quote": "We produce an opaque, concentrated milk product that flows through a processing line. We currently sample it for fat and protein analysis and would like earlier information about composition changes. Product temperature and texture vary during production. We want an initial spectroscopy concept and a practical comparison experiment, while retaining our laboratory checks."
+            },
+            {
+              "field_path": "/contexts/0/target_analytes/0",
+              "context_ids": [
+                "stream_1"
+              ],
+              "input_quote": "We produce an opaque, concentrated milk product that flows through a processing line. We currently sample it for fat and protein analysis and would like earlier information about composition changes. Product temperature and texture vary during production. We want an initial spectroscopy concept and a practical comparison experiment, while retaining our laboratory checks."
+            },
+            {
+              "field_path": "/contexts/0/target_analytes/1",
+              "context_ids": [
+                "stream_1"
+              ],
+              "input_quote": "We produce an opaque, concentrated milk product that flows through a processing line. We currently sample it for fat and protein analysis and would like earlier information about composition changes. Product temperature and texture vary during production. We want an initial spectroscopy concept and a practical comparison experiment, while retaining our laboratory checks."
+            },
+            {
+              "field_path": "/contexts/0/appearance",
+              "context_ids": [
+                "stream_1"
+              ],
+              "input_quote": "We produce an opaque, concentrated milk product that flows through a processing line. We currently sample it for fat and protein analysis and would like earlier information about composition changes. Product temperature and texture vary during production. We want an initial spectroscopy concept and a practical comparison experiment, while retaining our laboratory checks."
+            },
+            {
+              "field_path": "/contexts/0/process_constraints/0",
+              "context_ids": [
+                "stream_1"
+              ],
+              "input_quote": "We produce an opaque, concentrated milk product that flows through a processing line. We currently sample it for fat and protein analysis and would like earlier information about composition changes. Product temperature and texture vary during production. We want an initial spectroscopy concept and a practical comparison experiment, while retaining our laboratory checks."
+            }
+          ]
+        },
+        "retrieval": {
+          "status": "ok",
+          "corpus_version": "corpus-test",
+          "retrieval_version": "test",
+          "ranking": "BM25 + local BGE cosine, RRF k=60; structured method lookup",
+          "semantic_min_score": 0.65,
+          "max_records": 8,
+          "search_rounds": 1,
+          "evidence": [
+            {
+              "evidence": {
+                "evidence_id": "S01:p006:test",
+                "source_id": "S01",
+                "file_name": "test.pdf",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "page": 6,
+                "section": "Synthetic evidence",
+                "text": "Synthetic milk NIR reflection screening example.",
+                "content_kind": "verbatim_text",
+                "evidence_scope": "application_example",
+                "revision": "content-v1",
+                "validation_status": "passed",
+                "human_review_status": "not_reviewed",
+                "retrieval_eligible": true,
+                "issues": [],
+                "corpus_version": "corpus-test",
+                "evidence_url": "/api/evidence/test?revision=content-v1",
+                "workbook_notes": null
+              },
+              "context_ids": [
+                "stream_1"
+              ],
+              "facets": [
+                "application"
+              ],
+              "matches": [],
+              "score": 0.1,
+              "selection_reasons": [
+                "synthetic fixture"
+              ]
+            }
+          ],
+          "queries": [],
+          "coverage": [],
+          "gaps": [],
+          "warnings": [],
+          "model_calls": 0
+        },
+        "assessment": {
+          "decision_status": "provisional",
+          "decision_reason": "A conditional screening comparison is supported.",
+          "case_summary": "opaque, concentrated milk product (stream_1); appearance: opaque; targets: fat, protein; stated constraints: Product temperature and texture vary during production.",
+          "clarification_questions": [
+            {
+              "priority": 1,
+              "context_ids": [
+                "stream_1"
+              ],
+              "question": "What error would be acceptable?",
+              "reason": {
+                "text": "Customer clarification is needed before finalizing the proposed feasibility study.",
+                "evidence_ids": []
+              },
+              "affects": [
+                "feasibility_plan"
+              ]
+            }
+          ],
+          "recommendations": [
+            {
+              "context_ids": [
+                "stream_1"
+              ],
+              "method": "NIR",
+              "geometry": "reflection",
+              "measurement_location": "Proposed laboratory comparison",
+              "spectral_range": {
+                "text": "Coverage interval is undetermined for the proposed configuration; usable equipment coverage remains unverified.",
+                "evidence_ids": [],
+                "kind": "undetermined",
+                "interval": null,
+                "raman_excitation": null,
+                "raman_shift": null
+              },
+              "rationale": {
+                "text": "Source excerpt (application_example): Synthetic milk NIR reflection screening example.",
+                "evidence_ids": [
+                  "S01:p006:test"
+                ]
+              },
+              "assumptions": [
+                "Representative samples can be made available."
+              ],
+              "limitations": [
+                {
+                  "text": "Not established by this assessment: usable equipment coverage for this enquiry.",
+                  "evidence_ids": []
+                }
+              ],
+              "status": "worth_testing"
+            }
+          ],
+          "risks": [],
+          "experiment": {
+            "context_ids": [
+              "stream_1"
+            ],
+            "objective": "Proposed: Proposed screening comparison",
+            "samples": [
+              "Proposed: Proposed representative batches"
+            ],
+            "measurements": [
+              "Proposed: Proposed paired spectra and independent laboratory reference assays; confirm assay details.",
+              "Proposed: pair spectra and independent laboratory references at aligned sample locations and times; confirm assay identity, uncertainty and sampling lag with the customer."
+            ],
+            "comparisons": [
+              "Proposed (stream_1): evaluate NIR individually against aligned independent laboratory reference measurements."
+            ],
+            "validation": "Proposed (stream_1): keep related scans together and hold out entire independent run units for evaluation.",
+            "decision_criteria": "Proposed: Go/no-go proposal: proceed only if evaluation on independent material meets agreed customer-defined error, bias, response time and robustness criteria. Missing thresholds remain open; inconclusive results require clarification or further characterization.",
+            "open_items": [
+              "Confirm laboratory reference method",
+              "stream_1: agree required_error acceptance threshold with the customer.",
+              "stream_1: agree response_time_raw acceptance threshold with the customer.",
+              "stream_1: agree bias acceptance threshold with the customer.",
+              "stream_1: agree robustness acceptance threshold with the customer."
+            ],
+            "variation": [
+              "Proposed: Proposed temperature and texture variation."
+            ],
+            "proposed_settings": [],
+            "validation_groups": [
+              {
+                "context_ids": [
+                  "stream_1"
+                ],
+                "independent_unit": "run",
+                "study_type": "targeted_feasibility"
+              }
+            ],
+            "acceptance_criteria": [
+              {
+                "context_id": "stream_1",
+                "metric": "required_error",
+                "threshold": null,
+                "requirement_path": null,
+                "origin": "unknown"
+              },
+              {
+                "context_id": "stream_1",
+                "metric": "response_time_raw",
+                "threshold": null,
+                "requirement_path": null,
+                "origin": "unknown"
+              },
+              {
+                "context_id": "stream_1",
+                "metric": "bias",
+                "threshold": null,
+                "requirement_path": null,
+                "origin": "unknown"
+              },
+              {
+                "context_id": "stream_1",
+                "metric": "robustness",
+                "threshold": null,
+                "requirement_path": null,
+                "origin": "unknown"
+              }
+            ]
+          },
+          "requirements": {
+            "stated": [
+              {
+                "context_id": "stream_1",
+                "field": "label",
+                "field_path": "/contexts/0/label",
+                "value": "opaque, concentrated milk product",
+                "origin": "customer",
+                "input_quote": "We produce an opaque, concentrated milk product that flows through a processing line. We currently sample it for fat and protein analysis and would like earlier information about composition changes. Product temperature and texture vary during production. We want an initial spectroscopy concept and a practical comparison experiment, while retaining our laboratory checks."
+              },
+              {
+                "context_id": "stream_1",
+                "field": "target_analytes",
+                "field_path": "/contexts/0/target_analytes/0",
+                "value": "fat",
+                "origin": "customer",
+                "input_quote": "We produce an opaque, concentrated milk product that flows through a processing line. We currently sample it for fat and protein analysis and would like earlier information about composition changes. Product temperature and texture vary during production. We want an initial spectroscopy concept and a practical comparison experiment, while retaining our laboratory checks."
+              },
+              {
+                "context_id": "stream_1",
+                "field": "target_analytes",
+                "field_path": "/contexts/0/target_analytes/1",
+                "value": "protein",
+                "origin": "customer",
+                "input_quote": "We produce an opaque, concentrated milk product that flows through a processing line. We currently sample it for fat and protein analysis and would like earlier information about composition changes. Product temperature and texture vary during production. We want an initial spectroscopy concept and a practical comparison experiment, while retaining our laboratory checks."
+              },
+              {
+                "context_id": "stream_1",
+                "field": "appearance",
+                "field_path": "/contexts/0/appearance",
+                "value": "opaque",
+                "origin": "customer",
+                "input_quote": "We produce an opaque, concentrated milk product that flows through a processing line. We currently sample it for fat and protein analysis and would like earlier information about composition changes. Product temperature and texture vary during production. We want an initial spectroscopy concept and a practical comparison experiment, while retaining our laboratory checks."
+              },
+              {
+                "context_id": "stream_1",
+                "field": "process_constraints",
+                "field_path": "/contexts/0/process_constraints/0",
+                "value": "Product temperature and texture vary during production.",
+                "origin": "customer",
+                "input_quote": "We produce an opaque, concentrated milk product that flows through a processing line. We currently sample it for fat and protein analysis and would like earlier information about composition changes. Product temperature and texture vary during production. We want an initial spectroscopy concept and a practical comparison experiment, while retaining our laboratory checks."
+              }
+            ],
+            "unknowns": [
+              "Required error"
+            ]
+          },
+          "source_index": [
+            {
+              "evidence_id": "S01:p006:test",
+              "citation": "S01 p.6",
+              "source_id": "S01",
+              "file_name": "test.pdf",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "page": 6,
+              "sheet": null,
+              "row": null,
+              "revision": "content-v1",
+              "corpus_version": "corpus-test",
+              "evidence_url": "/api/evidence/test?revision=content-v1"
+            }
+          ]
+        },
+        "errors": [],
+        "metadata": {
+          "run_id": "4bd481a2cb0642d787b1e4697516d140",
+          "generated_at": "2026-10-18T03:16:37.386914+00:00",
+          "pipeline_version": "assessment-v3",
+          "provider": "groq",
+          "model": "qwen/qwen3.8-27b",
+          "returned_models": {
+            "extraction": "actual-model",
+            "synthesis": "actual-model"
+          },
+          "endpoint": "https://api.groq.com/openai/v1",
+          "corpus_version": "corpus-test",
+          "retrieval_version": "test",
+          "prompt_versions": {
+            "extraction": "extraction-v7",
+            "synthesis": "synthesis-v10"
+          },
+          "prompt_sha256": {
+            "extraction": "38afb3f0f002d048c5efd59aefde838b98e29c287983bdb7e4bd9c2a2d226769",
+            "synthesis": "f633b02a083aa873976d41ddc9d1e6250cd7733d6d205adb34d99ee218d96199"
+          },
+          "schema_sha256": {
+            "extraction": "9f318dbc9b6b577346ce7a962d93d4f2c34c807a611b6ed26e461e650d9d5045",
+            "synthesis": "3dde4759419451ca643e7fd5f3a2b964ca6190cf7e7b44bc54651291f728d80f"
+          },
+          "stage_elapsed_s": {
+            "extraction": 0.0,
+            "retrieval": 0.0,
+            "synthesis": 0.030999999988125637
+          },
+          "last_successful_call_usage": {
+            "extraction": {
+              "total_tokens": 1
+            },
+            "synthesis": {
+              "total_tokens": 2
+            }
+          },
+          "call_timeout_s": 30.0,
+          "request_deadline_s": 90.0,
+          "provider_max_retries": 0,
+          "provider_max_completion_tokens": 4096,
+          "extraction_max_completion_tokens": 3072,
+          "synthesis_max_completion_tokens": 4096,
+          "synthesis_temperature": 0.0,
+          "repair_counts": {
+            "extraction": 0,
+            "synthesis": 0
+          }
+        },
+        "warnings": [
+          "Mechanical validation establishes traceability, not scientific correctness; inspect source relevance and scope.",
+          "Automated checks and agent inspection do not constitute independent human or scientific validation."
+        ]
+      }
+    },
+    {
+      "scenario": "evidence_gap",
+      "http_status": 200,
+      "provider_calls_mocked": 2,
+      "envelope": {
+        "run_status": "complete",
+        "facts": {
+          "contexts": [
+            {
+              "context_id": "stream_1",
+              "label": "product",
+              "target_analytes": [],
+              "measurement_goals": [],
+              "sample_matrix": null,
+              "sample_phase": null,
+              "appearance": null,
+              "temperature": null,
+              "pressure": null,
+              "response_time_raw": null,
+              "response_time_s": null,
+              "concentration_range": null,
+              "required_error": null,
+              "reference_assays": [],
+              "process_constraints": [],
+              "missing_information": []
+            }
+          ],
+          "customer_claims_and_requests": [],
+          "shared_constraints": [],
+          "missing_information": [],
+          "fact_provenance": [
+            {
+              "field_path": "/contexts/0/label",
+              "context_ids": [
+                "stream_1"
+              ],
+              "input_quote": "Assess our product."
+            }
+          ]
+        },
+        "retrieval": {
+          "status": "ok",
+          "corpus_version": "corpus-test",
+          "retrieval_version": "test",
+          "ranking": "BM25 + local BGE cosine, RRF k=60; structured method lookup",
+          "semantic_min_score": 0.65,
+          "max_records": 8,
+          "search_rounds": 1,
+          "evidence": [],
+          "queries": [],
+          "coverage": [],
+          "gaps": [],
+          "warnings": [],
+          "model_calls": 0
+        },
+        "assessment": {
+          "decision_status": "insufficient_information",
+          "decision_reason": "The target needs clarification.",
+          "case_summary": "product (stream_1)",
+          "clarification_questions": [
+            {
+              "priority": 1,
+              "context_ids": [
+                "stream_1"
+              ],
+              "question": "What error would be acceptable?",
+              "reason": {
+                "text": "Customer clarification is needed before finalizing the proposed feasibility study.",
+                "evidence_ids": []
+              },
+              "affects": [
+                "feasibility_plan"
+              ]
+            }
+          ],
+          "recommendations": [],
+          "risks": [],
+          "experiment": {
+            "context_ids": [
+              "stream_1"
+            ],
+            "objective": "Proposed: Proposed screening comparison",
+            "samples": [
+              "Proposed: Proposed representative batches"
+            ],
+            "measurements": [
+              "Proposed: Proposed paired spectra and independent laboratory measurements",
+              "Proposed: pair spectra and independent laboratory references at aligned sample locations and times; confirm assay identity, uncertainty and sampling lag with the customer.",
+              "Proposed: stream_1: agree quality variables and independently characterize representative acceptable/off-specification material before analyte calibration or exact configuration selection."
+            ],
+            "comparisons": [
+              "Proposed: agree measurable quality variables and independent reference characterization before selecting candidate methods."
+            ],
+            "validation": "Proposed (stream_1): agree the independent experimental unit, keep related spectra together and hold out entire independent units for evaluation.",
+            "decision_criteria": "Proposed: Go/no-go proposal: proceed only if evaluation on independent material meets agreed customer-defined error, bias, response time and robustness criteria. Missing thresholds remain open; inconclusive results require clarification or further characterization.",
+            "open_items": [
+              "Confirm laboratory reference method",
+              "stream_1: agree the independent experimental unit before splitting data.",
+              "stream_1: clarify the target and independent characterization/reference method.",
+              "stream_1: agree required_error acceptance threshold with the customer.",
+              "stream_1: agree response_time_raw acceptance threshold with the customer.",
+              "stream_1: agree bias acceptance threshold with the customer.",
+              "stream_1: agree robustness acceptance threshold with the customer."
+            ],
+            "variation": [
+              "Proposed: Proposed moisture and particle-size variation"
+            ],
+            "proposed_settings": [],
+            "validation_groups": [
+              {
+                "context_ids": [
+                  "stream_1"
+                ],
+                "independent_unit": "unresolved",
+                "study_type": "characterization"
+              }
+            ],
+            "acceptance_criteria": [
+              {
+                "context_id": "stream_1",
+                "metric": "required_error",
+                "threshold": null,
+                "requirement_path": null,
+                "origin": "unknown"
+              },
+              {
+                "context_id": "stream_1",
+                "metric": "response_time_raw",
+                "threshold": null,
+                "requirement_path": null,
+                "origin": "unknown"
+              },
+              {
+                "context_id": "stream_1",
+                "metric": "bias",
+                "threshold": null,
+                "requirement_path": null,
+                "origin": "unknown"
+              },
+              {
+                "context_id": "stream_1",
+                "metric": "robustness",
+                "threshold": null,
+                "requirement_path": null,
+                "origin": "unknown"
+              }
+            ]
+          },
+          "requirements": {
+            "stated": [
+              {
+                "context_id": "stream_1",
+                "field": "label",
+                "field_path": "/contexts/0/label",
+                "value": "product",
+                "origin": "customer",
+                "input_quote": "Assess our product."
+              }
+            ],
+            "unknowns": [
+              "Required error"
+            ]
+          },
+          "source_index": []
+        },
+        "errors": [],
+        "metadata": {
+          "run_id": "06a82ee6e8554bc28d297ee7abe839f2",
+          "generated_at": "2026-10-18T03:16:37.442174+00:00",
+          "pipeline_version": "assessment-v3",
+          "provider": "groq",
+          "model": "qwen/qwen3.8-27b",
+          "returned_models": {
+            "extraction": "actual-model",
+            "synthesis": "actual-model"
+          },
+          "endpoint": "https://api.groq.com/openai/v1",
+          "corpus_version": "corpus-test",
+          "retrieval_version": "test",
+          "prompt_versions": {
+            "extraction": "extraction-v7",
+            "synthesis": "synthesis-v10"
+          },
+          "prompt_sha256": {
+            "extraction": "38afb3f0f002d048c5efd59aefde838b98e29c287983bdb7e4bd9c2a2d226769",
+            "synthesis": "f633b02a083aa873976d41ddc9d1e6250cd7733d6d205adb34d99ee218d96199"
+          },
+          "schema_sha256": {
+            "extraction": "9f318dbc9b6b577346ce7a962d93d4f2c34c807a611b6ed26e461e650d9d5045",
+            "synthesis": "2d705a56ee37101b9fa3b37e5cff2b66a2639e0f687765d0d60b4dbd23b27d53"
+          },
+          "stage_elapsed_s": {
+            "extraction": 0.0,
+            "retrieval": 0.0,
+            "synthesis": 0.046999999991385266
+          },
+          "last_successful_call_usage": {
+            "extraction": {
+              "total_tokens": 1
+            },
+            "synthesis": {
+              "total_tokens": 2
+            }
+          },
+          "call_timeout_s": 30.0,
+          "request_deadline_s": 90.0,
+          "provider_max_retries": 0,
+          "provider_max_completion_tokens": 4096,
+          "extraction_max_completion_tokens": 3072,
+          "synthesis_max_completion_tokens": 4096,
+          "synthesis_temperature": 0.0,
+          "repair_counts": {
+            "extraction": 0,
+            "synthesis": 0
+          }
+        },
+        "warnings": [
+          "Mechanical validation establishes traceability, not scientific correctness; inspect source relevance and scope.",
+          "Automated checks and agent inspection do not constitute independent human or scientific validation."
+        ]
+      }
+    },
+    {
+      "scenario": "unavailable_corpus",
+      "http_status": 200,
+      "provider_calls_mocked": 1,
+      "envelope": {
+        "run_status": "incomplete",
+        "facts": {
+          "contexts": [
+            {
+              "context_id": "stream_1",
+              "label": "powder",
+              "target_analytes": [
+                "moisture"
+              ],
+              "measurement_goals": [],
+              "sample_matrix": null,
+              "sample_phase": "powder",
+              "appearance": null,
+              "temperature": null,
+              "pressure": null,
+              "response_time_raw": null,
+              "response_time_s": null,
+              "concentration_range": null,
+              "required_error": null,
+              "reference_assays": [],
+              "process_constraints": [],
+              "missing_information": [
+                "Concentration range",
+                "Required error",
+                "Response time"
+              ]
+            }
+          ],
+          "customer_claims_and_requests": [],
+          "shared_constraints": [],
+          "missing_information": [],
+          "fact_provenance": [
+            {
+              "field_path": "/contexts/0/label",
+              "context_ids": [
+                "stream_1"
+              ],
+              "input_quote": "A powder; measure moisture."
+            },
+            {
+              "field_path": "/contexts/0/target_analytes/0",
+              "context_ids": [
+                "stream_1"
+              ],
+              "input_quote": "A powder; measure moisture."
+            },
+            {
+              "field_path": "/contexts/0/sample_phase",
+              "context_ids": [
+                "stream_1"
+              ],
+              "input_quote": "A powder; measure moisture."
+            }
+          ]
+        },
+        "retrieval": null,
+        "assessment": null,
+        "errors": [
+          {
+            "code": "corpus_unavailable",
+            "stage": "retrieval",
+            "message": "Technical corpus or retrieval indexes are unavailable or failed validation.",
+            "http_status": 503
+          }
+        ],
+        "metadata": {
+          "run_id": "edfcf1546c73432885d2dc4dd7579c51",
+          "generated_at": "2026-10-18T03:16:37.509904+00:00",
+          "pipeline_version": "assessment-v3",
+          "provider": "groq",
+          "model": "qwen/qwen3.8-27b",
+          "returned_models": {
+            "extraction": "actual-model"
+          },
+          "endpoint": "https://api.groq.com/openai/v1",
+          "corpus_version": null,
+          "retrieval_version": null,
+          "prompt_versions": {
+            "extraction": "extraction-v7",
+            "synthesis": "synthesis-v10"
+          },
+          "prompt_sha256": {
+            "extraction": "38afb3f0f002d048c5efd59aefde838b98e29c287983bdb7e4bd9c2a2d226769",
+            "synthesis": "f633b02a083aa873976d41ddc9d1e6250cd7733d6d205adb34d99ee218d96199"
+          },
+          "schema_sha256": {
+            "extraction": "9f318dbc9b6b577346ce7a962d93d4f2c34c807a611b6ed26e461e650d9d5045"
+          },
+          "stage_elapsed_s": {
+            "extraction": 0.0,
+            "retrieval": 0.0
+          },
+          "last_successful_call_usage": {
+            "extraction": {
+              "total_tokens": 1
+            }
+          },
+          "call_timeout_s": 30.0,
+          "request_deadline_s": 90.0,
+          "provider_max_retries": 0,
+          "provider_max_completion_tokens": 4096,
+          "extraction_max_completion_tokens": 3072,
+          "synthesis_max_completion_tokens": 4096,
+          "synthesis_temperature": 0.0,
+          "repair_counts": {
+            "extraction": 0
+          }
+        },
+        "warnings": [
+          "Mechanical validation establishes traceability, not scientific correctness; inspect source relevance and scope.",
+          "Automated checks and agent inspection do not constitute independent human or scientific validation."
+        ]
+      }
+    },
+    {
+      "scenario": "exhausted_synthesis_repair",
+      "http_status": 200,
+      "provider_calls_mocked": 3,
+      "envelope": {
+        "run_status": "incomplete",
+        "facts": {
+          "contexts": [
+            {
+              "context_id": "stream_1",
+              "label": "powder",
+              "target_analytes": [
+                "moisture"
+              ],
+              "measurement_goals": [],
+              "sample_matrix": null,
+              "sample_phase": "powder",
+              "appearance": null,
+              "temperature": null,
+              "pressure": null,
+              "response_time_raw": null,
+              "response_time_s": null,
+              "concentration_range": null,
+              "required_error": null,
+              "reference_assays": [],
+              "process_constraints": [],
+              "missing_information": [
+                "Concentration range",
+                "Required error",
+                "Response time"
+              ]
+            }
+          ],
+          "customer_claims_and_requests": [],
+          "shared_constraints": [],
+          "missing_information": [],
+          "fact_provenance": [
+            {
+              "field_path": "/contexts/0/label",
+              "context_ids": [
+                "stream_1"
+              ],
+              "input_quote": "A powder; measure moisture."
+            },
+            {
+              "field_path": "/contexts/0/target_analytes/0",
+              "context_ids": [
+                "stream_1"
+              ],
+              "input_quote": "A powder; measure moisture."
+            },
+            {
+              "field_path": "/contexts/0/sample_phase",
+              "context_ids": [
+                "stream_1"
+              ],
+              "input_quote": "A powder; measure moisture."
+            }
+          ]
+        },
+        "retrieval": {
+          "status": "ok",
+          "corpus_version": "corpus-test",
+          "retrieval_version": "test",
+          "ranking": "BM25 + local BGE cosine, RRF k=60; structured method lookup",
+          "semantic_min_score": 0.65,
+          "max_records": 8,
+          "search_rounds": 1,
+          "evidence": [
+            {
+              "evidence": {
+                "evidence_id": "S01:p006:test",
+                "source_id": "S01",
+                "file_name": "test.pdf",
+                "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "page": 6,
+                "section": "Synthetic evidence",
+                "text": "Synthetic powder NIR reflection screening example.",
+                "content_kind": "verbatim_text",
+                "evidence_scope": "application_example",
+                "revision": "content-v1",
+                "validation_status": "passed",
+                "human_review_status": "not_reviewed",
+                "retrieval_eligible": true,
+                "issues": [],
+                "corpus_version": "corpus-test",
+                "evidence_url": "/api/evidence/test?revision=content-v1",
+                "workbook_notes": null
+              },
+              "context_ids": [
+                "stream_1"
+              ],
+              "facets": [
+                "application"
+              ],
+              "matches": [],
+              "score": 0.1,
+              "selection_reasons": [
+                "synthetic fixture"
+              ]
+            }
+          ],
+          "queries": [],
+          "coverage": [],
+          "gaps": [],
+          "warnings": [],
+          "model_calls": 0
+        },
+        "assessment": null,
+        "errors": [
+          {
+            "code": "synthesis_invalid_response",
+            "stage": "synthesis",
+            "message": "Synthesis failed validation after one repair.",
+            "http_status": 502
+          }
+        ],
+        "metadata": {
+          "run_id": "90925e67da9d47dc8d52d52e7134563d",
+          "generated_at": "2026-10-18T03:16:37.549081+00:00",
+          "pipeline_version": "assessment-v3",
+          "provider": "groq",
+          "model": "qwen/qwen3.8-27b",
+          "returned_models": {
+            "extraction": "actual-model",
+            "synthesis": "actual-model"
+          },
+          "endpoint": "https://api.groq.com/openai/v1",
+          "corpus_version": "corpus-test",
+          "retrieval_version": "test",
+          "prompt_versions": {
+            "extraction": "extraction-v7",
+            "synthesis": "synthesis-v10"
+          },
+          "prompt_sha256": {
+            "extraction": "38afb3f0f002d048c5efd59aefde838b98e29c287983bdb7e4bd9c2a2d226769",
+            "synthesis": "f633b02a083aa873976d41ddc9d1e6250cd7733d6d205adb34d99ee218d96199"
+          },
+          "schema_sha256": {
+            "extraction": "9f318dbc9b6b577346ce7a962d93d4f2c34c807a611b6ed26e461e650d9d5045",
+            "synthesis": "6ec9d403d8fd559f2f100cc6f755328cd0caf2b11e9de4f0090b85e0efb02526"
+          },
+          "stage_elapsed_s": {
+            "extraction": 0.030999999988125637,
+            "retrieval": 0.0,
+            "synthesis": 0.0470000000204891
+          },
+          "last_successful_call_usage": {
+            "extraction": {
+              "total_tokens": 1
+            },
+            "synthesis": {}
+          },
+          "call_timeout_s": 30.0,
+          "request_deadline_s": 90.0,
+          "provider_max_retries": 0,
+          "provider_max_completion_tokens": 4096,
+          "extraction_max_completion_tokens": 3072,
+          "synthesis_max_completion_tokens": 4096,
+          "synthesis_temperature": 0.0,
+          "repair_counts": {
+            "extraction": 0,
+            "synthesis": 1
+          }
+        },
+        "warnings": [
+          "Mechanical validation establishes traceability, not scientific correctness; inspect source relevance and scope.",
+          "Automated checks and agent inspection do not constitute independent human or scientific validation."
+        ]
+      }
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 """Local readiness checks. No provider calls or implied human approval."""
 from pathlib import Path
 from typing import Literal
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel, Field, ValidationError
 from backend.knowledge_store import active_directory, validate_corpus
 
 class CorpusStatus(BaseModel):
@@ -13,9 +13,12 @@ class CorpusStatus(BaseModel):
     human_verified_records: int = 0
 
 class ProviderStatus(BaseModel):
-    name: Literal["groq", "llmtech"] = "groq"
+    name: Literal["auto", "groq", "llmtech"] = "auto"
     model: str
     configured: bool
+    mode: Literal["auto", "groq", "llmtech"] = "auto"
+    selected: str | None = None
+    candidates: list[dict] = Field(default_factory=list)
 
 class HealthResponse(BaseModel):
     service: Literal["running"] = "running"

@@ -1,0 +1,214 @@
+{
+  "generated_at": "2026-10-18T03:20:14.457693+00:00",
+  "pipeline_version": "assessment-v3",
+  "prompt_versions": {
+    "extraction": "extraction-v7",
+    "synthesis": "synthesis-v10"
+  },
+  "automated_tests": {
+    "command": ".venv/Scripts/python.exe -m pytest -q -p no:cacheprovider --basetemp <system-temp>/spectraplan-f06-20261018-final --junitxml=outputs/assessment/f06_tests.xml",
+    "tests": 236,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_s": 16.475,
+    "junit_path": "outputs/assessment/f06_tests.xml",
+    "execution_note": "Socket-enabled Windows execution. Test fixtures moved to the system temporary directory after a transient OneDrive os.replace access-denied failure; no product fix was needed for that fixture failure."
+  },
+  "contract_examples": {
+    "path": "outputs/assessment/f06_mocked_api.json",
+    "kind": "mocked API, synthetic evidence",
+    "scenarios": [
+      "D01",
+      "D02",
+      "evidence_gap",
+      "unavailable_corpus",
+      "exhausted_synthesis_repair"
+    ],
+    "live_provider_calls": 0,
+    "source_authentication": "separately tested using a synthetic published corpus"
+  },
+  "live_verification": {
+    "status": "passed_for_reviewed_D01_D02",
+    "command": ".venv/Scripts/python.exe -m backend.smoke_assessment --api --provider llmtech --public-trial --request-deadline-s 90 --call-timeout-s 30",
+    "provider": "llmtech",
+    "endpoint": "https://api.llmtech.eu/v1",
+    "requested_model": "nvidia/Qwen3.8-27B-NVFP4",
+    "transport": "asgi_api",
+    "diagnostic_record": "outputs/assessment/20261018T031435Z_573cc337a2c7459cb0d31246fe0eebfe.json",
+    "diagnostic_sha256": "5889316553fc9735936119b4610d973d0eff7ff0eaa214425af153b2a6e02c56",
+    "limits": {
+      "call_timeout_s": 30.0,
+      "request_deadline_s": 90.0,
+      "max_retries": 2,
+      "max_completion_tokens": 4096,
+      "extraction_max_completion_tokens": 3072,
+      "synthesis_max_completion_tokens": 4096,
+      "synthesis_temperature": 0
+    },
+    "authorization": "User authorized LLMTech for D01/D02 verification; public documented trial credential used without saving it.",
+    "cases": [
+      {
+        "case_id": "D01",
+        "http_status": 200,
+        "run_status": "complete",
+        "decision_status": "provisional",
+        "methods": [
+          "NIR",
+          "Raman"
+        ],
+        "elapsed_s": 25.875,
+        "stage_elapsed_s": {
+          "extraction": 6.672000000020489,
+          "retrieval": 2.5469999999913853,
+          "synthesis": 16.655999999988126
+        },
+        "repair_counts": {
+          "extraction": 0,
+          "synthesis": 0
+        },
+        "returned_models": {
+          "extraction": "qwen38",
+          "synthesis": "qwen38"
+        },
+        "corpus_version": "corpus-4aac882441587796afe5",
+        "cited_evidence_ids": [
+          "S01:p015:txt:5d65dd1642425d18",
+          "T01:method_comparison:r009",
+          "S01:p005:txt:ee0eed1e1fed5e85",
+          "T01:method_comparison:r013"
+        ],
+        "facts_sha256": "73aec08eac7541cd41f3b2604e2f63ec4d40284ae65b6dfecb8a43cc27b238da",
+        "assessment_sha256": "16d0d770937de976d9ab6ab15accf6abaeeab876593eb4f0811a57d69e405edc",
+        "ledger_sha256": "744d75d2ca9262e711ca77bdbf86232ad82f13fb16dddb4288c6631a9709e0bc",
+        "checks": [
+          "fresh extraction and public API route",
+          "exact input-quote provenance",
+          "all ledger records equal pinned canonical corpus records",
+          "original source-file hashes match each exported evidence record",
+          "final citation union and locators match the source index",
+          "backend customer summary contains only validated extracted values",
+          "missing acceptance thresholds stay open",
+          "independent run grouping keeps related scans together",
+          "individual methods compared before any proposed combination",
+          "references aligned by sample location/time",
+          "90-second shared request deadline and 30-second call limit",
+          "prompt/schema hashes and configured/returned identities retained"
+        ]
+      },
+      {
+        "case_id": "D02",
+        "http_status": 200,
+        "run_status": "complete",
+        "decision_status": "provisional",
+        "methods": [
+          "NIR"
+        ],
+        "elapsed_s": 22.812000000005355,
+        "stage_elapsed_s": {
+          "extraction": 10.0,
+          "retrieval": 0.28100000001722947,
+          "synthesis": 12.530999999988126
+        },
+        "repair_counts": {
+          "extraction": 1,
+          "synthesis": 0
+        },
+        "returned_models": {
+          "extraction": "qwen38",
+          "synthesis": "qwen38"
+        },
+        "corpus_version": "corpus-4aac882441587796afe5",
+        "cited_evidence_ids": [
+          "S01:p017:txt:03613ea0cb0945fb",
+          "S01:p018:txt:250c09c5fdb749b3"
+        ],
+        "facts_sha256": "0347adad5904356f77a3d0e7b55eb81156905b9a367bf31ccbefff4f91f77a38",
+        "assessment_sha256": "b44dd1efd4b9e49ee353a5c17d9a269c9576b41c0524bef788a0becf31d2aaf5",
+        "ledger_sha256": "5e0f49ccf9ec40cb330c1f9b3443d42d043611849644bbb131649dda51369e39",
+        "checks": [
+          "fresh extraction and public API route",
+          "exact input-quote provenance",
+          "all ledger records equal pinned canonical corpus records",
+          "original source-file hashes match each exported evidence record",
+          "final citation union and locators match the source index",
+          "backend customer summary contains only validated extracted values",
+          "missing acceptance thresholds stay open",
+          "independent run grouping keeps related scans together",
+          "individual methods compared before any proposed combination",
+          "references aligned by sample location/time",
+          "90-second shared request deadline and 30-second call limit",
+          "prompt/schema hashes and configured/returned identities retained"
+        ]
+      }
+    ]
+  },
+  "source_review": {
+    "status": "agent_source_record_comparison_completed",
+    "scope": "Comparison against original enquiry wording, canonical cited passages/rows and workbook notes; original source-file hashes checked. Not independent human/scientific validation.",
+    "D01": "S01 p.15 supports a conditional NIR/Raman feed-frame screening comparison. T01 rows 9/13 provide qualitative powder geometries with S01 Table 1 p.6 provenance. The output does not adopt the source passage's general fusion-improvement language as a guarantee; comparisons require independent material and customer criteria.",
+    "D02": "S01 p.17 describes reflection for opaque/concentrated dairy and fat/protein reference modeling. S01 p.18 supplies transmission limitations for thick/fat-rich material. Reflection is a conditional candidate; no diluted stream or demonstrated customer performance is invented.",
+    "residual_notes": [
+      "Some D01 source-excerpt limitations are editorially redundant, including a Raman-specific excerpt also listed under NIR.",
+      "Qualitative workbook rows are displayed verbatim in risks; their ratings/depths are comparison guidance, not measured customer performance or cable specifications.",
+      "D02 extraction retains an imprecise qualitative temperature phrase. Numerical ranges and thresholds remain unknown and require clarification.",
+      "Model-authored questions and study prose still require expert review; mechanical validation does not establish arbitrary prose entailment."
+    ]
+  },
+  "independent_scientific_validation": "not_performed",
+  "browser_verification": "not_performed",
+  "completion_gate": "passed_for_three_live_API_scenarios_and_local_success_failure_contract_tests",
+  "file_sha256": {
+    "backend/agent.py": "57cfc93fd1fc646ffc81a4fe7de9d042355ed4efa3749315a0106c575b58d763",
+    "backend/validation.py": "7d29597748cf0f1e937d256b7a1165ece2809e89d453f5dc1b533f513cbfb315",
+    "backend/main.py": "a2a947298d9ad9a9d9b858f335cff52b5b41614426ffd2a6f4111ba028d06714",
+    "backend/models.py": "53bf4661b234e28d535123656d2fac41cf60728f975fccc140022e8f3c613e29",
+    "backend/provider.py": "3d8ff6019cdaab5280a4925250d41eda67a071675e6fe82cc38ca033607de7e1",
+    "backend/config.py": "51036584626fe7ee8340f27925ff5e29d5093edc578b252f98969a7e7945b8a3",
+    "backend/prompts/assessment_synthesis.txt": "908caf528bf39352692e4e74a7a9f5fe30b1e4ce2864d27dcdf809a9d5b04778",
+    "backend/smoke_assessment.py": "ad98450bd4bca08f8589175a6d8b3783d859a1d583860158b3ed758f28eb9e2c",
+    "tests/test_assessment.py": "36bd06d6119fbf6e2017f7ef7d79d1b771fc6c809e32110ba85a369e85b67870",
+    "tests/test_assessment_api.py": "8c79aa90d10f172a5b622d5676d6615c32318926b10cd6987eff8fffc299ebbf"
+  },
+  "artifact_sha256": {
+    "outputs/assessment/f06_tests.xml": "0056b94236fb20ffdfe90bfd61d2825846b3338efaeb7f8cd3c426fb84961ccf",
+    "outputs/assessment/f06_mocked_api.json": "e064952ba0e8e0fc4c23b7c194238b17d88be8600fbe15e0270250f5bbf25267",
+    "outputs/assessment/f06_live_gap.json": "6109a3a7987ab6727ae7e68a9d872ce50d3763d4c6212f5c30aa202cc7fb5dd9"
+  },
+  "superseded_live_runs": [
+    {
+      "path": "outputs/assessment/20261018T031140Z_5f79a57f653a4b59a57b1896af523416.json",
+      "sha256": "7ae6f4a2955d48f81b33ee8b903829d41e0b1417d29a5d6e137db78339abfd50",
+      "pipeline_version": "assessment-v2",
+      "finding": "D01 model-authored case summary imported a source-study rotary-press detail; shared constraints also displaced explicit acceptance metrics in go/no-go wording.",
+      "resolution": "assessment-v3 builds the summary from validated customer values and always names error, bias, response time and robustness criteria. Regression added; both cases rerun successfully."
+    }
+  ],
+  "optional_live_undefined_target_check": {
+    "status": "passed",
+    "executed": true,
+    "authorization": "Explicit user approval for the generic undefined-target enquiry and any retrieved AFS passages to LLMTech.",
+    "path": "outputs/assessment/f06_live_gap.json",
+    "sha256": "6109a3a7987ab6727ae7e68a9d872ce50d3763d4c6212f5c30aa202cc7fb5dd9",
+    "http_status": 200,
+    "run_status": "complete",
+    "decision_status": "insufficient_information",
+    "elapsed_s": 7.764999999984866,
+    "repair_counts": {
+      "extraction": 0,
+      "synthesis": 0
+    },
+    "evidence_records": 0,
+    "recommendations": 0,
+    "checks": [
+      "fresh extraction through the public API",
+      "approved published corpus available",
+      "no extracted measurement contexts and no retrieved evidence",
+      "complete cautious scientific result rather than an infrastructure failure",
+      "empty shortlist and source index",
+      "useful sample/target/acceptance questions and initial characterization proposal",
+      "default 90-second shared deadline and 30-second call limit",
+      "no content repair needed"
+    ]
+  }
+}

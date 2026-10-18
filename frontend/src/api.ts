@@ -9,7 +9,11 @@ export interface HealthResponse {
     flagged_records: number
     human_verified_records: number
   }
-  provider: { name: 'groq' | 'llmtech'; model: string; configured: boolean }
+  provider: {
+    name: 'auto' | 'groq' | 'llmtech'; model: string; configured: boolean
+    mode: 'auto' | 'groq' | 'llmtech'; selected: string | null
+    candidates: { name: string; configured: boolean; status: 'unchecked' | 'working' | 'unavailable' | 'not_configured'; error_code: string | null }[]
+  }
 }
 
 export async function fetchHealth(signal: AbortSignal): Promise<HealthResponse> {
@@ -31,8 +35,13 @@ function isHealthResponse(value: unknown): value is HealthResponse {
     && Number.isInteger(data.corpus.eligible_methods) && data.corpus.eligible_methods >= 0
     && Number.isInteger(data.corpus.flagged_records) && data.corpus.flagged_records >= 0
     && Number.isInteger(data.corpus.human_verified_records) && data.corpus.human_verified_records >= 0
-    && !!data.provider && ['groq', 'llmtech'].includes(data.provider.name)
+    && !!data.provider && ['auto', 'groq', 'llmtech'].includes(data.provider.name)
     && typeof data.provider.model === 'string' && typeof data.provider.configured === 'boolean'
+    && ['auto', 'groq', 'llmtech'].includes(data.provider.mode)
+    && (data.provider.selected === null || typeof data.provider.selected === 'string')
+    && Array.isArray(data.provider.candidates)
+    && data.provider.candidates.every(p => !!p && typeof p.name === 'string' && typeof p.configured === 'boolean'
+      && ['unchecked', 'working', 'unavailable', 'not_configured'].includes(p.status))
 }
 
 export type SearchMode = 'compare' | 'bm25' | 'qdrant' | 'hybrid'

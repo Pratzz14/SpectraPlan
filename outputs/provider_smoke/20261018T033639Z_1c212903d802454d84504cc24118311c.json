@@ -1,0 +1,20 @@
+{
+  "run_id": "1c212903d802454d84504cc24118311c",
+  "generated_at": "2026-10-18T03:36:37.915346+00:00",
+  "provider": "auto",
+  "model": "qwen/qwen3.8-27b",
+  "settings": {
+    "reasoning_effort": "medium",
+    "strict_json_schema": true,
+    "call_timeout_s": 30.0,
+    "deadline_s": 90.0,
+    "max_retries": 2,
+    "max_completion_tokens": 2048
+  },
+  "outcome": "unresolved",
+  "validated_response": null,
+  "error": {
+    "code": "smoke_content_mismatch",
+    "message": "Synthetic extraction did not preserve the stated facts."
+  }
+}

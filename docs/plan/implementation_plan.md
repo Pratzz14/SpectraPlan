@@ -172,31 +172,33 @@ The timeboxes are the specification's proposed 12-hour budget, not guaranteed es
 **Spec:** Sections 6.3, 7 and 9.3–9.4.\
 **Primary files:** `backend/agent.py`, `backend/validation.py`, `backend/main.py`, `backend/models.py`, `tests/`.
 
-- [ ] **F06.1 — Complete feasibility-study output**
-  - [ ] Generate objective, representative samples/process states, independent reference measurements and relevant variation to cover.
-  - [ ] Compare suitable individual methods before combinations, aligning sample location and timing where needed.
-  - [ ] Propose independent validation at the batch/run/specimen/patient level appropriate to the task; avoid treating repeated scans as independent samples.
-  - [ ] Tie go/no-go criteria to customer requirements, leave missing thresholds open, and label proposed experimental settings as proposals.
-  - [ ] For an undefined target, propose initial characterization and clarification before analyte calibration or an exact configuration.
+- [x] **F06.1 — Complete feasibility-study output**
+  - [x] Generate objective, representative samples/process states, independent reference measurements and relevant variation to cover.
+  - [x] Compare suitable individual methods before combinations, aligning sample location and timing where needed.
+  - [x] Propose independent validation at the batch/run/specimen/patient level appropriate to the task; avoid treating repeated scans as independent samples.
+  - [x] Tie go/no-go criteria to customer requirements, leave missing thresholds open, and label proposed experimental settings as proposals.
+  - [x] For an undefined target, propose initial characterization and clarification before analyte calibration or an exact configuration.
 
-- [ ] **F06.2 — Implement mechanical validation and bounded repair**
-  - [ ] Validate schemas, context IDs, input-quote provenance and every evidence reference against the retrieved reviewed ledger.
-  - [ ] Check provenance for structured quantities and explicit configured conflicts; do not claim these checks prove arbitrary scientific prose.
-  - [ ] Permit one repair attempt using specific errors and the same evidence set within the total request deadline.
-  - [ ] Construct the final source index and run metadata on the backend; include all cited evidence records in the exportable envelope.
+- [x] **F06.2 — Implement mechanical validation and bounded repair**
+  - [x] Validate schemas, context IDs, input-quote provenance and every evidence reference against the retrieved reviewed ledger.
+  - [x] Check provenance for structured quantities and explicit configured conflicts; do not claim these checks prove arbitrary scientific prose.
+  - [x] Permit one repair attempt using specific errors and the same evidence set within the total request deadline.
+  - [x] Construct the final source index and run metadata on the backend; include all cited evidence records in the exportable envelope.
 
-- [ ] **F06.3 — Expose the assessment contract**
-  - [ ] Implement `POST /api/assess` with blank/oversized input validation and the default 8,000-character limit.
-  - [ ] Return the run envelope with validated facts, assessment, errors, model identity and prompt/corpus/pipeline versions.
-  - [ ] Separate `run_status` from scientific `decision_status`; incomplete results have `assessment=null` and a failed-stage error.
-  - [ ] Implement the specified HTTP error mapping, per-call limits and shared deadline across retries, search and repair.
+- [x] **F06.3 — Expose the assessment contract**
+  - [x] Implement `POST /api/assess` with blank/oversized input validation and the default 8,000-character limit.
+  - [x] Return the run envelope with validated facts, assessment, errors, model identity and prompt/corpus/pipeline versions.
+  - [x] Separate `run_status` from scientific `decision_status`; incomplete results have `assessment=null` and a failed-stage error.
+  - [x] Implement the specified HTTP error mapping, per-call limits and shared deadline across retries, search and repair.
 
-- [ ] **F06.4 — Verify successful and failing runs**
-  - [ ] Exercise valid D01/D02 assessments and a justified empty-shortlist assessment.
-  - [ ] Test nonexistent evidence, missing provenance, invalid model JSON, exhausted repair, provider timeout and unavailable corpus.
-  - [ ] Verify an evidence gap can yield a complete cautious assessment while infrastructure failures remain incomplete/error states.
+- [x] **F06.4 — Verify successful and failing runs**
+  - [x] Exercise valid D01/D02 assessments and a justified empty-shortlist assessment. D01/D02 and undefined-target empty-shortlist characterization passed live through the API with LLMTech, alongside local API tests.
+  - [x] Test nonexistent evidence, missing provenance, invalid model JSON, exhausted repair, provider timeout and unavailable corpus.
+  - [x] Verify an evidence gap can yield a complete cautious assessment while infrastructure failures remain incomplete/error states.
 
 **Completion gate:** The API returns a validated, inspectable complete result or the documented incomplete/error contract. Failed synthesis cannot appear as a normal technical recommendation.
+
+**Observed F06 status (2026-10-18): Complete for the inspected development gate.** The backend suite passed **236 tests**. Fresh LLMTech D01/D02 API runs returned complete provisional assessments at the default 90-second request / 30-second call limits, in about 26/23 seconds. Agent source comparison checked cited passages/rows, workbook scope, original source hashes and practical study design. An initial customer-summary source leak was corrected with backend-rendered facts, tested and rerun. [Live envelopes](../../outputs/assessment/20261018T031435Z_573cc337a2c7459cb0d31246fe0eebfe.json), [mocked empty/failure envelopes](../../outputs/assessment/f06_mocked_api.json) and the [verification receipt](../../outputs/assessment/f06_review.json) preserve exact evidence, hashes, earlier findings and residual semantic/editorial limits. A separately approved [live undefined-target check](../../outputs/assessment/f06_live_gap.json) returned a complete insufficient-information result with an empty shortlist in about 8 seconds, without repair. Agent inspection is not independent scientific validation.
 
 ## F07 — Assessment interface and export
 

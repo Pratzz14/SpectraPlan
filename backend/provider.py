@@ -52,8 +52,107 @@ class Provider:
         self.transport = transport
         self.last_usage: dict = {}
         self.last_model: str | None = None
+        self.repair_counts: dict[str, int] = {}
+        self.current_settings = settings
+        self.attempts: list[dict] = []
+        self.stage: str | None = None
+        if settings.provider_name == "auto" and (settings._provider_router is None or settings._provider_router.settings is not settings):
+            from backend.provider_routing import ProviderRouter
+            settings._provider_router = ProviderRouter(settings)
 
-    async def structured(
+    def identity(self):
+        config = self.current_settings
+        return {"provider": config.provider_name, "model": config.provider_model,
+                "endpoint": config.provider_base_url, "returned_model": self.last_model}
+
+    async def _probe(self, config, deadline):
+        from backend.provider_routing import AvailabilityProbe
+        candidate = config.model_copy(update={"provider_max_retries": 0, "provider_reasoning_effort": "none"})
+        direct = Provider(candidate, transport=self.transport)
+        started = time.monotonic()
+        error = None
+        try:
+            result = await direct.structured([{"role": "user", "content": 'Return exactly {"ok": true}.'}],
+                AvailabilityProbe, deadline=deadline, max_completion_tokens=128, temperature=0)
+            if not result.ok:
+                raise ProviderError("provider_probe_failed", "Provider failed the structured availability probe.")
+        except ProviderError as caught:
+            error = caught.code
+            raise
+        except asyncio.CancelledError:
+            error = "provider_timeout"
+            raise
+        finally:
+            self.attempts.append({"stage": self.stage, "purpose": "probe", "provider": config.provider_name,
+                "model": config.provider_model, "endpoint": config.provider_base_url,
+                "outcome": "failed" if error else "passed", "error_code": error,
+                "elapsed_s": time.monotonic() - started})
+
+    async def check(self, *, deadline=None):
+        """Explicit startup/manual availability check. GET /health never calls this."""
+        stop = min(deadline if deadline is not None else math.inf,
+                   time.monotonic() + self.settings.request_deadline_s)
+        try:
+            if self.settings.provider_name == "auto":
+                self.current_settings = await self.settings._provider_router.select(stop, self._probe)
+            else:
+                await self._probe(self.settings, stop)
+        except TimeoutError:
+            raise ProviderError("provider_timeout", "Provider selection deadline expired.", 504) from None
+        return self.identity()
+
+    async def structured(self, messages, response_model, *, deadline=None, max_completion_tokens=None, temperature=None):
+        if self.settings.provider_name != "auto":
+            return await self._structured(messages, response_model, deadline=deadline,
+                max_completion_tokens=max_completion_tokens, temperature=temperature)
+        stop = min(deadline if deadline is not None else math.inf,
+                   time.monotonic() + self.settings.request_deadline_s)
+        router = self.settings._provider_router
+        tried = set()
+        try:
+            while len(tried) < len(self.settings.provider_names):
+                candidate = await router.select(stop, self._probe, tried)
+                self.current_settings = candidate
+                tried.add(candidate.provider_name)
+                # One payload attempt per provider avoids spending the entire
+                # deadline on a failing provider's transport retries.
+                direct = Provider(candidate.model_copy(update={"provider_max_retries": 0}), transport=self.transport)
+                started = time.monotonic()
+                failure = None
+                try:
+                    result = await direct.structured(messages, response_model, deadline=stop,
+                        max_completion_tokens=max_completion_tokens, temperature=temperature)
+                except ProviderError as error:
+                    failure = error.code
+                    repairable_content = error.code == "provider_invalid_response" or (
+                        error.code == "provider_request_rejected" and error.upstream_code == "json_validate_failed")
+                    if repairable_content:
+                        raise
+                    router.mark(candidate.provider_name, False, error.code)
+                    if time.monotonic() >= stop:
+                        raise ProviderError("provider_timeout", "Provider request deadline expired.", 504) from None
+                    if len(tried) >= len(self.settings.provider_names):
+                        raise
+                    continue
+                except asyncio.CancelledError:
+                    failure = "provider_timeout"
+                    raise
+                finally:
+                    self.current_settings = candidate
+                    self.last_model = direct.last_model
+                    if direct.last_usage:
+                        self.last_usage = dict(direct.last_usage)
+                    self.attempts.append({"stage": self.stage, "purpose": "request", "provider": candidate.provider_name,
+                        "model": candidate.provider_model, "endpoint": candidate.provider_base_url,
+                        "outcome": "failed" if failure else "passed", "error_code": failure,
+                        "elapsed_s": time.monotonic() - started})
+                router.mark(candidate.provider_name, True)
+                return result
+        except TimeoutError:
+            raise ProviderError("provider_timeout", "Provider selection deadline expired.", 504) from None
+        raise ProviderError("provider_unavailable", "No configured provider is currently available.")
+
+    async def _structured(
         self,
         messages: list[Message],
         response_model: type[ResponseModel],
@@ -65,8 +164,8 @@ class Provider:
         """Deadline is an absolute time.monotonic() value supplied by the caller.
 
         Pass Pydantic models with extra='forbid' and required (nullable if needed)
-        fields, as required by Groq strict JSON Schema. No fallback or repair is
-        hidden inside this transport adapter.
+        fields, as required by strict JSON Schema. This method performs bounded
+        transport retries; structured() handles routing and callers handle repair.
         """
         config = self.settings
         if not config.provider_configured:
@@ -140,12 +239,16 @@ class Provider:
                                                                           "model_not_found", "rate_limit_exceeded"} else None
                                     raise ProviderError("provider_request_rejected", "Provider rejected the request or structured-output schema.",
                                                         upstream_status=response.status_code, upstream_code=safe_code)
+                                try:
+                                    response_data = response.json()
+                                except ValueError:
+                                    response_data = None
+                                returned_model = response_data.get("model") if isinstance(response_data, dict) else None
+                                self.last_model = returned_model if isinstance(returned_model, str) and returned_model.strip() else None
                                 result = self._validate(response, response_model)
                                 usage = response.json().get("usage", {})
                                 self.last_usage = {k: usage[k] for k in ("prompt_tokens", "completion_tokens", "total_tokens")
                                                    if isinstance(usage.get(k), int)} if isinstance(usage, dict) else {}
-                                returned_model = response.json().get("model")
-                                self.last_model = returned_model if isinstance(returned_model, str) else None
                                 return result
                             failure = ProviderError("provider_unavailable", f"Provider returned HTTP {response.status_code} (rate limit or service failure).",
                                                     upstream_status=response.status_code)

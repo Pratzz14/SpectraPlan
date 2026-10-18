@@ -8,7 +8,6 @@ import argparse
 import asyncio
 import base64
 import json
-import os
 import re
 from datetime import datetime, timezone
 from pathlib import Path
@@ -17,7 +16,7 @@ from uuid import uuid4
 import httpx
 import pymupdf
 
-from backend.config import PROJECT_ROOT
+from backend.config import PROJECT_ROOT, Settings
 from backend.knowledge_models import PageExtraction, PageVerification
 from backend.knowledge_store import write_json
 from backend.provider import Provider
@@ -44,31 +43,29 @@ def synthetic_image() -> str:
 
 
 async def run(*, public_trial=False) -> tuple[dict, int]:
+    settings = Settings().for_provider("llmtech")
+    if public_trial:
+        from backend.provider_setup import with_public_trial
+        settings = with_public_trial(settings)
+    endpoint, model_id = settings.provider_base_url, settings.provider_model
     record = {"run_id": uuid4().hex, "generated_at": datetime.now(timezone.utc).isoformat(),
-              "provider": "llmtech", "endpoint": BASE_URL, "requested_model": MODEL,
+              "provider": "llmtech", "endpoint": endpoint, "requested_model": model_id,
               "data_scope": "Synthetic text and a generated synthetic diagram only; no AFS content",
               "test_scope": "API/schema/vision compatibility, not acceptance of all extracted scientific fields",
               "production_configuration_changed": False, "tests": [], "outcome": "failed"}
     async with httpx.AsyncClient(timeout=120, follow_redirects=False) as client:
-        key = os.environ.get("LLMTECH_API_KEY", "").strip()
-        if not key and public_trial:
-            response = await client.get("https://llmtech.eu/docs/")
-            response.raise_for_status()
-            match = re.search(r"lt-trial-[0-9a-f]+", response.text)
-            if not match:
-                raise ValueError("The public documentation no longer contains a trial key")
-            key = match.group()
+        key = settings.llmtech_api_key.get_secret_value().strip()
         if not key:
             raise ValueError("Set backend-only LLMTECH_API_KEY or explicitly use --public-trial")
-        record["key_source"] = "public_documented_trial" if public_trial and not os.environ.get("LLMTECH_API_KEY") else "environment"
+        record["key_source"] = "backend_configuration_or_explicit_public_trial"
 
         async def request(name, messages, model, budget):
-            payload = {"model": MODEL, "messages": messages, "stream": False,
+            payload = {"model": model_id, "messages": messages, "stream": False,
                        "chat_template_kwargs": {"enable_thinking": False}, "max_completion_tokens": budget,
                        "response_format": {"type": "json_schema", "json_schema": {
                            "name": model.__name__, "strict": True, "schema": model.model_json_schema()}}}
             started = asyncio.get_running_loop().time()
-            result = await client.post(BASE_URL + "/chat/completions",
+            result = await client.post(endpoint + "/chat/completions",
                                        headers={"Authorization": "Bearer " + key}, json=payload)
             metadata = {"test": name, "http_status": result.status_code,
                         "elapsed_s": round(asyncio.get_running_loop().time() - started, 2),

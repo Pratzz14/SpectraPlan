@@ -1,16 +1,18 @@
 """Run from the repository root: python -m uvicorn backend.main:app --reload."""
 
 import re
+import time
+from contextlib import asynccontextmanager
 from typing import Literal
 
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.responses import FileResponse, RedirectResponse, JSONResponse
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from backend.config import Settings
-from backend.agent import extract_case
-from backend.models import CaseFacts, ExtractionRequest
-from backend.provider import ProviderError
+from backend.agent import extract_case, assess_case
+from backend.models import CaseFacts, ExtractionRequest, AssessmentRequest, AssessmentRun
+from backend.provider import Provider, ProviderError
 from backend.health import HealthResponse, ProviderStatus, inspect_corpus
 from backend.knowledge_store import active_directory, inside, read_json
 from backend.search_service import SearchService, SearchUnavailable
@@ -37,10 +39,33 @@ class SearchRequest(BaseModel):
 
 def create_app(settings: Settings | None = None) -> FastAPI:
     config = settings if settings is not None else Settings()
-    application = FastAPI(title="SpectraPlan", version="0.1.0")
+
+    @asynccontextmanager
+    async def lifespan(application):
+        if config.provider_name == "auto" and config.provider_configured:
+            try:
+                await Provider(config).check(deadline=time.monotonic() + min(
+                    config.request_deadline_s, config.provider_probe_timeout_s * len(config.provider_names)))
+            except ProviderError:
+                pass  # Readiness exposes availability; later requests retry after cooldown.
+        yield
+
+    application = FastAPI(title="SpectraPlan", version="0.1.0", lifespan=lifespan)
     search_service = SearchService(config)
     retrieval_service = CaseRetrievalService(config)
     application.state.retrieval_service = retrieval_service
+
+    @application.post("/api/assess", response_model=AssessmentRun,
+                      responses={422: {"description": "Invalid enquiry"},
+                                 502: {"model": AssessmentRun}, 503: {"model": AssessmentRun},
+                                 504: {"model": AssessmentRun}})
+    async def assess(request: AssessmentRequest):
+        if len(request.description) > config.assessment_max_description_chars:
+            raise HTTPException(422, {"code": "description_too_long",
+                "message": f"Description limit is {config.assessment_max_description_chars} characters."})
+        result = await assess_case(request.description, config, retrieval_service=retrieval_service)
+        status = result.errors[0].http_status if result.facts is None and result.errors else 200
+        return JSONResponse(result.model_dump(mode="json"), status_code=status)
 
     @application.post("/api/retrieve", response_model=RetrievalResult)
     def retrieve(facts: CaseFacts):
@@ -91,10 +116,19 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @application.get("/api/health", response_model=HealthResponse)
     def health() -> HealthResponse:
         corpus = inspect_corpus(config.corpus_dir)
+        router = config._provider_router
+        route = router.snapshot() if router is not None else {"selected": None, "candidates": [
+            {"name": name, "configured": config.usable_key(getattr(config, f"{name}_api_key")),
+             "status": "unchecked" if config.usable_key(getattr(config, f"{name}_api_key")) else "not_configured",
+             "error_code": None} for name in config.provider_names]}
+        selected = route["selected"]
+        identity = config.for_provider(selected) if selected else config
         return HealthResponse(
-            ready=config.provider_configured and corpus.status == "ready",
+            ready=config.provider_configured and corpus.status == "ready" and (config.provider_name != "auto" or selected is not None),
             corpus=corpus,
-            provider=ProviderStatus(name=config.provider_name, model=config.provider_model, configured=config.provider_configured),
+            provider=ProviderStatus(name=selected or config.provider_name, model=identity.provider_model,
+                configured=config.provider_configured, mode=config.provider_name,
+                selected=selected, candidates=route["candidates"]),
         )
 
     @application.get("/api/knowledge/report", include_in_schema=False)

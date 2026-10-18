@@ -23,7 +23,7 @@ CLAIM = "We own a fluorescence instrument. We believe it measures protein accura
 
 
 def config(**kwargs):
-    return Settings(_env_file=None, groq_api_key="test-secret", provider_max_retries=0, **kwargs)
+    return Settings(_env_file=None, **{"provider_name": "groq", "groq_api_key": "test-secret", "provider_max_retries": 0, **kwargs})
 
 
 def facts_for(description, *contexts, shared=(), statements=()):

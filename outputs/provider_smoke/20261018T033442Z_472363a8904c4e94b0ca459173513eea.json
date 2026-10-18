@@ -1,0 +1,53 @@
+{
+  "run_id": "472363a8904c4e94b0ca459173513eea",
+  "providers": [
+    {
+      "run_id": "17e19109392040a0886ee8d0b176ba75",
+      "generated_at": "2026-10-18T03:34:40.127233+00:00",
+      "provider": "llmtech",
+      "model": "nvidia/Qwen3.8-27B-NVFP4",
+      "settings": {
+        "reasoning_effort": "medium",
+        "strict_json_schema": true,
+        "call_timeout_s": 30.0,
+        "deadline_s": 90.0,
+        "max_retries": 2,
+        "max_completion_tokens": 2048
+      },
+      "outcome": "passed",
+      "validated_response": {
+        "sample_phase": "powder",
+        "target": "moisture"
+      },
+      "error": null,
+      "endpoint": "https://api.llmtech.eu/v1",
+      "returned_model": "qwen38",
+      "provider_mode": "llmtech",
+      "attempts": []
+    },
+    {
+      "run_id": "49b895950dd14b06b54bfd8ab526056b",
+      "generated_at": "2026-10-18T03:34:41.351769+00:00",
+      "provider": "groq",
+      "model": "qwen/qwen3.8-27b",
+      "settings": {
+        "reasoning_effort": "medium",
+        "strict_json_schema": true,
+        "call_timeout_s": 30.0,
+        "deadline_s": 90.0,
+        "max_retries": 2,
+        "max_completion_tokens": 2048
+      },
+      "outcome": "passed",
+      "validated_response": {
+        "sample_phase": "powder",
+        "target": "moisture"
+      },
+      "error": null,
+      "endpoint": "https://api.groq.com/openai/v1",
+      "returned_model": "qwen/qwen3.8-27b",
+      "provider_mode": "groq",
+      "attempts": []
+    }
+  ]
+}

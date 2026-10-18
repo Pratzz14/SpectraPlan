@@ -68,6 +68,18 @@ class ExtractionRequest(FactModel):
     description: str = Field(min_length=1, max_length=20000)
 
 
+class AssessmentRequest(FactModel):
+    description: str = Field(min_length=1)
+    fact_overrides: None = None
+
+    @field_validator("description")
+    @classmethod
+    def nonblank_description(cls, value):
+        if not value.strip():
+            raise ValueError("Enter an enquiry description")
+        return value
+
+
 class Assertion(FactModel):
     text: Text
     evidence_ids: list[Text] = Field(default_factory=list, description=(
@@ -155,7 +167,29 @@ class AssessmentRisk(LimitationAssertion):
     context_ids: list[Text] = Field(default_factory=list)
 
 
-class Experiment(FactModel):
+class ProposedSetting(FactModel):
+    context_ids: list[Text]
+    name: Text
+    value: float
+    unit: Text | None
+    origin: Literal["proposed"] = "proposed"
+
+
+class ValidationGroup(FactModel):
+    context_ids: list[Text]
+    independent_unit: Literal["batch", "run", "specimen", "patient", "unresolved"]
+    study_type: Literal["targeted_feasibility", "characterization"]
+
+
+class AcceptanceCriterion(FactModel):
+    context_id: Text
+    metric: Literal["required_error", "response_time_raw", "bias", "robustness"]
+    threshold: Text | None
+    requirement_path: Text | None
+    origin: Literal["customer", "unknown"]
+
+
+class ExperimentDraft(FactModel):
     """Proposed study design, not measured results or confirmed requirements."""
 
     context_ids: list[Text] = Field(default_factory=list)
@@ -166,6 +200,13 @@ class Experiment(FactModel):
     validation: Text
     decision_criteria: Text
     open_items: list[Text] = Field(default_factory=list)
+    variation: list[Text] = Field(min_length=1)
+    proposed_settings: list[ProposedSetting] = Field(default_factory=list)
+
+
+class Experiment(ExperimentDraft):
+    validation_groups: list[ValidationGroup]
+    acceptance_criteria: list[AcceptanceCriterion]
 
 
 class Requirement(FactModel):
@@ -227,8 +268,8 @@ class AssessmentMetadata(FactModel):
     model: Text
     returned_models: dict[str, str | None]
     endpoint: Text
-    corpus_version: Text
-    retrieval_version: Text
+    corpus_version: Text | None
+    retrieval_version: Text | None
     prompt_versions: dict[str, str]
     prompt_sha256: dict[str, str]
     schema_sha256: dict[str, str]
@@ -241,6 +282,10 @@ class AssessmentMetadata(FactModel):
     extraction_max_completion_tokens: int
     synthesis_max_completion_tokens: int
     synthesis_temperature: float
+    repair_counts: dict[str, int] = Field(default_factory=dict)
+    provider_mode: Literal["auto", "groq", "llmtech"] = "groq"
+    stage_providers: dict[str, dict] = Field(default_factory=dict)
+    provider_attempts: list[dict] = Field(default_factory=list)
 
 
 class DevelopmentAssessmentResult(FactModel):
@@ -250,3 +295,31 @@ class DevelopmentAssessmentResult(FactModel):
     assessment: Assessment
     metadata: AssessmentMetadata
     warnings: list[Text] = Field(default_factory=list)
+
+
+class RunError(FactModel):
+    code: Text
+    stage: Literal["extraction", "retrieval", "synthesis"]
+    message: Text
+    http_status: Literal[502, 503, 504]
+
+
+class AssessmentRun(FactModel):
+    run_status: Literal["complete", "incomplete"]
+    facts: CaseFacts | None
+    retrieval: RetrievalResult | None
+    assessment: Assessment | None
+    errors: list[RunError]
+    metadata: AssessmentMetadata
+    warnings: list[Text] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def enforce_outcome(self):
+        if self.retrieval is not None and self.facts is None:
+            raise ValueError("Retrieval requires validated facts")
+        if self.run_status == "complete":
+            if self.facts is None or self.retrieval is None or self.assessment is None or self.errors:
+                raise ValueError("Complete runs require validated facts, retrieval and assessment without errors")
+        elif self.assessment is not None or not self.errors:
+            raise ValueError("Incomplete runs require assessment=null and a failed-stage error")
+        return self

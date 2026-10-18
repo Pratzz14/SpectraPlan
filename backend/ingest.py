@@ -35,7 +35,7 @@ def extraction_config(settings: Settings) -> Settings:
 
 
 def pipeline_fingerprint(config: Settings) -> dict:
-    return {"schema": SCHEMA_VERSION, "extractor": EXTRACTOR_VERSION,
+    result = {"schema": SCHEMA_VERSION, "extractor": EXTRACTOR_VERSION,
             "pymupdf": __import__("pymupdf").VersionBind,
             "extract_prompt_sha256": file_hash(PROMPTS / "knowledge_extract.txt"),
             "verify_prompt_sha256": file_hash(PROMPTS / "knowledge_verify.txt"),
@@ -47,6 +47,11 @@ def pipeline_fingerprint(config: Settings) -> dict:
             "reasoning_effort": config.provider_reasoning_effort, "max_completion_tokens": config.ingest_max_output_tokens,
             "call_timeout_s": config.provider_call_timeout_s, "deadline_s": config.request_deadline_s,
             "max_retries": config.provider_max_retries}
+    if config.provider_name == "auto":
+        result.update(model="automatic", endpoint="automatic", provider_profiles=[{
+            "name": name, "model": config.for_provider(name).provider_model,
+            "endpoint": config.for_provider(name).provider_base_url} for name in config.provider_names])
+    return result
 
 
 def page_messages(page: dict, directory: Path, system: str, extra: str = "", *, include_image=None) -> list[dict]:
@@ -80,7 +85,7 @@ class IngestionTransport:
                 result = await self.provider.structured(*args, **kwargs)
                 usage = self.provider.last_usage
                 # Account-specific defaults verified from Groq's rejection messages.
-                if self.provider.settings.provider_name == "groq":
+                if self.provider.current_settings.provider_name == "groq":
                     self.next_request_at = time.monotonic() + max(usage.get("prompt_tokens", 0) / 7000,
                                                                   usage.get("completion_tokens", 0) / 1000) * 60
                 return result
@@ -95,7 +100,7 @@ class IngestionTransport:
                     continue
                 if error.upstream_status != 429 or attempt == 5:
                     raise
-                delay = 2 if self.provider.settings.provider_name == "llmtech" else 60
+                delay = 2 if self.provider.current_settings.provider_name == "llmtech" else 60
                 print(f"Provider rate limit; waiting {delay} seconds before resuming this stage.", flush=True)
                 await asyncio.sleep(delay)
 
@@ -185,14 +190,15 @@ async def process_page(page: dict, directory: Path, settings: Settings, fingerpr
                         continue
                     previous = read_json(previous_file)
                     old_pipeline = previous.get("pipeline", {})
-                    comparable = {"schema", "extractor", "pymupdf", "extract_prompt_sha256", "model", "endpoint", "reasoning_effort", "max_completion_tokens"}
+                    comparable = {"schema", "extractor", "pymupdf", "extract_prompt_sha256", "model", "endpoint", "provider", "provider_profiles", "reasoning_effort", "max_completion_tokens"}
                     if any(old_pipeline.get(k) != fingerprint.get(k) for k in comparable):
                         continue
                     if previous_file.stem != digest({**input_data, "pipeline": old_pipeline}):
                         continue
                     prior = PageExtraction.model_validate(previous["extraction"])
                     write_json(partial_file, {"input_key": extraction_key, "origin_pipeline": old_pipeline,
-                               "origin_cache": previous_file.name, "extraction": prior.model_dump()})
+                               "origin_cache": previous_file.name, "extraction": prior.model_dump(),
+                               "provider_identity": previous.get("provider_provenance", {}).get("extraction")})
                     break
             if partial_file.exists() and not refresh:
                 partial = read_json(partial_file)
@@ -211,7 +217,8 @@ async def process_page(page: dict, directory: Path, settings: Settings, fingerpr
                 extraction = await transport.structured(page_messages(page, directory,
                     (PROMPTS / "knowledge_extract.txt").read_text(encoding="utf-8")), PageExtraction,
                     max_completion_tokens=settings.ingest_max_output_tokens)
-                write_json(partial_file, {"input_key": extraction_key, "extraction": extraction.model_dump()})
+                write_json(partial_file, {"input_key": extraction_key, "extraction": extraction.model_dump(),
+                    "provider_identity": transport.provider.identity() if hasattr(transport, "provider") else None})
             if not extraction.candidates and not extraction.empty_reason:
                 raise ValueError("Empty model extraction has no explanation")
             if empty_omits_substantive(extraction, page):
@@ -224,11 +231,15 @@ async def process_page(page: dict, directory: Path, settings: Settings, fingerpr
                     (PROMPTS / "knowledge_verify.txt").read_text(encoding="utf-8"),
                     "\nCandidates to check:\n" + json.dumps(numbered, ensure_ascii=False),
                     include_image=bool(extraction.figures)), PageVerification,
-                    max_completion_tokens=min(2048 if settings.provider_name == "llmtech" else 768, settings.ingest_max_output_tokens))
+                    max_completion_tokens=min(2048 if settings.provider_name in {"auto", "llmtech"} else 768, settings.ingest_max_output_tokens))
             else:
                 verification = PageVerification(verdicts=[])
             bundle = {"input_key": key, "pipeline": fingerprint, "created_at": utc_now(),
                       "extraction": extraction.model_dump(), "verification": verification.model_dump()}
+            if hasattr(transport, "provider"):
+                bundle["provider_provenance"] = {
+                    "extraction": read_json(partial_file).get("provider_identity") if partial_file.exists() else None,
+                    "verification": transport.provider.identity() if extraction.candidates else None}
             write_json(cache_file, bundle)
             cached = False
         indices = [v.candidate_index for v in verification.verdicts]
@@ -237,8 +248,14 @@ async def process_page(page: dict, directory: Path, settings: Settings, fingerpr
         if sorted(indices) != list(range(len(extraction.candidates))):
             raise ValueError("Verification must return exactly one verdict per candidate")
         verdicts = {v.candidate_index: v.model_dump() for v in verification.verdicts}
-        revision = digest({"input_key": key, "output": bundle["extraction"], "verification": bundle["verification"]})
+        revision_data = {"input_key": key, "output": bundle["extraction"], "verification": bundle["verification"]}
+        if bundle.get("provider_provenance"):
+            revision_data["provider_provenance"] = bundle["provider_provenance"]
+        revision = digest(revision_data)
         records = [canonical_candidate(c, page, verdicts[i], revision) for i, c in enumerate(extraction.candidates)]
+        if bundle.get("provider_provenance"):
+            for record in records:
+                record["provider_provenance"] = bundle["provider_provenance"]
         # Identical selections on a page are one evidence record, never duplicate IDs.
         records = deduplicate_records(records)
         coverage = {"source_id": page["source_id"], "page": page["page"], "status": "processed",
@@ -350,7 +367,7 @@ def main() -> int:
     for name in ["build", "pilot"]:
         command = commands.add_parser(name)
         command.add_argument("--refresh", action="store_true", help="Explicitly rerun page extraction and verification")
-        command.add_argument("--provider", choices=["groq", "llmtech"])
+        command.add_argument("--provider", choices=["auto", "groq", "llmtech"])
         command.add_argument("--public-trial", action="store_true", help="Fetch LLMTech's documented public trial key at runtime")
     commands.add_parser("validate")
     commands.add_parser("report")
@@ -360,25 +377,11 @@ def main() -> int:
     settings = Settings()
     try:
         if args.command in {"build", "pilot"}:
-            if args.provider == "llmtech":
-                settings = settings.model_copy(update={"provider_name": "llmtech", "provider_base_url": "https://api.llmtech.eu/v1",
-                    "provider_model": "nvidia/Qwen3.8-27B-NVFP4", "ingest_max_output_tokens": 8192,
-                    "ingest_concurrency": 2, "provider_call_timeout_s": 120, "request_deadline_s": 300})
-            elif args.provider:
-                settings = settings.model_copy(update={"provider_name": args.provider})
+            if args.provider:
+                settings = settings.for_provider(args.provider)
             if args.public_trial:
-                if settings.provider_name != "llmtech":
-                    raise ValueError("--public-trial requires --provider llmtech")
-                if not settings.provider_configured:
-                    import re
-                    import httpx
-                    from pydantic import SecretStr
-                    response = httpx.get("https://llmtech.eu/docs/", timeout=30, follow_redirects=False)
-                    response.raise_for_status()
-                    match = re.search(r"lt-trial-[0-9a-f]+", response.text)
-                    if not match:
-                        raise ValueError("No public trial key found in official LLMTech documentation")
-                    settings = settings.model_copy(update={"llmtech_api_key": SecretStr(match.group())})
+                from backend.provider_setup import with_public_trial
+                settings = with_public_trial(settings)
             print(asyncio.run(build(settings, refresh=args.refresh, pilot=args.command == "pilot")))
         elif args.command == "validate":
             print(json.dumps(validate_corpus(active_directory(settings.corpus_dir), source_dir=settings.source_dir, deep=True), indent=2))
