@@ -51,7 +51,7 @@ These checks establish structural validity and quotation traceability. They do n
 
 ## Development checks
 
-`evaluation/development.json` contains only the exact D01/D02 enquiry paragraphs and their original document hash. Organizer worked answers and development inputs remain excluded from technical retrieval. D03-D08 and the full evaluation runner are later evaluation work.
+`evaluation/development.json` contains the exact D01-D08 enquiry paragraphs, source paragraph locations and the original document hash. Organizer worked answers and development inputs remain excluded from technical retrieval. `evaluation/run_evaluation.py` submits these original descriptions through `POST /api/assess` with isolated history and reproducibility metadata; generated development outputs remain separate from technical retrieval.
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest tests/test_extraction.py -q --basetemp tmp/f03-tests

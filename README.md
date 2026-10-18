@@ -197,7 +197,24 @@ Organizer-supplied original files are not included in this repository. The local
 
 Development scenarios **D01–D08** and organizer worked answers are used for development and review, separately from technical retrieval. Final scenarios **H01–H06** must run through the general application pipeline. Their answers must be generated without manual editing or case-specific hardcoding.
 
-Required final artifacts will include `outputs/H01.json` through `outputs/H06.json` and `outputs/run_manifest.json`. These outputs and the reviewed corpus are intentionally not globally ignored by Git. They have not been generated yet.
+The development runner now accepts the exact D01–D08 inputs and invokes the same API as the UI:
+
+```powershell
+.\.venv\Scripts\python.exe -m evaluation.run_evaluation --request-deadline-s 90 --call-timeout-s 30
+```
+
+Each batch records the source/input hashes, effective automatic provider policy, actual stage providers, isolated enquiry history, per-case envelopes, trace JSON/PDF files and incremental manifest under `outputs/development/`. Routine timestamped batches are ignored; retain a reviewed manifest explicitly when it becomes submission evidence. Gemini quota failures and Qwen fallback identities remain visible in the manifest; a fallback run is not a Gemini validation result.
+
+The final runner is deliberately gated on the organizer's original `customer_scenarios_for_final_evaluation.txt`; it never reconstructs H01–H06 from development cases. Place that file under `knowledge/original_sources/`, then prepare and verify the exact inputs:
+
+```powershell
+.\.venv\Scripts\python.exe -m evaluation.run_evaluation --prepare-final
+.\.venv\Scripts\python.exe -m evaluation.run_evaluation --suite final --request-deadline-s 90 --call-timeout-s 30
+.\.venv\Scripts\python.exe -m evaluation.run_evaluation --verify outputs/runs/<batch>/manifest.json --suite final
+.\.venv\Scripts\python.exe -m evaluation.run_evaluation --publish outputs/runs/<batch>/manifest.json
+```
+
+Final runs use automatic provider routing (`gemini,llmtech,groq`) and record the effective profiles, actual provider/model per stage, prompt/schema/configuration hashes, corpus/index identity, attempts, repairs, input/output hashes, isolated history, trace exports and portable evidence exports. Publication copies only a verified complete batch to `outputs/H01.json` through `outputs/H06.json` and writes `outputs/run_manifest.json`. Earlier and failed batches remain under `outputs/runs/`. The final cases are organizer-provided evaluation scenarios, not an unseen benchmark; citation membership and schema validation do not establish scientific entailment or spectroscopy performance.
 
 ## Verification
 
@@ -229,6 +246,12 @@ The extractor uses strict JSON schemas and versioned prompts in `backend/prompts
 No approval workflow is required. After a successful build, open **Inspect extracted knowledge** in the application or [the report endpoint](http://127.0.0.1:5173/api/knowledge/report). `report` prints the standalone HTML location, which also works locally with the adjacent page assets. Filter by source, physical PDF page, content kind, validation status or retrieval eligibility. Inspect the passage, facts, source image with highlighted regions, workbook cells, original notes and complete provenance. Records default to `human_review_status="not_reviewed"`; automated validation does not establish scientific accuracy.
 
 The current standalone report is [the published corpus report](knowledge/versions/corpus-4aac882441587796afe5/review.html). The earlier `knowledge/saved_extraction_64/review.html` is a historical, unpublished checkpoint and does not show the final counts. The report and adjacent images are generated local files; rebuild them after a fresh checkout.
+
+The basic five-minute deck is [the editable demonstration presentation](presentation/output/spectraplan-demo.pptx), with the rehearsal sequence in [the demo script](presentation/demo_script.md). Its claims are limited to observed application behavior and the documented evidence boundaries.
+
+### Local history and trace exports
+
+Assessment history is stored in the configured local SQLite file (`EXPLAINABILITY_DB_PATH`). Each enquiry can be reopened and continued as a linked round; clarification answers belong to their parent enquiry and are included in the selected run. JSON export is the machine envelope. The chemist PDF is a concise assessment export, while the trace PDF and explainability JSON include enquiry text, source excerpts, retrieval decisions, provider/model events and validation content. Treat trace exports as sensitive working records because they contain enquiry, source and model content. Evaluation batches use a dedicated history database and export the traces needed for review, so the SQLite file is not required to inspect a batch.
 
 ### Models, limits and storage
 

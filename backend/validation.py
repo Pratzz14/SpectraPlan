@@ -12,6 +12,7 @@ CONFLICT_RULES = {
     "nominal_range_as_configuration": "Configuration coverage needs structured equipment-range provenance.",
     "excitation_as_coverage": "Excitation-only source data cannot establish spectral coverage.",
     "threshold_override": "Acceptance thresholds are copied customer requirements, never model settings.",
+    "method_rationale_mismatch": "A recommendation rationale must support the selected method family at the cited source scope.",
 }
 
 class ExtractionValidationError(ValueError):
@@ -164,6 +165,38 @@ def _method_choices(retrieval):
         if e.content_kind == "method_row" or e.evidence_scope in {"application_example", "research_demonstration"}:
             families.update(_methods(getattr(e, "method", "") or e.text))
     return sorted(labels[family] for family in families)
+
+
+def _method_rationale_errors(data, retrieval):
+    """Detect an explicitly different method in a recommendation's cited rationale.
+
+    This is deliberately a narrow conflict check. It catches a MIR/fluorescence
+    excerpt attached to an NIR recommendation, while leaving broader scientific
+    entailment and matrix suitability to source review.
+    """
+    from backend.retrieval import _methods
+
+    labels = {"NIR": "nir", "Raman": "raman", "MIR/FTIR": "mir",
+              "UV/Vis": "uv", "Fluorescence": "fluorescence"}
+    entries = {entry.evidence.evidence_id: entry for entry in retrieval.evidence}
+    errors = []
+    for index, recommendation in enumerate(data.get("recommendations", [])):
+        selected = labels.get(recommendation.get("method"))
+        if selected is None:
+            continue
+        for evidence_id in recommendation.get("rationale", {}).get("evidence_ids", []):
+            entry = entries.get(evidence_id)
+            if entry is None:
+                continue
+            evidence = entry.evidence
+            source_text = " ".join(filter(None, [getattr(evidence, "method", None), evidence.text]))
+            families = _methods(source_text)
+            if families and selected not in families:
+                errors.append(
+                    f"/recommendations/{index}/rationale/evidence_ids: method_rationale_mismatch "
+                    f"(selected {recommendation['method']}; cited source identifies {', '.join(sorted(families))})"
+                )
+    return errors
 
 
 def _validation_options(facts):
@@ -362,6 +395,7 @@ def validate_synthesis(data, facts, retrieval):
     errors = _reference_errors(data, {c.context_id for c in facts.contexts},
                                {e.evidence.evidence_id for e in retrieval.evidence})
     errors += _assertion_errors(data, _assertion_choices(facts, retrieval))
+    errors += _method_rationale_errors(data, retrieval)
     entries = {e.evidence.evidence_id: e for e in retrieval.evidence}
     methods = _method_choices(retrieval)
     bands = _spectral_intervals(retrieval, methods)

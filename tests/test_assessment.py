@@ -298,6 +298,22 @@ def test_valid_citation_does_not_allow_an_invented_assertion():
     assert any("source excerpt" in item for item in error.value.validation_errors)
 
 
+def test_recommendation_rationale_cannot_cite_a_different_method_family():
+    retrieved = ledger()
+    second = retrieved.evidence[0].model_copy(deep=True)
+    second.evidence.evidence_id = "S01:p014:mir"
+    second.evidence.text = "MIR ATR and fluorescence are demonstrated for heterogeneous tissues."
+    retrieved.evidence.append(second)
+    data = draft()
+    data["recommendations"][0]["rationale"] = {
+        "text": "Source excerpt (application_example): MIR ATR and fluorescence are demonstrated for heterogeneous tissues.",
+        "evidence_ids": ["S01:p014:mir"],
+    }
+    with pytest.raises(ProviderError) as error:
+        invoke(data, retrieved=retrieved)
+    assert any("method_rationale_mismatch" in item for item in error.value.validation_errors)
+
+
 def test_source_excerpt_cannot_borrow_a_different_records_citation():
     retrieved = ledger()
     second = retrieved.evidence[0].model_copy(deep=True)

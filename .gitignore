@@ -19,6 +19,8 @@ htmlcov/
 
 # Frontend dependencies, build output and tooling caches
 node_modules/
+presentation/node_modules/
+presentation/.build/
 dist/
 build/
 .vite/
@@ -51,6 +53,7 @@ Desktop.ini
 # Routine diagnostic runs stay local; explicitly retain source-reviewed run records.
 /outputs/assessment/[0-9]*.json
 /outputs/assessment/explainability.sqlite*
+/outputs/development/[0-9]*
 /outputs/test-tmp-*/
 !/outputs/assessment/20261017T204318Z_3ebb9b193319407aa703eca6dd222209.json
 !/outputs/assessment/20261018T031435Z_573cc337a2c7459cb0d31246fe0eebfe.json

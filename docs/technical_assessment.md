@@ -80,7 +80,7 @@ Defaults are 30 seconds per provider call, 90 seconds for the entire request, tw
 
 The [shared provider configuration](providers.md) defaults to automatic LLMTech/Groq selection with synthetic availability checks and cached failover. Metadata records the actual provider/model per stage and sanitized probe/payload attempts.
 
-Metadata exists for complete and incomplete runs: configured/returned model identities, prompt/schema hashes, pipeline/corpus/retrieval versions, stage timings, repair counts and effective limits. Corpus/retrieval versions are null until an authenticated retrieval completes. Token usage describes each stage's last successful structured call, not aggregate billing across retries and repairs. The prompt version is `synthesis-v10`, pipeline `assessment-v4`.
+Metadata exists for complete and incomplete runs: configured/returned model identities, prompt/schema hashes, pipeline/corpus/retrieval versions, stage timings, repair counts and effective limits. Corpus/retrieval versions are null until an authenticated retrieval completes. Token usage describes each stage's last successful structured call, not aggregate billing across retries and repairs. The prompt version is `synthesis-v11`, pipeline `assessment-v5`; synthesis now rejects an explicitly different method family in a recommendation rationale.
 
 ## Verification
 

@@ -248,8 +248,8 @@ async def extract_case(description: str, settings: Settings | None = None, *,
     raise AssertionError("Unreachable extraction state")
 
 
-SYNTHESIS_PROMPT_VERSION = "synthesis-v10"
-PIPELINE_VERSION = "assessment-v4"
+SYNTHESIS_PROMPT_VERSION = "synthesis-v11"
+PIPELINE_VERSION = "assessment-v5"
 SYNTHESIS_PROMPT = (Path(__file__).with_name("prompts") / "assessment_synthesis.txt").read_text(encoding="utf-8")
 
 

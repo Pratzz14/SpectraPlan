@@ -1,7 +1,8 @@
 # SpectraPlan Iterative Implementation Plan
 
 **Based on:** [Technical specification v1.1](spec.md)\
-**Status:** F01–F05 complete for tested development gates; F06 feasibility completion and validated API are next\
+**Status:** F01–F07 implemented for their recorded development gates; start F08 development evaluation next\
+**Reconciled:** 2026-10-18, against implementation through commit `844a835`\
 **Structure:** Main feature → tasks → subtasks\
 **Target:** A working, source-grounded spectroscopy assessment app with reproducible evaluation outputs.
 
@@ -11,11 +12,32 @@ Work through the main features in order. Each task has a stable ID so you can re
 
 At the end of each iteration, record the files changed, checks performed, remaining issues and next task in the progress log. Keep a feature unfinished if its completion gate has not passed. Distinguish source inspection, automated tests, live model calls and browser verification; one does not establish the others.
 
-The specification remains the authority for contracts and behavior. This plan breaks that work into increments; it does not introduce permission to change scientific requirements or fabricate missing evidence. Checkmarks below reflect recorded implementation evidence; unresolved gates remain open.
+The specification remains the authority for scientific requirements and evidence boundaries. The current-baseline section below records implemented project choices that extend its original UI, provider and optional-feature scope. Checkmarks reflect recorded implementation evidence; unresolved evaluation and provider-specific live checks remain open.
+
+## Current baseline and changes from the initial plan
+
+Resume at **F08.1**. F01–F07 do not need to be implemented again. Their completion means the recorded application gates passed, not that all development cases or scientific claims have been evaluated. F08–F10 remain unfinished.
+
+| Area | Implemented baseline to preserve | Consequence for the remaining plan |
+|---|---|---|
+| Technical knowledge | Versioned PDF/workbook evidence, automated eligibility checks, optional human verification, local BGE/Qdrant + BM25 hybrid retrieval | Evaluate the published corpus first; rebuild only for a demonstrated evidence/ingestion defect. No mandatory expert-approval step |
+| Business context and inspection | Separate S06 website snapshot, manual search comparison and Extracted knowledge workspace | Website/vendor claims remain excluded from default technical assessment evidence; inspection is not scientific validation |
+| Providers | `auto` defaults to Gemini → LLMTech Qwen → Groq Qwen; pinned modes remain available. Availability checks, bounded repair/fallback and actual stage identities are recorded | Freeze the provider policy and effective settings for evaluation; record actual models per stage rather than assuming every run used Gemini |
+| Assessment API | `POST /api/assess` wraps extraction → retrieval → synthesis with complete/incomplete envelopes and a shared deadline | The evaluation runner should exercise this route, including request composition and durable history, rather than recreating its orchestration |
+| Clarifications | Separate `clarification_answers`, linked questions and successive enquiry rounds; original enquiry editing remains supported | Evaluate initial answers separately from clarification rounds, preserving original text, effective input and answer provenance |
+| Persistent history | Local SQLite enquiries, immutable rounds and chronological retrieval/model/validation traces; separate History page with reopen/continue | Use a dedicated evaluation database and export needed traces explicitly; the ignored local database is not the submission artifact |
+| Interface and export | Assessment / History / Search sources / Extracted knowledge / Workspace navigation; embedded evidence drawer, JSON, report copy, chemist PDF and trace PDF | Extend regression coverage to history, clarification and both PDF audiences; compare each export with its selected run |
+| Gemini source comparison | Separate original-file extraction comparison with source hashes and location checks | Comparison artifacts do not publish a new corpus. Gemini-specific success remains a separate live check |
+
+**Recorded verification and limits:** F06/F07 receipts below establish API and browser workflows. The later [Gemini/history receipt](../../outputs/provider_smoke/gemini_history_review.json) records 289 backend tests, 17 frontend tests, a production build, controlled browser checks and live D01/D02 assessments through Qwen fallback. Those are historical results at the receipt's recorded hashes, not a fresh test of every subsequent change. The receipt reports Gemini daily-quota failures and a staged source pilot; it does not establish successful live Gemini generation or a new full corpus build. The active pointer inspected for this reconciliation remains `corpus-4aac882441587796afe5`.
+
+**F08 entry gaps:** D01–D08 are now stored verbatim with source paragraph locations and the supplied DOCX hash; `evaluation/run_evaluation.py` now runs them through the public API with isolated history and incremental manifests. `evaluation/final.json` and the original H01–H06 material remain an F09 dependency. The F07 live review's NIR/MIR source-relevance finding has been reproduced as a general method-rationale conflict check and corrected in the synthesis validation/prompt; fresh provider outputs must still receive semantic source review.
+
+Existing diagnostic runners and receipts are useful starting points, but they do not complete the eight-case development review or the six-case final evaluation. Keep Gemini quota/comparison limitations explicit; an evaluation using an available, recorded Qwen provider need not wait for a Gemini corpus rebuild.
 
 ## Implementation sequence
 
-The timeboxes are the specification's proposed 12-hour budget, not guaranteed estimates. They include the checks within each feature. If a completion gate takes longer, reduce optional scope rather than marking unfinished work complete.
+The timeboxes retain the specification's original proposed 12-hour budget for reference. They are not actual elapsed time or fresh estimates: provider routing, persistent history and PDF exports expanded the implemented scope. Re-estimate F08–F10 from the remaining gates below. If a gate takes longer, reduce optional scope rather than marking unfinished work complete.
 
 | Order | Main feature | Depends on | Target time | Observable result |
 |---|---|---|---:|---|
@@ -25,13 +47,13 @@ The timeboxes are the specification's proposed 12-hour budget, not guaranteed es
 | F04 | Evidence retrieval | F02, F03 | 1 h | Relevant evidence ledger for each enquiry |
 | F05 | Structured technical assessment | F04 | 1.25 h | First provisional assessment from the real pipeline |
 | F06 | Feasibility planning and validated API | F05 | 1.5 h | Complete API result with checks and bounded failures |
-| F07 | Assessment interface and export | F06 | 2 h | Browser input → assessment → evidence → JSON |
-| F08 | Development evaluation and fixes | F07 | 1.5 h | Reviewed D01–D08 results and tested failure paths |
-| F09 | Reproducible final evaluation | F08 | 1 h | Six generated final outputs and run manifest |
+| F07 | Assessment interface, history and export | F06 | 2 h | Browser enquiry → clarification rounds → evidence → JSON/PDF |
+| F08 | Development evaluation and fixes — next | F07 | 1.5 h | Reviewed D01–D08 results, source-relevance fixes and current-workflow regressions |
+| F09 | Reproducible final evaluation | F08 | 1 h | Six generated final outputs and manifest with actual provider identities |
 | F10 | Reproducible setup and demonstration | F09 | 0.5 h | Fresh-start instructions, slides and demo |
 | | **Total** | | **12 h** | |
 
-**First useful milestone:** F02–F05 support a real enquiry through extraction, retrieval and synthesis using a small reviewed corpus. F06 makes that result suitable for the public API; F07 makes the complete workflow usable in the browser. Keep the initial corpus small enough to review, then expand its coverage before development evaluation.
+**Current milestone:** F02–F07 support the complete application workflow. Next, evaluate the general pipeline and its claim support across all eight development cases, then freeze it for F09. Expand corpus coverage only where review demonstrates a gap.
 
 ## F01 — Project foundation and provider connection
 
@@ -182,7 +204,7 @@ The timeboxes are the specification's proposed 12-hour budget, not guaranteed es
 - [x] **F06.2 — Implement mechanical validation and bounded repair**
   - [x] Validate schemas, context IDs, input-quote provenance and every evidence reference against the retrieved reviewed ledger.
   - [x] Check provenance for structured quantities and explicit configured conflicts; do not claim these checks prove arbitrary scientific prose.
-  - [x] Permit one repair attempt using specific errors and the same evidence set within the total request deadline.
+  - [x] Permit one content repair per provider using specific errors and the same evidence set within the total request deadline; automatic routing can then try the next configured provider under the same validation rules.
   - [x] Construct the final source index and run metadata on the backend; include all cited evidence records in the exportable envelope.
 
 - [x] **F06.3 — Expose the assessment contract**
@@ -196,15 +218,22 @@ The timeboxes are the specification's proposed 12-hour budget, not guaranteed es
   - [x] Test nonexistent evidence, missing provenance, invalid model JSON, exhausted repair, provider timeout and unavailable corpus.
   - [x] Verify an evidence gap can yield a complete cautious assessment while infrastructure failures remain incomplete/error states.
 
+- [x] **F06.5 — Integrate shared provider routing and explainability**
+  - [x] Support Gemini-first automatic selection, LLMTech/Groq fallbacks and pinned providers with cached availability and bounded attempts within the shared deadline.
+  - [x] Record actual stage providers/models, sanitized attempt metadata and chronological extraction/retrieval/synthesis events.
+  - [x] Create durable enquiry rounds before model work; preserve original/revised descriptions, linked clarification answers, effective input, questions and stored results.
+
+These additions are implemented; Gemini-specific live generation and original-file comparison success remain separately unresolved in the later receipt. Trace capture and fallback success do not establish scientific claim support.
+
 **Completion gate:** The API returns a validated, inspectable complete result or the documented incomplete/error contract. Failed synthesis cannot appear as a normal technical recommendation.
 
 **Observed F06 status (2026-10-18): Complete for the inspected development gate.** The backend suite passed **236 tests**. Fresh LLMTech D01/D02 API runs returned complete provisional assessments at the default 90-second request / 30-second call limits, in about 26/23 seconds. Agent source comparison checked cited passages/rows, workbook scope, original source hashes and practical study design. An initial customer-summary source leak was corrected with backend-rendered facts, tested and rerun. [Live envelopes](../../outputs/assessment/20261018T031435Z_573cc337a2c7459cb0d31246fe0eebfe.json), [mocked empty/failure envelopes](../../outputs/assessment/f06_mocked_api.json) and the [verification receipt](../../outputs/assessment/f06_review.json) preserve exact evidence, hashes, earlier findings and residual semantic/editorial limits. A separately approved [live undefined-target check](../../outputs/assessment/f06_live_gap.json) returned a complete insufficient-information result with an empty shortlist in about 8 seconds, without repair. Agent inspection is not independent scientific validation.
 
-## F07 — Assessment interface and export
+## F07 — Assessment interface, history and export
 
-**Outcome:** A responsive page for entering enquiries, reviewing evidence and saving actual results.\
+**Outcome:** Responsive workspaces for entering enquiries, continuing saved rounds, reviewing evidence and exporting actual results.\
 **Spec:** Sections 3 and 8.\
-**Primary files:** `frontend/src/App.tsx`, `frontend/src/api.ts`, `frontend/src/components/`.
+**Primary files:** `frontend/src/App.tsx`, `frontend/src/api.ts`, `frontend/src/assessment.ts`, `frontend/src/components/`, `backend/explainability.py`, `backend/history_pdf.py`.
 
 - [x] **F07.1 — Build the enquiry and request flow**
   - [x] Add a labeled enquiry textarea, Analyze action and blank-input prevention.
@@ -229,6 +258,12 @@ The timeboxes are the specification's proposed 12-hour budget, not guaranteed es
   - [x] Inspect desktop and narrow layouts, keyboard access, readable result sections and visible errors.
   - [x] Confirm the downloaded envelope matches the displayed run; exercise resubmission, empty shortlist and a failed request.
 
+- [x] **F07.5 — Add clarification rounds, saved history and PDF reports**
+  - [x] Submit separate clarification answers linked to issued questions and retain enquiry/parent-run/round identity across reassessment.
+  - [x] Provide a History workspace to list enquiries, select rounds, inspect/export traces and continue a saved enquiry without replacing the active draft merely by viewing history.
+  - [x] Export a chemist-facing assessment PDF and a separate trace PDF from the selected stored run through `/api/assess/{run_id}/report.pdf` with `audience=chemist` or `audience=trace`.
+  - [x] Retain shared search/knowledge/status workspaces and same-run JSON/report copy with stale-result protection.
+
 **Completion gate:** A user can complete the entire browser workflow, inspect support for a claim and export the same run. Record browser evidence separately from backend-only tests.
 
 **Observed F07 status (2026-10-18): Complete for the browser workflow gate.** The assessment page is the default view; `#search` and `#status` retain the diagnostic tools. The browser submitted an unedited D01 enquiry to the real local API with LLMTech (`nvidia/Qwen3.8-27B-NVFP4`), returning complete provisional run `69ae3c206b3e4c4bb1ad7d77c5207b8e`. Citation inspection used the run's embedded evidence, report copy used the same result, and the downloaded JSON deep-equaled the entire captured API envelope. Microsoft Edge via Playwright was used because the Browser plugin was unavailable. Desktop 1440×1000 and narrow 390×844 checks covered layout, keyboard citation access, modal focus containment/restoration, Escape, exact evidence content and navigation without relevant console errors or horizontal overflow. An initial dialog Tab-focus defect was fixed and the live flow rerun successfully.
@@ -245,26 +280,38 @@ The timeboxes are the specification's proposed 12-hour budget, not guaranteed es
 
 **Outcome:** General pipeline problems are found and corrected before final evaluation.\
 **Spec:** Section 10 and the acceptance checklist in section 14.\
-**Primary files:** `evaluation/development.json`, `evaluation/run_evaluation.py`, `tests/`, `outputs/development/`.
+**Primary files:** `evaluation/development.json`, `evaluation/run_evaluation.py` (new), `tests/`, `frontend/tests/`, `outputs/development/`; general fixes in `backend/agent.py`, `backend/retrieval.py`, `backend/validation.py` and affected UI modules only as justified by findings.
+
+**Starting point:** Keep F01–F07 and the published corpus as the baseline. Reuse `backend/smoke_assessment.py`'s input/hash/output handling and in-process ASGI route invocation where useful. Its current defaults cover D01/D02 with 180-second request / 60-second call limits; a general evaluation runner still needs all eight inputs, a manifest and explicit production-equivalent limits. Use 90 seconds total / 30 seconds per call unless a different evaluation profile is deliberately recorded.
 
 - [ ] **F08.1 — Prepare a generic development runner**
-  - [ ] Preserve D01–D08 enquiry wording as development inputs; keep organizer worked answers available only for review.
-  - [ ] Invoke the same assessment pipeline used by the UI, saving machine-produced envelopes and run outcomes.
-  - [ ] Keep case IDs in runner bookkeeping, not model input or runtime branching.
+  - [x] Complete D01–D08 inputs from the supplied original, preserving exact enquiry wording, source hash and source locations; keep organizer worked answers available only for review.
+  - [x] Implement reusable batch handling through the same `POST /api/assess` route used by the UI, saving exact returned envelopes, HTTP/run/scientific outcomes and failed attempts in timestamped directories.
+  - [x] Keep case IDs in runner bookkeeping, not model input or runtime branching.
+  - [x] Use a dedicated `EXPLAINABILITY_DB_PATH` for each evaluation run; retain enquiry/run IDs and export traces needed for review without mixing evaluation with personal saved history.
+  - [x] Write a development manifest with exact submitted text or verifiable UTF-8 hashes, implementation revision, prompt/schema/configuration/corpus identity, effective limits, requested provider policy, actual stage providers/models, timings, output paths and hashes.
+  - [ ] Separate initial assessments using unmodified source enquiries from optional clarification-round checks; save the actual answers and effective input for those follow-ups.
 
 - [ ] **F08.2 — Review development results**
   - [ ] Compare D01/D02 with organizer worked examples for structure, caution and experiment quality without requiring identical wording or method rankings.
   - [ ] Run and inspect D03–D08 for coverage, matrix/geometry handling, target/proxy distinctions and research scope.
   - [ ] Check important claims against cited passages and log unsupported claims, critical missing questions and feasibility-plan weaknesses.
-  - [ ] Fix general retrieval, schema or prompt issues and rerun affected development cases; expand reviewed evidence where justified.
+  - [ ] Reproduce and resolve the recorded NIR rationale / S01 p.14 source mismatch with a general retrieval/synthesis/validation improvement; add a meaningful regression and inspect fresh generated claims against their cited method, geometry, matrix and scope.
+  - [ ] Fix general retrieval, schema or prompt issues and rerun affected cases. If the shared pipeline, provider policy or corpus changes, finish with one coherent D01–D08 run under the candidate F09 configuration; preserve earlier results.
+  - [ ] Save a review log per case with run/decision status, source IDs and pages/rows, claim-support findings and severity, missing questions, experiment/independent-validation quality, reviewer identity/type and residual limitations. Record unchecked claim support as unreviewed, never zero unsupported claims by default.
 
 - [ ] **F08.3 — Complete regression and failure checks**
   - [ ] Test a novel enquiry plus generic multi-stream, unspecified-target and unsupported-premise inputs.
   - [ ] Confirm input text and retrieved documents cannot override workflow rules or introduce arbitrary tools/URLs.
-  - [ ] Run relevant contract/integration tests and repeat the browser smoke flow after material changes.
+  - [ ] Verify missing/corrupt corpus, invalid output, exhausted per-provider repair, provider unavailability/quota/timeout and fallback with mocked failures; verify a live available provider separately. Check shared deadlines and actual per-stage identities, including mixed-provider runs.
+  - [ ] Cover clarification question/answer ownership, parent-round conflicts, reload/reopen/continue, new-enquiry isolation, interrupted rounds and unavailable history storage; failures must not become scientific recommendations or overwrite earlier rounds.
+  - [ ] Run relevant backend and frontend checks and the production build. Repeat desktop/narrow browser enquiry → clarification → reassessment → evidence → JSON/chemist PDF and History → selected round → trace JSON/PDF checks after material changes; verify selected-run identity, factual/citation fidelity, incomplete labels and stale-request protection. Render representative PDFs to inspect pagination, long content and readability.
   - [ ] Record human review, stubbed tests, live provider results and browser verification separately; unresolved material issues remain open.
+  - [ ] Record the outstanding Gemini quota/comparison check separately. Retry Gemini-specific diagnostics when available if needed for the chosen evaluation policy; neither a failed comparison nor an unpublished pilot replaces the active corpus. Rebuild only for an identified defect, validate before publication and rerun affected cases afterward.
 
-**Completion gate:** All eight development cases have recorded outcomes, critical fabricated claims discovered in review are resolved, and the generic pipeline handles uncertainty and failures honestly. Schema success alone is not a zero-unsupported-claims result.
+**Completion gate:** All eight initial development cases have machine-produced outcomes and source-support reviews under the recorded candidate configuration. Critical fabricated/misattributed claims discovered in review, including the recorded NIR citation mismatch, are resolved and rerun; uncertainty and runtime failures remain distinct. Current clarification/history/export behavior passes relevant regressions, and remaining provider-specific limitations are disclosed. Schema success alone is not a zero-unsupported-claims result. Hand off the runner, development manifest/review log, fixes and candidate settings to F09; final scenarios are not tuning inputs.
+
+**F08 implementation checkpoint (2026-10-18):** The runner now validates the supplied DOCX hash and exact D01–D08 paragraphs, invokes the public assessment route with an isolated explainability database, records per-case envelopes/traces/PDFs and actual provider identities, and emits a review receipt that keeps semantic source entailment explicitly `unreviewed`. The general `method_rationale_mismatch` validation guard reproduces and blocks the earlier NIR rationale / MIR-ATR-fluorescence citation failure. The backend suite passes **298 tests**, the frontend suite passes **17 tests**, and the production build passes. A fresh automatic batch `outputs/development/20261018T104630Z_13bffba3ae73447982827b5f96da41d9/` completed D01–D07; D08 returned a recorded `provider_unavailable` synthesis result. A separate prior D08 retry completed with method-matched MIR/FTIR and fluorescence rationales, but this does not constitute one coherent all-eight batch. Clarification-round checks, semantic source review, fresh browser/export reruns and the Gemini-specific comparison remain open; no F08 completion claim is made.
 
 ## F09 — Reproducible final evaluation
 
@@ -274,13 +321,14 @@ The timeboxes are the specification's proposed 12-hour budget, not guaranteed es
 
 - [ ] **F09.1 — Freeze the general pipeline**
   - [ ] Preserve the exact H01–H06 enquiry text from the supplied file and verify the stored inputs against it.
-  - [ ] Record model/configuration identity, prompt hash/version, corpus hash/version and implementation revision.
+  - [ ] Record implementation revision, prompt/schema hashes and versions, corpus/index identity, effective time/token/repair/retrieval settings and provider policy. Either pin a verified provider/model or freeze automatic order and profiles, recording actual models/attempts per stage; one configuration does not imply one actual provider.
+  - [ ] Verify original final-scenario material is available before generating `evaluation/final.json`; never reconstruct missing H inputs from memory or development cases.
   - [ ] Inspect runtime prompts, retrieval data, synonym maps and code for evaluation-case text, IDs or answer lookups; remove any case-specific behavior.
 
 - [ ] **F09.2 — Generate and record all six outputs**
-  - [ ] Run every final enquiry through the same pipeline as the UI, using IDs only to associate inputs with output filenames.
+  - [ ] Run every unmodified final enquiry through the same assessment route as the UI with the F08 runner, isolated history storage and no added clarification answers; use IDs only to associate inputs with output filenames.
   - [ ] Save each full machine-produced envelope without manual answer editing.
-  - [ ] Write a manifest containing input text or verifiable hashes, timestamps, configuration identity, output paths and run outcomes.
+  - [ ] Write a manifest containing input text or verifiable hashes, timestamps, frozen configuration identity, actual stage provider/model identities, enquiry/run IDs, output paths/hashes and HTTP/run/scientific outcomes; export any supporting traces needed without requiring the local SQLite database.
   - [ ] Confirm all six runs are complete; an incomplete/error record does not meet the submission requirement.
 
 - [ ] **F09.3 — Verify the submission set**
@@ -297,15 +345,16 @@ The timeboxes are the specification's proposed 12-hour budget, not guaranteed es
 **Primary files:** `README.md`, `.env.example`, presentation/demo materials, this plan's progress log.
 
 - [ ] **F10.1 — Finish setup and architecture documentation**
-  - [ ] Document installation, source placement, corpus rebuild, model configuration, startup, checks and evaluation commands.
+  - [ ] Document installation, source placement, corpus rebuild, automatic/pinned provider configuration, startup, checks and the implemented development/final evaluation commands.
   - [ ] Explain the pipeline, source handling, citation scope, uncertainty behavior and known limitations.
   - [ ] Document external sources if any, keep external retrieval disabled by default, and avoid publishing supplied originals unless redistribution is established.
   - [ ] Verify a fresh setup using the instructions and confirm that credentials are absent from tracked files and outputs.
+  - [ ] Document local history storage, enquiry continuation, chemist versus trace exports and the fact that traces contain enquiry/source/model content. Reconcile the specification's earlier provider/API examples and deferred-feature list with the implemented scope and final evidence.
 
 - [ ] **F10.2 — Prepare the five-minute demonstration**
-  - [ ] Create concise slides covering the customer problem, workflow, architecture, evaluation and limitations.
-  - [ ] Rehearse a development/novel enquiry through facts, recommendations, evidence and feasibility plan, followed by a contrasting uncertainty case.
-  - [ ] Time the presentation to five minutes or less and verify the live demo environment; label any saved fallback output as a prior run.
+  - [x] Create concise slides covering the customer problem, workflow, architecture, evaluation and limitations.
+  - [ ] Rehearse a development/novel enquiry through facts, recommendations, evidence and feasibility plan, followed by a clarification round/history reopen and same-run export; include a contrasting uncertainty case within the time limit.
+  - [x] Add a timed script with a clearly labelled prior-run fallback; live timing and environment verification remain open.
 
 - [ ] **F10.3 — Close the implementation checklist**
   - [ ] Review every acceptance item in specification section 14 against actual evidence.
@@ -319,9 +368,11 @@ The timeboxes are the specification's proposed 12-hour budget, not guaranteed es
 These items do not block the MVP. Keep them deferred until the required completion gates pass.
 
 - [ ] **O01 — Structured fact editing:** add context-aware user corrections, preserve correction provenance, reject unknown fields and rerun affected pipeline stages.
-- [ ] **O02 — Extraction endpoint:** expose `/api/extract` if the callable stage used during development was sufficient initially.
-- [ ] **O03 — Additional retrieval capability:** consider model-selected search or hybrid retrieval only after the deterministic pipeline is evaluated.
-- [ ] **O04 — Later product features:** separately plan persistent cases, expert review history, verified hardware catalog, spectral-data analysis and PDF export.
+- [x] **O02 — Extraction endpoint:** `/api/extract` was implemented in F03.
+- [ ] **O03 — Model-selected search:** consider only after evaluating deterministic retrieval; hybrid BM25/BGE/Qdrant retrieval and manual search comparison are already implemented.
+- [ ] **O04 — Later product features:** expert approval/review workflow, verified hardware catalog and offline spectral-data analysis remain deferred. Local persistent enquiries, analysis-round history and PDF exports are already implemented; they do not establish expert approval.
+
+Direct clarification answers and original-enquiry editing are already supported. O01 refers specifically to structured field overrides; non-null `fact_overrides` remain unsupported.
 
 ## Scope reduction when time is short
 
@@ -339,6 +390,8 @@ Do not reduce scope by removing citations, fabricating missing facts, manually e
 
 Add one row after each implementation increment. Include the exact check/command and its outcome where useful; use a file path or run ID for evidence that would make the table unwieldy.
 
+Entries below are historical checkpoints. Their then-current next steps, provider choices and open gates are superseded by the current baseline and later completed milestones above.
+
 | Date | Task IDs | Status | Files changed | Verification and outcome | Remaining issue / next task |
 |---|---|---|---|---|---|
 | 2026-10-17 | F01.1, F01.2 configuration/adapter, F01.3 | Local foundation verified; live gate open | Backend configuration/health/provider/smoke modules; frontend; pinned dependencies; `.env.example`; ignore rules; tests; README | `python -m pytest -q --basetemp=tmp/pytest-runtime`: 50 passed; `python -m pip check`: no broken requirements; `npm run build`: typecheck and Vite build passed; direct backend and Vite-proxied `/api/health`: HTTP 200, service running, ready false; ignore checks preserve required outputs | API key not supplied; F01.2 live response unresolved |
@@ -349,7 +402,7 @@ Add one row after each implementation increment. Include the exact check/command
 
 **Runner note:** Python asynchronous networking and the Vite proxy stalled inside the restricted Windows sandbox. Tests and both servers were verified outside it; a minimal traceback located the stall in Windows `socketpair` during event-loop creation. Workspace-local temporary paths resolved the separate `ensurepip` write restriction. These accommodations do not change application behavior.
 
-**Suggested next iteration request:** “Implement F06 feasibility completion, comprehensive validation, bounded synthesis repair and the public assessment API using the F05 development pipeline.”
+**Suggested next iteration request:** “Complete F08.2/F08.3: review the generated D01–D08 claims against their cited source passages, record the per-case review receipt, rerun any materially corrected cases as one coherent batch, and finish the clarification/history/export regression checks before freezing F09. Preserve prior results and keep final scenarios out of tuning.”
 
 
 ### 2026-10-17 — F02 implementation and bounded live validation
@@ -478,3 +531,18 @@ At the user's request, documented the implemented capabilities for later pipelin
 - `python -m pytest -q --basetemp tmp/f05-release-check`: **191 passed**. Restricted Windows asyncio initialization required socket-enabled execution; a separate transient manifest-replacement permission failure cleared on a fresh-directory rerun.
 - `python -m backend.smoke_assessment --provider llmtech --public-trial` completed fresh D01/D02 runs with final synthesis-v8. Both are provisional; exact artifacts, hashes, source comparison and limitations are in `outputs/assessment/review.json`. Earlier schema/grounding failures remain available.
 - F05 is complete for these inspected development cases. Reasons can be generic and repeated excerpts remain an editorial refinement; source identity and membership do not establish arbitrary scientific entailment. Saved provider configuration and the technical corpus were not changed. F06 is next; no commit was created.
+
+### 2026-10-18 — F06/F07 completion and implemented scope reconciliation
+
+- F06 added feasibility completion, canonical-evidence/mechanical validation, bounded repair and the public complete/incomplete assessment API. F07 added the verified browser workflow, compact workspaces, direct clarification answers and same-run exports. Their detailed receipts and limits are recorded with the feature sections above.
+- Commits `dc30202`, `645ea40` and `844a835` subsequently added shared automatic routing, the compact interface, Gemini integration, durable enquiry rounds/explainability, the History workspace and chemist/trace PDF reports. The baseline now defaults to Gemini → LLMTech → Groq, while the later live receipt records Qwen fallback success and Gemini quota failures.
+- Reconciled this plan against the current code, input inventory, active corpus pointer, tracked receipts and Git history. Replaced stale F06-next guidance, recorded implemented optional work and expanded F08–F10 for the actual API/provider/history/export contracts. This reconciliation changes documentation only and makes no new provider calls or scientific-validation claims.
+- **Next:** F08.1. Only D01/D02 are currently staged as development inputs; the generic runner, D03–D08 review and final-scenario input file are outstanding. The NIR/source-relevance finding remains an explicit F08 regression, and Gemini-specific comparison success remains separately unresolved.
+- **F08 implementation checkpoint:** Added exact D03–D08 inputs, the API batch runner, isolated per-batch history, per-case trace JSON/PDF exports, incremental manifests and a per-case review receipt. Added a general method-rationale consistency validator and synthesis-v11 guidance; the reproduced NIR/MIR mismatch is now rejected mechanically. Automatic live batches produced complete D01–D07 and D08 results across preserved runs, while individual provider responses remain stochastic and one coherent all-eight batch still needs a clean rerun. Backend regression is **298 passed**; frontend tests (**17**) and production build pass. Semantic source review, browser rerun after this change, and Gemini quota/comparison checks remain open before F08 can close.
+
+### 2026-10-18 — F09/F10 reproducibility increment
+
+- Extended `evaluation/run_evaluation.py` with final-suite input preparation and exact-source verification, frozen provider/profile and corpus/index configuration identity, portable per-case evidence exports, offline manifest verification and guarded publication. Final mode always requires all six cases and will not run without the original organizer scenario file. Existing development input loading remains compatible.
+- Added final-input integrity tests for H01–H06 parsing, source hashes and mutation rejection. The original `customer_scenarios_for_final_evaluation.txt` is still absent from `knowledge/original_sources/`; `evaluation/final.json` and final outputs therefore remain intentionally ungenerated.
+- Updated README with fresh-start and final-run commands, automatic-routing provenance, local history/trace-export handling and the final evaluation boundary. Added an editable five-slide deck at `presentation/output/spectraplan-demo.pptx` and a timed rehearsal script at `presentation/demo_script.md`. The presentation candidate passed the bundled package, layout and first-party import checks; OneDrive rejected the finalizer hard-link, so the validated candidate was copied unchanged to the repository output.
+- Verification: `python -m pytest -q tests/test_evaluation_runner.py --basetemp=tmp/pytest-f09` — **4 passed**; Python compilation passed; rendered deck slides were inspected at full size. F08 semantic review, one coherent D01–D08 rerun, fresh browser demonstration and final H01–H06 source remain open.

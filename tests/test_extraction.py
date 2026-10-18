@@ -127,7 +127,7 @@ def test_provider_schema_requires_nested_properties_and_local_defaults_do_not_ma
         ExtractionOutput.model_validate({})
 
 
-@pytest.mark.parametrize("case", DEVELOPMENT, ids=lambda c: c["case_id"])
+@pytest.mark.parametrize("case", [case for case in DEVELOPMENT if case["case_id"] in {"D01", "D02"}], ids=lambda c: c["case_id"])
 def test_d01_d02_pipeline_contract(case):
     description = case["description"]
     if case["case_id"] == "D01":
