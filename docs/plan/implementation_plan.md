@@ -206,30 +206,40 @@ The timeboxes are the specification's proposed 12-hour budget, not guaranteed es
 **Spec:** Sections 3 and 8.\
 **Primary files:** `frontend/src/App.tsx`, `frontend/src/api.ts`, `frontend/src/components/`.
 
-- [ ] **F07.1 — Build the enquiry and request flow**
-  - [ ] Add a labeled enquiry textarea, Analyze action and blank-input prevention.
-  - [ ] Define matching TypeScript contracts and connect to `/api/assess`.
-  - [ ] Implement empty, loading, success, incomplete and error views with useful stage/error text.
-  - [ ] Prevent stale requests from replacing newer results and disable stale copy/download actions during reassessment.
+- [x] **F07.1 — Build the enquiry and request flow**
+  - [x] Add a labeled enquiry textarea, Analyze action and blank-input prevention.
+  - [x] Define matching TypeScript contracts and connect to `/api/assess`.
+  - [x] Implement empty, loading, success, incomplete and error views with useful stage/error text.
+  - [x] Prevent stale requests from replacing newer results and disable stale copy/download actions during reassessment.
 
-- [ ] **F07.2 — Render the assessment**
-  - [ ] Build requirements, clarification, recommendation and experiment components.
-  - [ ] Separate facts, unknowns and assumptions, grouping stream-specific content by context.
-  - [ ] Display decision reason, conditional status, geometry, qualified range and limitations without fabricated confidence percentages.
-  - [ ] Render empty-shortlist and research-only/outside-scope assessments with their useful questions and next steps.
+- [x] **F07.2 — Render the assessment**
+  - [x] Build requirements, clarification, recommendation and experiment components.
+  - [x] Separate facts, unknowns and assumptions, grouping stream-specific content by context.
+  - [x] Display decision reason, conditional status, geometry, qualified range and limitations without fabricated confidence percentages.
+  - [x] Render empty-shortlist and research-only/outside-scope assessments with their useful questions and next steps.
 
-- [ ] **F07.3 — Add evidence inspection and export**
-  - [ ] Make claim-level citation controls open an evidence drawer with source location, scope and reviewed content.
-  - [ ] Label figure transcriptions and workbook-derived evidence accurately.
-  - [ ] Download the actual run envelope with resolved evidence and metadata; copy report text derived from the same result.
-  - [ ] Support editing the original enquiry and submitting it again as the required clarification workflow.
+- [x] **F07.3 — Add evidence inspection and export**
+  - [x] Make claim-level citation controls open an evidence drawer with source location, scope and reviewed content.
+  - [x] Label figure transcriptions and workbook-derived evidence accurately.
+  - [x] Download the actual run envelope with resolved evidence and metadata; copy report text derived from the same result.
+  - [x] Support editing the original enquiry and submitting it again as the required clarification workflow.
 
-- [ ] **F07.4 — Verify the browser workflow**
-  - [ ] Run a live enquiry from input through result, evidence inspection and JSON download.
-  - [ ] Inspect desktop and narrow layouts, keyboard access, readable result sections and visible errors.
-  - [ ] Confirm the downloaded envelope matches the displayed run; exercise resubmission, empty shortlist and a failed request.
+- [x] **F07.4 — Verify the browser workflow**
+  - [x] Run a live enquiry from input through result, evidence inspection and JSON download.
+  - [x] Inspect desktop and narrow layouts, keyboard access, readable result sections and visible errors.
+  - [x] Confirm the downloaded envelope matches the displayed run; exercise resubmission, empty shortlist and a failed request.
 
 **Completion gate:** A user can complete the entire browser workflow, inspect support for a claim and export the same run. Record browser evidence separately from backend-only tests.
+
+**Observed F07 status (2026-10-18): Complete for the browser workflow gate.** The assessment page is the default view; `#search` and `#status` retain the diagnostic tools. The browser submitted an unedited D01 enquiry to the real local API with LLMTech (`nvidia/Qwen3.8-27B-NVFP4`), returning complete provisional run `69ae3c206b3e4c4bb1ad7d77c5207b8e`. Citation inspection used the run's embedded evidence, report copy used the same result, and the downloaded JSON deep-equaled the entire captured API envelope. Microsoft Edge via Playwright was used because the Browser plugin was unavailable. Desktop 1440×1000 and narrow 390×844 checks covered layout, keyboard citation access, modal focus containment/restoration, Escape, exact evidence content and navigation without relevant console errors or horizontal overflow. An initial dialog Tab-focus defect was fixed and the live flow rerun successfully.
+
+**Controlled browser evidence is separate from live execution:** route fixtures cover workbook notes, figure-transcription/research labels, qualified spectral quantities, multiple streams, insufficient-information and outside-scope decisions, incomplete results, 422/500/503 and network failures, malformed responses, dangling citations, superseded requests, keyboard submission and clipboard recovery. These checks establish UI behavior, not scientific claim support. Browser scripts, successful receipts, screenshots, the exact live envelope and download are outside Git under `C:\Users\prati\.codex\visualizations\2026\10\18\01a14d23-42ec-75a1-b40a-ed8c0351992c\` (`f07-live-review.json`, `f07-controlled-review.json`).
+
+**Automated checks are separate from browser evidence:** `npm test` passes five frontend contract/report tests; `npm run build` passes TypeScript and production bundling. The backend regression suite passes **262 tests** using `python -m pytest -q --basetemp tmp/f07-regression-outside`; it ran outside the restricted sandbox because async/socket operations stalled inside it. No backend implementation or API contract changes were required for F07. Scientific performance and source-claim entailment were not evaluated by this frontend gate. The live UI review did expose a backend source-relevance issue: the NIR rationale in the saved run cites a MIR-ATR/fluorescence passage on S01 p.14. The frontend displays the original response and support faithfully; recommendation/source entailment requires a separate backend follow-up and is not established by the F07 completion gate.
+
+**F07 UI refinement after brief review (2026-10-18):** Compared the interface with the supplied challenge PDF, especially main process requirements/constraints on p.1 and structured requirements/questions/recommendation/risks/feasibility output on p.2. Retained a compact process summary to confirm interpretation, replaced schema-like field rows with readable grouped labels, and moved full extraction, attributed claims and original quotes into one keyboard-accessible review disclosure. Missing information remains available separately from stated facts. Removed the exact uncited generic clarification fallback from question rendering and copied reports; specific explanations, affected decisions and cited explanations remain. JSON exports preserve the entire original envelope. Seven frontend tests and the production build pass; Edge/Playwright checks at 1440×1000, 598×668, 675×668 and 390×844 verify disclosures, question/citation access, partial results and lossless export without uncaught runtime errors or horizontal overflow. These refinement checks use controlled responses with no new provider calls. The source-relevance limitation above remains a backend follow-up. Browser evidence is outside Git in the same visualization directory (`f07-refinement-review.json`, `f07-refined-*.png`).
+
+**Compact workspace redesign (2026-10-18):** Implemented the three approved concepts with shared Assessment / Search sources / Extracted knowledge / Workspace navigation and no large title/status banners. Assessment supports direct clarification answers, original-enquiry editing, retained previous answers, collapsible results and exact same-run exports. Search retains BM25/Qdrant/hybrid comparison and website business-context boundaries. Extracted knowledge uses a read-only `/api/knowledge/inspection` endpoint sharing the legacy report data, with original source images, corpus-pinned artifact paths, review labels, workbook notes and excluded records. Twelve frontend tests, the production build and 265 backend tests pass. The first backend run had two timing/file-lock failures; both passed individually and the full fresh-directory run passed. Edge/Playwright at 1536×1024 and 390×844 verified controlled assessment failures, real search and published knowledge, source access, keyboard behavior and exports. Two fresh live provider runs completed the enquiry → direct clarification → reassessment → evidence → matching JSON workflow. Browser evidence and the concept comparison record remain outside Git in the visualization directory (`compact-workbench-review.json`, `compact-live-clarification.json`, `compact-*.png`). Scientific performance and claim-source entailment remain outside this UI verification.
 
 ## F08 — Development evaluation and fixes
 

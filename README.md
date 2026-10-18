@@ -4,13 +4,13 @@ SpectraPlan is an AI assistant in development for the first technical assessment
 
 ## Project status
 
-**F01–F06 are complete for their tested development gates:** a FastAPI readiness API, a React status page, structured provider adapters, backend enquiry extraction, context-aware hybrid evidence retrieval and a typed development assessment pipeline are implemented. Both local services and their development API connection have been verified. On 2026-10-17, Groq `qwen/qwen3.8-27b` returned the initial live provider smoke response, the complete 64-page F02 corpus was published and validated, and F03 extraction was checked with LLMTech.
+**F01–F07 are implemented for their tested development gates:** the application supports enquiry entry, source-grounded initial assessments, claim-level evidence inspection and same-run JSON/report export, alongside readiness and search tools. Both local services and their development API connection have been verified. On 2026-10-17, Groq `qwen/qwen3.8-27b` returned the initial live provider smoke response, the complete 64-page F02 corpus was published and validated, and F03 extraction was checked with LLMTech.
 
 F02 adds source inventory, page-aware Qwen extraction and verification, workbook import, a manual inspection report, and Qdrant + BM25 search. The active corpus is `corpus-4aac882441587796afe5`, with 152 passages, 81 retrieval-eligible passages, 19 method rows and 63 flagged records. F03 adds typed enquiry extraction and `POST /api/extract`, with exact input provenance, separate streams, explicit unknowns and attributed customer claims. See [customer extraction](docs/customer_extraction.md) for its API, provider options and checks.
 
 F04 adds `POST /api/retrieve` and revision-pinned `GET /api/evidence/{evidence_id}`. It combines BM25, local BGE/Qdrant semantic search and structured method lookup into at most eight evidence records, exposing selection reasons, scores, context coverage and remaining gaps. See [evidence retrieval](docs/evidence_retrieval.md) for the API, semantic threshold, single follow-up budget and verification records.
 
-F05 provides a reusable Python assessment pipeline with conditional method choices, clarification questions, source excerpts, explicit unknowns and an initial comparison experiment. Saved development results include the complete evidence ledger and run metadata. See [technical assessment](docs/technical_assessment.md) for the Python interface and live diagnostic command. F06 adds `POST /api/assess` with complete/incomplete run envelopes, stream-specific feasibility planning, mechanical validation and one bounded synthesis repair. The API and failure contracts have 236 passing backend tests, and live D01/D02 checks with LLMTech returned complete provisional results at the normal request limits. A live undefined-target check returned a complete insufficient-information result with an empty shortlist. The verification receipt distinguishes automated checks, live execution and agent source comparison. The assessment interface and full evaluation remain subsequent increments.
+F05 provides a reusable Python assessment pipeline with conditional method choices, clarification questions, source excerpts, explicit unknowns and an initial comparison experiment. Saved development results include the complete evidence ledger and run metadata. See [technical assessment](docs/technical_assessment.md) for the Python interface and live diagnostic command. F06 adds `POST /api/assess` with complete/incomplete run envelopes, stream-specific feasibility planning, mechanical validation and one bounded synthesis repair. The API and failure contracts have 236 passing backend tests, and live D01/D02 checks with LLMTech returned complete provisional results at the normal request limits. A live undefined-target check returned a complete insufficient-information result with an empty shortlist. The verification receipt distinguishes automated checks, live execution and agent source comparison. F07 adds the responsive assessment interface, editable-enquiry resubmission, an evidence drawer and exports of the actual run envelope. The browser workflow has been verified from live enquiry submission through evidence inspection and matching JSON download; full development/final evaluation remains separate work.
 
 ## Local setup
 
@@ -45,6 +45,16 @@ npm run dev
 ```
 
 Open [SpectraPlan](http://127.0.0.1:5173/). Vite proxies `/api` to `http://127.0.0.1:8000`; frontend code uses relative API URLs. Both services bind to loopback. Vite fails clearly if port 5173 is occupied. Stop either service with Ctrl+C in its terminal.
+
+### Assess an enquiry
+
+1. Enter a process description on the **Assessment** page and select **Analyze**.
+2. Review customer facts and unknowns, prioritized clarification questions, conditional method options and the proposed feasibility experiment.
+3. Select a citation beside a claim to inspect its exact supporting content, source location, scope and review status. Figure transcriptions and workbook rows are labeled separately.
+4. Answer clarification questions directly or edit the enquiry, then select **Analyze again** for a fresh assessment. Answers are submitted alongside the original text and remain available across runs.
+5. Use **Copy report** or **Download JSON** to save the displayed run. JSON includes the full response, resolved evidence ledger and metadata. Editing the draft does not change the enquiry attached to an existing result; export actions are disabled during reassessment.
+
+A complete assessment can conclude that information is insufficient or that the request is outside the supported scope, with questions and next investigation steps. A processing failure is shown as an incomplete run with available validated facts and explicitly labeled incomplete exports. Search sources, Extracted knowledge and cached provider/corpus status remain accessible through the shared navigation. Extracted knowledge provides record filters, source-page images, provenance and separate automated/human-review labels.
 
 ### Configuration
 
@@ -123,6 +133,7 @@ New-Item -ItemType Directory -Force tmp/pytest | Out-Null
 .\.venv\Scripts\python.exe -m pytest -q --basetemp=tmp/pytest
 .\.venv\Scripts\python.exe -m pip check
 Push-Location frontend
+npm test
 npm run build
 npm ls --depth=0
 Pop-Location

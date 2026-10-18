@@ -1,3 +1,51 @@
+import { isAssessmentRun } from './assessment'
+import type { AssessmentRequest, AssessmentRun, ResolvedEvidence } from './assessment'
+import type { KnowledgeInspection } from './knowledge'
+import { isKnowledgeInspection } from './knowledge'
+export type { AssessmentRequest, AssessmentRun } from './assessment'
+
+export async function resolveSearchEvidence(id: string, version: string, revision: string, signal: AbortSignal): Promise<ResolvedEvidence> {
+  const response = await fetch(`/api/evidence/${encodeURIComponent(id)}?${new URLSearchParams({ corpus_version: version, revision })}`, { signal })
+  if (!response.ok) throw new Error(`Evidence could not be opened (HTTP ${response.status}). Retry the search if the corpus has changed.`)
+  const data = await response.json() as ResolvedEvidence
+  if (data.evidence_id !== id || data.revision !== revision || data.corpus_version !== version || typeof data.text !== 'string'
+    || !Array.isArray(data.issues) || typeof data.file_name !== 'string') throw new Error('Evidence response does not match this search result.')
+  return data
+}
+
+export async function fetchKnowledgeInspection(signal: AbortSignal): Promise<KnowledgeInspection> {
+  const response = await fetch('/api/knowledge/inspection', { signal, cache: 'no-store' })
+  if (!response.ok) throw new Error('Extracted knowledge is unavailable. Check workspace status, then retry.')
+  const data: unknown = await response.json()
+  if (!isKnowledgeInspection(data)) throw new Error('Unexpected knowledge inspection response.')
+  return data
+}
+
+export async function assessEnquiry(input: AssessmentRequest, signal: AbortSignal): Promise<AssessmentRun> {
+  let response: Response
+  try {
+    response = await fetch('/api/assess', {
+      method: 'POST', signal, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(input),
+    })
+  } catch (error) {
+    if (signal.aborted) throw error
+    throw new Error('Cannot reach the assessment service. Check the backend connection and try again.')
+  }
+  let data: unknown
+  try { data = await response.json() } catch {
+    throw new Error(`The assessment service returned an unreadable response (HTTP ${response.status}). Please try again.`)
+  }
+  // F06 can return a valid incomplete envelope on non-2xx responses.
+  if (isAssessmentRun(data) && (response.ok || ([502, 503, 504].includes(response.status) && data.run_status === 'incomplete'))) return data
+  if (response.status === 422) {
+    const detail = data && typeof data === 'object' && 'detail' in data ? data.detail : null
+    const message = detail && typeof detail === 'object' && 'message' in detail && typeof detail.message === 'string' ? detail.message : null
+    throw new Error(message ?? 'The enquiry was not accepted. Check that it contains text and is within the service’s length limit, then submit again.')
+  }
+  if (!response.ok) throw new Error(`The assessment service failed (HTTP ${response.status}). Please try again or check workspace status.`)
+  throw new Error('Unexpected assessment response. No result was displayed. Please try again or check the backend version.')
+}
+
 export interface HealthResponse {
   service: 'running'
   ready: boolean

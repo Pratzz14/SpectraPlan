@@ -15,6 +15,7 @@ from backend.models import CaseFacts, ExtractionRequest, AssessmentRequest, Asse
 from backend.provider import Provider, ProviderError
 from backend.health import HealthResponse, ProviderStatus, inspect_corpus
 from backend.knowledge_store import active_directory, inside, read_json
+from backend.knowledge_report import inspection_data
 from backend.search_service import SearchService, SearchUnavailable
 from backend.evidence import CorpusUnavailable, EvidenceNotFound, EvidenceRevisionMismatch, ResolvedEvidence, load_snapshot
 from backend.retrieval import CaseRetrievalService, RetrievalTimeout, SEARCH_LOCK
@@ -130,6 +131,18 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 configured=config.provider_configured, mode=config.provider_name,
                 selected=selected, candidates=route["candidates"]),
         )
+
+    @application.get("/api/knowledge/inspection")
+    def knowledge_inspection():
+        try:
+            directory = active_directory(config.corpus_dir)
+            data = inspection_data(directory)
+            version = data["manifest"]["corpus_version"]
+            if not re.fullmatch(r"corpus-[a-f0-9]{20}", version) or directory.name != version:
+                raise ValueError("No published corpus")
+            return {**data, "artifact_base": f"/api/knowledge/versions/{version}/"}
+        except (OSError, ValueError, KeyError, TypeError):
+            raise HTTPException(503, "Published extracted knowledge is unavailable. Check workspace status.") from None
 
     @application.get("/api/knowledge/report", include_in_schema=False)
     def knowledge_report():
