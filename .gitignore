@@ -19,8 +19,8 @@ htmlcov/
 
 # Frontend dependencies, build output and tooling caches
 node_modules/
-presentation/node_modules/
-presentation/.build/
+# Deferred presentation work stays local, including sources and generated decks.
+/presentation/
 dist/
 build/
 .vite/
