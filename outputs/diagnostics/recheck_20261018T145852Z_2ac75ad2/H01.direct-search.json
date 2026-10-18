@@ -1,0 +1,1133 @@
+{
+  "query": "Our existing NIR pilot follows API concentration in one powder formulation at\nthe tablet press feed frame. We are introducing a different API and excipient\nblend and would like to reuse the calibration. A colleague suggests adding\nRaman so that the old calibration will remain valid. What should our first\ntechnical assessment and experiment be?",
+  "mode": "compare",
+  "dataset": "technical",
+  "versions": {
+    "technical": "corpus-4aac882441587796afe5"
+  },
+  "limit": 3,
+  "elapsed_ms": 3687.0,
+  "query_terms": [
+    "our",
+    "existing",
+    "nir",
+    "pilot",
+    "follows",
+    "api",
+    "concentration",
+    "in",
+    "one",
+    "powder",
+    "formulation",
+    "at",
+    "the",
+    "tablet",
+    "press",
+    "feed",
+    "frame",
+    "we",
+    "are",
+    "introducing",
+    "a",
+    "different",
+    "and",
+    "excipient",
+    "blend",
+    "would",
+    "like",
+    "to",
+    "reuse",
+    "calibration",
+    "colleague",
+    "suggests",
+    "adding",
+    "raman",
+    "so",
+    "that",
+    "old",
+    "will",
+    "remain",
+    "valid",
+    "what",
+    "should",
+    "first",
+    "technical",
+    "assessment",
+    "experiment",
+    "be"
+  ],
+  "expanded_terms": [
+    "near",
+    "infrared",
+    "active",
+    "pharmaceutical",
+    "ingredient"
+  ],
+  "rankings": {
+    "bm25": [
+      {
+        "rank": 1,
+        "score": 80.03067566712976,
+        "bm25_score": 80.03067566712976,
+        "qdrant_score": null,
+        "branches": [
+          "bm25"
+        ],
+        "matched_terms": [
+          "api",
+          "concentration",
+          "in",
+          "powder",
+          "the",
+          "tablet",
+          "press",
+          "feed",
+          "frame",
+          "a",
+          "and",
+          "blend",
+          "to",
+          "be",
+          "active",
+          "pharmaceutical",
+          "ingredient"
+        ],
+        "matching_segment": null,
+        "evidence": {
+          "section": "Pharmaceutical Manufacturing Monitoring",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "application_example",
+          "spans": [
+            {
+              "block_id": "b006",
+              "quote": null
+            },
+            {
+              "block_id": "b007",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "method",
+              "statement": "Multispectral lab approaches can be used for in-line monitoring of blend potency, specifically in the feed frame of a rotary tablet press.",
+              "support_quotes": [
+                "determine \"blend potency\" - the precise concentration and \nuniformity of the Active Pharmaceutical Ingredient (API) - directly within the production line, \nspecifically in the feed frame of a rotary tablet press"
+              ],
+              "quantities": []
+            }
+          ],
+          "tags": [
+            "pharmaceutical",
+            "in-line monitoring",
+            "blend potency",
+            "API"
+          ],
+          "issues": [],
+          "evidence_id": "S01:p014:txt:727f9ea2c0b286a3",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 14,
+          "text": "2. Pharmaceutical Manufacturing - In-line Monitoring of Blend Potency and Coating \nProcesses \n\n\nA multispectral lab can be also focused on ensuring the quality and consistency of pharmaceutical \nproducts through in-line monitoring of critical manufacturing stages, such as powder blending and pellet \ncoating. The primary objective is to determine \"blend potency\" - the precise concentration and \nuniformity of the Active Pharmaceutical Ingredient (API) - directly within the production line, \nspecifically in the feed frame of a rotary tablet press. In the pharmaceutical industry, the most popular \n",
+          "source_spans": [
+            {
+              "block_id": "b006",
+              "quote": "2. Pharmaceutical Manufacturing - In-line Monitoring of Blend Potency and Coating \nProcesses \n",
+              "start": 0,
+              "end": 94,
+              "bbox": [
+                90.05000305175781,
+                653.7449951171875,
+                498.2659606933594,
+                680.8259887695312
+              ]
+            },
+            {
+              "block_id": "b007",
+              "quote": "A multispectral lab can be also focused on ensuring the quality and consistency of pharmaceutical \nproducts through in-line monitoring of critical manufacturing stages, such as powder blending and pellet \ncoating. The primary objective is to determine \"blend potency\" - the precise concentration and \nuniformity of the Active Pharmaceutical Ingredient (API) - directly within the production line, \nspecifically in the feed frame of a rotary tablet press. In the pharmaceutical industry, the most popular \n",
+              "start": 0,
+              "end": 505,
+              "bbox": [
+                72.0250015258789,
+                691.1489868164062,
+                526.0951538085938,
+                762.1009521484375
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p014.jpg",
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "Candidate 1 correctly describes the in-line monitoring application. Block b007 explicitly supports the statement that blend potency is determined in the feed frame of a rotary tablet press to ensure API concentration and uniformity."
+          },
+          "revision": "99b7900567223bc8f2de03b6",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 2,
+        "score": 45.386692962653996,
+        "bm25_score": 45.386692962653996,
+        "qdrant_score": 0.8019367644529196,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "nir",
+          "api",
+          "in",
+          "the",
+          "tablet",
+          "press",
+          "feed",
+          "frame",
+          "are",
+          "a",
+          "and",
+          "to",
+          "raman",
+          "that",
+          "pharmaceutical"
+        ],
+        "matching_segment": "Data fusion and modeling\nData processing for pharmaceutical tasks relies on \"low-level data fusion,\" where the synchronized NIR \nand Raman spectra are merged into a single augmented matrix.\n\nThen regression models, such as Partial \nLeast Squares (PLS), are applied to these fused datasets.\n\nBy combining Raman and NIR, these models \ncan predict API potency or coating thickness with higher accuracy and robustness than single-method \nmodels.\n\nFig. 6.\n\nA multispectral NIRaman fiber probe has industrial grade design that combines NIR reflection \nand Raman optical techniques in a compact shaft that fits in a tablet press feed frame.",
+        "evidence": {
+          "section": "Data fusion and modeling",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "application_example",
+          "spans": [
+            {
+              "block_id": "b005",
+              "quote": null
+            },
+            {
+              "block_id": "b006",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "method",
+              "statement": "Synchronized NIR and Raman spectra are fused into one matrix and PLS models are applied to predict API potency or coating thickness.",
+              "support_quotes": [
+                "By combining Raman and NIR, these models \ncan predict API potency or coating thickness with higher accuracy and robustness than single-method \nmodels."
+              ],
+              "quantities": []
+            }
+          ],
+          "tags": [],
+          "issues": [],
+          "evidence_id": "S01:p015:txt:5d65dd1642425d18",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 15,
+          "text": "Data processing for pharmaceutical tasks relies on \"low-level data fusion,\" where the synchronized NIR \nand Raman spectra are merged into a single augmented matrix. Then regression models, such as Partial \nLeast Squares (PLS), are applied to these fused datasets. By combining Raman and NIR, these models \ncan predict API potency or coating thickness with higher accuracy and robustness than single-method \nmodels.  \n\n\nFig. 6. A multispectral NIRaman fiber probe has industrial grade design that combines NIR reflection \nand Raman optical techniques in a compact shaft that fits in a tablet press feed frame. \n",
+          "source_spans": [
+            {
+              "block_id": "b005",
+              "quote": "Data processing for pharmaceutical tasks relies on \"low-level data fusion,\" where the synchronized NIR \nand Raman spectra are merged into a single augmented matrix. Then regression models, such as Partial \nLeast Squares (PLS), are applied to these fused datasets. By combining Raman and NIR, these models \ncan predict API potency or coating thickness with higher accuracy and robustness than single-method \nmodels.  \n",
+              "start": 0,
+              "end": 417,
+              "bbox": [
+                72.0250015258789,
+                317.5489807128906,
+                526.1970825195312,
+                388.2460021972656
+              ]
+            },
+            {
+              "block_id": "b006",
+              "quote": "Fig. 6. A multispectral NIRaman fiber probe has industrial grade design that combines NIR reflection \nand Raman optical techniques in a compact shaft that fits in a tablet press feed frame. \n",
+              "start": 0,
+              "end": 191,
+              "bbox": [
+                72.0250015258789,
+                599.6189575195312,
+                522.6911010742188,
+                626.5459594726562
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p015.jpg",
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "Block b005 confirms that synchronized NIR and Raman spectra are fused and PLS models are applied to predict API potency or coating thickness."
+          },
+          "revision": "9a22b6758c23f5a6ea8e1b7a",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 3,
+        "score": 39.57127681265611,
+        "bm25_score": 39.57127681265611,
+        "qdrant_score": 0.7766010443976334,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "nir",
+          "in",
+          "powder",
+          "at",
+          "the",
+          "tablet",
+          "press",
+          "feed",
+          "frame",
+          "are",
+          "a",
+          "and",
+          "blend",
+          "to",
+          "raman",
+          "be",
+          "near",
+          "infrared"
+        ],
+        "matching_segment": "Combined NIR and Raman spectroscopy\nand widely implemented spectral techniques are Near-Infrared (NIR) and Raman spectroscopy.\n\nThe \ncombination of these techniques is particularly effective because it captures complementary chemical \ninformation: NIR detects hydrogen bonds and asymmetric polar groups, while Raman provides \ninformation on the molecular backbone and symmetrical non-polar groups.\n\nThe equipment used for such task involves next spectral systems:\n\n- \nNIR spectrometer and light source coupled with a NIR reflection probe \n- \nRaman spectrometer and Raman fiber probe for contact measurements with 785 nm excitation \nwavelength\n\nDuring the experimental action, the probes are inserted directly into the process environment, such as \nthe feed frame of a rotary tablet press.\n\nAs the powder blend passes the probe tip, the system captures \nspectra at high speeds without interrupting the production flow.\n\nThis setup allows the laboratory to track \ndynamic changes, such as the gradual increase in coating thickness or the homogenization of a multi-\ncomponent blend, in real-time.\n\nThe use of fiber optics is critical here, as it allows the sensitive \nspectrometers to be located safely away from the vibration and dust of the manufacturing floor.",
+        "evidence": {
+          "section": "Combined NIR and Raman spectroscopy",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "general_method",
+          "spans": [
+            {
+              "block_id": "b001",
+              "quote": null
+            },
+            {
+              "block_id": "b002",
+              "quote": null
+            },
+            {
+              "block_id": "b003",
+              "quote": null
+            },
+            {
+              "block_id": "b004",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "equipment",
+              "statement": "The Raman system uses contact fiber probes with 785 nm excitation.",
+              "support_quotes": [
+                "Raman spectrometer and Raman fiber probe for contact measurements with 785 nm excitation \nwavelength"
+              ],
+              "quantities": [
+                {
+                  "label": "Raman excitation wavelength",
+                  "value": "785",
+                  "unit": "nm",
+                  "kind": "other",
+                  "source_quote": "Raman spectrometer and Raman fiber probe for contact measurements with 785 nm excitation \nwavelength"
+                }
+              ]
+            }
+          ],
+          "tags": [],
+          "issues": [],
+          "evidence_id": "S01:p015:txt:3fa6d0000254f55e",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 15,
+          "text": "and widely implemented spectral techniques are Near-Infrared (NIR) and Raman spectroscopy. The \ncombination of these techniques is particularly effective because it captures complementary chemical \ninformation: NIR detects hydrogen bonds and asymmetric polar groups, while Raman provides \ninformation on the molecular backbone and symmetrical non-polar groups.  \n\n\nThe equipment used for such task involves next spectral systems: \n\n\n- \nNIR spectrometer and light source coupled with a NIR reflection probe \n- \nRaman spectrometer and Raman fiber probe for contact measurements with 785 nm excitation \nwavelength \n\n\nDuring the experimental action, the probes are inserted directly into the process environment, such as \nthe feed frame of a rotary tablet press. As the powder blend passes the probe tip, the system captures \nspectra at high speeds without interrupting the production flow. This setup allows the laboratory to track \ndynamic changes, such as the gradual increase in coating thickness or the homogenization of a multi-\ncomponent blend, in real-time. The use of fiber optics is critical here, as it allows the sensitive \nspectrometers to be located safely away from the vibration and dust of the manufacturing floor. \n",
+          "source_spans": [
+            {
+              "block_id": "b001",
+              "quote": "and widely implemented spectral techniques are Near-Infrared (NIR) and Raman spectroscopy. The \ncombination of these techniques is particularly effective because it captures complementary chemical \ninformation: NIR detects hydrogen bonds and asymmetric polar groups, while Raman provides \ninformation on the molecular backbone and symmetrical non-polar groups.  \n",
+              "start": 0,
+              "end": 363,
+              "bbox": [
+                72.0250015258789,
+                78.2290267944336,
+                526.075927734375,
+                134.42599487304688
+              ]
+            },
+            {
+              "block_id": "b002",
+              "quote": "The equipment used for such task involves next spectral systems: \n",
+              "start": 0,
+              "end": 66,
+              "bbox": [
+                72.0250015258789,
+                144.99899291992188,
+                362.1499938964844,
+                157.17599487304688
+              ]
+            },
+            {
+              "block_id": "b003",
+              "quote": "- \nNIR spectrometer and light source coupled with a NIR reflection probe \n- \nRaman spectrometer and Raman fiber probe for contact measurements with 785 nm excitation \nwavelength \n",
+              "start": 0,
+              "end": 179,
+              "bbox": [
+                90.05000305175781,
+                167.031982421875,
+                525.8630981445312,
+                211.17599487304688
+              ]
+            },
+            {
+              "block_id": "b004",
+              "quote": "During the experimental action, the probes are inserted directly into the process environment, such as \nthe feed frame of a rotary tablet press. As the powder blend passes the probe tip, the system captures \nspectra at high speeds without interrupting the production flow. This setup allows the laboratory to track \ndynamic changes, such as the gradual increase in coating thickness or the homogenization of a multi-\ncomponent blend, in real-time. The use of fiber optics is critical here, as it allows the sensitive \nspectrometers to be located safely away from the vibration and dust of the manufacturing floor. \n",
+              "start": 0,
+              "end": 615,
+              "bbox": [
+                72.0250015258789,
+                221.52902221679688,
+                526.219970703125,
+                306.9759826660156
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p015.jpg",
+          "verification": {
+            "candidate_index": 0,
+            "status": "supported",
+            "reason": "The equipment details, including the 785 nm Raman excitation wavelength and contact fiber probes, are explicitly stated in block b003."
+          },
+          "revision": "b008fa3357185c0bdc564efb",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      }
+    ],
+    "qdrant": [
+      {
+        "rank": 1,
+        "score": 0.8019367644529196,
+        "bm25_score": 45.386692962653996,
+        "qdrant_score": 0.8019367644529196,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "nir",
+          "api",
+          "in",
+          "the",
+          "tablet",
+          "press",
+          "feed",
+          "frame",
+          "are",
+          "a",
+          "and",
+          "to",
+          "raman",
+          "that",
+          "pharmaceutical"
+        ],
+        "matching_segment": "Data fusion and modeling\nData processing for pharmaceutical tasks relies on \"low-level data fusion,\" where the synchronized NIR \nand Raman spectra are merged into a single augmented matrix.\n\nThen regression models, such as Partial \nLeast Squares (PLS), are applied to these fused datasets.\n\nBy combining Raman and NIR, these models \ncan predict API potency or coating thickness with higher accuracy and robustness than single-method \nmodels.\n\nFig. 6.\n\nA multispectral NIRaman fiber probe has industrial grade design that combines NIR reflection \nand Raman optical techniques in a compact shaft that fits in a tablet press feed frame.",
+        "evidence": {
+          "section": "Data fusion and modeling",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "application_example",
+          "spans": [
+            {
+              "block_id": "b005",
+              "quote": null
+            },
+            {
+              "block_id": "b006",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "method",
+              "statement": "Synchronized NIR and Raman spectra are fused into one matrix and PLS models are applied to predict API potency or coating thickness.",
+              "support_quotes": [
+                "By combining Raman and NIR, these models \ncan predict API potency or coating thickness with higher accuracy and robustness than single-method \nmodels."
+              ],
+              "quantities": []
+            }
+          ],
+          "tags": [],
+          "issues": [],
+          "evidence_id": "S01:p015:txt:5d65dd1642425d18",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 15,
+          "text": "Data processing for pharmaceutical tasks relies on \"low-level data fusion,\" where the synchronized NIR \nand Raman spectra are merged into a single augmented matrix. Then regression models, such as Partial \nLeast Squares (PLS), are applied to these fused datasets. By combining Raman and NIR, these models \ncan predict API potency or coating thickness with higher accuracy and robustness than single-method \nmodels.  \n\n\nFig. 6. A multispectral NIRaman fiber probe has industrial grade design that combines NIR reflection \nand Raman optical techniques in a compact shaft that fits in a tablet press feed frame. \n",
+          "source_spans": [
+            {
+              "block_id": "b005",
+              "quote": "Data processing for pharmaceutical tasks relies on \"low-level data fusion,\" where the synchronized NIR \nand Raman spectra are merged into a single augmented matrix. Then regression models, such as Partial \nLeast Squares (PLS), are applied to these fused datasets. By combining Raman and NIR, these models \ncan predict API potency or coating thickness with higher accuracy and robustness than single-method \nmodels.  \n",
+              "start": 0,
+              "end": 417,
+              "bbox": [
+                72.0250015258789,
+                317.5489807128906,
+                526.1970825195312,
+                388.2460021972656
+              ]
+            },
+            {
+              "block_id": "b006",
+              "quote": "Fig. 6. A multispectral NIRaman fiber probe has industrial grade design that combines NIR reflection \nand Raman optical techniques in a compact shaft that fits in a tablet press feed frame. \n",
+              "start": 0,
+              "end": 191,
+              "bbox": [
+                72.0250015258789,
+                599.6189575195312,
+                522.6911010742188,
+                626.5459594726562
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p015.jpg",
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "Block b005 confirms that synchronized NIR and Raman spectra are fused and PLS models are applied to predict API potency or coating thickness."
+          },
+          "revision": "9a22b6758c23f5a6ea8e1b7a",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 2,
+        "score": 0.7766010443976334,
+        "bm25_score": 39.57127681265611,
+        "qdrant_score": 0.7766010443976334,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "nir",
+          "in",
+          "powder",
+          "at",
+          "the",
+          "tablet",
+          "press",
+          "feed",
+          "frame",
+          "are",
+          "a",
+          "and",
+          "blend",
+          "to",
+          "raman",
+          "be",
+          "near",
+          "infrared"
+        ],
+        "matching_segment": "Combined NIR and Raman spectroscopy\nand widely implemented spectral techniques are Near-Infrared (NIR) and Raman spectroscopy.\n\nThe \ncombination of these techniques is particularly effective because it captures complementary chemical \ninformation: NIR detects hydrogen bonds and asymmetric polar groups, while Raman provides \ninformation on the molecular backbone and symmetrical non-polar groups.\n\nThe equipment used for such task involves next spectral systems:\n\n- \nNIR spectrometer and light source coupled with a NIR reflection probe \n- \nRaman spectrometer and Raman fiber probe for contact measurements with 785 nm excitation \nwavelength\n\nDuring the experimental action, the probes are inserted directly into the process environment, such as \nthe feed frame of a rotary tablet press.\n\nAs the powder blend passes the probe tip, the system captures \nspectra at high speeds without interrupting the production flow.\n\nThis setup allows the laboratory to track \ndynamic changes, such as the gradual increase in coating thickness or the homogenization of a multi-\ncomponent blend, in real-time.\n\nThe use of fiber optics is critical here, as it allows the sensitive \nspectrometers to be located safely away from the vibration and dust of the manufacturing floor.",
+        "evidence": {
+          "section": "Combined NIR and Raman spectroscopy",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "general_method",
+          "spans": [
+            {
+              "block_id": "b001",
+              "quote": null
+            },
+            {
+              "block_id": "b002",
+              "quote": null
+            },
+            {
+              "block_id": "b003",
+              "quote": null
+            },
+            {
+              "block_id": "b004",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "equipment",
+              "statement": "The Raman system uses contact fiber probes with 785 nm excitation.",
+              "support_quotes": [
+                "Raman spectrometer and Raman fiber probe for contact measurements with 785 nm excitation \nwavelength"
+              ],
+              "quantities": [
+                {
+                  "label": "Raman excitation wavelength",
+                  "value": "785",
+                  "unit": "nm",
+                  "kind": "other",
+                  "source_quote": "Raman spectrometer and Raman fiber probe for contact measurements with 785 nm excitation \nwavelength"
+                }
+              ]
+            }
+          ],
+          "tags": [],
+          "issues": [],
+          "evidence_id": "S01:p015:txt:3fa6d0000254f55e",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 15,
+          "text": "and widely implemented spectral techniques are Near-Infrared (NIR) and Raman spectroscopy. The \ncombination of these techniques is particularly effective because it captures complementary chemical \ninformation: NIR detects hydrogen bonds and asymmetric polar groups, while Raman provides \ninformation on the molecular backbone and symmetrical non-polar groups.  \n\n\nThe equipment used for such task involves next spectral systems: \n\n\n- \nNIR spectrometer and light source coupled with a NIR reflection probe \n- \nRaman spectrometer and Raman fiber probe for contact measurements with 785 nm excitation \nwavelength \n\n\nDuring the experimental action, the probes are inserted directly into the process environment, such as \nthe feed frame of a rotary tablet press. As the powder blend passes the probe tip, the system captures \nspectra at high speeds without interrupting the production flow. This setup allows the laboratory to track \ndynamic changes, such as the gradual increase in coating thickness or the homogenization of a multi-\ncomponent blend, in real-time. The use of fiber optics is critical here, as it allows the sensitive \nspectrometers to be located safely away from the vibration and dust of the manufacturing floor. \n",
+          "source_spans": [
+            {
+              "block_id": "b001",
+              "quote": "and widely implemented spectral techniques are Near-Infrared (NIR) and Raman spectroscopy. The \ncombination of these techniques is particularly effective because it captures complementary chemical \ninformation: NIR detects hydrogen bonds and asymmetric polar groups, while Raman provides \ninformation on the molecular backbone and symmetrical non-polar groups.  \n",
+              "start": 0,
+              "end": 363,
+              "bbox": [
+                72.0250015258789,
+                78.2290267944336,
+                526.075927734375,
+                134.42599487304688
+              ]
+            },
+            {
+              "block_id": "b002",
+              "quote": "The equipment used for such task involves next spectral systems: \n",
+              "start": 0,
+              "end": 66,
+              "bbox": [
+                72.0250015258789,
+                144.99899291992188,
+                362.1499938964844,
+                157.17599487304688
+              ]
+            },
+            {
+              "block_id": "b003",
+              "quote": "- \nNIR spectrometer and light source coupled with a NIR reflection probe \n- \nRaman spectrometer and Raman fiber probe for contact measurements with 785 nm excitation \nwavelength \n",
+              "start": 0,
+              "end": 179,
+              "bbox": [
+                90.05000305175781,
+                167.031982421875,
+                525.8630981445312,
+                211.17599487304688
+              ]
+            },
+            {
+              "block_id": "b004",
+              "quote": "During the experimental action, the probes are inserted directly into the process environment, such as \nthe feed frame of a rotary tablet press. As the powder blend passes the probe tip, the system captures \nspectra at high speeds without interrupting the production flow. This setup allows the laboratory to track \ndynamic changes, such as the gradual increase in coating thickness or the homogenization of a multi-\ncomponent blend, in real-time. The use of fiber optics is critical here, as it allows the sensitive \nspectrometers to be located safely away from the vibration and dust of the manufacturing floor. \n",
+              "start": 0,
+              "end": 615,
+              "bbox": [
+                72.0250015258789,
+                221.52902221679688,
+                526.219970703125,
+                306.9759826660156
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p015.jpg",
+          "verification": {
+            "candidate_index": 0,
+            "status": "supported",
+            "reason": "The equipment details, including the 785 nm Raman excitation wavelength and contact fiber probes, are explicitly stated in block b003."
+          },
+          "revision": "b008fa3357185c0bdc564efb",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 3,
+        "score": 0.7240057931255357,
+        "bm25_score": null,
+        "qdrant_score": 0.7240057931255357,
+        "branches": [
+          "qdrant"
+        ],
+        "matched_terms": [
+          "nir",
+          "in",
+          "one",
+          "the",
+          "a",
+          "and",
+          "to",
+          "near",
+          "infrared"
+        ],
+        "matching_segment": "Inline Milk Analysis: NIR Reflection\n4.\n\nInline Milk Analysis.\n\nThe use of Near-Infrared (NIR) spectroscopy for the inline monitoring of milk is a cornerstone of \nmodern dairy \"Process Analytical Technology\" (PAT).\n\nMaintaining both NIR Reflection and NIR \nTransmission techniques in a lab environment provides a comprehensive analytical suite capable of \nhandling the diverse physical properties of dairy products.\n\n- \nNIR Reflection: Inline NIR Reflection is primarily used for opaque or highly concentrated dairy \nproducts, such as yogurt, butter, or whole milk concentrates.\n\nThe main equipment includes a fiber \noptic probe where one set of fibers delivers light to the sample and the other collects the \n\"backscattered\" light.\n\nExperimentally, the probe is flush-mounted into a pipe or vat to interact \ndirectly with the flowing medium.\n\nBecause the light does not penetrate deeply, the method is \nsensitive to the surface characteristics and fat globule size.\n\nData processing may involve converting \nthe reflectance values to absorbance and applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations to remove physical interference caused by the \nscattering nature of the milk particles before using Partial Least Squares (PLS) regression to \nquantify fat and protein.",
+        "evidence": {
+          "section": "Inline Milk Analysis: NIR Reflection",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "application_example",
+          "spans": [
+            {
+              "block_id": "b004",
+              "quote": null
+            },
+            {
+              "block_id": "b005",
+              "quote": null
+            },
+            {
+              "block_id": "b006",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "method",
+              "statement": "NIR Reflection spectroscopy is used for opaque dairy products, with data processed using Multiplicative Scatter Correction (MSC) or Standard Normal Variate (SNV) and PLS regression.",
+              "support_quotes": [
+                "applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations",
+                "using Partial Least Squares (PLS) regression to \nquantify fat and protein."
+              ],
+              "quantities": []
+            }
+          ],
+          "tags": [],
+          "issues": [],
+          "evidence_id": "S01:p017:txt:03613ea0cb0945fb",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 17,
+          "text": "4. Inline Milk Analysis. \n\n\nThe use of Near-Infrared (NIR) spectroscopy for the inline monitoring of milk is a cornerstone of \nmodern dairy \"Process Analytical Technology\" (PAT). Maintaining both NIR Reflection and NIR \nTransmission techniques in a lab environment provides a comprehensive analytical suite capable of \nhandling the diverse physical properties of dairy products. \n\n\n- \nNIR Reflection: Inline NIR Reflection is primarily used for opaque or highly concentrated dairy \nproducts, such as yogurt, butter, or whole milk concentrates. The main equipment includes a fiber \noptic probe where one set of fibers delivers light to the sample and the other collects the \n\"backscattered\" light. Experimentally, the probe is flush-mounted into a pipe or vat to interact \ndirectly with the flowing medium. Because the light does not penetrate deeply, the method is \nsensitive to the surface characteristics and fat globule size. Data processing may involve converting \nthe reflectance values to absorbance and applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations to remove physical interference caused by the \nscattering nature of the milk particles before using Partial Least Squares (PLS) regression to \nquantify fat and protein. \n",
+          "source_spans": [
+            {
+              "block_id": "b004",
+              "quote": "4. Inline Milk Analysis. \n",
+              "start": 0,
+              "end": 26,
+              "bbox": [
+                72.0250015258789,
+                521.9450073242188,
+                190.3300018310547,
+                534.2760009765625
+              ]
+            },
+            {
+              "block_id": "b005",
+              "quote": "The use of Near-Infrared (NIR) spectroscopy for the inline monitoring of milk is a cornerstone of \nmodern dairy \"Process Analytical Technology\" (PAT). Maintaining both NIR Reflection and NIR \nTransmission techniques in a lab environment provides a comprehensive analytical suite capable of \nhandling the diverse physical properties of dairy products. \n",
+              "start": 0,
+              "end": 352,
+              "bbox": [
+                72.0250015258789,
+                544.5989990234375,
+                526.20703125,
+                600.8059692382812
+              ]
+            },
+            {
+              "block_id": "b006",
+              "quote": "- \nNIR Reflection: Inline NIR Reflection is primarily used for opaque or highly concentrated dairy \nproducts, such as yogurt, butter, or whole milk concentrates. The main equipment includes a fiber \noptic probe where one set of fibers delivers light to the sample and the other collects the \n\"backscattered\" light. Experimentally, the probe is flush-mounted into a pipe or vat to interact \ndirectly with the flowing medium. Because the light does not penetrate deeply, the method is \nsensitive to the surface characteristics and fat globule size. Data processing may involve converting \nthe reflectance values to absorbance and applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations to remove physical interference caused by the \nscattering nature of the milk particles before using Partial Least Squares (PLS) regression to \nquantify fat and protein. \n",
+              "start": 0,
+              "end": 897,
+              "bbox": [
+                72.0250015258789,
+                610.9019775390625,
+                526.1729736328125,
+                756.3509521484375
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p017.jpg",
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "The description of NIR Reflection spectroscopy for opaque dairy products and the specific data processing steps (MSC, SNV, and PLS regression) are accurately transcribed from the text blocks provided in b004 through b006."
+          },
+          "revision": "9f5f308d1c6bf85bd2e441e0",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      }
+    ],
+    "hybrid": [
+      {
+        "rank": 1,
+        "score": 0.03252247488101534,
+        "bm25_score": 45.386692962653996,
+        "qdrant_score": 0.8019367644529196,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "nir",
+          "api",
+          "in",
+          "the",
+          "tablet",
+          "press",
+          "feed",
+          "frame",
+          "are",
+          "a",
+          "and",
+          "to",
+          "raman",
+          "that",
+          "pharmaceutical"
+        ],
+        "matching_segment": "Data fusion and modeling\nData processing for pharmaceutical tasks relies on \"low-level data fusion,\" where the synchronized NIR \nand Raman spectra are merged into a single augmented matrix.\n\nThen regression models, such as Partial \nLeast Squares (PLS), are applied to these fused datasets.\n\nBy combining Raman and NIR, these models \ncan predict API potency or coating thickness with higher accuracy and robustness than single-method \nmodels.\n\nFig. 6.\n\nA multispectral NIRaman fiber probe has industrial grade design that combines NIR reflection \nand Raman optical techniques in a compact shaft that fits in a tablet press feed frame.",
+        "evidence": {
+          "section": "Data fusion and modeling",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "application_example",
+          "spans": [
+            {
+              "block_id": "b005",
+              "quote": null
+            },
+            {
+              "block_id": "b006",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "method",
+              "statement": "Synchronized NIR and Raman spectra are fused into one matrix and PLS models are applied to predict API potency or coating thickness.",
+              "support_quotes": [
+                "By combining Raman and NIR, these models \ncan predict API potency or coating thickness with higher accuracy and robustness than single-method \nmodels."
+              ],
+              "quantities": []
+            }
+          ],
+          "tags": [],
+          "issues": [],
+          "evidence_id": "S01:p015:txt:5d65dd1642425d18",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 15,
+          "text": "Data processing for pharmaceutical tasks relies on \"low-level data fusion,\" where the synchronized NIR \nand Raman spectra are merged into a single augmented matrix. Then regression models, such as Partial \nLeast Squares (PLS), are applied to these fused datasets. By combining Raman and NIR, these models \ncan predict API potency or coating thickness with higher accuracy and robustness than single-method \nmodels.  \n\n\nFig. 6. A multispectral NIRaman fiber probe has industrial grade design that combines NIR reflection \nand Raman optical techniques in a compact shaft that fits in a tablet press feed frame. \n",
+          "source_spans": [
+            {
+              "block_id": "b005",
+              "quote": "Data processing for pharmaceutical tasks relies on \"low-level data fusion,\" where the synchronized NIR \nand Raman spectra are merged into a single augmented matrix. Then regression models, such as Partial \nLeast Squares (PLS), are applied to these fused datasets. By combining Raman and NIR, these models \ncan predict API potency or coating thickness with higher accuracy and robustness than single-method \nmodels.  \n",
+              "start": 0,
+              "end": 417,
+              "bbox": [
+                72.0250015258789,
+                317.5489807128906,
+                526.1970825195312,
+                388.2460021972656
+              ]
+            },
+            {
+              "block_id": "b006",
+              "quote": "Fig. 6. A multispectral NIRaman fiber probe has industrial grade design that combines NIR reflection \nand Raman optical techniques in a compact shaft that fits in a tablet press feed frame. \n",
+              "start": 0,
+              "end": 191,
+              "bbox": [
+                72.0250015258789,
+                599.6189575195312,
+                522.6911010742188,
+                626.5459594726562
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p015.jpg",
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "Block b005 confirms that synchronized NIR and Raman spectra are fused and PLS models are applied to predict API potency or coating thickness."
+          },
+          "revision": "9a22b6758c23f5a6ea8e1b7a",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 2,
+        "score": 0.03200204813108039,
+        "bm25_score": 39.57127681265611,
+        "qdrant_score": 0.7766010443976334,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "nir",
+          "in",
+          "powder",
+          "at",
+          "the",
+          "tablet",
+          "press",
+          "feed",
+          "frame",
+          "are",
+          "a",
+          "and",
+          "blend",
+          "to",
+          "raman",
+          "be",
+          "near",
+          "infrared"
+        ],
+        "matching_segment": "Combined NIR and Raman spectroscopy\nand widely implemented spectral techniques are Near-Infrared (NIR) and Raman spectroscopy.\n\nThe \ncombination of these techniques is particularly effective because it captures complementary chemical \ninformation: NIR detects hydrogen bonds and asymmetric polar groups, while Raman provides \ninformation on the molecular backbone and symmetrical non-polar groups.\n\nThe equipment used for such task involves next spectral systems:\n\n- \nNIR spectrometer and light source coupled with a NIR reflection probe \n- \nRaman spectrometer and Raman fiber probe for contact measurements with 785 nm excitation \nwavelength\n\nDuring the experimental action, the probes are inserted directly into the process environment, such as \nthe feed frame of a rotary tablet press.\n\nAs the powder blend passes the probe tip, the system captures \nspectra at high speeds without interrupting the production flow.\n\nThis setup allows the laboratory to track \ndynamic changes, such as the gradual increase in coating thickness or the homogenization of a multi-\ncomponent blend, in real-time.\n\nThe use of fiber optics is critical here, as it allows the sensitive \nspectrometers to be located safely away from the vibration and dust of the manufacturing floor.",
+        "evidence": {
+          "section": "Combined NIR and Raman spectroscopy",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "general_method",
+          "spans": [
+            {
+              "block_id": "b001",
+              "quote": null
+            },
+            {
+              "block_id": "b002",
+              "quote": null
+            },
+            {
+              "block_id": "b003",
+              "quote": null
+            },
+            {
+              "block_id": "b004",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "equipment",
+              "statement": "The Raman system uses contact fiber probes with 785 nm excitation.",
+              "support_quotes": [
+                "Raman spectrometer and Raman fiber probe for contact measurements with 785 nm excitation \nwavelength"
+              ],
+              "quantities": [
+                {
+                  "label": "Raman excitation wavelength",
+                  "value": "785",
+                  "unit": "nm",
+                  "kind": "other",
+                  "source_quote": "Raman spectrometer and Raman fiber probe for contact measurements with 785 nm excitation \nwavelength"
+                }
+              ]
+            }
+          ],
+          "tags": [],
+          "issues": [],
+          "evidence_id": "S01:p015:txt:3fa6d0000254f55e",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 15,
+          "text": "and widely implemented spectral techniques are Near-Infrared (NIR) and Raman spectroscopy. The \ncombination of these techniques is particularly effective because it captures complementary chemical \ninformation: NIR detects hydrogen bonds and asymmetric polar groups, while Raman provides \ninformation on the molecular backbone and symmetrical non-polar groups.  \n\n\nThe equipment used for such task involves next spectral systems: \n\n\n- \nNIR spectrometer and light source coupled with a NIR reflection probe \n- \nRaman spectrometer and Raman fiber probe for contact measurements with 785 nm excitation \nwavelength \n\n\nDuring the experimental action, the probes are inserted directly into the process environment, such as \nthe feed frame of a rotary tablet press. As the powder blend passes the probe tip, the system captures \nspectra at high speeds without interrupting the production flow. This setup allows the laboratory to track \ndynamic changes, such as the gradual increase in coating thickness or the homogenization of a multi-\ncomponent blend, in real-time. The use of fiber optics is critical here, as it allows the sensitive \nspectrometers to be located safely away from the vibration and dust of the manufacturing floor. \n",
+          "source_spans": [
+            {
+              "block_id": "b001",
+              "quote": "and widely implemented spectral techniques are Near-Infrared (NIR) and Raman spectroscopy. The \ncombination of these techniques is particularly effective because it captures complementary chemical \ninformation: NIR detects hydrogen bonds and asymmetric polar groups, while Raman provides \ninformation on the molecular backbone and symmetrical non-polar groups.  \n",
+              "start": 0,
+              "end": 363,
+              "bbox": [
+                72.0250015258789,
+                78.2290267944336,
+                526.075927734375,
+                134.42599487304688
+              ]
+            },
+            {
+              "block_id": "b002",
+              "quote": "The equipment used for such task involves next spectral systems: \n",
+              "start": 0,
+              "end": 66,
+              "bbox": [
+                72.0250015258789,
+                144.99899291992188,
+                362.1499938964844,
+                157.17599487304688
+              ]
+            },
+            {
+              "block_id": "b003",
+              "quote": "- \nNIR spectrometer and light source coupled with a NIR reflection probe \n- \nRaman spectrometer and Raman fiber probe for contact measurements with 785 nm excitation \nwavelength \n",
+              "start": 0,
+              "end": 179,
+              "bbox": [
+                90.05000305175781,
+                167.031982421875,
+                525.8630981445312,
+                211.17599487304688
+              ]
+            },
+            {
+              "block_id": "b004",
+              "quote": "During the experimental action, the probes are inserted directly into the process environment, such as \nthe feed frame of a rotary tablet press. As the powder blend passes the probe tip, the system captures \nspectra at high speeds without interrupting the production flow. This setup allows the laboratory to track \ndynamic changes, such as the gradual increase in coating thickness or the homogenization of a multi-\ncomponent blend, in real-time. The use of fiber optics is critical here, as it allows the sensitive \nspectrometers to be located safely away from the vibration and dust of the manufacturing floor. \n",
+              "start": 0,
+              "end": 615,
+              "bbox": [
+                72.0250015258789,
+                221.52902221679688,
+                526.219970703125,
+                306.9759826660156
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p015.jpg",
+          "verification": {
+            "candidate_index": 0,
+            "status": "supported",
+            "reason": "The equipment details, including the 785 nm Raman excitation wavelength and contact fiber probes, are explicitly stated in block b003."
+          },
+          "revision": "b008fa3357185c0bdc564efb",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 3,
+        "score": 0.030776515151515152,
+        "bm25_score": 23.92311627822477,
+        "qdrant_score": 0.7220509940263362,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "nir",
+          "in",
+          "one",
+          "the",
+          "a",
+          "and",
+          "like",
+          "to",
+          "raman",
+          "that",
+          "remain",
+          "be",
+          "infrared"
+        ],
+        "matching_segment": "Dual-Technique Advantage and Advanced Methods\n- \nThe Advantage of Dual-Technique Availability: having both fiber optic techniques available in a \nlab rather than relying on one provides the flexibility needed to monitor the entire production chain.\n\nWhile transmission is superior for the high-precision analysis of dilute process streams (like whey \nfiltration), it fails when the milk becomes too \"thick\" or fat-rich, as the light cannot penetrate the \nsample.\n\nConversely, reflection can work well in highly scattering environments but can be less \nrepresentative for clear liquids.\n\nBy maintaining both, a lab can calibrate models for every stage of \nproduction - from raw milk intake to final evaporation - ensuring that no matter how the physical \nstate of the milk changes during processing, the inline monitoring remains accurate and robust.\n\nIn \nsome cases, a Transflection probe can already be a combined solution working well for low-fat and \nhigh-fat containing milk products.\n\nNIR Spectrometer and NIR light source remain the same for both \nreflection and transmission techniques.\n\nWhile NIR is the workhorse of the dairy industry, advanced labs often incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques to capture specific chemical or structural \ninformation that NIR might miss.\n\nThese methods provide a higher level of \"molecular specificity,\" \nmaking them useful for specialized monitoring in milk analysis.",
+        "evidence": {
+          "section": "Dual-Technique Advantage and Advanced Methods",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "general_method",
+          "spans": [
+            {
+              "block_id": "b002",
+              "quote": null
+            },
+            {
+              "block_id": "b003",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "method",
+              "statement": "Advanced labs often incorporate Fluorescence, Raman, and Mid-Infrared (MIR) ATR techniques alongside NIR to capture specific chemical or structural information.",
+              "support_quotes": [
+                "incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques"
+              ],
+              "quantities": []
+            }
+          ],
+          "tags": [
+            "multi-technique",
+            "Raman",
+            "Fluorescence",
+            "MIR"
+          ],
+          "issues": [],
+          "evidence_id": "S01:p018:txt:250c09c5fdb749b3",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 18,
+          "text": " \n- \nThe Advantage of Dual-Technique Availability: having both fiber optic techniques available in a \nlab rather than relying on one provides the flexibility needed to monitor the entire production chain. \nWhile transmission is superior for the high-precision analysis of dilute process streams (like whey \nfiltration), it fails when the milk becomes too \"thick\" or fat-rich, as the light cannot penetrate the \nsample. Conversely, reflection can work well in highly scattering environments but can be less \nrepresentative for clear liquids. By maintaining both, a lab can calibrate models for every stage of \nproduction - from raw milk intake to final evaporation - ensuring that no matter how the physical \nstate of the milk changes during processing, the inline monitoring remains accurate and robust. In \nsome cases, a Transflection probe can already be a combined solution working well for low-fat and \nhigh-fat containing milk products. NIR Spectrometer and NIR light source remain the same for both \nreflection and transmission techniques. \n\n\nWhile NIR is the workhorse of the dairy industry, advanced labs often incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques to capture specific chemical or structural \ninformation that NIR might miss. These methods provide a higher level of \"molecular specificity,\" \nmaking them useful for specialized monitoring in milk analysis. \n",
+          "source_spans": [
+            {
+              "block_id": "b002",
+              "quote": " \n- \nThe Advantage of Dual-Technique Availability: having both fiber optic techniques available in a \nlab rather than relying on one provides the flexibility needed to monitor the entire production chain. \nWhile transmission is superior for the high-precision analysis of dilute process streams (like whey \nfiltration), it fails when the milk becomes too \"thick\" or fat-rich, as the light cannot penetrate the \nsample. Conversely, reflection can work well in highly scattering environments but can be less \nrepresentative for clear liquids. By maintaining both, a lab can calibrate models for every stage of \nproduction - from raw milk intake to final evaporation - ensuring that no matter how the physical \nstate of the milk changes during processing, the inline monitoring remains accurate and robust. In \nsome cases, a Transflection probe can already be a combined solution working well for low-fat and \nhigh-fat containing milk products. NIR Spectrometer and NIR light source remain the same for both \nreflection and transmission techniques. \n",
+              "start": 0,
+              "end": 1047,
+              "bbox": [
+                72.0250015258789,
+                225.77902221679688,
+                526.22998046875,
+                400.2460021972656
+              ]
+            },
+            {
+              "block_id": "b003",
+              "quote": "While NIR is the workhorse of the dairy industry, advanced labs often incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques to capture specific chemical or structural \ninformation that NIR might miss. These methods provide a higher level of \"molecular specificity,\" \nmaking them useful for specialized monitoring in milk analysis. \n",
+              "start": 0,
+              "end": 362,
+              "bbox": [
+                72.0250015258789,
+                410.8190002441406,
+                528.969970703125,
+                466.9960021972656
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p018.jpg",
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "The text confirms advanced labs incorporate Fluorescence, Raman, and MIR ATR techniques to capture specific molecular information."
+          },
+          "revision": "3dbc2c1783f50b4c3f9e11c9",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      }
+    ]
+  },
+  "warnings": [],
+  "model_calls": 0
+}

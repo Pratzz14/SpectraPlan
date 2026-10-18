@@ -4,13 +4,15 @@ SpectraPlan is an AI assistant in development for the first technical assessment
 
 ## Project status
 
+Six unedited final answers are saved in [outputs](outputs/run_manifest.json), with their original requests, frozen configuration, evidence and model traces. Offline integrity verification passes. The [scenario review](docs/scenario_content_review.md) records substantive content failures, including missed context and skipped retrieval; a complete run is not a scientifically adequate answer. See [reproducibility](docs/reproducibility.md) and the [acceptance review](docs/acceptance_review.md) for verification commands, setup evidence and remaining gaps. Demo preparation and PPTX work are deferred.
+
 **F01–F07 are implemented for their tested development gates:** the application supports enquiry entry, source-grounded initial assessments, claim-level evidence inspection and same-run JSON/report export, alongside readiness and search tools. Both local services and their development API connection have been verified. On 2026-10-17, Groq `qwen/qwen3.8-27b` returned the initial live provider smoke response, the complete 64-page F02 corpus was published and validated, and F03 extraction was checked with LLMTech.
 
 F02 adds source inventory, page-aware Qwen extraction and verification, workbook import, a manual inspection report, and Qdrant + BM25 search. The active corpus is `corpus-4aac882441587796afe5`, with 152 passages, 81 retrieval-eligible passages, 19 method rows and 63 flagged records. F03 adds typed enquiry extraction and `POST /api/extract`, with exact input provenance, separate streams, explicit unknowns and attributed customer claims. See [customer extraction](docs/customer_extraction.md) for its API, provider options and checks.
 
 F04 adds `POST /api/retrieve` and revision-pinned `GET /api/evidence/{evidence_id}`. It combines BM25, local BGE/Qdrant semantic search and structured method lookup into at most eight evidence records, exposing selection reasons, scores, context coverage and remaining gaps. See [evidence retrieval](docs/evidence_retrieval.md) for the API, semantic threshold, single follow-up budget and verification records.
 
-F05 provides a reusable Python assessment pipeline with conditional method choices, clarification questions, source excerpts, explicit unknowns and an initial comparison experiment. Saved development results include the complete evidence ledger and run metadata. See [technical assessment](docs/technical_assessment.md) for the Python interface and live diagnostic command. F06 adds `POST /api/assess` with complete/incomplete run envelopes, stream-specific feasibility planning, mechanical validation and one bounded synthesis repair. The API and failure contracts have 236 passing backend tests, and live D01/D02 checks with LLMTech returned complete provisional results at the normal request limits. A live undefined-target check returned a complete insufficient-information result with an empty shortlist. The verification receipt distinguishes automated checks, live execution and agent source comparison. F07 adds the responsive assessment interface, editable-enquiry resubmission, an evidence drawer and exports of the actual run envelope. The browser workflow has been verified from live enquiry submission through evidence inspection and matching JSON download; full development/final evaluation remains separate work.
+F05 provides a reusable Python assessment pipeline with conditional method choices, clarification questions, source excerpts, explicit unknowns and an initial comparison experiment. Saved development results include the complete evidence ledger and run metadata. See [technical assessment](docs/technical_assessment.md) for the Python interface and live diagnostic command. F06 adds `POST /api/assess` with complete/incomplete run envelopes, stream-specific feasibility planning, mechanical validation and bounded synthesis repair. Historical live D01/D02 checks with LLMTech returned complete provisional results at normal request limits; an undefined-target check returned complete insufficient information with an empty shortlist. F07 adds the responsive assessment interface, clarification rounds, history, evidence inspection and same-run exports. Current setup verification passes **316 backend tests**, **17 frontend tests**, a production build and a fresh live D01 → clarification → history/export browser flow. The full development scientific-quality gate remains open.
 
 ## Local setup
 
@@ -25,7 +27,9 @@ npm ci
 Pop-Location
 ```
 
-If `.env` already exists, keep it and compare it with `.env.example` instead of overwriting it. Set `GROQ_API_KEY` in the root `.env` when available. Keep the key on the backend; never put it in a `VITE_*` variable or commit it. The supplied placeholder is treated as missing configuration.
+If `.env` already exists, keep it and compare it with `.env.example` instead of overwriting it. Supply at least one of `GEMINI_API_KEY`, `LLMTECH_API_KEY` or `GROQ_API_KEY` for live assessment. Automatic routing defaults to Gemini → LLMTech → Groq; use `PROVIDER_NAME` to pin a provider. Regolo is an optional provider and is appended when its key is configured. Keep keys on the backend; never put them in `VITE_*` variables or commit them. Placeholders count as missing configuration.
+
+Before assessing an enquiry, supply the original source files and restore the local corpus as described in [reproducibility](docs/reproducibility.md#restore-the-saved-evidence). The repository deliberately excludes source images, model binaries and the local vector database. Starting the services before restoration is useful for checking missing-dependency handling, but does not make the app ready for assessment.
 
 On restricted Windows runners where `ensurepip` or pytest cannot write to the system temp folder, create `tmp/` and set `$env:TEMP` and `$env:TMP` to its absolute path for that shell before creating the environment. These are runner accommodations, not application requirements.
 
@@ -144,7 +148,7 @@ npm ls --depth=0
 Pop-Location
 ```
 
-`requirements.txt` pins the installed Python environment including transitive dependencies; `frontend/package-lock.json` records the npm dependency tree. Key installed versions:
+`requirements.txt` pins backend packages; `frontend/package-lock.json` records the npm dependency tree. The setup receipt records the resolved Python environment, including SDK transitive dependencies. The websocket pin is 16.1.1 to satisfy the Google SDK's `<17` requirement; the archived final batch retains its original dependency-file snapshot. Key installed versions:
 
 | Backend | Version | Frontend | Version |
 |---|---|---|---|
@@ -164,10 +168,12 @@ Pop-Location
 | [Technical specification](docs/plan/spec.md) | Product scope, source handling, data contracts, architecture and acceptance criteria |
 | [Implementation plan](docs/plan/implementation_plan.md) | Ten ordered features with task/subtask checklists, dependencies, completion gates and a progress log |
 | [Technical assessment](docs/technical_assessment.md) | Assessment API, feasibility study, validation, failure contracts and live checks |
+| [Reproducibility](docs/reproducibility.md) | Restore/rebuild the corpus, inspect the archived final batch and reproduce setup checks |
+| [Acceptance review](docs/acceptance_review.md) | Section-14 evidence, observed failures, deferred work and verification limits |
 
 Continue using the implementation plan's task checklists and progress log. The proposed MVP budget is 12 hours; it is a project planning choice.
 
-## Planned workflow
+## Application workflow
 
 1. Enter a customer enquiry in natural language.
 2. Extract stated facts, unknowns and distinct process streams while preserving input provenance.
@@ -177,17 +183,19 @@ Continue using the implementation plan's task checklists and progress log. The p
 
 The assistant supports expert review. Its recommendations are hypotheses to test; the software does not establish measurement accuracy, equipment compatibility or clinical readiness. A justified insufficient-information assessment is a valid result.
 
-## Planned architecture
+## Architecture
 
-| Layer | Proposed implementation |
+| Layer | Implementation |
 |---|---|
 | Interface | React, TypeScript, Vite and Tailwind |
-| API and validation | Python 3.11+, FastAPI and Pydantic v2 |
+| API and validation | Python 3.12, FastAPI and Pydantic v2 |
 | Document ingestion | PyMuPDF and openpyxl |
 | Retrieval | Local Qdrant + BM25 with BGE-small embeddings and canonical JSON/JSONL evidence |
 | Generation | Configurable model provider with structured responses, bounded retries and local validation |
 
-The backend will run extraction, retrieval, synthesis and validation. API credentials will remain on the backend. External retrieval is disabled by default in the MVP design.
+The UI and evaluation runner both call `POST /api/assess`: customer text → typed facts → local evidence ledger → structured synthesis → mechanical validation → complete/incomplete envelope. SQLite stores enquiry rounds and traces. The evidence drawer uses the selected run's embedded ledger; JSON and PDF exports retain that run's identity. Provider credentials remain on the backend. Extraction and synthesis can use different actual providers under one automatic policy.
+
+Technical retrieval uses the supplied PDF/workbook corpus. The optional S06 website snapshot is separately versioned business context available in the manual search workbench; ordinary assessment does not fetch the web or use that dataset as technical support. Source membership, structured-output validation and retrieval scores do not prove scientific entailment. Source-image transcriptions have automated checks, not independent expert approval.
 
 ## Source materials and evaluation
 
@@ -205,16 +213,27 @@ The development runner now accepts the exact D01–D08 inputs and invokes the sa
 
 Each batch records the source/input hashes, effective automatic provider policy, actual stage providers, isolated enquiry history, per-case envelopes, trace JSON/PDF files and incremental manifest under `outputs/development/`. Routine timestamped batches are ignored; retain a reviewed manifest explicitly when it becomes submission evidence. Gemini quota failures and Qwen fallback identities remain visible in the manifest; a fallback run is not a Gemini validation result.
 
-The final runner is deliberately gated on the organizer's original `customer_scenarios_for_final_evaluation.txt`; it never reconstructs H01–H06 from development cases. Place that file under `knowledge/original_sources/`, then prepare and verify the exact inputs:
+The retained final batch is `4c14fccd1a3d4eadb672c14de91c142e`. Verify its archived artifacts without model access, originals, a live corpus or SQLite:
+
+```powershell
+.\.venv\Scripts\python.exe -m evaluation.run_evaluation --verify outputs/run_manifest.json
+.\.venv\Scripts\python.exe scripts/verify_submission.py --portable
+```
+
+For the original-input/runtime audit and a separate dated receipt, use `python scripts/verify_submission.py --receipt outputs/submission_verification.json`. This requires the original source at the location recorded in `evaluation/final.json`; the retained batch records the ignored repository-root copy. A fresh evaluator can use portable verification without that original.
+
+To generate a **new** final batch, the runner requires the organizer's original `customer_scenarios_for_final_evaluation.txt`; it never reconstructs H01–H06 from development cases. In a separate evaluation workspace, place that file under `knowledge/original_sources/`, prepare exact inputs, explicitly freeze provider/model profiles and use the historical time limits below. These commands make live calls and produce new artifacts; they are unnecessary for inspecting the retained submission:
 
 ```powershell
 .\.venv\Scripts\python.exe -m evaluation.run_evaluation --prepare-final
-.\.venv\Scripts\python.exe -m evaluation.run_evaluation --suite final --request-deadline-s 90 --call-timeout-s 30
+.\.venv\Scripts\python.exe -m evaluation.run_evaluation --suite final --provider auto --request-deadline-s 180 --call-timeout-s 60
 .\.venv\Scripts\python.exe -m evaluation.run_evaluation --verify outputs/runs/<batch>/manifest.json --suite final
 .\.venv\Scripts\python.exe -m evaluation.run_evaluation --publish outputs/runs/<batch>/manifest.json
 ```
 
-Final runs use automatic provider routing (`gemini,llmtech,groq`) and record the effective profiles, actual provider/model per stage, prompt/schema/configuration hashes, corpus/index identity, attempts, repairs, input/output hashes, isolated history, trace exports and portable evidence exports. Publication copies only a verified complete batch to `outputs/H01.json` through `outputs/H06.json` and writes `outputs/run_manifest.json`. Earlier and failed batches remain under `outputs/runs/`. The final cases are organizer-provided evaluation scenarios, not an unseen benchmark; citation membership and schema validation do not establish scientific entailment or spectroscopy performance.
+The archived batch froze automatic routing in the order `gemini,llmtech,groq`; every extraction and synthesis stage actually completed through LLMTech, with Gemini quota failures retained in the attempt metadata. The requested Qwen model and returned `qwen38` alias are recorded separately. Normal application defaults remain 90/30 seconds. See the frozen configuration for the remaining token, repair, retrieval, prompt/schema, corpus and provider settings; the commands alone do not recreate that configuration or guarantee identical generated text.
+
+Publication copies only a verified complete batch to `outputs/H01.json` through `outputs/H06.json` and writes `outputs/run_manifest.json`. Earlier and failed batches remain under `outputs/runs/`; individual results are not selected from different batches. Local SQLite files are ignored because portable trace and evidence exports provide the review material. These are organizer-provided evaluation scenarios, not an unseen benchmark.
 
 ## Verification
 
@@ -247,7 +266,7 @@ No approval workflow is required. After a successful build, open **Inspect extra
 
 The current standalone report is [the published corpus report](knowledge/versions/corpus-4aac882441587796afe5/review.html). The earlier `knowledge/saved_extraction_64/review.html` is a historical, unpublished checkpoint and does not show the final counts. The report and adjacent images are generated local files; rebuild them after a fresh checkout.
 
-The basic five-minute deck is [the editable demonstration presentation](presentation/output/spectraplan-demo.pptx), with the rehearsal sequence in [the demo script](presentation/demo_script.md). Its claims are limited to observed application behavior and the documented evidence boundaries.
+Demo preparation, rehearsal and PPTX updates are deferred by request. Existing presentation artifacts are historical and are not evidence of a completed demonstration.
 
 ### Local history and trace exports
 
@@ -268,7 +287,7 @@ Canonical data lives in `knowledge/versions/<corpus-version>/`. `knowledge/curre
 
 Originals, model binaries, page images, raw extraction caches and Qdrant binaries are local rebuildable artifacts. Keep the original-source folder available when validating or rebuilding. Generated evidence and manifests remain trackable. Their third-party source rights remain unchanged.
 
-A fresh checkout includes the published evidence, manifests, segments and BM25 data, but requires a local rebuild before readiness or search can pass: source images, raw pages, the HTML report, model files and Qdrant binaries are deliberately excluded from Git. Rebuild with the separately supplied originals and the selected provider. An existing local cache avoids repeating successful model stages; `--refresh` intentionally reruns them.
+A fresh checkout includes saved canonical evidence, manifests, segments and BM25 data. Use `python scripts/restore_corpus.py` with the separately supplied originals to render pages and rebuild the local indexes/report from that saved evidence without extraction-model calls. Restoration publishes a new corpus/index identity while preserving evidence IDs and revisions; it never changes the archived evaluation. The first embedding-model use downloads its public files unless the matching local cache is supplied. For new source extraction, use `python -m backend.ingest build --provider auto`; valid content-addressed caches can resume compatible stages, while `--refresh` explicitly requests new model extraction.
 
 See [the pipeline contract](docs/knowledge_pipeline.md) for exact outputs, interfaces, validation and current live-run status.
 

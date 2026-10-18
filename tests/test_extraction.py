@@ -208,6 +208,35 @@ def test_raw_units_ranges_and_pressure_basis():
         validate_extraction(facts, text)
 
 
+def test_whitespace_wrapped_quotes_are_accepted_but_changed_words_are_rejected():
+    text = "A powder;\nmeasure moisture."
+    facts = powder(text)
+    for record in facts.fact_provenance:
+        record.input_quote = "A powder; measure moisture."
+    validate_extraction(facts, text)
+    facts.fact_provenance[0].input_quote = "A powder; measure contaminants."
+    with pytest.raises(ExtractionValidationError, match="exact substring"):
+        validate_extraction(facts, text)
+
+
+def test_field_recovery_preserves_original_constraints_and_omits_bad_quotes():
+    from backend.agent import ExtractionOutput, recover_extraction_fields
+    text = "A powder; measure moisture. Do not exceed 40 C or reuse the cable."
+    data = wire_for(powder(text).model_dump())
+    quote = "Do not exceed 40 C or reuse the cable."
+    data["shared_constraints"] = [
+        {"value": "Reuse the cable at 50 C", "input_quote": quote},
+        {"value": "invented fact", "input_quote": "No such source sentence"},
+    ]
+    recovered, warnings = recover_extraction_fields(ExtractionOutput.model_validate(data), text)
+    assert len(recovered.shared_constraints) == 1
+    assert recovered.shared_constraints[0].value == quote
+    assert recovered.shared_constraints[0].input_quote == quote
+    assert len(warnings) == 2
+    assert all(warning in recovered.missing_information for warning in warnings)
+    validate_extraction(recovered.to_facts(text), text)
+
+
 def test_generalized_sample_form_and_shared_constraint_duplication_are_rejected():
     facts = powder()
     facts.contexts[0].sample_phase = "solid"

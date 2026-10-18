@@ -1,10 +1,12 @@
 # SpectraPlan Iterative Implementation Plan
 
 **Based on:** [Technical specification v1.1](spec.md)\
-**Status:** F01–F07 implemented for their recorded development gates; start F08 development evaluation next\
-**Reconciled:** 2026-10-18, against implementation through commit `844a835`\
+**Status:** F09 reproducibility and revised F10 setup/documentation gates verified; F08 scientific quality remains open; F10.2 deferred\
+**Reconciled:** 2026-10-18, against archived final batch `4c14fccd1a3d4eadb672c14de91c142e` and current verification receipts\
 **Structure:** Main feature → tasks → subtasks\
 **Target:** A working, source-grounded spectroscopy assessment app with reproducible evaluation outputs.
+
+**Current agreed scope (2026-10-18):** Verify and document the existing final batch, preserve its unedited answers and disclose the observed content limitations. Finish setup/architecture documentation, fresh-install checks and acceptance reconciliation. Demo preparation, rehearsal and PPTX creation are excluded; F10.2 is deferred, and existing presentation files remain unchanged. This scope update supersedes earlier demo requirements in this plan without claiming the specification's section 13 is complete.
 
 ## How to use this plan
 
@@ -16,7 +18,7 @@ The specification remains the authority for scientific requirements and evidence
 
 ## Current baseline and changes from the initial plan
 
-Resume at **F08.1**. F01–F07 do not need to be implemented again. Their completion means the recorded application gates passed, not that all development cases or scientific claims have been evaluated. F08–F10 remain unfinished.
+F01–F07 retain their recorded development gates. **F09 artifact reproducibility and F10 setup/documentation are verified under the revised scope; F10.2 is deferred.** F08 remains open because source-support failures and the coherent eight-case development gate are unresolved. Verifying the saved final batch does not retrospectively satisfy that prerequisite or the full scientific acceptance checklist.
 
 | Area | Implemented baseline to preserve | Consequence for the remaining plan |
 |---|---|---|
@@ -31,9 +33,9 @@ Resume at **F08.1**. F01–F07 do not need to be implemented again. Their comple
 
 **Recorded verification and limits:** F06/F07 receipts below establish API and browser workflows. The later [Gemini/history receipt](../../outputs/provider_smoke/gemini_history_review.json) records 289 backend tests, 17 frontend tests, a production build, controlled browser checks and live D01/D02 assessments through Qwen fallback. Those are historical results at the receipt's recorded hashes, not a fresh test of every subsequent change. The receipt reports Gemini daily-quota failures and a staged source pilot; it does not establish successful live Gemini generation or a new full corpus build. The active pointer inspected for this reconciliation remains `corpus-4aac882441587796afe5`.
 
-**F08 entry gaps:** D01–D08 are now stored verbatim with source paragraph locations and the supplied DOCX hash; `evaluation/run_evaluation.py` now runs them through the public API with isolated history and incremental manifests. `evaluation/final.json` and the original H01–H06 material remain an F09 dependency. The F07 live review's NIR/MIR source-relevance finding has been reproduced as a general method-rationale conflict check and corrected in the synthesis validation/prompt; fresh provider outputs must still receive semantic source review.
+**F08 entry gaps:** D01–D08 are now stored verbatim with source paragraph locations and the supplied DOCX hash; `evaluation/run_evaluation.py` now runs them through the public API with isolated history and incremental manifests. `evaluation/final.json` and the original H01–H06 material are now present and verified against each other; the six saved envelopes pass the F09 artifact checks. The F07 live review's NIR/MIR source-relevance finding has been reproduced as a general method-rationale conflict check and corrected in the synthesis validation/prompt; fresh provider outputs must still receive semantic source review.
 
-Existing diagnostic runners and receipts are useful starting points, but they do not complete the eight-case development review or the six-case final evaluation. Keep Gemini quota/comparison limitations explicit; an evaluation using an available, recorded Qwen provider need not wait for a Gemini corpus rebuild.
+Existing diagnostic runners and receipts do not complete the eight-case development quality review. The six-case final artifact/reproducibility gate is now verified separately, with content failures disclosed. Keep Gemini quota/comparison limitations explicit; an evaluation using an available, recorded Qwen provider need not wait for a Gemini corpus rebuild.
 
 ## Implementation sequence
 
@@ -49,11 +51,11 @@ The timeboxes retain the specification's original proposed 12-hour budget for re
 | F06 | Feasibility planning and validated API | F05 | 1.5 h | Complete API result with checks and bounded failures |
 | F07 | Assessment interface, history and export | F06 | 2 h | Browser enquiry → clarification rounds → evidence → JSON/PDF |
 | F08 | Development evaluation and fixes — next | F07 | 1.5 h | Reviewed D01–D08 results, source-relevance fixes and current-workflow regressions |
-| F09 | Reproducible final evaluation | F08 | 1 h | Six generated final outputs and manifest with actual provider identities |
-| F10 | Reproducible setup and demonstration | F09 | 0.5 h | Fresh-start instructions, slides and demo |
+| F09 | Reproducible final evaluation — artifact gate verified | F08 quality gate remains open; saved-batch verification agreed separately | 1 h | Six preserved generated outputs, portable provenance and content-limitations review |
+| F10 | Reproducible setup and documentation — revised gate verified | F09 artifact gate | 0.5 h | Fresh install/restoration, live browser/export checks and acceptance evidence; F10.2 deferred |
 | | **Total** | | **12 h** | |
 
-**Current milestone:** F02–F07 support the complete application workflow. Next, evaluate the general pipeline and its claim support across all eight development cases, then freeze it for F09. Expand corpus coverage only where review demonstrates a gap.
+**Current milestone:** F09 reproducibility and revised F10 setup/documentation are verified. The retained H01–H06 answers remain unchanged and have known scientific-content failures. Future scientific work must resolve general defects using development cases, close F08 and version/rerun all six if the shared assessment pipeline changes. No claim of full-specification completion is made.
 
 ## F01 — Project foundation and provider connection
 
@@ -319,49 +321,55 @@ These additions are implemented; Gemini-specific live generation and original-fi
 **Spec:** Sections 2 and 10.1.\
 **Primary files:** `evaluation/final.json`, `evaluation/run_evaluation.py`, `outputs/H01.json`–`outputs/H06.json`, `outputs/run_manifest.json`, `outputs/runs/`.
 
-- [ ] **F09.1 — Freeze the general pipeline**
-  - [ ] Preserve the exact H01–H06 enquiry text from the supplied file and verify the stored inputs against it.
-  - [ ] Record implementation revision, prompt/schema hashes and versions, corpus/index identity, effective time/token/repair/retrieval settings and provider policy. Either pin a verified provider/model or freeze automatic order and profiles, recording actual models/attempts per stage; one configuration does not imply one actual provider.
-  - [ ] Verify original final-scenario material is available before generating `evaluation/final.json`; never reconstruct missing H inputs from memory or development cases.
-  - [ ] Inspect runtime prompts, retrieval data, synonym maps and code for evaluation-case text, IDs or answer lookups; remove any case-specific behavior.
+**Current execution scope:** Verify and document the existing six-case batch rather than regenerate answers or change the general assessment pipeline. Preserve earlier/failed runs and diagnostic reruns, record integrity checks separately from answer-quality findings, and leave unresolved scientific acceptance items open. If an integrity defect requires pipeline changes or regeneration, record the blocker rather than silently replacing the submission.
 
-- [ ] **F09.2 — Generate and record all six outputs**
-  - [ ] Run every unmodified final enquiry through the same assessment route as the UI with the F08 runner, isolated history storage and no added clarification answers; use IDs only to associate inputs with output filenames.
-  - [ ] Save each full machine-produced envelope without manual answer editing.
-  - [ ] Write a manifest containing input text or verifiable hashes, timestamps, frozen configuration identity, actual stage provider/model identities, enquiry/run IDs, output paths/hashes and HTTP/run/scientific outcomes; export any supporting traces needed without requiring the local SQLite database.
-  - [ ] Confirm all six runs are complete; an incomplete/error record does not meet the submission requirement.
+- [x] **F09.1 — Freeze the general pipeline**
+  - [x] Preserve the exact H01–H06 enquiry text from the supplied file and verify the stored inputs against it.
+  - [x] Record implementation revision, prompt/schema hashes and versions, corpus/index identity, effective time/token/repair/retrieval settings and provider policy. Either pin a verified provider/model or freeze automatic order and profiles, recording actual models/attempts per stage; one configuration does not imply one actual provider.
+  - [x] Verify original final-scenario material is available before generating `evaluation/final.json`; never reconstruct missing H inputs from memory or development cases.
+  - [x] Inspect runtime prompts, retrieval data, synonym maps and code for evaluation-case text, IDs or answer lookups; remove any case-specific behavior.
 
-- [ ] **F09.3 — Verify the submission set**
-  - [ ] Check each output's schema, evidence references and consistency with its manifest entry.
-  - [ ] Preserve earlier and failed runs; if a general bug requires a change, version it and rerun all six under one configuration.
-  - [ ] Describe these as organizer-provided evaluation scenarios, not an unseen benchmark, and record observed limitations.
+- [x] **F09.2 — Generate and record all six outputs**
+  - [x] Run every unmodified final enquiry through the same assessment route as the UI with the F08 runner, isolated history storage and no added clarification answers; use IDs only to associate inputs with output filenames.
+  - [x] Save each full machine-produced envelope without manual answer editing.
+  - [x] Write a manifest containing input text or verifiable hashes, timestamps, frozen configuration identity, actual stage provider/model identities, enquiry/run IDs, output paths/hashes and HTTP/run/scientific outcomes; export any supporting traces needed without requiring the local SQLite database.
+  - [x] Confirm all six runs are complete; an incomplete/error record does not meet the submission requirement.
+
+- [x] **F09.3 — Verify the submission set**
+  - [x] Check each output's schema, evidence references and consistency with its manifest entry.
+  - [x] Preserve earlier and failed runs; if a general bug requires a change, version it and rerun all six under one configuration.
+  - [x] Describe these as organizer-provided evaluation scenarios, not an unseen benchmark, and record observed limitations.
 
 **Completion gate:** H01–H06 each have a completed, unedited generated envelope under one recorded configuration, with their supporting evidence and manifest available in the repository.
 
-## F10 — Reproducible setup and demonstration
+**Observed F09 status (2026-10-18): Artifact/reproducibility gate verified.** `outputs/submission_verification.json` records exact original-input checks, six complete envelopes, canonical/archive equality, configuration and supporting-artifact hashes, runtime/corpus case-content audit and credential/inventory scan. A portable copy verifies with HTTP/SQLite disabled and no originals/live index. All final answers, manifests and archived snapshots remain unchanged. `docs/scenario_content_review.md` and `docs/acceptance_review.md` disclose substantive failures; F08 and full scientific acceptance remain open. The setup-only websocket pin correction is explicitly recorded against the archived dependency snapshot.
 
-**Outcome:** An evaluator can install the app, understand the architecture and see a short working demonstration.\
-**Spec:** Sections 11, 13 and 14.\
-**Primary files:** `README.md`, `.env.example`, presentation/demo materials, this plan's progress log.
+## F10 — Reproducible setup and documentation
 
-- [ ] **F10.1 — Finish setup and architecture documentation**
-  - [ ] Document installation, source placement, corpus rebuild, automatic/pinned provider configuration, startup, checks and the implemented development/final evaluation commands.
-  - [ ] Explain the pipeline, source handling, citation scope, uncertainty behavior and known limitations.
-  - [ ] Document external sources if any, keep external retrieval disabled by default, and avoid publishing supplied originals unless redistribution is established.
-  - [ ] Verify a fresh setup using the instructions and confirm that credentials are absent from tracked files and outputs.
-  - [ ] Document local history storage, enquiry continuation, chemist versus trace exports and the fact that traces contain enquiry/source/model content. Reconcile the specification's earlier provider/API examples and deferred-feature list with the implemented scope and final evidence.
+**Outcome:** An evaluator can install the app, understand the architecture and inspect the reproducibility evidence and known limitations.\
+**Spec:** Sections 11 and 14; section 13 demonstration work is deferred by user request.\
+**Primary files:** `README.md`, `.env.example`, verification receipts, this plan's progress log.
 
-- [ ] **F10.2 — Prepare the five-minute demonstration**
-  - [x] Create concise slides covering the customer problem, workflow, architecture, evaluation and limitations.
-  - [ ] Rehearse a development/novel enquiry through facts, recommendations, evidence and feasibility plan, followed by a clarification round/history reopen and same-run export; include a contrasting uncertainty case within the time limit.
-  - [x] Add a timed script with a clearly labelled prior-run fallback; live timing and environment verification remain open.
+- [x] **F10.1 — Finish setup and architecture documentation**
+  - [x] Document installation, source placement, corpus rebuild, automatic/pinned provider configuration, startup, checks and the implemented development/final evaluation commands.
+  - [x] Explain the pipeline, source handling, citation scope, uncertainty behavior and known limitations.
+  - [x] Document external sources if any, keep external retrieval disabled by default, and avoid publishing supplied originals unless redistribution is established.
+  - [x] Verify a fresh setup using the instructions and confirm that credentials are absent from tracked files and outputs.
+  - [x] Document local history storage, enquiry continuation, chemist versus trace exports and the fact that traces contain enquiry/source/model content. Reconcile the specification's earlier provider/API examples and deferred-feature list with the implemented scope and final evidence.
 
-- [ ] **F10.3 — Close the implementation checklist**
-  - [ ] Review every acceptance item in specification section 14 against actual evidence.
-  - [ ] Record completed features, deferred optional items and remaining limitations in the progress log and README.
-  - [ ] Confirm required code, reproducibility instructions, final outputs, manifest and presentation materials are present.
+- **F10.2 — Five-minute demonstration — Deferred by user request (2026-10-18)**
+  - Skip demo preparation, rehearsal, timing and PPTX creation or updates.
+  - Retain the existing deck and script unchanged as historical artifacts; their presence does not establish a completed demonstration.
+  - Demonstration work does not block the revised F10 completion gate. Ordinary application/browser verification remains part of setup and acceptance checks.
 
-**Completion gate:** The documented fresh-start workflow works, required artifacts are present, and the demonstration makes claims supported by observed results.
+- [x] **F10.3 — Close the implementation checklist**
+  - [x] Review every acceptance item in specification section 14 against actual evidence.
+  - [x] Record completed features, deferred optional items and remaining limitations in the progress log and README.
+  - [x] Confirm required code, reproducibility instructions, final outputs, manifest and supporting evidence are present; record F10.2 and the specification's demonstration requirement as deferred.
+
+**Completion gate (revised scope):** The documented fresh-start workflow works, required code/evaluation artifacts and supporting evidence are present, and setup/architecture claims are supported by observed results. F10.2 remains explicitly deferred; this gate does not claim completion of the full demonstration requirement.
+
+**Observed F10 status (2026-10-18): Revised setup/documentation gate verified.** `outputs/setup_verification.json` and `outputs/setup_checks/` retain fresh virtual-environment/npm installation, dependency checks, 64-page saved-evidence restoration, real hybrid searches, missing-key HTTP-503 behavior and authorized live LLMTech D01 → clarification → evidence → exact JSON/PDF export → history reopen. Edge/Playwright at 1440×1000 and 390×844 passed without relevant console errors or document overflow. Backend regression: **316 passed**; evaluation-runner subset: **17 passed**; frontend: **17 passed** and production build passed. The embedding cache was supplied; first model download and cold source re-extraction were not retested. The isolated restoration has a new corpus/index identity and leaves the submission corpus unchanged. No demo or presentation work was performed by this increment.
 
 ## Optional work after the required workflow
 
@@ -382,7 +390,7 @@ Direct clarification answers and original-enquiry editing are already supported.
 | Extra model tooling consumes time by hour 6 | Keep backend-directed retrieval and one structured synthesis stage |
 | A complete assessment is unavailable by hour 7 | Finish F05/F06 before adding UI polish |
 | UI remains unfinished by hour 9 | Use the minimal input, result sections, expandable evidence and JSON export |
-| Hour 10.5 is reached | Freeze optional features and protect time for final outputs, setup and demo |
+| Hour 10.5 is reached | Freeze optional features and protect time for final-output verification, setup and documentation; demonstration work is deferred |
 
 Do not reduce scope by removing citations, fabricating missing facts, manually editing final answers or treating failed runs as completed evaluations.
 
@@ -402,7 +410,7 @@ Entries below are historical checkpoints. Their then-current next steps, provide
 
 **Runner note:** Python asynchronous networking and the Vite proxy stalled inside the restricted Windows sandbox. Tests and both servers were verified outside it; a minimal traceback located the stall in Windows `socketpair` during event-loop creation. Workspace-local temporary paths resolved the separate `ensurepip` write restriction. These accommodations do not change application behavior.
 
-**Suggested next iteration request:** “Complete F08.2/F08.3: review the generated D01–D08 claims against their cited source passages, record the per-case review receipt, rerun any materially corrected cases as one coherent batch, and finish the clarification/history/export regression checks before freezing F09. Preserve prior results and keep final scenarios out of tuning.”
+**Suggested future scientific iteration:** “Resolve the general extraction, retrieval and evidence-use defects using development cases, complete F08.2/F08.3 with one coherent D01–D08 batch and source-support review, then version and rerun all six final scenarios if the shared pipeline changes. Preserve the current submission and keep final scenarios out of tuning.”
 
 
 ### 2026-10-17 — F02 implementation and bounded live validation
@@ -546,3 +554,22 @@ At the user's request, documented the implemented capabilities for later pipelin
 - Added final-input integrity tests for H01–H06 parsing, source hashes and mutation rejection. The original `customer_scenarios_for_final_evaluation.txt` is still absent from `knowledge/original_sources/`; `evaluation/final.json` and final outputs therefore remain intentionally ungenerated.
 - Updated README with fresh-start and final-run commands, automatic-routing provenance, local history/trace-export handling and the final evaluation boundary. Added an editable five-slide deck at `presentation/output/spectraplan-demo.pptx` and a timed rehearsal script at `presentation/demo_script.md`. The presentation candidate passed the bundled package, layout and first-party import checks; OneDrive rejected the finalizer hard-link, so the validated candidate was copied unchanged to the repository output.
 - Verification: `python -m pytest -q tests/test_evaluation_runner.py --basetemp=tmp/pytest-f09` — **4 passed**; Python compilation passed; rendered deck slides were inspected at full size. F08 semantic review, one coherent D01–D08 rerun, fresh browser demonstration and final H01–H06 source remain open.
+
+### 2026-10-18 — F09/F10 agreed scope update
+
+- Preserve and verify the existing final batch, document content failures and retain unresolved scientific acceptance items. General pipeline fixes and final-answer regeneration are outside this increment.
+- At the user's request, defer F10.2 and skip demo preparation, rehearsal and PPTX creation or updates. Existing presentation files remain unchanged.
+- Retain setup/architecture documentation, fresh-install checks, ordinary browser/export verification and acceptance reconciliation. Update the F10 outcome, implementation sequence and completion gate to reflect this reduced scope; section 13 is not marked complete.
+- This increment changes the plan only. It does not complete implementation gates or add new runtime/test evidence.
+
+
+### 2026-10-18 — F09 artifact verification and F10 setup/documentation completion
+
+- Retained final batch `4c14fccd1a3d4eadb672c14de91c142e` and all H01–H06 answer bytes, earlier/failed runs, original manifests and source snapshots. Added `scripts/verify_submission.py`, a separate verification receipt and section-14 acceptance review; scientific failures remain disclosed rather than edited away.
+- Corrected the install-only websocket pin from 17.2 to 16.1.1 after a fresh dependency-resolution failure; the inspected working environment already used 16.1.1. Preserved the archived dependency file and recorded the difference. Aligned `.env.example` with the default three-provider order and documented optional Regolo behavior. Ignored source originals and per-run SQLite databases while retaining portable exports.
+- Added `scripts/restore_corpus.py`: verifies supplied originals/saved-evidence hashes, reconstructs 64 page images and local indexes/report without extraction-model calls, validates deeply and publishes a new corpus identity. A fresh venv/npm workspace restored 152 passages, 81 searchable passages, 19 methods and seven unchanged notes using the supplied BGE cache. The original submission corpus pointer remains unchanged.
+- Updated README, setup/reproducibility instructions and specification annotations. `docs/acceptance_review.md` reviews every section-14 item as passed/partial/unverified, reconciles implemented history/hybrid/PDF features with the old backlog and explicitly defers F10.2.
+- Verification: `python -m pytest -q --basetemp=tmp/f09-f10-regression-20261018 --junitxml=tmp/f09-f10-tests.xml` — **316 passed** (one Starlette/HTTPX deprecation warning); evaluation-runner subset — **17 passed**; fresh `pip check` — no broken requirements; fresh `npm ci`, **17 frontend tests**, typecheck and production build — passed.
+- Fresh runtime/browser verification used isolated ports 18090/15173. It checked a real missing-key incomplete result, real technical searches, two explicitly authorized LLMTech development rounds, embedded evidence, byte-content-equivalent JSON download, both same-run PDFs and history reopen. Screenshots and browser receipts distinguish observed behavior from scientific correctness. Initial automatic review rejected the external test; the user explicitly authorized its data/destination before execution. No unresolved approval blocker remains.
+- Completion: F09 artifact/reproducibility and revised F10 setup/documentation gates verified. F08 scientific-quality findings remain open; demo/PPTX work remains deferred. First embedding download and cold model source re-extraction were not retested. No application assessment code, frozen answer or archived manifest was changed by this increment.
+- Commit packaging: preserve hashed archive bytes through Git attributes. Redundant trace PDF renderings (including files over 100 MB) remain local and ignored; complete machine-readable traces/evidence and unchanged manifests remain in the repository. `outputs/archive_storage.json` records the optional PDF paths and hashes; portable verification does not require these human-readable derivatives.

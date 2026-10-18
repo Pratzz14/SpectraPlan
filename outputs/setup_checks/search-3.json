@@ -1,0 +1,1757 @@
+{
+  "query": "opaque dairy fat protein",
+  "mode": "compare",
+  "dataset": "technical",
+  "versions": {
+    "technical": "corpus-5c462abafd6240aa941e"
+  },
+  "limit": 6,
+  "elapsed_ms": 156.0,
+  "query_terms": [
+    "opaque",
+    "dairy",
+    "fat",
+    "protein"
+  ],
+  "expanded_terms": [],
+  "rankings": {
+    "bm25": [
+      {
+        "rank": 1,
+        "score": 14.654026917663865,
+        "bm25_score": 14.654026917663865,
+        "qdrant_score": 0.7411311170103033,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "opaque",
+          "dairy",
+          "fat",
+          "protein"
+        ],
+        "matching_segment": "Inline Milk Analysis: NIR Reflection\n4.\n\nInline Milk Analysis.\n\nThe use of Near-Infrared (NIR) spectroscopy for the inline monitoring of milk is a cornerstone of \nmodern dairy \"Process Analytical Technology\" (PAT).\n\nMaintaining both NIR Reflection and NIR \nTransmission techniques in a lab environment provides a comprehensive analytical suite capable of \nhandling the diverse physical properties of dairy products.\n\n- \nNIR Reflection: Inline NIR Reflection is primarily used for opaque or highly concentrated dairy \nproducts, such as yogurt, butter, or whole milk concentrates.\n\nThe main equipment includes a fiber \noptic probe where one set of fibers delivers light to the sample and the other collects the \n\"backscattered\" light.\n\nExperimentally, the probe is flush-mounted into a pipe or vat to interact \ndirectly with the flowing medium.\n\nBecause the light does not penetrate deeply, the method is \nsensitive to the surface characteristics and fat globule size.\n\nData processing may involve converting \nthe reflectance values to absorbance and applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations to remove physical interference caused by the \nscattering nature of the milk particles before using Partial Least Squares (PLS) regression to \nquantify fat and protein.",
+        "evidence": {
+          "section": "Inline Milk Analysis: NIR Reflection",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "application_example",
+          "spans": [
+            {
+              "block_id": "b004",
+              "quote": null
+            },
+            {
+              "block_id": "b005",
+              "quote": null
+            },
+            {
+              "block_id": "b006",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "method",
+              "statement": "NIR Reflection spectroscopy is used for opaque dairy products, with data processed using Multiplicative Scatter Correction (MSC) or Standard Normal Variate (SNV) and PLS regression.",
+              "support_quotes": [
+                "applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations",
+                "using Partial Least Squares (PLS) regression to \nquantify fat and protein."
+              ],
+              "quantities": []
+            }
+          ],
+          "tags": [],
+          "issues": [],
+          "evidence_id": "S01:p017:txt:03613ea0cb0945fb",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 17,
+          "text": "4. Inline Milk Analysis. \n\n\nThe use of Near-Infrared (NIR) spectroscopy for the inline monitoring of milk is a cornerstone of \nmodern dairy \"Process Analytical Technology\" (PAT). Maintaining both NIR Reflection and NIR \nTransmission techniques in a lab environment provides a comprehensive analytical suite capable of \nhandling the diverse physical properties of dairy products. \n\n\n- \nNIR Reflection: Inline NIR Reflection is primarily used for opaque or highly concentrated dairy \nproducts, such as yogurt, butter, or whole milk concentrates. The main equipment includes a fiber \noptic probe where one set of fibers delivers light to the sample and the other collects the \n\"backscattered\" light. Experimentally, the probe is flush-mounted into a pipe or vat to interact \ndirectly with the flowing medium. Because the light does not penetrate deeply, the method is \nsensitive to the surface characteristics and fat globule size. Data processing may involve converting \nthe reflectance values to absorbance and applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations to remove physical interference caused by the \nscattering nature of the milk particles before using Partial Least Squares (PLS) regression to \nquantify fat and protein. \n",
+          "source_spans": [
+            {
+              "block_id": "b004",
+              "quote": "4. Inline Milk Analysis. \n",
+              "start": 0,
+              "end": 26,
+              "bbox": [
+                72.0250015258789,
+                521.9450073242188,
+                190.3300018310547,
+                534.2760009765625
+              ]
+            },
+            {
+              "block_id": "b005",
+              "quote": "The use of Near-Infrared (NIR) spectroscopy for the inline monitoring of milk is a cornerstone of \nmodern dairy \"Process Analytical Technology\" (PAT). Maintaining both NIR Reflection and NIR \nTransmission techniques in a lab environment provides a comprehensive analytical suite capable of \nhandling the diverse physical properties of dairy products. \n",
+              "start": 0,
+              "end": 352,
+              "bbox": [
+                72.0250015258789,
+                544.5989990234375,
+                526.20703125,
+                600.8059692382812
+              ]
+            },
+            {
+              "block_id": "b006",
+              "quote": "- \nNIR Reflection: Inline NIR Reflection is primarily used for opaque or highly concentrated dairy \nproducts, such as yogurt, butter, or whole milk concentrates. The main equipment includes a fiber \noptic probe where one set of fibers delivers light to the sample and the other collects the \n\"backscattered\" light. Experimentally, the probe is flush-mounted into a pipe or vat to interact \ndirectly with the flowing medium. Because the light does not penetrate deeply, the method is \nsensitive to the surface characteristics and fat globule size. Data processing may involve converting \nthe reflectance values to absorbance and applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations to remove physical interference caused by the \nscattering nature of the milk particles before using Partial Least Squares (PLS) regression to \nquantify fat and protein. \n",
+              "start": 0,
+              "end": 897,
+              "bbox": [
+                72.0250015258789,
+                610.9019775390625,
+                526.1729736328125,
+                756.3509521484375
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p017.jpg",
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "The description of NIR Reflection spectroscopy for opaque dairy products and the specific data processing steps (MSC, SNV, and PLS regression) are accurately transcribed from the text blocks provided in b004 through b006."
+          },
+          "revision": "9f5f308d1c6bf85bd2e441e0",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 2,
+        "score": 6.467493967365592,
+        "bm25_score": 6.467493967365592,
+        "qdrant_score": 0.7025873113064676,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "dairy",
+          "fat"
+        ],
+        "matching_segment": "Dual-Technique Advantage and Advanced Methods\n- \nThe Advantage of Dual-Technique Availability: having both fiber optic techniques available in a \nlab rather than relying on one provides the flexibility needed to monitor the entire production chain.\n\nWhile transmission is superior for the high-precision analysis of dilute process streams (like whey \nfiltration), it fails when the milk becomes too \"thick\" or fat-rich, as the light cannot penetrate the \nsample.\n\nConversely, reflection can work well in highly scattering environments but can be less \nrepresentative for clear liquids.\n\nBy maintaining both, a lab can calibrate models for every stage of \nproduction - from raw milk intake to final evaporation - ensuring that no matter how the physical \nstate of the milk changes during processing, the inline monitoring remains accurate and robust.\n\nIn \nsome cases, a Transflection probe can already be a combined solution working well for low-fat and \nhigh-fat containing milk products.\n\nNIR Spectrometer and NIR light source remain the same for both \nreflection and transmission techniques.\n\nWhile NIR is the workhorse of the dairy industry, advanced labs often incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques to capture specific chemical or structural \ninformation that NIR might miss.\n\nThese methods provide a higher level of \"molecular specificity,\" \nmaking them useful for specialized monitoring in milk analysis.",
+        "evidence": {
+          "section": "Dual-Technique Advantage and Advanced Methods",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "general_method",
+          "spans": [
+            {
+              "block_id": "b002",
+              "quote": null
+            },
+            {
+              "block_id": "b003",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "method",
+              "statement": "Advanced labs often incorporate Fluorescence, Raman, and Mid-Infrared (MIR) ATR techniques alongside NIR to capture specific chemical or structural information.",
+              "support_quotes": [
+                "incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques"
+              ],
+              "quantities": []
+            }
+          ],
+          "tags": [
+            "multi-technique",
+            "Raman",
+            "Fluorescence",
+            "MIR"
+          ],
+          "issues": [],
+          "evidence_id": "S01:p018:txt:250c09c5fdb749b3",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 18,
+          "text": " \n- \nThe Advantage of Dual-Technique Availability: having both fiber optic techniques available in a \nlab rather than relying on one provides the flexibility needed to monitor the entire production chain. \nWhile transmission is superior for the high-precision analysis of dilute process streams (like whey \nfiltration), it fails when the milk becomes too \"thick\" or fat-rich, as the light cannot penetrate the \nsample. Conversely, reflection can work well in highly scattering environments but can be less \nrepresentative for clear liquids. By maintaining both, a lab can calibrate models for every stage of \nproduction - from raw milk intake to final evaporation - ensuring that no matter how the physical \nstate of the milk changes during processing, the inline monitoring remains accurate and robust. In \nsome cases, a Transflection probe can already be a combined solution working well for low-fat and \nhigh-fat containing milk products. NIR Spectrometer and NIR light source remain the same for both \nreflection and transmission techniques. \n\n\nWhile NIR is the workhorse of the dairy industry, advanced labs often incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques to capture specific chemical or structural \ninformation that NIR might miss. These methods provide a higher level of \"molecular specificity,\" \nmaking them useful for specialized monitoring in milk analysis. \n",
+          "source_spans": [
+            {
+              "block_id": "b002",
+              "quote": " \n- \nThe Advantage of Dual-Technique Availability: having both fiber optic techniques available in a \nlab rather than relying on one provides the flexibility needed to monitor the entire production chain. \nWhile transmission is superior for the high-precision analysis of dilute process streams (like whey \nfiltration), it fails when the milk becomes too \"thick\" or fat-rich, as the light cannot penetrate the \nsample. Conversely, reflection can work well in highly scattering environments but can be less \nrepresentative for clear liquids. By maintaining both, a lab can calibrate models for every stage of \nproduction - from raw milk intake to final evaporation - ensuring that no matter how the physical \nstate of the milk changes during processing, the inline monitoring remains accurate and robust. In \nsome cases, a Transflection probe can already be a combined solution working well for low-fat and \nhigh-fat containing milk products. NIR Spectrometer and NIR light source remain the same for both \nreflection and transmission techniques. \n",
+              "start": 0,
+              "end": 1047,
+              "bbox": [
+                72.0250015258789,
+                225.77902221679688,
+                526.22998046875,
+                400.2460021972656
+              ]
+            },
+            {
+              "block_id": "b003",
+              "quote": "While NIR is the workhorse of the dairy industry, advanced labs often incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques to capture specific chemical or structural \ninformation that NIR might miss. These methods provide a higher level of \"molecular specificity,\" \nmaking them useful for specialized monitoring in milk analysis. \n",
+              "start": 0,
+              "end": 362,
+              "bbox": [
+                72.0250015258789,
+                410.8190002441406,
+                528.969970703125,
+                466.9960021972656
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p018.jpg",
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "The text confirms advanced labs incorporate Fluorescence, Raman, and MIR ATR techniques to capture specific molecular information."
+          },
+          "revision": "3dbc2c1783f50b4c3f9e11c9",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 3,
+        "score": 5.837997444442348,
+        "bm25_score": 5.837997444442348,
+        "qdrant_score": 0.6775186993259397,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "fat",
+          "protein"
+        ],
+        "matching_segment": "Multispectral Classification of Biological Tissue\nMultispectral Classi\ufb01cation of Biological Tissue.\n\nThe\ndeveloped multispectral probe was tested in the practical\nanalysis of biological tissue samples using di\ufb00erent organs and\nparts of the chicken: breast, fat, and liver.\n\nThe general chemical\nsimilarity of biological objects makes spectroscopic recognition\nof di\ufb00erent tissue types a nontrivial task, which requires careful\noptimization of the measurement technique.\n\nCommercially\nproduced poultry combines the availability of fresh samples\nand the variability of tissue types, making it an attractive model\nsystem for evaluating spectroscopic methods and equipment.\n\nTo provide the necessary statistical representativeness of the\ndata, three samples of each tissue type were prepared.\n\nThe\nsamples were large enough to re\ufb02ect the possible heterogeneity\nof the tissue.\n\nEach sample was represented by \ufb01ve distributed\npoints.\n\nThis experimental design resulted in two data matrices:\na 45 \u00d7 118 XIR matrix of Fourier-transform (FT) IR and 45 \u00d7\n705 XFL of \ufb02uorescence spectra (see the Supporting\nInformation for more information).\n\nPreliminary visual exploration of the obtained spectra\n(Figure 2) revealed the di\ufb00erent abilities of the two techniques\nto recognize certain tissue types.\n\nThe discriminative power of\nmid-IR spectroscopy (Figure 2a and Figure S-4) toward rich in\nlipids fat samples is related to the stretching vibration band of\n\nthe ester carbonyl C\ue0c8O at about 1740 cm\u22121, which is\ncharacteristic of saturated triglycerides.20 At the same time, all\nthree sample types (fat to a lesser extent) have in the selected\nregion two very similar signals with maxima at 1548 and 1640\ncm\u22121.\n\nThese are, respectively, the amide I and II bands, two\nmajor absorption peaks of the protein peptide group in the\ninfrared region.21 Low measurement reproducibility of the fat\nsamples (broad standard deviation in Figure 2a) is explained\nby higher inhomogeneity of this tissue type, because the\nspectra in all points of analysis always represent a mixture of\nlipids with an essential part of neighboring proteins.",
+        "evidence": {
+          "section": "Multispectral Classification of Biological Tissue",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "research_demonstration",
+          "spans": [
+            {
+              "block_id": "b007",
+              "quote": null
+            },
+            {
+              "block_id": "b009",
+              "quote": null
+            },
+            {
+              "block_id": "b010",
+              "quote": null
+            },
+            {
+              "block_id": "b005",
+              "quote": null
+            },
+            {
+              "block_id": "b008",
+              "quote": null
+            },
+            {
+              "block_id": "b011",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [],
+          "tags": [
+            "biological tissue",
+            "chicken breast",
+            "IR",
+            "fluorescence"
+          ],
+          "issues": [],
+          "evidence_id": "S04:p003:txt:63787604987d3bce",
+          "source_id": "S04",
+          "file_name": "S04_Combi_MIR_Fluorescence_2021.pdf",
+          "source_sha256": "7286bc915e322363395ae10b0519a5705487e013dd69d4930e24f6542bee6b4b",
+          "page": 3,
+          "text": "Multispectral Classi\ufb01cation of Biological Tissue. The\ndeveloped multispectral probe was tested in the practical\nanalysis of biological tissue samples using di\ufb00erent organs and\nparts of the chicken: breast, fat, and liver. The general chemical\nsimilarity of biological objects makes spectroscopic recognition\nof di\ufb00erent tissue types a nontrivial task, which requires careful\noptimization of the measurement technique. Commercially\nproduced poultry combines the availability of fresh samples\nand the variability of tissue types, making it an attractive model\nsystem for evaluating spectroscopic methods and equipment.\n\n\nTo provide the necessary statistical representativeness of the\ndata, three samples of each tissue type were prepared. The\nsamples were large enough to re\ufb02ect the possible heterogeneity\nof the tissue. Each sample was represented by \ufb01ve distributed\npoints. This experimental design resulted in two data matrices:\na 45 \u00d7 118 XIR matrix of Fourier-transform (FT) IR and 45 \u00d7\n705 XFL of \ufb02uorescence spectra (see the Supporting\nInformation for more information).\n\n\nPreliminary visual exploration of the obtained spectra\n(Figure 2) revealed the di\ufb00erent abilities of the two techniques\nto recognize certain tissue types. The discriminative power of\nmid-IR spectroscopy (Figure 2a and Figure S-4) toward rich in\nlipids fat samples is related to the stretching vibration band of\n\n\nthe ester carbonyl C\ue0c8O at about 1740 cm\u22121, which is\ncharacteristic of saturated triglycerides.20 At the same time, all\nthree sample types (fat to a lesser extent) have in the selected\nregion two very similar signals with maxima at 1548 and 1640\ncm\u22121. These are, respectively, the amide I and II bands, two\nmajor absorption peaks of the protein peptide group in the\ninfrared region.21 Low measurement reproducibility of the fat\nsamples (broad standard deviation in Figure 2a) is explained\nby higher inhomogeneity of this tissue type, because the\nspectra in all points of analysis always represent a mixture of\nlipids with an essential part of neighboring proteins. This fact\nalso explains the presence of protein amide I and II bands in\nthe IR spectra of fat in Figure 2a, making those bands less\nuseful for the sample classi\ufb01cation.\n\n\nThe \ufb02uorescence spectra (Figure S-5 in the Supporting\nInformation) after standard normal variate (SNV)22 correction\nlook very similar below 600 nm (Figure 2b). Low standard\ndeviations of the preprocessed spectra indicate homogeneity of\nthe samples from the \ufb02uorimetric point of view (considering\nlarger analyzed volumes). The observed broad band with the\nmaximum between 520 and 530 nm is formed by the emission\nof intracellular \ufb02uorophores with the dominating contribution\nof \ufb02avin adenine dinucleotide (FAD)23 that can be a\ufb00ected by\nthe overlaying laser emission peak \u201ctail\u201d passed through the\noptical \ufb01lter used (Supporting Information). This possible\ndistortion, however, does not play any signi\ufb01cant role in the\nsample classi\ufb01cation. The most selective peak at 613 nm, which\ncan be assigned to porphyrins, has su\ufb03cient speci\ufb01city to\ndistinguish the liver from other measured samples. The\nincreased content of this protein in the liver is expected,\nsince the liver has a central role in the metabolism of haem and\nporphyrins/porphyrinogens, which are intermediates in the\nhaem biosynthetic pathway.24\n\n\nPrincipal component analysis (PCA)25 was used to evaluate\nthe advantage of multispectral measurement with the\ndeveloped probe for multivariate sample classi\ufb01cation. IR\nand \ufb02uorescence data parts presented in Figure 2 were\nanalyzed both separately and jointly without any further\nmodi\ufb01cation, thus enabling a direct comparison of the results.\nFor the joint analysis, the IR and \ufb02uorescence spectra rescaled\nto have intensities between 0 and 1 were fused into a single\nmatrix X (45 \u00d7 823) with the augmented spectral axis: X =\n[XIRXFL]. The purpose of the data analysis was to investigate\n",
+          "source_spans": [
+            {
+              "block_id": "b007",
+              "quote": "Multispectral Classi\ufb01cation of Biological Tissue. The\ndeveloped multispectral probe was tested in the practical\nanalysis of biological tissue samples using di\ufb00erent organs and\nparts of the chicken: breast, fat, and liver. The general chemical\nsimilarity of biological objects makes spectroscopic recognition\nof di\ufb00erent tissue types a nontrivial task, which requires careful\noptimization of the measurement technique. Commercially\nproduced poultry combines the availability of fresh samples\nand the variability of tissue types, making it an attractive model\nsystem for evaluating spectroscopic methods and equipment.\n",
+              "start": 0,
+              "end": 617,
+              "bbox": [
+                51.5238037109375,
+                496.22833251953125,
+                291.53619384765625,
+                608.3424682617188
+              ]
+            },
+            {
+              "block_id": "b009",
+              "quote": "To provide the necessary statistical representativeness of the\ndata, three samples of each tissue type were prepared. The\nsamples were large enough to re\ufb02ect the possible heterogeneity\nof the tissue. Each sample was represented by \ufb01ve distributed\npoints. This experimental design resulted in two data matrices:\na 45 \u00d7 118 XIR matrix of Fourier-transform (FT) IR and 45 \u00d7\n705 XFL of \ufb02uorescence spectra (see the Supporting\nInformation for more information).\n",
+              "start": 0,
+              "end": 457,
+              "bbox": [
+                51.52381896972656,
+                609.512451171875,
+                291.5352478027344,
+                698.3963623046875
+              ]
+            },
+            {
+              "block_id": "b010",
+              "quote": "Preliminary visual exploration of the obtained spectra\n(Figure 2) revealed the di\ufb00erent abilities of the two techniques\nto recognize certain tissue types. The discriminative power of\nmid-IR spectroscopy (Figure 2a and Figure S-4) toward rich in\nlipids fat samples is related to the stretching vibration band of\n",
+              "start": 0,
+              "end": 311,
+              "bbox": [
+                51.52687454223633,
+                699.50634765625,
+                291.5202941894531,
+                754.56689453125
+              ]
+            },
+            {
+              "block_id": "b005",
+              "quote": "the ester carbonyl C\ue0c8O at about 1740 cm\u22121, which is\ncharacteristic of saturated triglycerides.20 At the same time, all\nthree sample types (fat to a lesser extent) have in the selected\nregion two very similar signals with maxima at 1548 and 1640\ncm\u22121. These are, respectively, the amide I and II bands, two\nmajor absorption peaks of the protein peptide group in the\ninfrared region.21 Low measurement reproducibility of the fat\nsamples (broad standard deviation in Figure 2a) is explained\nby higher inhomogeneity of this tissue type, because the\nspectra in all points of analysis always represent a mixture of\nlipids with an essential part of neighboring proteins. This fact\nalso explains the presence of protein amide I and II bands in\nthe IR spectra of fat in Figure 2a, making those bands less\nuseful for the sample classi\ufb01cation.\n",
+              "start": 0,
+              "end": 833,
+              "bbox": [
+                315.4895324707031,
+                270.22412109375,
+                555.5460815429688,
+                428.5143737792969
+              ]
+            },
+            {
+              "block_id": "b008",
+              "quote": "The \ufb02uorescence spectra (Figure S-5 in the Supporting\nInformation) after standard normal variate (SNV)22 correction\nlook very similar below 600 nm (Figure 2b). Low standard\ndeviations of the preprocessed spectra indicate homogeneity of\nthe samples from the \ufb02uorimetric point of view (considering\nlarger analyzed volumes). The observed broad band with the\nmaximum between 520 and 530 nm is formed by the emission\nof intracellular \ufb02uorophores with the dominating contribution\nof \ufb02avin adenine dinucleotide (FAD)23 that can be a\ufb00ected by\nthe overlaying laser emission peak \u201ctail\u201d passed through the\noptical \ufb01lter used (Supporting Information). This possible\ndistortion, however, does not play any signi\ufb01cant role in the\nsample classi\ufb01cation. The most selective peak at 613 nm, which\ncan be assigned to porphyrins, has su\ufb03cient speci\ufb01city to\ndistinguish the liver from other measured samples. The\nincreased content of this protein in the liver is expected,\nsince the liver has a central role in the metabolism of haem and\nporphyrins/porphyrinogens, which are intermediates in the\nhaem biosynthetic pathway.24\n",
+              "start": 0,
+              "end": 1105,
+              "bbox": [
+                315.4936218261719,
+                428.85137939453125,
+                555.5542602539062,
+                642.1212158203125
+              ]
+            },
+            {
+              "block_id": "b011",
+              "quote": "Principal component analysis (PCA)25 was used to evaluate\nthe advantage of multispectral measurement with the\ndeveloped probe for multivariate sample classi\ufb01cation. IR\nand \ufb02uorescence data parts presented in Figure 2 were\nanalyzed both separately and jointly without any further\nmodi\ufb01cation, thus enabling a direct comparison of the results.\nFor the joint analysis, the IR and \ufb02uorescence spectra rescaled\nto have intensities between 0 and 1 were fused into a single\nmatrix X (45 \u00d7 823) with the augmented spectral axis: X =\n[XIRXFL]. The purpose of the data analysis was to investigate\n",
+              "start": 0,
+              "end": 587,
+              "bbox": [
+                315.4954833984375,
+                638.848388671875,
+                555.5439453125,
+                755.6072387695312
+              ]
+            }
+          ],
+          "image": "assets/7286bc915e322363/S04-p003.jpg",
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "The candidate selects multiple blocks (b007-b011) corresponding to the section 'Multispectral Classification of Biological Tissue'. The content is verbatim text from the source, and the section header matches the content provided in the b"
+          },
+          "revision": "be5687987812e30c6704b8d8",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 4,
+        "score": 4.399020691873513,
+        "bm25_score": 4.399020691873513,
+        "qdrant_score": 0.6067908397760221,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "fat"
+        ],
+        "matching_segment": "Probe Schematic and Classification\ninfrared fluorescence tissue classification liver breast fat ATR autofluorescence fluorescence IR absorbance",
+        "evidence": {
+          "section": "Probe Schematic and Classification",
+          "content_kind": "figure_transcription",
+          "evidence_scope": "research_demonstration",
+          "spans": [],
+          "region": {
+            "x0": 0.52,
+            "y0": 0.3,
+            "x1": 0.98,
+            "y1": 0.52,
+            "label": "Schematic of ATR/Autofluorescence and Classification"
+          },
+          "transcription": "infrared fluorescence tissue classification liver breast fat ATR autofluorescence fluorescence IR absorbance",
+          "interpretation": "Diagram showing the probe interface with a tissue sample, emitting signals (infrared, fluorescence) and generating spectra, alongside a scatter plot classifying tissues as liver, breast, and fat based on fluorescence and IR absorbance.",
+          "facts": [
+            {
+              "category": "application",
+              "statement": "The developed probe demonstrated tissue classification capability for liver, breast, and fat samples.",
+              "support_quotes": [
+                "tissue classification liver breast fat"
+              ],
+              "quantities": []
+            }
+          ],
+          "tags": [
+            "tissue_classification",
+            "spectroscopy"
+          ],
+          "issues": [],
+          "evidence_id": "S04:p001:fig:8c0326912d1c1af5",
+          "source_id": "S04",
+          "file_name": "S04_Combi_MIR_Fluorescence_2021.pdf",
+          "source_sha256": "7286bc915e322363395ae10b0519a5705487e013dd69d4930e24f6542bee6b4b",
+          "page": 1,
+          "text": "infrared fluorescence tissue classification liver breast fat ATR autofluorescence fluorescence IR absorbance",
+          "source_spans": [],
+          "image": "assets/7286bc915e322363/S04-p001.jpg",
+          "verification": {
+            "candidate_index": 3,
+            "status": "supported",
+            "reason": "The figure in the specified region clearly displays a schematic of the probe interacting with tissue and a scatter plot labeled 'tissue classification' with points for 'liver', 'breast', and 'fat'."
+          },
+          "revision": "a3860738664527fcde481767",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 5,
+        "score": 3.0389368036782938,
+        "bm25_score": 3.0389368036782938,
+        "qdrant_score": 0.6225496724793899,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "fat"
+        ],
+        "matching_segment": "PLS-DA Series A Results\nThis was observed when using one of the channels as an internal reference.\n\nThus, the data sets for\nSeries A and B were analyzed in a multivariate mode without any scatter-correcting preprocessing.\n\nThe PLS-DA score plot (Figure 7) is a convenient way to visualize the \u201cstrength\u201d of the cancer\ndiscrimination.\n\nIn Series A, the tumor/normal class separation in the plane of the two \ufb01rst LVs is almost\ncomplete (Figure 7b).\n\nA few measurement points showing discrimination ambiguity problems were\nrelated to the spectral similarity of two different samples from patient 194.\n\nThis could be explained by\nthe high content of fat in both the tumor and normal samples of this patient.\n\nThe bright golden-yellow\ncolor of the tumor sample T194 was clearly due to intracellular lipid accumulation, while the normal\nsample N194 might have been a cut of the adipose capsule of the kidney (or perinephric fat), which is\na structure between the renal fascia and the renal capsule.\n\nIn spite of a reasonably strong variance in\nthe measurements of tumor samples observed in the factor space of the PLS-DA models, the overall\ntendency looks very promising.\n\nWhile none of the individual channels in Figure 8 can allow for\na reliable discrimination of the samples, multivariate data processing yielded rather convincing results.",
+        "evidence": {
+          "section": "PLS-DA Series A Results",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "research_demonstration",
+          "spans": [
+            {
+              "block_id": "b002",
+              "quote": null
+            },
+            {
+              "block_id": "b003",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [],
+          "tags": [],
+          "issues": [],
+          "evidence_id": "S03:p012:txt:e19aa643001dad23",
+          "source_id": "S03",
+          "file_name": "S03_LED_Kidney_Study_2017.pdf",
+          "source_sha256": "3cfb4771f150902a729f88ec4a40c90031c7a8d07e8641e653e4543157917fd4",
+          "page": 12,
+          "text": "This was observed when using one of the channels as an internal reference. Thus, the data sets for\nSeries A and B were analyzed in a multivariate mode without any scatter-correcting preprocessing.\n\n\nThe PLS-DA score plot (Figure 7) is a convenient way to visualize the \u201cstrength\u201d of the cancer\ndiscrimination. In Series A, the tumor/normal class separation in the plane of the two \ufb01rst LVs is almost\ncomplete (Figure 7b). A few measurement points showing discrimination ambiguity problems were\nrelated to the spectral similarity of two different samples from patient 194. This could be explained by\nthe high content of fat in both the tumor and normal samples of this patient. The bright golden-yellow\ncolor of the tumor sample T194 was clearly due to intracellular lipid accumulation, while the normal\nsample N194 might have been a cut of the adipose capsule of the kidney (or perinephric fat), which is\na structure between the renal fascia and the renal capsule. In spite of a reasonably strong variance in\nthe measurements of tumor samples observed in the factor space of the PLS-DA models, the overall\ntendency looks very promising. While none of the individual channels in Figure 8 can allow for\na reliable discrimination of the samples, multivariate data processing yielded rather convincing results.\n",
+          "source_spans": [
+            {
+              "block_id": "b002",
+              "quote": "This was observed when using one of the channels as an internal reference. Thus, the data sets for\nSeries A and B were analyzed in a multivariate mode without any scatter-correcting preprocessing.\n",
+              "start": 0,
+              "end": 197,
+              "bbox": [
+                76.22599792480469,
+                90.62909698486328,
+                518.9550170898438,
+                114.17322540283203
+              ]
+            },
+            {
+              "block_id": "b003",
+              "quote": "The PLS-DA score plot (Figure 7) is a convenient way to visualize the \u201cstrength\u201d of the cancer\ndiscrimination. In Series A, the tumor/normal class separation in the plane of the two \ufb01rst LVs is almost\ncomplete (Figure 7b). A few measurement points showing discrimination ambiguity problems were\nrelated to the spectral similarity of two different samples from patient 194. This could be explained by\nthe high content of fat in both the tumor and normal samples of this patient. The bright golden-yellow\ncolor of the tumor sample T194 was clearly due to intracellular lipid accumulation, while the normal\nsample N194 might have been a cut of the adipose capsule of the kidney (or perinephric fat), which is\na structure between the renal fascia and the renal capsule. In spite of a reasonably strong variance in\nthe measurements of tumor samples observed in the factor space of the PLS-DA models, the overall\ntendency looks very promising. While none of the individual channels in Figure 8 can allow for\na reliable discrimination of the samples, multivariate data processing yielded rather convincing results.\n",
+              "start": 0,
+              "end": 1108,
+              "bbox": [
+                76.53500366210938,
+                117.64807891845703,
+                520.5020751953125,
+                262.7478942871094
+              ]
+            }
+          ],
+          "image": "assets/3cfb4771f150902a/S03-p012.jpg",
+          "verification": {
+            "candidate_index": 0,
+            "status": "supported",
+            "reason": "The selected blocks b002 and b003 verbatim text aligns with the PLS-DA analysis of Series A, including the reference to Figure 7 and the discussion of class separation and patient 194."
+          },
+          "revision": "cf9020e8578b1db03139e7ec",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 6,
+        "score": 2.560103172833916,
+        "bm25_score": 2.560103172833916,
+        "qdrant_score": null,
+        "branches": [
+          "bm25"
+        ],
+        "matched_terms": [
+          "fat",
+          "protein"
+        ],
+        "matching_segment": null,
+        "evidence": {
+          "section": "Challenges of Multispectral Data Analysis",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "general_method",
+          "spans": [
+            {
+              "block_id": "b001",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [],
+          "tags": [],
+          "issues": [],
+          "evidence_id": "S01:p009:txt:fafd6a6388e4e7dd",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 9,
+          "text": "different methods can vary greatly in quality. That is, one part of the data matrix may contain more \nuseful information (higher variance) than another. Variables of different methods may differ in the \nlevel of noise or irrelevant variance they contain. Furthermore, methods containing a larger number of \nvariables have a greater impact on the model. To effectively analyze multispectral data, avoiding the \nabove-mentioned problems and maximizing the benefits of combining spectral methods, specialized \ndata fusion algorithms are being developed. \n \n3.3.3 Instrumentation for Multispectral Analysis \n \nOne of the challenges of multispectral analysis is the need to simultaneously connect at least two \nindependently operating measuring instruments. These are often benchtop laboratory spectrometers, \nwhich take up considerable space. Each spectrometer is typically connected to a separate personal \ncomputer or laptop. The cost of such spectrometers is also quite high. There is only one way to move \naway from cumbersome and expensive solutions in multispectral analysis. The development of \nspecialized analyzers\u2014optical multisensor systems (OMS)\u2014focused on a specific analytical task is \nnecessary. The growing use of OMS is a trend in the development of analytical chemistry. The next \nsection is devoted to the use of a multispectral laboratory in the development of OMS. \n \n \n \n \n4. Multispectral Laboratory in the Development of Optical Multisensor Systems \n \nThe development of OMS begins with in-depth studies of the analyzed object using standard \nlaboratory spectrometers. This is necessary to calculate the optimal configuration of the future \nmultispectral analyzer, for example, the optimal spectral ranges for analysis to select the necessary \nelements\u2014LEDs, filters, etc. It is important to understand that, unlike classical spectral methods such \nas UV and visible, NIR, and mid-IR spectroscopy, OMS are not limited to the same spectral ranges. \nFor example, LED analyzers can simultaneously contain radiation sources from any of the above-\nmentioned regions. An ordinary blue LED with a wavelength of 400 nm can be adjacent to an LED in \nthe near-IR region, having an intensity maximum at 1940 nm, and even to an LED in the mid-IR \nrange, for example, 3 \u03bcm (about 3300 cm-1). Moreover, the combination of several spectral regions at \nonce does not lead to significant complexity of the design. Here are just a few examples of LED OMS \nthat are the most common and practical: \n\u2022 a probe for determining tumor boundaries in kidney cancer and rectal cancer; \n\u2022 an RGB sensor for determining fat and protein in cow's milk; \n\u2022 an LED probe moisture analyzer for bulk materials.  \n \n \n5. Hardware and Software \n \n5.1. Mid-IR Spectrometry (includes FTIR Mid-IR spectrometer, ATR fiber probe) \nVibrational spectroscopy in the mid-IR range (4000\u2013400 cm-1) is one of the most informative \nmethods of chemical analysis. Due to the high extinction coefficients of various molecules in this \nregion, the method is highly sensitive and can be used to analyze a wide variety of samples: solids, \nliquids, and gases. \n \n",
+          "source_spans": [
+            {
+              "block_id": "b001",
+              "quote": "different methods can vary greatly in quality. That is, one part of the data matrix may contain more \nuseful information (higher variance) than another. Variables of different methods may differ in the \nlevel of noise or irrelevant variance they contain. Furthermore, methods containing a larger number of \nvariables have a greater impact on the model. To effectively analyze multispectral data, avoiding the \nabove-mentioned problems and maximizing the benefits of combining spectral methods, specialized \ndata fusion algorithms are being developed. \n \n3.3.3 Instrumentation for Multispectral Analysis \n \nOne of the challenges of multispectral analysis is the need to simultaneously connect at least two \nindependently operating measuring instruments. These are often benchtop laboratory spectrometers, \nwhich take up considerable space. Each spectrometer is typically connected to a separate personal \ncomputer or laptop. The cost of such spectrometers is also quite high. There is only one way to move \naway from cumbersome and expensive solutions in multispectral analysis. The development of \nspecialized analyzers\u2014optical multisensor systems (OMS)\u2014focused on a specific analytical task is \nnecessary. The growing use of OMS is a trend in the development of analytical chemistry. The next \nsection is devoted to the use of a multispectral laboratory in the development of OMS. \n \n \n \n \n4. Multispectral Laboratory in the Development of Optical Multisensor Systems \n \nThe development of OMS begins with in-depth studies of the analyzed object using standard \nlaboratory spectrometers. This is necessary to calculate the optimal configuration of the future \nmultispectral analyzer, for example, the optimal spectral ranges for analysis to select the necessary \nelements\u2014LEDs, filters, etc. It is important to understand that, unlike classical spectral methods such \nas UV and visible, NIR, and mid-IR spectroscopy, OMS are not limited to the same spectral ranges. \nFor example, LED analyzers can simultaneously contain radiation sources from any of the above-\nmentioned regions. An ordinary blue LED with a wavelength of 400 nm can be adjacent to an LED in \nthe near-IR region, having an intensity maximum at 1940 nm, and even to an LED in the mid-IR \nrange, for example, 3 \u03bcm (about 3300 cm-1). Moreover, the combination of several spectral regions at \nonce does not lead to significant complexity of the design. Here are just a few examples of LED OMS \nthat are the most common and practical: \n\u2022 a probe for determining tumor boundaries in kidney cancer and rectal cancer; \n\u2022 an RGB sensor for determining fat and protein in cow's milk; \n\u2022 an LED probe moisture analyzer for bulk materials.  \n \n \n5. Hardware and Software \n \n5.1. Mid-IR Spectrometry (includes FTIR Mid-IR spectrometer, ATR fiber probe) \nVibrational spectroscopy in the mid-IR range (4000\u2013400 cm-1) is one of the most informative \nmethods of chemical analysis. Due to the high extinction coefficients of various molecules in this \nregion, the method is highly sensitive and can be used to analyze a wide variety of samples: solids, \nliquids, and gases. \n \n",
+              "start": 0,
+              "end": 3127,
+              "bbox": [
+                72.0250015258789,
+                78.2290267944336,
+                524.5601196289062,
+                768.6009521484375
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p009.jpg",
+          "verification": {
+            "candidate_index": 0,
+            "status": "supported",
+            "reason": "The span selects the entire block b001, which contains the text corresponding to the section content, although the specific section title provided in the candidate is a summary label for the text present in the block."
+          },
+          "revision": "8a7a95e2a4019fdb8f880b75",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "alternative_annotations": [
+            {
+              "section": "Instrumentation and Optical Multisensor Systems (OMS)",
+              "facts": [
+                {
+                  "category": "method",
+                  "statement": "OMS can combine spectral regions not typically combined in classical spectroscopy, such as a blue LED at 400 nm and a mid-IR LED at 3 \u03bcm.",
+                  "support_quotes": [
+                    "An ordinary blue LED with a wavelength of 400 nm can be adjacent to an LED in the near-IR region... and even to an LED in the mid-IR range, for example, 3 \u03bcm"
+                  ],
+                  "quantities": []
+                }
+              ],
+              "verification": {
+                "candidate_index": 1,
+                "status": "supported",
+                "reason": "The text in block b001 explicitly states that OMS are not limited to standard spectral ranges and provides the example of a blue LED at 400 nm being adjacent to a mid-IR LED at 3 \u03bcm."
+              },
+              "issues": [
+                "Fact has missing or unmatched supporting quotes"
+              ],
+              "revision": "a07db3daaa70a184d83f6921"
+            },
+            {
+              "section": "Mid-IR Spectrometry Hardware",
+              "facts": [
+                {
+                  "category": "method",
+                  "statement": "Vibrational spectroscopy in the mid-IR range is highly sensitive due to high extinction coefficients of molecules in this region.",
+                  "support_quotes": [
+                    "Vibrational spectroscopy in the mid-IR range (4000\u2013400 cm-1) is one of the most informative \nmethods of chemical analysis. Due to the high extinction coefficients of various molecules in this \nregion, the method is highly sensitive"
+                  ],
+                  "quantities": []
+                }
+              ],
+              "verification": {
+                "candidate_index": 2,
+                "status": "supported",
+                "reason": "Block b001 states that vibrational spectroscopy in the mid-IR range is highly sensitive due to high extinction coefficients, matching the candidate's fact and supporting quote."
+              },
+              "issues": [],
+              "revision": "256b677f1cbb915213570a4c"
+            }
+          ],
+          "dataset": "technical"
+        }
+      }
+    ],
+    "qdrant": [
+      {
+        "rank": 1,
+        "score": 0.7411311170103033,
+        "bm25_score": 14.654026917663865,
+        "qdrant_score": 0.7411311170103033,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "opaque",
+          "dairy",
+          "fat",
+          "protein"
+        ],
+        "matching_segment": "Inline Milk Analysis: NIR Reflection\n4.\n\nInline Milk Analysis.\n\nThe use of Near-Infrared (NIR) spectroscopy for the inline monitoring of milk is a cornerstone of \nmodern dairy \"Process Analytical Technology\" (PAT).\n\nMaintaining both NIR Reflection and NIR \nTransmission techniques in a lab environment provides a comprehensive analytical suite capable of \nhandling the diverse physical properties of dairy products.\n\n- \nNIR Reflection: Inline NIR Reflection is primarily used for opaque or highly concentrated dairy \nproducts, such as yogurt, butter, or whole milk concentrates.\n\nThe main equipment includes a fiber \noptic probe where one set of fibers delivers light to the sample and the other collects the \n\"backscattered\" light.\n\nExperimentally, the probe is flush-mounted into a pipe or vat to interact \ndirectly with the flowing medium.\n\nBecause the light does not penetrate deeply, the method is \nsensitive to the surface characteristics and fat globule size.\n\nData processing may involve converting \nthe reflectance values to absorbance and applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations to remove physical interference caused by the \nscattering nature of the milk particles before using Partial Least Squares (PLS) regression to \nquantify fat and protein.",
+        "evidence": {
+          "section": "Inline Milk Analysis: NIR Reflection",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "application_example",
+          "spans": [
+            {
+              "block_id": "b004",
+              "quote": null
+            },
+            {
+              "block_id": "b005",
+              "quote": null
+            },
+            {
+              "block_id": "b006",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "method",
+              "statement": "NIR Reflection spectroscopy is used for opaque dairy products, with data processed using Multiplicative Scatter Correction (MSC) or Standard Normal Variate (SNV) and PLS regression.",
+              "support_quotes": [
+                "applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations",
+                "using Partial Least Squares (PLS) regression to \nquantify fat and protein."
+              ],
+              "quantities": []
+            }
+          ],
+          "tags": [],
+          "issues": [],
+          "evidence_id": "S01:p017:txt:03613ea0cb0945fb",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 17,
+          "text": "4. Inline Milk Analysis. \n\n\nThe use of Near-Infrared (NIR) spectroscopy for the inline monitoring of milk is a cornerstone of \nmodern dairy \"Process Analytical Technology\" (PAT). Maintaining both NIR Reflection and NIR \nTransmission techniques in a lab environment provides a comprehensive analytical suite capable of \nhandling the diverse physical properties of dairy products. \n\n\n- \nNIR Reflection: Inline NIR Reflection is primarily used for opaque or highly concentrated dairy \nproducts, such as yogurt, butter, or whole milk concentrates. The main equipment includes a fiber \noptic probe where one set of fibers delivers light to the sample and the other collects the \n\"backscattered\" light. Experimentally, the probe is flush-mounted into a pipe or vat to interact \ndirectly with the flowing medium. Because the light does not penetrate deeply, the method is \nsensitive to the surface characteristics and fat globule size. Data processing may involve converting \nthe reflectance values to absorbance and applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations to remove physical interference caused by the \nscattering nature of the milk particles before using Partial Least Squares (PLS) regression to \nquantify fat and protein. \n",
+          "source_spans": [
+            {
+              "block_id": "b004",
+              "quote": "4. Inline Milk Analysis. \n",
+              "start": 0,
+              "end": 26,
+              "bbox": [
+                72.0250015258789,
+                521.9450073242188,
+                190.3300018310547,
+                534.2760009765625
+              ]
+            },
+            {
+              "block_id": "b005",
+              "quote": "The use of Near-Infrared (NIR) spectroscopy for the inline monitoring of milk is a cornerstone of \nmodern dairy \"Process Analytical Technology\" (PAT). Maintaining both NIR Reflection and NIR \nTransmission techniques in a lab environment provides a comprehensive analytical suite capable of \nhandling the diverse physical properties of dairy products. \n",
+              "start": 0,
+              "end": 352,
+              "bbox": [
+                72.0250015258789,
+                544.5989990234375,
+                526.20703125,
+                600.8059692382812
+              ]
+            },
+            {
+              "block_id": "b006",
+              "quote": "- \nNIR Reflection: Inline NIR Reflection is primarily used for opaque or highly concentrated dairy \nproducts, such as yogurt, butter, or whole milk concentrates. The main equipment includes a fiber \noptic probe where one set of fibers delivers light to the sample and the other collects the \n\"backscattered\" light. Experimentally, the probe is flush-mounted into a pipe or vat to interact \ndirectly with the flowing medium. Because the light does not penetrate deeply, the method is \nsensitive to the surface characteristics and fat globule size. Data processing may involve converting \nthe reflectance values to absorbance and applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations to remove physical interference caused by the \nscattering nature of the milk particles before using Partial Least Squares (PLS) regression to \nquantify fat and protein. \n",
+              "start": 0,
+              "end": 897,
+              "bbox": [
+                72.0250015258789,
+                610.9019775390625,
+                526.1729736328125,
+                756.3509521484375
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p017.jpg",
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "The description of NIR Reflection spectroscopy for opaque dairy products and the specific data processing steps (MSC, SNV, and PLS regression) are accurately transcribed from the text blocks provided in b004 through b006."
+          },
+          "revision": "9f5f308d1c6bf85bd2e441e0",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 2,
+        "score": 0.7025873113064676,
+        "bm25_score": 6.467493967365592,
+        "qdrant_score": 0.7025873113064676,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "dairy",
+          "fat"
+        ],
+        "matching_segment": "Dual-Technique Advantage and Advanced Methods\n- \nThe Advantage of Dual-Technique Availability: having both fiber optic techniques available in a \nlab rather than relying on one provides the flexibility needed to monitor the entire production chain.\n\nWhile transmission is superior for the high-precision analysis of dilute process streams (like whey \nfiltration), it fails when the milk becomes too \"thick\" or fat-rich, as the light cannot penetrate the \nsample.\n\nConversely, reflection can work well in highly scattering environments but can be less \nrepresentative for clear liquids.\n\nBy maintaining both, a lab can calibrate models for every stage of \nproduction - from raw milk intake to final evaporation - ensuring that no matter how the physical \nstate of the milk changes during processing, the inline monitoring remains accurate and robust.\n\nIn \nsome cases, a Transflection probe can already be a combined solution working well for low-fat and \nhigh-fat containing milk products.\n\nNIR Spectrometer and NIR light source remain the same for both \nreflection and transmission techniques.\n\nWhile NIR is the workhorse of the dairy industry, advanced labs often incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques to capture specific chemical or structural \ninformation that NIR might miss.\n\nThese methods provide a higher level of \"molecular specificity,\" \nmaking them useful for specialized monitoring in milk analysis.",
+        "evidence": {
+          "section": "Dual-Technique Advantage and Advanced Methods",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "general_method",
+          "spans": [
+            {
+              "block_id": "b002",
+              "quote": null
+            },
+            {
+              "block_id": "b003",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "method",
+              "statement": "Advanced labs often incorporate Fluorescence, Raman, and Mid-Infrared (MIR) ATR techniques alongside NIR to capture specific chemical or structural information.",
+              "support_quotes": [
+                "incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques"
+              ],
+              "quantities": []
+            }
+          ],
+          "tags": [
+            "multi-technique",
+            "Raman",
+            "Fluorescence",
+            "MIR"
+          ],
+          "issues": [],
+          "evidence_id": "S01:p018:txt:250c09c5fdb749b3",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 18,
+          "text": " \n- \nThe Advantage of Dual-Technique Availability: having both fiber optic techniques available in a \nlab rather than relying on one provides the flexibility needed to monitor the entire production chain. \nWhile transmission is superior for the high-precision analysis of dilute process streams (like whey \nfiltration), it fails when the milk becomes too \"thick\" or fat-rich, as the light cannot penetrate the \nsample. Conversely, reflection can work well in highly scattering environments but can be less \nrepresentative for clear liquids. By maintaining both, a lab can calibrate models for every stage of \nproduction - from raw milk intake to final evaporation - ensuring that no matter how the physical \nstate of the milk changes during processing, the inline monitoring remains accurate and robust. In \nsome cases, a Transflection probe can already be a combined solution working well for low-fat and \nhigh-fat containing milk products. NIR Spectrometer and NIR light source remain the same for both \nreflection and transmission techniques. \n\n\nWhile NIR is the workhorse of the dairy industry, advanced labs often incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques to capture specific chemical or structural \ninformation that NIR might miss. These methods provide a higher level of \"molecular specificity,\" \nmaking them useful for specialized monitoring in milk analysis. \n",
+          "source_spans": [
+            {
+              "block_id": "b002",
+              "quote": " \n- \nThe Advantage of Dual-Technique Availability: having both fiber optic techniques available in a \nlab rather than relying on one provides the flexibility needed to monitor the entire production chain. \nWhile transmission is superior for the high-precision analysis of dilute process streams (like whey \nfiltration), it fails when the milk becomes too \"thick\" or fat-rich, as the light cannot penetrate the \nsample. Conversely, reflection can work well in highly scattering environments but can be less \nrepresentative for clear liquids. By maintaining both, a lab can calibrate models for every stage of \nproduction - from raw milk intake to final evaporation - ensuring that no matter how the physical \nstate of the milk changes during processing, the inline monitoring remains accurate and robust. In \nsome cases, a Transflection probe can already be a combined solution working well for low-fat and \nhigh-fat containing milk products. NIR Spectrometer and NIR light source remain the same for both \nreflection and transmission techniques. \n",
+              "start": 0,
+              "end": 1047,
+              "bbox": [
+                72.0250015258789,
+                225.77902221679688,
+                526.22998046875,
+                400.2460021972656
+              ]
+            },
+            {
+              "block_id": "b003",
+              "quote": "While NIR is the workhorse of the dairy industry, advanced labs often incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques to capture specific chemical or structural \ninformation that NIR might miss. These methods provide a higher level of \"molecular specificity,\" \nmaking them useful for specialized monitoring in milk analysis. \n",
+              "start": 0,
+              "end": 362,
+              "bbox": [
+                72.0250015258789,
+                410.8190002441406,
+                528.969970703125,
+                466.9960021972656
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p018.jpg",
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "The text confirms advanced labs incorporate Fluorescence, Raman, and MIR ATR techniques to capture specific molecular information."
+          },
+          "revision": "3dbc2c1783f50b4c3f9e11c9",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 3,
+        "score": 0.6862455276219097,
+        "bm25_score": null,
+        "qdrant_score": 0.6862455276219097,
+        "branches": [
+          "qdrant"
+        ],
+        "matched_terms": [],
+        "matching_segment": "NIR Transmission for Milk Analysis\n- \nNIR Transmission: NIR Transmission is the preferred method for transparent or semi-transparent \nliquids, such as skim milk, whey, or permeate.\n\nThe setup typically consists of a transmission / \ntransflection probe, where light passes entirely through a defined layer of the sample to a detector \non the opposite side.\n\nThe key experimental action is the precise control of the optical pathlength \n(usually 1 - 10 mm); if the pathlength is too wide, the signal is lost to absorption; if too narrow, the \nsample represents a negligible volume.\n\nData processing focuses on the Beer-Lambert law, where \nthe measured transmittance is converted to Absorbance.\n\nThis technique generally offers higher \naccuracy for low-concentration components because the light interacts with the entire volume of \nthe sampled cross-section, providing a more representative chemical signature.",
+        "evidence": {
+          "section": "NIR Transmission for Milk Analysis",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "general_method",
+          "spans": [
+            {
+              "block_id": "b001",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "method",
+              "statement": "NIR Transmission uses a probe where light passes through the sample, with a typical optical pathlength control of 1 - 10 mm.",
+              "support_quotes": [
+                "precise control of the optical pathlength \n(usually 1 - 10 mm)"
+              ],
+              "quantities": [
+                {
+                  "label": "optical pathlength",
+                  "value": "1 - 10",
+                  "unit": "mm",
+                  "kind": "other",
+                  "source_quote": "precise control of the optical pathlength \n(usually 1 - 10 mm)"
+                }
+              ]
+            }
+          ],
+          "tags": [
+            "NIR",
+            "transmission",
+            "pathlength"
+          ],
+          "issues": [],
+          "evidence_id": "S01:p018:txt:076b268969e39637",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 18,
+          "text": " \n- \nNIR Transmission: NIR Transmission is the preferred method for transparent or semi-transparent \nliquids, such as skim milk, whey, or permeate. The setup typically consists of a transmission / \ntransflection probe, where light passes entirely through a defined layer of the sample to a detector \non the opposite side. The key experimental action is the precise control of the optical pathlength \n(usually 1 - 10 mm); if the pathlength is too wide, the signal is lost to absorption; if too narrow, the \nsample represents a negligible volume. Data processing focuses on the Beer-Lambert law, where \nthe measured transmittance is converted to Absorbance. This technique generally offers higher \naccuracy for low-concentration components because the light interacts with the entire volume of \nthe sampled cross-section, providing a more representative chemical signature.  \n",
+          "source_spans": [
+            {
+              "block_id": "b001",
+              "quote": " \n- \nNIR Transmission: NIR Transmission is the preferred method for transparent or semi-transparent \nliquids, such as skim milk, whey, or permeate. The setup typically consists of a transmission / \ntransflection probe, where light passes entirely through a defined layer of the sample to a detector \non the opposite side. The key experimental action is the precise control of the optical pathlength \n(usually 1 - 10 mm); if the pathlength is too wide, the signal is lost to absorption; if too narrow, the \nsample represents a negligible volume. Data processing focuses on the Beer-Lambert law, where \nthe measured transmittance is converted to Absorbance. This technique generally offers higher \naccuracy for low-concentration components because the light interacts with the entire volume of \nthe sampled cross-section, providing a more representative chemical signature.  \n",
+              "start": 0,
+              "end": 874,
+              "bbox": [
+                72.0250015258789,
+                78.2290267944336,
+                526.219970703125,
+                223.45602416992188
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p018.jpg",
+          "verification": {
+            "candidate_index": 0,
+            "status": "supported",
+            "reason": "Source text explicitly states that precise control of optical pathlength is usually 1-10 mm and describes the transmission probe mechanism."
+          },
+          "revision": "75c335d55f1ec607f483b647",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 4,
+        "score": 0.6775186993259397,
+        "bm25_score": 5.837997444442348,
+        "qdrant_score": 0.6775186993259397,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "fat",
+          "protein"
+        ],
+        "matching_segment": "Multispectral Classification of Biological Tissue\nMultispectral Classi\ufb01cation of Biological Tissue.\n\nThe\ndeveloped multispectral probe was tested in the practical\nanalysis of biological tissue samples using di\ufb00erent organs and\nparts of the chicken: breast, fat, and liver.\n\nThe general chemical\nsimilarity of biological objects makes spectroscopic recognition\nof di\ufb00erent tissue types a nontrivial task, which requires careful\noptimization of the measurement technique.\n\nCommercially\nproduced poultry combines the availability of fresh samples\nand the variability of tissue types, making it an attractive model\nsystem for evaluating spectroscopic methods and equipment.\n\nTo provide the necessary statistical representativeness of the\ndata, three samples of each tissue type were prepared.\n\nThe\nsamples were large enough to re\ufb02ect the possible heterogeneity\nof the tissue.\n\nEach sample was represented by \ufb01ve distributed\npoints.\n\nThis experimental design resulted in two data matrices:\na 45 \u00d7 118 XIR matrix of Fourier-transform (FT) IR and 45 \u00d7\n705 XFL of \ufb02uorescence spectra (see the Supporting\nInformation for more information).\n\nPreliminary visual exploration of the obtained spectra\n(Figure 2) revealed the di\ufb00erent abilities of the two techniques\nto recognize certain tissue types.\n\nThe discriminative power of\nmid-IR spectroscopy (Figure 2a and Figure S-4) toward rich in\nlipids fat samples is related to the stretching vibration band of\n\nthe ester carbonyl C\ue0c8O at about 1740 cm\u22121, which is\ncharacteristic of saturated triglycerides.20 At the same time, all\nthree sample types (fat to a lesser extent) have in the selected\nregion two very similar signals with maxima at 1548 and 1640\ncm\u22121.\n\nThese are, respectively, the amide I and II bands, two\nmajor absorption peaks of the protein peptide group in the\ninfrared region.21 Low measurement reproducibility of the fat\nsamples (broad standard deviation in Figure 2a) is explained\nby higher inhomogeneity of this tissue type, because the\nspectra in all points of analysis always represent a mixture of\nlipids with an essential part of neighboring proteins.",
+        "evidence": {
+          "section": "Multispectral Classification of Biological Tissue",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "research_demonstration",
+          "spans": [
+            {
+              "block_id": "b007",
+              "quote": null
+            },
+            {
+              "block_id": "b009",
+              "quote": null
+            },
+            {
+              "block_id": "b010",
+              "quote": null
+            },
+            {
+              "block_id": "b005",
+              "quote": null
+            },
+            {
+              "block_id": "b008",
+              "quote": null
+            },
+            {
+              "block_id": "b011",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [],
+          "tags": [
+            "biological tissue",
+            "chicken breast",
+            "IR",
+            "fluorescence"
+          ],
+          "issues": [],
+          "evidence_id": "S04:p003:txt:63787604987d3bce",
+          "source_id": "S04",
+          "file_name": "S04_Combi_MIR_Fluorescence_2021.pdf",
+          "source_sha256": "7286bc915e322363395ae10b0519a5705487e013dd69d4930e24f6542bee6b4b",
+          "page": 3,
+          "text": "Multispectral Classi\ufb01cation of Biological Tissue. The\ndeveloped multispectral probe was tested in the practical\nanalysis of biological tissue samples using di\ufb00erent organs and\nparts of the chicken: breast, fat, and liver. The general chemical\nsimilarity of biological objects makes spectroscopic recognition\nof di\ufb00erent tissue types a nontrivial task, which requires careful\noptimization of the measurement technique. Commercially\nproduced poultry combines the availability of fresh samples\nand the variability of tissue types, making it an attractive model\nsystem for evaluating spectroscopic methods and equipment.\n\n\nTo provide the necessary statistical representativeness of the\ndata, three samples of each tissue type were prepared. The\nsamples were large enough to re\ufb02ect the possible heterogeneity\nof the tissue. Each sample was represented by \ufb01ve distributed\npoints. This experimental design resulted in two data matrices:\na 45 \u00d7 118 XIR matrix of Fourier-transform (FT) IR and 45 \u00d7\n705 XFL of \ufb02uorescence spectra (see the Supporting\nInformation for more information).\n\n\nPreliminary visual exploration of the obtained spectra\n(Figure 2) revealed the di\ufb00erent abilities of the two techniques\nto recognize certain tissue types. The discriminative power of\nmid-IR spectroscopy (Figure 2a and Figure S-4) toward rich in\nlipids fat samples is related to the stretching vibration band of\n\n\nthe ester carbonyl C\ue0c8O at about 1740 cm\u22121, which is\ncharacteristic of saturated triglycerides.20 At the same time, all\nthree sample types (fat to a lesser extent) have in the selected\nregion two very similar signals with maxima at 1548 and 1640\ncm\u22121. These are, respectively, the amide I and II bands, two\nmajor absorption peaks of the protein peptide group in the\ninfrared region.21 Low measurement reproducibility of the fat\nsamples (broad standard deviation in Figure 2a) is explained\nby higher inhomogeneity of this tissue type, because the\nspectra in all points of analysis always represent a mixture of\nlipids with an essential part of neighboring proteins. This fact\nalso explains the presence of protein amide I and II bands in\nthe IR spectra of fat in Figure 2a, making those bands less\nuseful for the sample classi\ufb01cation.\n\n\nThe \ufb02uorescence spectra (Figure S-5 in the Supporting\nInformation) after standard normal variate (SNV)22 correction\nlook very similar below 600 nm (Figure 2b). Low standard\ndeviations of the preprocessed spectra indicate homogeneity of\nthe samples from the \ufb02uorimetric point of view (considering\nlarger analyzed volumes). The observed broad band with the\nmaximum between 520 and 530 nm is formed by the emission\nof intracellular \ufb02uorophores with the dominating contribution\nof \ufb02avin adenine dinucleotide (FAD)23 that can be a\ufb00ected by\nthe overlaying laser emission peak \u201ctail\u201d passed through the\noptical \ufb01lter used (Supporting Information). This possible\ndistortion, however, does not play any signi\ufb01cant role in the\nsample classi\ufb01cation. The most selective peak at 613 nm, which\ncan be assigned to porphyrins, has su\ufb03cient speci\ufb01city to\ndistinguish the liver from other measured samples. The\nincreased content of this protein in the liver is expected,\nsince the liver has a central role in the metabolism of haem and\nporphyrins/porphyrinogens, which are intermediates in the\nhaem biosynthetic pathway.24\n\n\nPrincipal component analysis (PCA)25 was used to evaluate\nthe advantage of multispectral measurement with the\ndeveloped probe for multivariate sample classi\ufb01cation. IR\nand \ufb02uorescence data parts presented in Figure 2 were\nanalyzed both separately and jointly without any further\nmodi\ufb01cation, thus enabling a direct comparison of the results.\nFor the joint analysis, the IR and \ufb02uorescence spectra rescaled\nto have intensities between 0 and 1 were fused into a single\nmatrix X (45 \u00d7 823) with the augmented spectral axis: X =\n[XIRXFL]. The purpose of the data analysis was to investigate\n",
+          "source_spans": [
+            {
+              "block_id": "b007",
+              "quote": "Multispectral Classi\ufb01cation of Biological Tissue. The\ndeveloped multispectral probe was tested in the practical\nanalysis of biological tissue samples using di\ufb00erent organs and\nparts of the chicken: breast, fat, and liver. The general chemical\nsimilarity of biological objects makes spectroscopic recognition\nof di\ufb00erent tissue types a nontrivial task, which requires careful\noptimization of the measurement technique. Commercially\nproduced poultry combines the availability of fresh samples\nand the variability of tissue types, making it an attractive model\nsystem for evaluating spectroscopic methods and equipment.\n",
+              "start": 0,
+              "end": 617,
+              "bbox": [
+                51.5238037109375,
+                496.22833251953125,
+                291.53619384765625,
+                608.3424682617188
+              ]
+            },
+            {
+              "block_id": "b009",
+              "quote": "To provide the necessary statistical representativeness of the\ndata, three samples of each tissue type were prepared. The\nsamples were large enough to re\ufb02ect the possible heterogeneity\nof the tissue. Each sample was represented by \ufb01ve distributed\npoints. This experimental design resulted in two data matrices:\na 45 \u00d7 118 XIR matrix of Fourier-transform (FT) IR and 45 \u00d7\n705 XFL of \ufb02uorescence spectra (see the Supporting\nInformation for more information).\n",
+              "start": 0,
+              "end": 457,
+              "bbox": [
+                51.52381896972656,
+                609.512451171875,
+                291.5352478027344,
+                698.3963623046875
+              ]
+            },
+            {
+              "block_id": "b010",
+              "quote": "Preliminary visual exploration of the obtained spectra\n(Figure 2) revealed the di\ufb00erent abilities of the two techniques\nto recognize certain tissue types. The discriminative power of\nmid-IR spectroscopy (Figure 2a and Figure S-4) toward rich in\nlipids fat samples is related to the stretching vibration band of\n",
+              "start": 0,
+              "end": 311,
+              "bbox": [
+                51.52687454223633,
+                699.50634765625,
+                291.5202941894531,
+                754.56689453125
+              ]
+            },
+            {
+              "block_id": "b005",
+              "quote": "the ester carbonyl C\ue0c8O at about 1740 cm\u22121, which is\ncharacteristic of saturated triglycerides.20 At the same time, all\nthree sample types (fat to a lesser extent) have in the selected\nregion two very similar signals with maxima at 1548 and 1640\ncm\u22121. These are, respectively, the amide I and II bands, two\nmajor absorption peaks of the protein peptide group in the\ninfrared region.21 Low measurement reproducibility of the fat\nsamples (broad standard deviation in Figure 2a) is explained\nby higher inhomogeneity of this tissue type, because the\nspectra in all points of analysis always represent a mixture of\nlipids with an essential part of neighboring proteins. This fact\nalso explains the presence of protein amide I and II bands in\nthe IR spectra of fat in Figure 2a, making those bands less\nuseful for the sample classi\ufb01cation.\n",
+              "start": 0,
+              "end": 833,
+              "bbox": [
+                315.4895324707031,
+                270.22412109375,
+                555.5460815429688,
+                428.5143737792969
+              ]
+            },
+            {
+              "block_id": "b008",
+              "quote": "The \ufb02uorescence spectra (Figure S-5 in the Supporting\nInformation) after standard normal variate (SNV)22 correction\nlook very similar below 600 nm (Figure 2b). Low standard\ndeviations of the preprocessed spectra indicate homogeneity of\nthe samples from the \ufb02uorimetric point of view (considering\nlarger analyzed volumes). The observed broad band with the\nmaximum between 520 and 530 nm is formed by the emission\nof intracellular \ufb02uorophores with the dominating contribution\nof \ufb02avin adenine dinucleotide (FAD)23 that can be a\ufb00ected by\nthe overlaying laser emission peak \u201ctail\u201d passed through the\noptical \ufb01lter used (Supporting Information). This possible\ndistortion, however, does not play any signi\ufb01cant role in the\nsample classi\ufb01cation. The most selective peak at 613 nm, which\ncan be assigned to porphyrins, has su\ufb03cient speci\ufb01city to\ndistinguish the liver from other measured samples. The\nincreased content of this protein in the liver is expected,\nsince the liver has a central role in the metabolism of haem and\nporphyrins/porphyrinogens, which are intermediates in the\nhaem biosynthetic pathway.24\n",
+              "start": 0,
+              "end": 1105,
+              "bbox": [
+                315.4936218261719,
+                428.85137939453125,
+                555.5542602539062,
+                642.1212158203125
+              ]
+            },
+            {
+              "block_id": "b011",
+              "quote": "Principal component analysis (PCA)25 was used to evaluate\nthe advantage of multispectral measurement with the\ndeveloped probe for multivariate sample classi\ufb01cation. IR\nand \ufb02uorescence data parts presented in Figure 2 were\nanalyzed both separately and jointly without any further\nmodi\ufb01cation, thus enabling a direct comparison of the results.\nFor the joint analysis, the IR and \ufb02uorescence spectra rescaled\nto have intensities between 0 and 1 were fused into a single\nmatrix X (45 \u00d7 823) with the augmented spectral axis: X =\n[XIRXFL]. The purpose of the data analysis was to investigate\n",
+              "start": 0,
+              "end": 587,
+              "bbox": [
+                315.4954833984375,
+                638.848388671875,
+                555.5439453125,
+                755.6072387695312
+              ]
+            }
+          ],
+          "image": "assets/7286bc915e322363/S04-p003.jpg",
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "The candidate selects multiple blocks (b007-b011) corresponding to the section 'Multispectral Classification of Biological Tissue'. The content is verbatim text from the source, and the section header matches the content provided in the b"
+          },
+          "revision": "be5687987812e30c6704b8d8",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 5,
+        "score": 0.6225496724793899,
+        "bm25_score": 3.0389368036782938,
+        "qdrant_score": 0.6225496724793899,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "fat"
+        ],
+        "matching_segment": "PLS-DA Series A Results\nThis was observed when using one of the channels as an internal reference.\n\nThus, the data sets for\nSeries A and B were analyzed in a multivariate mode without any scatter-correcting preprocessing.\n\nThe PLS-DA score plot (Figure 7) is a convenient way to visualize the \u201cstrength\u201d of the cancer\ndiscrimination.\n\nIn Series A, the tumor/normal class separation in the plane of the two \ufb01rst LVs is almost\ncomplete (Figure 7b).\n\nA few measurement points showing discrimination ambiguity problems were\nrelated to the spectral similarity of two different samples from patient 194.\n\nThis could be explained by\nthe high content of fat in both the tumor and normal samples of this patient.\n\nThe bright golden-yellow\ncolor of the tumor sample T194 was clearly due to intracellular lipid accumulation, while the normal\nsample N194 might have been a cut of the adipose capsule of the kidney (or perinephric fat), which is\na structure between the renal fascia and the renal capsule.\n\nIn spite of a reasonably strong variance in\nthe measurements of tumor samples observed in the factor space of the PLS-DA models, the overall\ntendency looks very promising.\n\nWhile none of the individual channels in Figure 8 can allow for\na reliable discrimination of the samples, multivariate data processing yielded rather convincing results.",
+        "evidence": {
+          "section": "PLS-DA Series A Results",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "research_demonstration",
+          "spans": [
+            {
+              "block_id": "b002",
+              "quote": null
+            },
+            {
+              "block_id": "b003",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [],
+          "tags": [],
+          "issues": [],
+          "evidence_id": "S03:p012:txt:e19aa643001dad23",
+          "source_id": "S03",
+          "file_name": "S03_LED_Kidney_Study_2017.pdf",
+          "source_sha256": "3cfb4771f150902a729f88ec4a40c90031c7a8d07e8641e653e4543157917fd4",
+          "page": 12,
+          "text": "This was observed when using one of the channels as an internal reference. Thus, the data sets for\nSeries A and B were analyzed in a multivariate mode without any scatter-correcting preprocessing.\n\n\nThe PLS-DA score plot (Figure 7) is a convenient way to visualize the \u201cstrength\u201d of the cancer\ndiscrimination. In Series A, the tumor/normal class separation in the plane of the two \ufb01rst LVs is almost\ncomplete (Figure 7b). A few measurement points showing discrimination ambiguity problems were\nrelated to the spectral similarity of two different samples from patient 194. This could be explained by\nthe high content of fat in both the tumor and normal samples of this patient. The bright golden-yellow\ncolor of the tumor sample T194 was clearly due to intracellular lipid accumulation, while the normal\nsample N194 might have been a cut of the adipose capsule of the kidney (or perinephric fat), which is\na structure between the renal fascia and the renal capsule. In spite of a reasonably strong variance in\nthe measurements of tumor samples observed in the factor space of the PLS-DA models, the overall\ntendency looks very promising. While none of the individual channels in Figure 8 can allow for\na reliable discrimination of the samples, multivariate data processing yielded rather convincing results.\n",
+          "source_spans": [
+            {
+              "block_id": "b002",
+              "quote": "This was observed when using one of the channels as an internal reference. Thus, the data sets for\nSeries A and B were analyzed in a multivariate mode without any scatter-correcting preprocessing.\n",
+              "start": 0,
+              "end": 197,
+              "bbox": [
+                76.22599792480469,
+                90.62909698486328,
+                518.9550170898438,
+                114.17322540283203
+              ]
+            },
+            {
+              "block_id": "b003",
+              "quote": "The PLS-DA score plot (Figure 7) is a convenient way to visualize the \u201cstrength\u201d of the cancer\ndiscrimination. In Series A, the tumor/normal class separation in the plane of the two \ufb01rst LVs is almost\ncomplete (Figure 7b). A few measurement points showing discrimination ambiguity problems were\nrelated to the spectral similarity of two different samples from patient 194. This could be explained by\nthe high content of fat in both the tumor and normal samples of this patient. The bright golden-yellow\ncolor of the tumor sample T194 was clearly due to intracellular lipid accumulation, while the normal\nsample N194 might have been a cut of the adipose capsule of the kidney (or perinephric fat), which is\na structure between the renal fascia and the renal capsule. In spite of a reasonably strong variance in\nthe measurements of tumor samples observed in the factor space of the PLS-DA models, the overall\ntendency looks very promising. While none of the individual channels in Figure 8 can allow for\na reliable discrimination of the samples, multivariate data processing yielded rather convincing results.\n",
+              "start": 0,
+              "end": 1108,
+              "bbox": [
+                76.53500366210938,
+                117.64807891845703,
+                520.5020751953125,
+                262.7478942871094
+              ]
+            }
+          ],
+          "image": "assets/3cfb4771f150902a/S03-p012.jpg",
+          "verification": {
+            "candidate_index": 0,
+            "status": "supported",
+            "reason": "The selected blocks b002 and b003 verbatim text aligns with the PLS-DA analysis of Series A, including the reference to Figure 7 and the discussion of class separation and patient 194."
+          },
+          "revision": "cf9020e8578b1db03139e7ec",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 6,
+        "score": 0.6067908397760221,
+        "bm25_score": 4.399020691873513,
+        "qdrant_score": 0.6067908397760221,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "fat"
+        ],
+        "matching_segment": "Probe Schematic and Classification\ninfrared fluorescence tissue classification liver breast fat ATR autofluorescence fluorescence IR absorbance",
+        "evidence": {
+          "section": "Probe Schematic and Classification",
+          "content_kind": "figure_transcription",
+          "evidence_scope": "research_demonstration",
+          "spans": [],
+          "region": {
+            "x0": 0.52,
+            "y0": 0.3,
+            "x1": 0.98,
+            "y1": 0.52,
+            "label": "Schematic of ATR/Autofluorescence and Classification"
+          },
+          "transcription": "infrared fluorescence tissue classification liver breast fat ATR autofluorescence fluorescence IR absorbance",
+          "interpretation": "Diagram showing the probe interface with a tissue sample, emitting signals (infrared, fluorescence) and generating spectra, alongside a scatter plot classifying tissues as liver, breast, and fat based on fluorescence and IR absorbance.",
+          "facts": [
+            {
+              "category": "application",
+              "statement": "The developed probe demonstrated tissue classification capability for liver, breast, and fat samples.",
+              "support_quotes": [
+                "tissue classification liver breast fat"
+              ],
+              "quantities": []
+            }
+          ],
+          "tags": [
+            "tissue_classification",
+            "spectroscopy"
+          ],
+          "issues": [],
+          "evidence_id": "S04:p001:fig:8c0326912d1c1af5",
+          "source_id": "S04",
+          "file_name": "S04_Combi_MIR_Fluorescence_2021.pdf",
+          "source_sha256": "7286bc915e322363395ae10b0519a5705487e013dd69d4930e24f6542bee6b4b",
+          "page": 1,
+          "text": "infrared fluorescence tissue classification liver breast fat ATR autofluorescence fluorescence IR absorbance",
+          "source_spans": [],
+          "image": "assets/7286bc915e322363/S04-p001.jpg",
+          "verification": {
+            "candidate_index": 3,
+            "status": "supported",
+            "reason": "The figure in the specified region clearly displays a schematic of the probe interacting with tissue and a scatter plot labeled 'tissue classification' with points for 'liver', 'breast', and 'fat'."
+          },
+          "revision": "a3860738664527fcde481767",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      }
+    ],
+    "hybrid": [
+      {
+        "rank": 1,
+        "score": 0.03278688524590164,
+        "bm25_score": 14.654026917663865,
+        "qdrant_score": 0.7411311170103033,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "opaque",
+          "dairy",
+          "fat",
+          "protein"
+        ],
+        "matching_segment": "Inline Milk Analysis: NIR Reflection\n4.\n\nInline Milk Analysis.\n\nThe use of Near-Infrared (NIR) spectroscopy for the inline monitoring of milk is a cornerstone of \nmodern dairy \"Process Analytical Technology\" (PAT).\n\nMaintaining both NIR Reflection and NIR \nTransmission techniques in a lab environment provides a comprehensive analytical suite capable of \nhandling the diverse physical properties of dairy products.\n\n- \nNIR Reflection: Inline NIR Reflection is primarily used for opaque or highly concentrated dairy \nproducts, such as yogurt, butter, or whole milk concentrates.\n\nThe main equipment includes a fiber \noptic probe where one set of fibers delivers light to the sample and the other collects the \n\"backscattered\" light.\n\nExperimentally, the probe is flush-mounted into a pipe or vat to interact \ndirectly with the flowing medium.\n\nBecause the light does not penetrate deeply, the method is \nsensitive to the surface characteristics and fat globule size.\n\nData processing may involve converting \nthe reflectance values to absorbance and applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations to remove physical interference caused by the \nscattering nature of the milk particles before using Partial Least Squares (PLS) regression to \nquantify fat and protein.",
+        "evidence": {
+          "section": "Inline Milk Analysis: NIR Reflection",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "application_example",
+          "spans": [
+            {
+              "block_id": "b004",
+              "quote": null
+            },
+            {
+              "block_id": "b005",
+              "quote": null
+            },
+            {
+              "block_id": "b006",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "method",
+              "statement": "NIR Reflection spectroscopy is used for opaque dairy products, with data processed using Multiplicative Scatter Correction (MSC) or Standard Normal Variate (SNV) and PLS regression.",
+              "support_quotes": [
+                "applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations",
+                "using Partial Least Squares (PLS) regression to \nquantify fat and protein."
+              ],
+              "quantities": []
+            }
+          ],
+          "tags": [],
+          "issues": [],
+          "evidence_id": "S01:p017:txt:03613ea0cb0945fb",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 17,
+          "text": "4. Inline Milk Analysis. \n\n\nThe use of Near-Infrared (NIR) spectroscopy for the inline monitoring of milk is a cornerstone of \nmodern dairy \"Process Analytical Technology\" (PAT). Maintaining both NIR Reflection and NIR \nTransmission techniques in a lab environment provides a comprehensive analytical suite capable of \nhandling the diverse physical properties of dairy products. \n\n\n- \nNIR Reflection: Inline NIR Reflection is primarily used for opaque or highly concentrated dairy \nproducts, such as yogurt, butter, or whole milk concentrates. The main equipment includes a fiber \noptic probe where one set of fibers delivers light to the sample and the other collects the \n\"backscattered\" light. Experimentally, the probe is flush-mounted into a pipe or vat to interact \ndirectly with the flowing medium. Because the light does not penetrate deeply, the method is \nsensitive to the surface characteristics and fat globule size. Data processing may involve converting \nthe reflectance values to absorbance and applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations to remove physical interference caused by the \nscattering nature of the milk particles before using Partial Least Squares (PLS) regression to \nquantify fat and protein. \n",
+          "source_spans": [
+            {
+              "block_id": "b004",
+              "quote": "4. Inline Milk Analysis. \n",
+              "start": 0,
+              "end": 26,
+              "bbox": [
+                72.0250015258789,
+                521.9450073242188,
+                190.3300018310547,
+                534.2760009765625
+              ]
+            },
+            {
+              "block_id": "b005",
+              "quote": "The use of Near-Infrared (NIR) spectroscopy for the inline monitoring of milk is a cornerstone of \nmodern dairy \"Process Analytical Technology\" (PAT). Maintaining both NIR Reflection and NIR \nTransmission techniques in a lab environment provides a comprehensive analytical suite capable of \nhandling the diverse physical properties of dairy products. \n",
+              "start": 0,
+              "end": 352,
+              "bbox": [
+                72.0250015258789,
+                544.5989990234375,
+                526.20703125,
+                600.8059692382812
+              ]
+            },
+            {
+              "block_id": "b006",
+              "quote": "- \nNIR Reflection: Inline NIR Reflection is primarily used for opaque or highly concentrated dairy \nproducts, such as yogurt, butter, or whole milk concentrates. The main equipment includes a fiber \noptic probe where one set of fibers delivers light to the sample and the other collects the \n\"backscattered\" light. Experimentally, the probe is flush-mounted into a pipe or vat to interact \ndirectly with the flowing medium. Because the light does not penetrate deeply, the method is \nsensitive to the surface characteristics and fat globule size. Data processing may involve converting \nthe reflectance values to absorbance and applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations to remove physical interference caused by the \nscattering nature of the milk particles before using Partial Least Squares (PLS) regression to \nquantify fat and protein. \n",
+              "start": 0,
+              "end": 897,
+              "bbox": [
+                72.0250015258789,
+                610.9019775390625,
+                526.1729736328125,
+                756.3509521484375
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p017.jpg",
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "The description of NIR Reflection spectroscopy for opaque dairy products and the specific data processing steps (MSC, SNV, and PLS regression) are accurately transcribed from the text blocks provided in b004 through b006."
+          },
+          "revision": "9f5f308d1c6bf85bd2e441e0",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 2,
+        "score": 0.03225806451612903,
+        "bm25_score": 6.467493967365592,
+        "qdrant_score": 0.7025873113064676,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "dairy",
+          "fat"
+        ],
+        "matching_segment": "Dual-Technique Advantage and Advanced Methods\n- \nThe Advantage of Dual-Technique Availability: having both fiber optic techniques available in a \nlab rather than relying on one provides the flexibility needed to monitor the entire production chain.\n\nWhile transmission is superior for the high-precision analysis of dilute process streams (like whey \nfiltration), it fails when the milk becomes too \"thick\" or fat-rich, as the light cannot penetrate the \nsample.\n\nConversely, reflection can work well in highly scattering environments but can be less \nrepresentative for clear liquids.\n\nBy maintaining both, a lab can calibrate models for every stage of \nproduction - from raw milk intake to final evaporation - ensuring that no matter how the physical \nstate of the milk changes during processing, the inline monitoring remains accurate and robust.\n\nIn \nsome cases, a Transflection probe can already be a combined solution working well for low-fat and \nhigh-fat containing milk products.\n\nNIR Spectrometer and NIR light source remain the same for both \nreflection and transmission techniques.\n\nWhile NIR is the workhorse of the dairy industry, advanced labs often incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques to capture specific chemical or structural \ninformation that NIR might miss.\n\nThese methods provide a higher level of \"molecular specificity,\" \nmaking them useful for specialized monitoring in milk analysis.",
+        "evidence": {
+          "section": "Dual-Technique Advantage and Advanced Methods",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "general_method",
+          "spans": [
+            {
+              "block_id": "b002",
+              "quote": null
+            },
+            {
+              "block_id": "b003",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "method",
+              "statement": "Advanced labs often incorporate Fluorescence, Raman, and Mid-Infrared (MIR) ATR techniques alongside NIR to capture specific chemical or structural information.",
+              "support_quotes": [
+                "incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques"
+              ],
+              "quantities": []
+            }
+          ],
+          "tags": [
+            "multi-technique",
+            "Raman",
+            "Fluorescence",
+            "MIR"
+          ],
+          "issues": [],
+          "evidence_id": "S01:p018:txt:250c09c5fdb749b3",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 18,
+          "text": " \n- \nThe Advantage of Dual-Technique Availability: having both fiber optic techniques available in a \nlab rather than relying on one provides the flexibility needed to monitor the entire production chain. \nWhile transmission is superior for the high-precision analysis of dilute process streams (like whey \nfiltration), it fails when the milk becomes too \"thick\" or fat-rich, as the light cannot penetrate the \nsample. Conversely, reflection can work well in highly scattering environments but can be less \nrepresentative for clear liquids. By maintaining both, a lab can calibrate models for every stage of \nproduction - from raw milk intake to final evaporation - ensuring that no matter how the physical \nstate of the milk changes during processing, the inline monitoring remains accurate and robust. In \nsome cases, a Transflection probe can already be a combined solution working well for low-fat and \nhigh-fat containing milk products. NIR Spectrometer and NIR light source remain the same for both \nreflection and transmission techniques. \n\n\nWhile NIR is the workhorse of the dairy industry, advanced labs often incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques to capture specific chemical or structural \ninformation that NIR might miss. These methods provide a higher level of \"molecular specificity,\" \nmaking them useful for specialized monitoring in milk analysis. \n",
+          "source_spans": [
+            {
+              "block_id": "b002",
+              "quote": " \n- \nThe Advantage of Dual-Technique Availability: having both fiber optic techniques available in a \nlab rather than relying on one provides the flexibility needed to monitor the entire production chain. \nWhile transmission is superior for the high-precision analysis of dilute process streams (like whey \nfiltration), it fails when the milk becomes too \"thick\" or fat-rich, as the light cannot penetrate the \nsample. Conversely, reflection can work well in highly scattering environments but can be less \nrepresentative for clear liquids. By maintaining both, a lab can calibrate models for every stage of \nproduction - from raw milk intake to final evaporation - ensuring that no matter how the physical \nstate of the milk changes during processing, the inline monitoring remains accurate and robust. In \nsome cases, a Transflection probe can already be a combined solution working well for low-fat and \nhigh-fat containing milk products. NIR Spectrometer and NIR light source remain the same for both \nreflection and transmission techniques. \n",
+              "start": 0,
+              "end": 1047,
+              "bbox": [
+                72.0250015258789,
+                225.77902221679688,
+                526.22998046875,
+                400.2460021972656
+              ]
+            },
+            {
+              "block_id": "b003",
+              "quote": "While NIR is the workhorse of the dairy industry, advanced labs often incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques to capture specific chemical or structural \ninformation that NIR might miss. These methods provide a higher level of \"molecular specificity,\" \nmaking them useful for specialized monitoring in milk analysis. \n",
+              "start": 0,
+              "end": 362,
+              "bbox": [
+                72.0250015258789,
+                410.8190002441406,
+                528.969970703125,
+                466.9960021972656
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p018.jpg",
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "The text confirms advanced labs incorporate Fluorescence, Raman, and MIR ATR techniques to capture specific molecular information."
+          },
+          "revision": "3dbc2c1783f50b4c3f9e11c9",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 3,
+        "score": 0.03149801587301587,
+        "bm25_score": 5.837997444442348,
+        "qdrant_score": 0.6775186993259397,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "fat",
+          "protein"
+        ],
+        "matching_segment": "Multispectral Classification of Biological Tissue\nMultispectral Classi\ufb01cation of Biological Tissue.\n\nThe\ndeveloped multispectral probe was tested in the practical\nanalysis of biological tissue samples using di\ufb00erent organs and\nparts of the chicken: breast, fat, and liver.\n\nThe general chemical\nsimilarity of biological objects makes spectroscopic recognition\nof di\ufb00erent tissue types a nontrivial task, which requires careful\noptimization of the measurement technique.\n\nCommercially\nproduced poultry combines the availability of fresh samples\nand the variability of tissue types, making it an attractive model\nsystem for evaluating spectroscopic methods and equipment.\n\nTo provide the necessary statistical representativeness of the\ndata, three samples of each tissue type were prepared.\n\nThe\nsamples were large enough to re\ufb02ect the possible heterogeneity\nof the tissue.\n\nEach sample was represented by \ufb01ve distributed\npoints.\n\nThis experimental design resulted in two data matrices:\na 45 \u00d7 118 XIR matrix of Fourier-transform (FT) IR and 45 \u00d7\n705 XFL of \ufb02uorescence spectra (see the Supporting\nInformation for more information).\n\nPreliminary visual exploration of the obtained spectra\n(Figure 2) revealed the di\ufb00erent abilities of the two techniques\nto recognize certain tissue types.\n\nThe discriminative power of\nmid-IR spectroscopy (Figure 2a and Figure S-4) toward rich in\nlipids fat samples is related to the stretching vibration band of\n\nthe ester carbonyl C\ue0c8O at about 1740 cm\u22121, which is\ncharacteristic of saturated triglycerides.20 At the same time, all\nthree sample types (fat to a lesser extent) have in the selected\nregion two very similar signals with maxima at 1548 and 1640\ncm\u22121.\n\nThese are, respectively, the amide I and II bands, two\nmajor absorption peaks of the protein peptide group in the\ninfrared region.21 Low measurement reproducibility of the fat\nsamples (broad standard deviation in Figure 2a) is explained\nby higher inhomogeneity of this tissue type, because the\nspectra in all points of analysis always represent a mixture of\nlipids with an essential part of neighboring proteins.",
+        "evidence": {
+          "section": "Multispectral Classification of Biological Tissue",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "research_demonstration",
+          "spans": [
+            {
+              "block_id": "b007",
+              "quote": null
+            },
+            {
+              "block_id": "b009",
+              "quote": null
+            },
+            {
+              "block_id": "b010",
+              "quote": null
+            },
+            {
+              "block_id": "b005",
+              "quote": null
+            },
+            {
+              "block_id": "b008",
+              "quote": null
+            },
+            {
+              "block_id": "b011",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [],
+          "tags": [
+            "biological tissue",
+            "chicken breast",
+            "IR",
+            "fluorescence"
+          ],
+          "issues": [],
+          "evidence_id": "S04:p003:txt:63787604987d3bce",
+          "source_id": "S04",
+          "file_name": "S04_Combi_MIR_Fluorescence_2021.pdf",
+          "source_sha256": "7286bc915e322363395ae10b0519a5705487e013dd69d4930e24f6542bee6b4b",
+          "page": 3,
+          "text": "Multispectral Classi\ufb01cation of Biological Tissue. The\ndeveloped multispectral probe was tested in the practical\nanalysis of biological tissue samples using di\ufb00erent organs and\nparts of the chicken: breast, fat, and liver. The general chemical\nsimilarity of biological objects makes spectroscopic recognition\nof di\ufb00erent tissue types a nontrivial task, which requires careful\noptimization of the measurement technique. Commercially\nproduced poultry combines the availability of fresh samples\nand the variability of tissue types, making it an attractive model\nsystem for evaluating spectroscopic methods and equipment.\n\n\nTo provide the necessary statistical representativeness of the\ndata, three samples of each tissue type were prepared. The\nsamples were large enough to re\ufb02ect the possible heterogeneity\nof the tissue. Each sample was represented by \ufb01ve distributed\npoints. This experimental design resulted in two data matrices:\na 45 \u00d7 118 XIR matrix of Fourier-transform (FT) IR and 45 \u00d7\n705 XFL of \ufb02uorescence spectra (see the Supporting\nInformation for more information).\n\n\nPreliminary visual exploration of the obtained spectra\n(Figure 2) revealed the di\ufb00erent abilities of the two techniques\nto recognize certain tissue types. The discriminative power of\nmid-IR spectroscopy (Figure 2a and Figure S-4) toward rich in\nlipids fat samples is related to the stretching vibration band of\n\n\nthe ester carbonyl C\ue0c8O at about 1740 cm\u22121, which is\ncharacteristic of saturated triglycerides.20 At the same time, all\nthree sample types (fat to a lesser extent) have in the selected\nregion two very similar signals with maxima at 1548 and 1640\ncm\u22121. These are, respectively, the amide I and II bands, two\nmajor absorption peaks of the protein peptide group in the\ninfrared region.21 Low measurement reproducibility of the fat\nsamples (broad standard deviation in Figure 2a) is explained\nby higher inhomogeneity of this tissue type, because the\nspectra in all points of analysis always represent a mixture of\nlipids with an essential part of neighboring proteins. This fact\nalso explains the presence of protein amide I and II bands in\nthe IR spectra of fat in Figure 2a, making those bands less\nuseful for the sample classi\ufb01cation.\n\n\nThe \ufb02uorescence spectra (Figure S-5 in the Supporting\nInformation) after standard normal variate (SNV)22 correction\nlook very similar below 600 nm (Figure 2b). Low standard\ndeviations of the preprocessed spectra indicate homogeneity of\nthe samples from the \ufb02uorimetric point of view (considering\nlarger analyzed volumes). The observed broad band with the\nmaximum between 520 and 530 nm is formed by the emission\nof intracellular \ufb02uorophores with the dominating contribution\nof \ufb02avin adenine dinucleotide (FAD)23 that can be a\ufb00ected by\nthe overlaying laser emission peak \u201ctail\u201d passed through the\noptical \ufb01lter used (Supporting Information). This possible\ndistortion, however, does not play any signi\ufb01cant role in the\nsample classi\ufb01cation. The most selective peak at 613 nm, which\ncan be assigned to porphyrins, has su\ufb03cient speci\ufb01city to\ndistinguish the liver from other measured samples. The\nincreased content of this protein in the liver is expected,\nsince the liver has a central role in the metabolism of haem and\nporphyrins/porphyrinogens, which are intermediates in the\nhaem biosynthetic pathway.24\n\n\nPrincipal component analysis (PCA)25 was used to evaluate\nthe advantage of multispectral measurement with the\ndeveloped probe for multivariate sample classi\ufb01cation. IR\nand \ufb02uorescence data parts presented in Figure 2 were\nanalyzed both separately and jointly without any further\nmodi\ufb01cation, thus enabling a direct comparison of the results.\nFor the joint analysis, the IR and \ufb02uorescence spectra rescaled\nto have intensities between 0 and 1 were fused into a single\nmatrix X (45 \u00d7 823) with the augmented spectral axis: X =\n[XIRXFL]. The purpose of the data analysis was to investigate\n",
+          "source_spans": [
+            {
+              "block_id": "b007",
+              "quote": "Multispectral Classi\ufb01cation of Biological Tissue. The\ndeveloped multispectral probe was tested in the practical\nanalysis of biological tissue samples using di\ufb00erent organs and\nparts of the chicken: breast, fat, and liver. The general chemical\nsimilarity of biological objects makes spectroscopic recognition\nof di\ufb00erent tissue types a nontrivial task, which requires careful\noptimization of the measurement technique. Commercially\nproduced poultry combines the availability of fresh samples\nand the variability of tissue types, making it an attractive model\nsystem for evaluating spectroscopic methods and equipment.\n",
+              "start": 0,
+              "end": 617,
+              "bbox": [
+                51.5238037109375,
+                496.22833251953125,
+                291.53619384765625,
+                608.3424682617188
+              ]
+            },
+            {
+              "block_id": "b009",
+              "quote": "To provide the necessary statistical representativeness of the\ndata, three samples of each tissue type were prepared. The\nsamples were large enough to re\ufb02ect the possible heterogeneity\nof the tissue. Each sample was represented by \ufb01ve distributed\npoints. This experimental design resulted in two data matrices:\na 45 \u00d7 118 XIR matrix of Fourier-transform (FT) IR and 45 \u00d7\n705 XFL of \ufb02uorescence spectra (see the Supporting\nInformation for more information).\n",
+              "start": 0,
+              "end": 457,
+              "bbox": [
+                51.52381896972656,
+                609.512451171875,
+                291.5352478027344,
+                698.3963623046875
+              ]
+            },
+            {
+              "block_id": "b010",
+              "quote": "Preliminary visual exploration of the obtained spectra\n(Figure 2) revealed the di\ufb00erent abilities of the two techniques\nto recognize certain tissue types. The discriminative power of\nmid-IR spectroscopy (Figure 2a and Figure S-4) toward rich in\nlipids fat samples is related to the stretching vibration band of\n",
+              "start": 0,
+              "end": 311,
+              "bbox": [
+                51.52687454223633,
+                699.50634765625,
+                291.5202941894531,
+                754.56689453125
+              ]
+            },
+            {
+              "block_id": "b005",
+              "quote": "the ester carbonyl C\ue0c8O at about 1740 cm\u22121, which is\ncharacteristic of saturated triglycerides.20 At the same time, all\nthree sample types (fat to a lesser extent) have in the selected\nregion two very similar signals with maxima at 1548 and 1640\ncm\u22121. These are, respectively, the amide I and II bands, two\nmajor absorption peaks of the protein peptide group in the\ninfrared region.21 Low measurement reproducibility of the fat\nsamples (broad standard deviation in Figure 2a) is explained\nby higher inhomogeneity of this tissue type, because the\nspectra in all points of analysis always represent a mixture of\nlipids with an essential part of neighboring proteins. This fact\nalso explains the presence of protein amide I and II bands in\nthe IR spectra of fat in Figure 2a, making those bands less\nuseful for the sample classi\ufb01cation.\n",
+              "start": 0,
+              "end": 833,
+              "bbox": [
+                315.4895324707031,
+                270.22412109375,
+                555.5460815429688,
+                428.5143737792969
+              ]
+            },
+            {
+              "block_id": "b008",
+              "quote": "The \ufb02uorescence spectra (Figure S-5 in the Supporting\nInformation) after standard normal variate (SNV)22 correction\nlook very similar below 600 nm (Figure 2b). Low standard\ndeviations of the preprocessed spectra indicate homogeneity of\nthe samples from the \ufb02uorimetric point of view (considering\nlarger analyzed volumes). The observed broad band with the\nmaximum between 520 and 530 nm is formed by the emission\nof intracellular \ufb02uorophores with the dominating contribution\nof \ufb02avin adenine dinucleotide (FAD)23 that can be a\ufb00ected by\nthe overlaying laser emission peak \u201ctail\u201d passed through the\noptical \ufb01lter used (Supporting Information). This possible\ndistortion, however, does not play any signi\ufb01cant role in the\nsample classi\ufb01cation. The most selective peak at 613 nm, which\ncan be assigned to porphyrins, has su\ufb03cient speci\ufb01city to\ndistinguish the liver from other measured samples. The\nincreased content of this protein in the liver is expected,\nsince the liver has a central role in the metabolism of haem and\nporphyrins/porphyrinogens, which are intermediates in the\nhaem biosynthetic pathway.24\n",
+              "start": 0,
+              "end": 1105,
+              "bbox": [
+                315.4936218261719,
+                428.85137939453125,
+                555.5542602539062,
+                642.1212158203125
+              ]
+            },
+            {
+              "block_id": "b011",
+              "quote": "Principal component analysis (PCA)25 was used to evaluate\nthe advantage of multispectral measurement with the\ndeveloped probe for multivariate sample classi\ufb01cation. IR\nand \ufb02uorescence data parts presented in Figure 2 were\nanalyzed both separately and jointly without any further\nmodi\ufb01cation, thus enabling a direct comparison of the results.\nFor the joint analysis, the IR and \ufb02uorescence spectra rescaled\nto have intensities between 0 and 1 were fused into a single\nmatrix X (45 \u00d7 823) with the augmented spectral axis: X =\n[XIRXFL]. The purpose of the data analysis was to investigate\n",
+              "start": 0,
+              "end": 587,
+              "bbox": [
+                315.4954833984375,
+                638.848388671875,
+                555.5439453125,
+                755.6072387695312
+              ]
+            }
+          ],
+          "image": "assets/7286bc915e322363/S04-p003.jpg",
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "The candidate selects multiple blocks (b007-b011) corresponding to the section 'Multispectral Classification of Biological Tissue'. The content is verbatim text from the source, and the section header matches the content provided in the b"
+          },
+          "revision": "be5687987812e30c6704b8d8",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 4,
+        "score": 0.030776515151515152,
+        "bm25_score": 4.399020691873513,
+        "qdrant_score": 0.6067908397760221,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "fat"
+        ],
+        "matching_segment": "Probe Schematic and Classification\ninfrared fluorescence tissue classification liver breast fat ATR autofluorescence fluorescence IR absorbance",
+        "evidence": {
+          "section": "Probe Schematic and Classification",
+          "content_kind": "figure_transcription",
+          "evidence_scope": "research_demonstration",
+          "spans": [],
+          "region": {
+            "x0": 0.52,
+            "y0": 0.3,
+            "x1": 0.98,
+            "y1": 0.52,
+            "label": "Schematic of ATR/Autofluorescence and Classification"
+          },
+          "transcription": "infrared fluorescence tissue classification liver breast fat ATR autofluorescence fluorescence IR absorbance",
+          "interpretation": "Diagram showing the probe interface with a tissue sample, emitting signals (infrared, fluorescence) and generating spectra, alongside a scatter plot classifying tissues as liver, breast, and fat based on fluorescence and IR absorbance.",
+          "facts": [
+            {
+              "category": "application",
+              "statement": "The developed probe demonstrated tissue classification capability for liver, breast, and fat samples.",
+              "support_quotes": [
+                "tissue classification liver breast fat"
+              ],
+              "quantities": []
+            }
+          ],
+          "tags": [
+            "tissue_classification",
+            "spectroscopy"
+          ],
+          "issues": [],
+          "evidence_id": "S04:p001:fig:8c0326912d1c1af5",
+          "source_id": "S04",
+          "file_name": "S04_Combi_MIR_Fluorescence_2021.pdf",
+          "source_sha256": "7286bc915e322363395ae10b0519a5705487e013dd69d4930e24f6542bee6b4b",
+          "page": 1,
+          "text": "infrared fluorescence tissue classification liver breast fat ATR autofluorescence fluorescence IR absorbance",
+          "source_spans": [],
+          "image": "assets/7286bc915e322363/S04-p001.jpg",
+          "verification": {
+            "candidate_index": 3,
+            "status": "supported",
+            "reason": "The figure in the specified region clearly displays a schematic of the probe interacting with tissue and a scatter plot labeled 'tissue classification' with points for 'liver', 'breast', and 'fat'."
+          },
+          "revision": "a3860738664527fcde481767",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 5,
+        "score": 0.03076923076923077,
+        "bm25_score": 3.0389368036782938,
+        "qdrant_score": 0.6225496724793899,
+        "branches": [
+          "bm25",
+          "qdrant"
+        ],
+        "matched_terms": [
+          "fat"
+        ],
+        "matching_segment": "PLS-DA Series A Results\nThis was observed when using one of the channels as an internal reference.\n\nThus, the data sets for\nSeries A and B were analyzed in a multivariate mode without any scatter-correcting preprocessing.\n\nThe PLS-DA score plot (Figure 7) is a convenient way to visualize the \u201cstrength\u201d of the cancer\ndiscrimination.\n\nIn Series A, the tumor/normal class separation in the plane of the two \ufb01rst LVs is almost\ncomplete (Figure 7b).\n\nA few measurement points showing discrimination ambiguity problems were\nrelated to the spectral similarity of two different samples from patient 194.\n\nThis could be explained by\nthe high content of fat in both the tumor and normal samples of this patient.\n\nThe bright golden-yellow\ncolor of the tumor sample T194 was clearly due to intracellular lipid accumulation, while the normal\nsample N194 might have been a cut of the adipose capsule of the kidney (or perinephric fat), which is\na structure between the renal fascia and the renal capsule.\n\nIn spite of a reasonably strong variance in\nthe measurements of tumor samples observed in the factor space of the PLS-DA models, the overall\ntendency looks very promising.\n\nWhile none of the individual channels in Figure 8 can allow for\na reliable discrimination of the samples, multivariate data processing yielded rather convincing results.",
+        "evidence": {
+          "section": "PLS-DA Series A Results",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "research_demonstration",
+          "spans": [
+            {
+              "block_id": "b002",
+              "quote": null
+            },
+            {
+              "block_id": "b003",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [],
+          "tags": [],
+          "issues": [],
+          "evidence_id": "S03:p012:txt:e19aa643001dad23",
+          "source_id": "S03",
+          "file_name": "S03_LED_Kidney_Study_2017.pdf",
+          "source_sha256": "3cfb4771f150902a729f88ec4a40c90031c7a8d07e8641e653e4543157917fd4",
+          "page": 12,
+          "text": "This was observed when using one of the channels as an internal reference. Thus, the data sets for\nSeries A and B were analyzed in a multivariate mode without any scatter-correcting preprocessing.\n\n\nThe PLS-DA score plot (Figure 7) is a convenient way to visualize the \u201cstrength\u201d of the cancer\ndiscrimination. In Series A, the tumor/normal class separation in the plane of the two \ufb01rst LVs is almost\ncomplete (Figure 7b). A few measurement points showing discrimination ambiguity problems were\nrelated to the spectral similarity of two different samples from patient 194. This could be explained by\nthe high content of fat in both the tumor and normal samples of this patient. The bright golden-yellow\ncolor of the tumor sample T194 was clearly due to intracellular lipid accumulation, while the normal\nsample N194 might have been a cut of the adipose capsule of the kidney (or perinephric fat), which is\na structure between the renal fascia and the renal capsule. In spite of a reasonably strong variance in\nthe measurements of tumor samples observed in the factor space of the PLS-DA models, the overall\ntendency looks very promising. While none of the individual channels in Figure 8 can allow for\na reliable discrimination of the samples, multivariate data processing yielded rather convincing results.\n",
+          "source_spans": [
+            {
+              "block_id": "b002",
+              "quote": "This was observed when using one of the channels as an internal reference. Thus, the data sets for\nSeries A and B were analyzed in a multivariate mode without any scatter-correcting preprocessing.\n",
+              "start": 0,
+              "end": 197,
+              "bbox": [
+                76.22599792480469,
+                90.62909698486328,
+                518.9550170898438,
+                114.17322540283203
+              ]
+            },
+            {
+              "block_id": "b003",
+              "quote": "The PLS-DA score plot (Figure 7) is a convenient way to visualize the \u201cstrength\u201d of the cancer\ndiscrimination. In Series A, the tumor/normal class separation in the plane of the two \ufb01rst LVs is almost\ncomplete (Figure 7b). A few measurement points showing discrimination ambiguity problems were\nrelated to the spectral similarity of two different samples from patient 194. This could be explained by\nthe high content of fat in both the tumor and normal samples of this patient. The bright golden-yellow\ncolor of the tumor sample T194 was clearly due to intracellular lipid accumulation, while the normal\nsample N194 might have been a cut of the adipose capsule of the kidney (or perinephric fat), which is\na structure between the renal fascia and the renal capsule. In spite of a reasonably strong variance in\nthe measurements of tumor samples observed in the factor space of the PLS-DA models, the overall\ntendency looks very promising. While none of the individual channels in Figure 8 can allow for\na reliable discrimination of the samples, multivariate data processing yielded rather convincing results.\n",
+              "start": 0,
+              "end": 1108,
+              "bbox": [
+                76.53500366210938,
+                117.64807891845703,
+                520.5020751953125,
+                262.7478942871094
+              ]
+            }
+          ],
+          "image": "assets/3cfb4771f150902a/S03-p012.jpg",
+          "verification": {
+            "candidate_index": 0,
+            "status": "supported",
+            "reason": "The selected blocks b002 and b003 verbatim text aligns with the PLS-DA analysis of Series A, including the reference to Figure 7 and the discussion of class separation and patient 194."
+          },
+          "revision": "cf9020e8578b1db03139e7ec",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      },
+      {
+        "rank": 6,
+        "score": 0.015873015873015872,
+        "bm25_score": null,
+        "qdrant_score": 0.6862455276219097,
+        "branches": [
+          "qdrant"
+        ],
+        "matched_terms": [],
+        "matching_segment": "NIR Transmission for Milk Analysis\n- \nNIR Transmission: NIR Transmission is the preferred method for transparent or semi-transparent \nliquids, such as skim milk, whey, or permeate.\n\nThe setup typically consists of a transmission / \ntransflection probe, where light passes entirely through a defined layer of the sample to a detector \non the opposite side.\n\nThe key experimental action is the precise control of the optical pathlength \n(usually 1 - 10 mm); if the pathlength is too wide, the signal is lost to absorption; if too narrow, the \nsample represents a negligible volume.\n\nData processing focuses on the Beer-Lambert law, where \nthe measured transmittance is converted to Absorbance.\n\nThis technique generally offers higher \naccuracy for low-concentration components because the light interacts with the entire volume of \nthe sampled cross-section, providing a more representative chemical signature.",
+        "evidence": {
+          "section": "NIR Transmission for Milk Analysis",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "general_method",
+          "spans": [
+            {
+              "block_id": "b001",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "method",
+              "statement": "NIR Transmission uses a probe where light passes through the sample, with a typical optical pathlength control of 1 - 10 mm.",
+              "support_quotes": [
+                "precise control of the optical pathlength \n(usually 1 - 10 mm)"
+              ],
+              "quantities": [
+                {
+                  "label": "optical pathlength",
+                  "value": "1 - 10",
+                  "unit": "mm",
+                  "kind": "other",
+                  "source_quote": "precise control of the optical pathlength \n(usually 1 - 10 mm)"
+                }
+              ]
+            }
+          ],
+          "tags": [
+            "NIR",
+            "transmission",
+            "pathlength"
+          ],
+          "issues": [],
+          "evidence_id": "S01:p018:txt:076b268969e39637",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 18,
+          "text": " \n- \nNIR Transmission: NIR Transmission is the preferred method for transparent or semi-transparent \nliquids, such as skim milk, whey, or permeate. The setup typically consists of a transmission / \ntransflection probe, where light passes entirely through a defined layer of the sample to a detector \non the opposite side. The key experimental action is the precise control of the optical pathlength \n(usually 1 - 10 mm); if the pathlength is too wide, the signal is lost to absorption; if too narrow, the \nsample represents a negligible volume. Data processing focuses on the Beer-Lambert law, where \nthe measured transmittance is converted to Absorbance. This technique generally offers higher \naccuracy for low-concentration components because the light interacts with the entire volume of \nthe sampled cross-section, providing a more representative chemical signature.  \n",
+          "source_spans": [
+            {
+              "block_id": "b001",
+              "quote": " \n- \nNIR Transmission: NIR Transmission is the preferred method for transparent or semi-transparent \nliquids, such as skim milk, whey, or permeate. The setup typically consists of a transmission / \ntransflection probe, where light passes entirely through a defined layer of the sample to a detector \non the opposite side. The key experimental action is the precise control of the optical pathlength \n(usually 1 - 10 mm); if the pathlength is too wide, the signal is lost to absorption; if too narrow, the \nsample represents a negligible volume. Data processing focuses on the Beer-Lambert law, where \nthe measured transmittance is converted to Absorbance. This technique generally offers higher \naccuracy for low-concentration components because the light interacts with the entire volume of \nthe sampled cross-section, providing a more representative chemical signature.  \n",
+              "start": 0,
+              "end": 874,
+              "bbox": [
+                72.0250015258789,
+                78.2290267944336,
+                526.219970703125,
+                223.45602416992188
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p018.jpg",
+          "verification": {
+            "candidate_index": 0,
+            "status": "supported",
+            "reason": "Source text explicitly states that precise control of optical pathlength is usually 1-10 mm and describes the transmission probe mechanism."
+          },
+          "revision": "75c335d55f1ec607f483b647",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "dataset": "technical"
+        }
+      }
+    ]
+  },
+  "warnings": [],
+  "model_calls": 0
+}

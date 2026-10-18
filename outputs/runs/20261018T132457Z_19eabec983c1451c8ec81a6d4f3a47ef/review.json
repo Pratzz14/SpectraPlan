@@ -1,0 +1,155 @@
+{
+  "batch_id": "19eabec983c1451c8ec81a6d4f3a47ef",
+  "generated_at": "2026-10-18T13:26:48.661963+00:00",
+  "review_scope": "development output inventory and mechanical provenance; semantic support remains explicitly reviewable",
+  "cases": [
+    {
+      "case_id": "H01",
+      "run_id": "1be4eeccd84c437a84ef87f50607f383",
+      "run_status": "incomplete",
+      "decision_status": null,
+      "cited_sources": [],
+      "retrieved_evidence_count": 0,
+      "critical_missing_questions": [],
+      "independent_validation": {
+        "proposed": false,
+        "validation_groups": []
+      },
+      "claim_support_review": {
+        "mechanical_reference_check": "not available",
+        "method_rationale_consistency": "not available",
+        "semantic_source_entailment": "unreviewed",
+        "unsupported_claim_count": null,
+        "reviewer_type": "automated boundary inspection; independent scientific review not performed"
+      },
+      "residual_limitations": [
+        "Citation membership and source excerpts do not establish arbitrary scientific entailment.",
+        "Saved results are provisional and do not establish spectroscopy performance."
+      ]
+    },
+    {
+      "case_id": "H02",
+      "run_id": "a2a3f7a982ba4033bfcad7f67d8470f1",
+      "run_status": "incomplete",
+      "decision_status": null,
+      "cited_sources": [],
+      "retrieved_evidence_count": 0,
+      "critical_missing_questions": [],
+      "independent_validation": {
+        "proposed": false,
+        "validation_groups": []
+      },
+      "claim_support_review": {
+        "mechanical_reference_check": "not available",
+        "method_rationale_consistency": "not available",
+        "semantic_source_entailment": "unreviewed",
+        "unsupported_claim_count": null,
+        "reviewer_type": "automated boundary inspection; independent scientific review not performed"
+      },
+      "residual_limitations": [
+        "Citation membership and source excerpts do not establish arbitrary scientific entailment.",
+        "Saved results are provisional and do not establish spectroscopy performance."
+      ]
+    },
+    {
+      "case_id": "H03",
+      "run_id": "b3c674e7dc15437fbf6103ea899624ce",
+      "run_status": "complete",
+      "decision_status": "insufficient_information",
+      "cited_sources": [],
+      "retrieved_evidence_count": 0,
+      "critical_missing_questions": [
+        "What is the target analyte or property, and what is the sample matrix or phase?",
+        "What are the required accuracy, precision, and response time specifications?",
+        "What is the reference assay or ground-truth method, and what is its uncertainty?"
+      ],
+      "independent_validation": {
+        "proposed": true,
+        "validation_groups": []
+      },
+      "claim_support_review": {
+        "mechanical_reference_check": "passed by validated API",
+        "method_rationale_consistency": "passed by validated API",
+        "semantic_source_entailment": "unreviewed",
+        "unsupported_claim_count": null,
+        "reviewer_type": "automated boundary inspection; independent scientific review not performed"
+      },
+      "residual_limitations": [
+        "Citation membership and source excerpts do not establish arbitrary scientific entailment.",
+        "Saved results are provisional and do not establish spectroscopy performance."
+      ]
+    },
+    {
+      "case_id": "H04",
+      "run_id": "89e1193ed07f4eb9a5b276223ccc6e3d",
+      "run_status": "incomplete",
+      "decision_status": null,
+      "cited_sources": [],
+      "retrieved_evidence_count": 0,
+      "critical_missing_questions": [],
+      "independent_validation": {
+        "proposed": false,
+        "validation_groups": []
+      },
+      "claim_support_review": {
+        "mechanical_reference_check": "not available",
+        "method_rationale_consistency": "not available",
+        "semantic_source_entailment": "unreviewed",
+        "unsupported_claim_count": null,
+        "reviewer_type": "automated boundary inspection; independent scientific review not performed"
+      },
+      "residual_limitations": [
+        "Citation membership and source excerpts do not establish arbitrary scientific entailment.",
+        "Saved results are provisional and do not establish spectroscopy performance."
+      ]
+    },
+    {
+      "case_id": "H05",
+      "run_id": "c8f83a566a9d4d57a9b253552acf69f4",
+      "run_status": "incomplete",
+      "decision_status": null,
+      "cited_sources": [],
+      "retrieved_evidence_count": 0,
+      "critical_missing_questions": [],
+      "independent_validation": {
+        "proposed": false,
+        "validation_groups": []
+      },
+      "claim_support_review": {
+        "mechanical_reference_check": "not available",
+        "method_rationale_consistency": "not available",
+        "semantic_source_entailment": "unreviewed",
+        "unsupported_claim_count": null,
+        "reviewer_type": "automated boundary inspection; independent scientific review not performed"
+      },
+      "residual_limitations": [
+        "Citation membership and source excerpts do not establish arbitrary scientific entailment.",
+        "Saved results are provisional and do not establish spectroscopy performance."
+      ]
+    },
+    {
+      "case_id": "H06",
+      "run_id": "e801e1fa251a411387b02174ceb0c7ef",
+      "run_status": "incomplete",
+      "decision_status": null,
+      "cited_sources": [],
+      "retrieved_evidence_count": 0,
+      "critical_missing_questions": [],
+      "independent_validation": {
+        "proposed": false,
+        "validation_groups": []
+      },
+      "claim_support_review": {
+        "mechanical_reference_check": "not available",
+        "method_rationale_consistency": "not available",
+        "semantic_source_entailment": "unreviewed",
+        "unsupported_claim_count": null,
+        "reviewer_type": "automated boundary inspection; independent scientific review not performed"
+      },
+      "residual_limitations": [
+        "Citation membership and source excerpts do not establish arbitrary scientific entailment.",
+        "Saved results are provisional and do not establish spectroscopy performance."
+      ]
+    }
+  ]
+}

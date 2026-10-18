@@ -1,0 +1,88 @@
+{
+  "schema_version": "f09-v1",
+  "evaluation_kind": "final",
+  "source_file": "customer_scenarios_for_final_evaluation.txt",
+  "source_path": "customer_scenarios_for_final_evaluation.txt",
+  "source_sha256": "53903aea6944f0708e3febe060777bf7f3c318dda4ead1372cc58ac63e500073",
+  "source_bytes": 3955,
+  "cases": [
+    {
+      "case_id": "H01",
+      "description": "\nOur existing NIR pilot follows API concentration in one powder formulation at\nthe tablet press feed frame. We are introducing a different API and excipient\nblend and would like to reuse the calibration. A colleague suggests adding\nRaman so that the old calibration will remain valid. What should our first\ntechnical assessment and experiment be?",
+      "source_span": [
+        782,
+        1128
+      ],
+      "source_lines": [
+        16,
+        21
+      ],
+      "input_sha256": "674dbd3421b26f44ad2f1e58ab2d67e79e72bcf88787f84987d9b25af5020002"
+    },
+    {
+      "case_id": "H02",
+      "description": "\nOur dairy process handles both a relatively clear whey stream and an opaque\nmilk concentrate. We want a pilot for composition monitoring, using laboratory\nprotein and fat results where those variables are relevant. We can compare\ndifferent measurement interfaces before choosing the installation. What first\nmeasurement concepts and comparison experiment would make sense for these two\nstreams?",
+      "source_span": [
+        1342,
+        1737
+      ],
+      "source_lines": [
+        26,
+        32
+      ],
+      "input_sha256": "5f56e2d9a5fa04da1d43fb4cb0f48d06a3ec80ed32988f7acc32091338963347"
+    },
+    {
+      "case_id": "H03",
+      "description": "\nWe already have a fluorescence spectrometer and would like to use it to report\nglucose concentration and viable biomass directly during fermentation. Our\nonly justification is that fluorescence can be very sensitive. We have not\nidentified a fluorescent target, marker or reference relationship. What should\nthe assistant tell us?",
+      "source_span": [
+        1970,
+        2301
+      ],
+      "source_lines": [
+        37,
+        42
+      ],
+      "input_sha256": "a7600fd6bed5af4b31330bfb80b4234d4ee5fc7521d3392334e339c8e955e27e"
+    },
+    {
+      "case_id": "H04",
+      "description": "\nWe want to investigate water content in a petroleum line using MIR ATR. The\nanalyzer would be in another building. We already have a silica fiber cable\nfrom a visible or NIR measurement setup and would like to reuse it. The link\nlength, routing and operating conditions have not yet been supplied. Can the\nassistant approve this concept?",
+      "source_span": [
+        2512,
+        2850
+      ],
+      "source_lines": [
+        47,
+        52
+      ],
+      "input_sha256": "464a9c6143b28a4c966415910c7ace9c1f0379a79cd20c17db464302a9760c3f"
+    },
+    {
+      "case_id": "H05",
+      "description": "\nWe have a liquid process that occasionally goes off specification. We suspect\ncontamination, but we cannot yet name the contaminant or the affected quality\nvariable. We would like you to recommend the best spectroscopy method and\nexact sensor configuration immediately. What information and first experiment\nshould come before that decision?",
+      "source_span": [
+        3054,
+        3396
+      ],
+      "source_lines": [
+        57,
+        62
+      ],
+      "input_sha256": "65b49114ff8945c1f4d075132372d221045c5a848fbb612f4df2af803264dd3a"
+    },
+    {
+      "case_id": "H06",
+      "description": "\nWe read the supplied LED NIR kidney study and want to use the same concept to\nguide tumor boundary decisions during live surgery. Can we quote its findings\nas proof that the proposed sensor is ready for that use? We have no new in\nvivo data and no validation on our own setup. What assessment and next\nfeasibility steps are appropriate?",
+      "source_span": [
+        3617,
+        3954
+      ],
+      "source_lines": [
+        67,
+        72
+      ],
+      "input_sha256": "76d6c65be4db01750e44a28d502e4a50927275c62ecbf7aa6ce582017ec3fe44"
+    }
+  ]
+}

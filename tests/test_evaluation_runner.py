@@ -68,6 +68,17 @@ def test_final_parser_retains_crlf_indent_and_trailing_spaces(tmp_path):
     assert all(content[slice(*case["source_span"])] == case["description"] for case in cases)
 
 
+def test_final_parser_removes_heading_separators(tmp_path):
+    source = tmp_path / "source.txt"
+    source.write_text("\n".join(
+        f"H0{i} | Title {i}\n{'=' * 78}\nEnquiry {i}."
+        for i in range(1, 7)
+    ), encoding="utf-8")
+    _, cases = prepare_final_input(source, tmp_path / "final.json")
+    assert cases[0]["description"] == "Enquiry 1."
+    assert all("=" not in case["description"] for case in cases)
+
+
 @pytest.fixture
 def final_batch(tmp_path, monkeypatch):
     """Real public route and history, synthetic provider and retrieval only."""

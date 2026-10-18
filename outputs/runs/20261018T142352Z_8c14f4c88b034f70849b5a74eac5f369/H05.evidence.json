@@ -1,0 +1,642 @@
+[
+  {
+    "evidence": {
+      "evidence_id": "S01:p014:txt:c4062c38d2d885cc",
+      "source_id": "S01",
+      "file_name": "S01_Multispectral_Laboratory.pdf",
+      "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+      "page": 14,
+      "section": "Multispectral Differentiation of Tissues",
+      "text": "Fig. 5. Multispectral approach examples in differentiation between healthy and tumor tissues. \n\n\nA multispectral fiber probe, e.g. one combining MIR-ATR and fluorescence techniques into a single \nfiber optic probe shaft allows for the simultaneous acquisition of complementary chemical information \nfrom the exact same measurement point, a capability critical for analyzing heterogeneous solid samples \nlike biological tissues or rapidly changing liquid environments.  \n",
+      "content_kind": "verbatim_text",
+      "evidence_scope": "application_example",
+      "revision": "36bea33cf6369b8fedb8dbb1",
+      "validation_status": "passed",
+      "human_review_status": "not_reviewed",
+      "retrieval_eligible": true,
+      "issues": [],
+      "corpus_version": "corpus-4aac882441587796afe5",
+      "evidence_url": "/api/evidence/S01%3Ap014%3Atxt%3Ac4062c38d2d885cc?corpus_version=corpus-4aac882441587796afe5&revision=36bea33cf6369b8fedb8dbb1",
+      "workbook_notes": null,
+      "spans": [
+        {
+          "block_id": "b001",
+          "quote": null
+        },
+        {
+          "block_id": "b003",
+          "quote": null
+        }
+      ],
+      "region": null,
+      "transcription": null,
+      "interpretation": null,
+      "facts": [
+        {
+          "category": "method",
+          "statement": "A multispectral fiber probe combining MIR-ATR and fluorescence allows simultaneous acquisition of chemical information from the exact same measurement point.",
+          "support_quotes": [
+            "A multispectral fiber probe, e.g. one combining MIR-ATR and fluorescence techniques into a single \nfiber optic probe shaft allows for the simultaneous acquisition of complementary chemical information \nfrom the exact same measurement point"
+          ],
+          "quantities": []
+        }
+      ],
+      "tags": [
+        "multispectral",
+        "fiber probe",
+        "MIR-ATR",
+        "fluorescence"
+      ],
+      "source_spans": [
+        {
+          "block_id": "b001",
+          "quote": "Fig. 5. Multispectral approach examples in differentiation between healthy and tumor tissues. \n",
+          "start": 0,
+          "end": 95,
+          "bbox": [
+            92.05000305175781,
+            295.5489807128906,
+            506.2200012207031,
+            307.7259826660156
+          ]
+        },
+        {
+          "block_id": "b003",
+          "quote": "A multispectral fiber probe, e.g. one combining MIR-ATR and fluorescence techniques into a single \nfiber optic probe shaft allows for the simultaneous acquisition of complementary chemical information \nfrom the exact same measurement point, a capability critical for analyzing heterogeneous solid samples \nlike biological tissues or rapidly changing liquid environments.  \n",
+          "start": 0,
+          "end": 373,
+          "bbox": [
+            72.0250015258789,
+            356.54901123046875,
+            526.219970703125,
+            412.4960021972656
+          ]
+        }
+      ],
+      "image": "assets/7026efe7266877b5/S01-p014.jpg",
+      "verification": {
+        "candidate_index": 0,
+        "status": "supported",
+        "reason": "Candidate 0 accurately transcribes the method from block b003. The quote confirms a fiber probe combining MIR-ATR and fluorescence enables simultaneous chemical information acquisition from the exact same measurement point."
+      }
+    },
+    "context_ids": [
+      "stream_1"
+    ],
+    "facets": [
+      "application",
+      "geometry",
+      "compatibility"
+    ],
+    "matches": [
+      {
+        "query_id": "initial_stream_1",
+        "context_id": "stream_1",
+        "facets": [
+          "application",
+          "geometry",
+          "compatibility"
+        ],
+        "admission": "lexical",
+        "bm25_score": 13.421809799772966,
+        "bm25_rank": 2,
+        "cosine_score": null,
+        "dense_rank": null,
+        "rrf_score": 0.016129032258064516,
+        "matched_terms": [
+          "exact",
+          "liquid"
+        ],
+        "matching_segment": null
+      }
+    ],
+    "score": 0.016129032258064516,
+    "selection_reasons": [
+      "application candidate for stream_1"
+    ]
+  },
+  {
+    "evidence": {
+      "evidence_id": "T01:method_comparison:r002",
+      "source_id": "T01",
+      "file_name": "AFS_method_comparison_table.xlsx",
+      "source_sha256": "a6a83e976b12ebfc784eb69494fe2b1e71da878ae2b1b7c5ee54e701a6e387b6",
+      "page": 6,
+      "section": "Table 1",
+      "text": "method_no: 1; method: IR spectroscopy; measurement_technique: ATR platform; physical_phenomenon: absorption; sample_type: liquid, paste, soft; optical_path_or_depth: 1-6 um; sensitivity: average; selectivity: high; cost: high",
+      "content_kind": "method_row",
+      "evidence_scope": "general_method",
+      "revision": "7a8e299063132f0a78596049",
+      "validation_status": "passed",
+      "human_review_status": "not_reviewed",
+      "retrieval_eligible": true,
+      "issues": [],
+      "corpus_version": "corpus-4aac882441587796afe5",
+      "evidence_url": "/api/evidence/T01%3Amethod_comparison%3Ar002?corpus_version=corpus-4aac882441587796afe5&revision=7a8e299063132f0a78596049",
+      "workbook_notes": [
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 1,
+          "text": "Source: \"Multispectral Laboratory of Optical Analysis Methods\", Table 1, page 6 (file S01)."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 2,
+          "text": "Transcribed from the rendered page because PDF text extraction interleaves the columns."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 3,
+          "text": "\"mu\" in the original means micrometres; written here as \"um\"."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 4,
+          "text": "Merged cells of the original are expanded, so each row is independent."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 5,
+          "text": "sensitivity / selectivity / cost are the original qualitative ratings (low / average / high), not measured values."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 6,
+          "text": "\"ATR probe*\" carries an asterisk in the original; no footnote is printed on that page."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 7,
+          "text": "Status: transcription for AFS review. Ratings are the source document's, not an AFS product specification."
+        }
+      ],
+      "sheet": "method_comparison",
+      "row": 2,
+      "method": "IR spectroscopy",
+      "geometry": "ATR platform",
+      "raw_values": {
+        "method_no": 1,
+        "method": "IR spectroscopy",
+        "measurement_technique": "ATR platform",
+        "physical_phenomenon": "absorption",
+        "sample_type": "liquid, paste, soft",
+        "optical_path_or_depth": "1-6 um",
+        "sensitivity": "average",
+        "selectivity": "high",
+        "cost": "high"
+      },
+      "ratings_are_qualitative": true,
+      "underlying_citation": {
+        "source_id": "S01",
+        "page": 6,
+        "table": "Table 1",
+        "sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935"
+      },
+      "validation_basis": "Exact workbook cell import; underlying PDF transcription not human-reviewed"
+    },
+    "context_ids": [
+      "stream_1"
+    ],
+    "facets": [
+      "geometry"
+    ],
+    "matches": [
+      {
+        "query_id": "methods_stream_1",
+        "context_id": "stream_1",
+        "facets": [
+          "geometry"
+        ],
+        "admission": "structured",
+        "bm25_score": null,
+        "bm25_rank": null,
+        "cosine_score": null,
+        "dense_rank": null,
+        "rrf_score": 0.01639344262295082,
+        "matched_terms": [
+          "atr",
+          "liquid",
+          "mir",
+          "reflection"
+        ],
+        "matching_segment": null
+      }
+    ],
+    "score": 0.01639344262295082,
+    "selection_reasons": [
+      "structured method geometry for stream_1"
+    ]
+  },
+  {
+    "evidence": {
+      "evidence_id": "S01:p005:txt:ee0eed1e1fed5e85",
+      "source_id": "S01",
+      "file_name": "S01_Multispectral_Laboratory.pdf",
+      "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+      "page": 5,
+      "section": "Spectral Method Capabilities and Penetration Depth",
+      "text": "For example, NIR spectroscopy, with its relatively large penetration depth (up to several millimetres) \neven into dense solid samples due to low absorption and strong scattering, allows the use of ordinary \nglass for optics, as well as standard lamps as light sources, making it ideal for online applications, \nincluding remote measurements via fiber optic probes. In contrast, strong absorption in the mid-IR \nregion limits the corresponding spectral method to the analysis of very thin samples (usually less than \n50 µm), but it opens up the possibility of using attenuated total reflectance (ATR) by connecting \nappropriate attachments and probes. \nMeasurement of the weak Raman effect requires special probes but is recorded in the visible and NIR \nspectral regions. Moreover, the spectra of vibrational transitions in Raman and mid-IR spectroscopy \ncarry complementary qualitative and quantitative information about the sample's composition. \nUV-visible spectroscopy is based on electronic transitions between molecular energy levels. It has \nvery high sensitivity, especially in the UV region (190-360 nm), but requires the use of special light \nsources and fiber optic probes. However, the strong overlap of spectral signals in UV spectra \ncomplicates the analysis of real samples and makes the use of chemometric algorithms a necessary \ncomponent of qualitative mixture analysis methods. Another highly sensitive method, UV/Vis \nfluorimetry, is based on the secondary emission of excited molecules of certain substances, most often \nof biological origin. However, most chemicals do not exhibit this property. \nTherefore, fluorimetry is primarily used in medicine, biology, and biotechnology. \nSpectra from different methods vary greatly, both in their nature and in the information they contain. \nMid-IR band spectra contain well-defined peaks (absorption bands), while NIR, UV, and fluorescence \nspectra contain broad, highly overlapping signals, forming a so-called continuous spectrum. \nExtracting the information necessary for quantitative and qualitative analysis from optical spectra \nrequires special methods for analyzing multidimensional data, called the above-mentioned term \nchemometrics. Chemometric algorithms are implemented in specialized software that enables \npreliminary data preparation (preprocessing), construction, validation, and application of predictive \nmodels, specifically calibration or classification models. \nImmersible fiber optic probes operating in various spectral regions from UV to mid-IR are \nincreasingly being used for measuring liquid and soft or powdered solid samples. They can be used to \nobtain absorption, diffuse reflectance or transmission, Raman, and ATR spectra. The use of these \nprobes can be essential for in-situ analysis—in the field or in an ongoing process. Online \nmeasurements require high-speed spectral acquisition. \nOften, analytical results must be obtained in real time to be used for management decisions. \nAn analysis of individual spectral methods, their capabilities, and limitations, demonstrates that \ndeveloping an optimal instrumental methodology for solving a given analytical problem requires \nconsidering many different factors. Thus, selecting a spectral method for a specific analytical problem \nis a complex task requiring specialized knowledge in chemistry, physics, and mathematics. This is \nespecially true for equipping an entire laboratory for future needs, since the need for a particular \noptical analysis method is difficult to predict in advance. In the equipment package offered here, \ncalled a multispectral laboratory, experts from various fields have already worked hard to select the \noptimal solutions. \n \n \n \n \n \n \n \n",
+      "content_kind": "verbatim_text",
+      "evidence_scope": "general_method",
+      "revision": "09ac50a7550539aaf5d5660c",
+      "validation_status": "passed",
+      "human_review_status": "not_reviewed",
+      "retrieval_eligible": true,
+      "issues": [],
+      "corpus_version": "corpus-4aac882441587796afe5",
+      "evidence_url": "/api/evidence/S01%3Ap005%3Atxt%3Aee0eed1e1fed5e85?corpus_version=corpus-4aac882441587796afe5&revision=09ac50a7550539aaf5d5660c",
+      "workbook_notes": null,
+      "spans": [
+        {
+          "block_id": "b001",
+          "quote": null
+        }
+      ],
+      "region": null,
+      "transcription": null,
+      "interpretation": null,
+      "facts": [
+        {
+          "category": "method",
+          "statement": "NIR spectroscopy has a penetration depth of up to several millimetres in dense solid samples due to low absorption and strong scattering.",
+          "support_quotes": [
+            "NIR spectroscopy, with its relatively large penetration depth (up to several millimetres) \neven into dense solid samples"
+          ],
+          "quantities": []
+        }
+      ],
+      "tags": [
+        "NIR",
+        "penetration depth",
+        "scattering"
+      ],
+      "source_spans": [
+        {
+          "block_id": "b001",
+          "quote": "For example, NIR spectroscopy, with its relatively large penetration depth (up to several millimetres) \neven into dense solid samples due to low absorption and strong scattering, allows the use of ordinary \nglass for optics, as well as standard lamps as light sources, making it ideal for online applications, \nincluding remote measurements via fiber optic probes. In contrast, strong absorption in the mid-IR \nregion limits the corresponding spectral method to the analysis of very thin samples (usually less than \n50 µm), but it opens up the possibility of using attenuated total reflectance (ATR) by connecting \nappropriate attachments and probes. \nMeasurement of the weak Raman effect requires special probes but is recorded in the visible and NIR \nspectral regions. Moreover, the spectra of vibrational transitions in Raman and mid-IR spectroscopy \ncarry complementary qualitative and quantitative information about the sample's composition. \nUV-visible spectroscopy is based on electronic transitions between molecular energy levels. It has \nvery high sensitivity, especially in the UV region (190-360 nm), but requires the use of special light \nsources and fiber optic probes. However, the strong overlap of spectral signals in UV spectra \ncomplicates the analysis of real samples and makes the use of chemometric algorithms a necessary \ncomponent of qualitative mixture analysis methods. Another highly sensitive method, UV/Vis \nfluorimetry, is based on the secondary emission of excited molecules of certain substances, most often \nof biological origin. However, most chemicals do not exhibit this property. \nTherefore, fluorimetry is primarily used in medicine, biology, and biotechnology. \nSpectra from different methods vary greatly, both in their nature and in the information they contain. \nMid-IR band spectra contain well-defined peaks (absorption bands), while NIR, UV, and fluorescence \nspectra contain broad, highly overlapping signals, forming a so-called continuous spectrum. \nExtracting the information necessary for quantitative and qualitative analysis from optical spectra \nrequires special methods for analyzing multidimensional data, called the above-mentioned term \nchemometrics. Chemometric algorithms are implemented in specialized software that enables \npreliminary data preparation (preprocessing), construction, validation, and application of predictive \nmodels, specifically calibration or classification models. \nImmersible fiber optic probes operating in various spectral regions from UV to mid-IR are \nincreasingly being used for measuring liquid and soft or powdered solid samples. They can be used to \nobtain absorption, diffuse reflectance or transmission, Raman, and ATR spectra. The use of these \nprobes can be essential for in-situ analysis—in the field or in an ongoing process. Online \nmeasurements require high-speed spectral acquisition. \nOften, analytical results must be obtained in real time to be used for management decisions. \nAn analysis of individual spectral methods, their capabilities, and limitations, demonstrates that \ndeveloping an optimal instrumental methodology for solving a given analytical problem requires \nconsidering many different factors. Thus, selecting a spectral method for a specific analytical problem \nis a complex task requiring specialized knowledge in chemistry, physics, and mathematics. This is \nespecially true for equipping an entire laboratory for future needs, since the need for a particular \noptical analysis method is difficult to predict in advance. In the equipment package offered here, \ncalled a multispectral laboratory, experts from various fields have already worked hard to select the \noptimal solutions. \n \n \n \n \n \n \n \n",
+          "start": 0,
+          "end": 3719,
+          "bbox": [
+            72.0250015258789,
+            78.2290267944336,
+            524.4750366210938,
+            764.6009521484375
+          ]
+        }
+      ],
+      "image": "assets/7026efe7266877b5/S01-p005.jpg",
+      "verification": {
+        "candidate_index": 0,
+        "status": "supported",
+        "reason": "The text in block b001 explicitly states that NIR spectroscopy has a penetration depth of up to several millimetres into dense solid samples due to low absorption and strong scattering."
+      },
+      "alternative_annotations": [
+        {
+          "section": "Mid-IR and Raman Spectroscopy Applications",
+          "facts": [
+            {
+              "category": "limitation",
+              "statement": "Strong absorption in the mid-IR region limits the method to the analysis of very thin samples, usually less than 50 µm.",
+              "support_quotes": [
+                "strong absorption in the mid-IR \nregion limits the corresponding spectral method to the analysis of very thin samples (usually less than \n50 µm)"
+              ],
+              "quantities": [
+                {
+                  "label": "sample thickness",
+                  "value": "50",
+                  "unit": "µm",
+                  "kind": "sample_count",
+                  "source_quote": "usually less than \n50 µm"
+                }
+              ]
+            }
+          ],
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "Block b001 confirms that strong absorption in the mid-IR region limits the method to very thin samples, usually less than 50 µm."
+          },
+          "issues": [],
+          "revision": "351df0bc7d366c2c4666557f"
+        },
+        {
+          "section": "UV-Visible and Fluorimetry Sensitivity",
+          "facts": [
+            {
+              "category": "method",
+              "statement": "UV-visible spectroscopy has very high sensitivity, especially in the UV region (190-360 nm), but requires special light sources and fiber optic probes.",
+              "support_quotes": [
+                "It has \nvery high sensitivity, especially in the UV region (190-360 nm), but requires the use of special light \nsources and fiber optic probes."
+              ],
+              "quantities": []
+            }
+          ],
+          "verification": {
+            "candidate_index": 2,
+            "status": "supported",
+            "reason": "The source text in b001 supports the claim that UV-visible spectroscopy has high sensitivity in the 190-360 nm range but requires special light sources and probes."
+          },
+          "issues": [],
+          "revision": "e4e5e134b181273072d108a0"
+        },
+        {
+          "section": "Multispectral Laboratory Equipment Rationale",
+          "facts": [
+            {
+              "category": "application",
+              "statement": "Immersible fiber optic probes are increasingly used for in-situ analysis of liquid and soft or powdered solid samples, where online measurements require high-speed spectral acquisition.",
+              "support_quotes": [
+                "Immersible fiber optic probes operating in various spectral regions from UV to mid-IR are \nincreasingly being used for measuring liquid and soft or powdered solid samples."
+              ],
+              "quantities": []
+            }
+          ],
+          "verification": {
+            "candidate_index": 3,
+            "status": "supported",
+            "reason": "Block b001 states that immersible fiber optic probes are used for in-situ analysis of various sample types, noting that online measurements require high-speed acquisition."
+          },
+          "issues": [],
+          "revision": "9d4b1d0f343c6d60a8ff1933"
+        }
+      ]
+    },
+    "context_ids": [
+      "stream_1"
+    ],
+    "facets": [
+      "application",
+      "geometry",
+      "compatibility",
+      "limitations"
+    ],
+    "matches": [
+      {
+        "query_id": "initial_stream_1",
+        "context_id": "stream_1",
+        "facets": [
+          "application",
+          "geometry",
+          "compatibility",
+          "limitations"
+        ],
+        "admission": "lexical",
+        "bm25_score": 8.389830481070353,
+        "bm25_rank": 19,
+        "cosine_score": 0.6781624868641997,
+        "dense_rank": 7,
+        "rrf_score": 0.027583600982429624,
+        "matched_terms": [
+          "liquid"
+        ],
+        "matching_segment": "Spectral Method Capabilities and Penetration Depth\nChemometric algorithms are implemented in specialized software that enables \npreliminary data preparation (preprocessing), construction, validation, and application of predictive \nmodels, specifically calibration or classification models.\n\nImmersible fiber optic probes operating in various spectral regions from UV to mid-IR are \nincreasingly being used for measuring liquid and soft or powdered solid samples.\n\nThey can be used to \nobtain absorption, diffuse reflectance or transmission, Raman, and ATR spectra.\n\nThe use of these \nprobes can be essential for in-situ analysis—in the field or in an ongoing process.\n\nOnline \nmeasurements require high-speed spectral acquisition.\n\nOften, analytical results must be obtained in real time to be used for management decisions.\n\nAn analysis of individual spectral methods, their capabilities, and limitations, demonstrates that \ndeveloping an optimal instrumental methodology for solving a given analytical problem requires \nconsidering many different factors.\n\nThus, selecting a spectral method for a specific analytical problem \nis a complex task requiring specialized knowledge in chemistry, physics, and mathematics.\n\nThis is \nespecially true for equipping an entire laboratory for future needs, since the need for a particular \noptical analysis method is difficult to predict in advance.\n\nIn the equipment package offered here, \ncalled a multispectral laboratory, experts from various fields have already worked hard to select the \noptimal solutions."
+      }
+    ],
+    "score": 0.027583600982429624,
+    "selection_reasons": [
+      "adds context/facet coverage"
+    ]
+  },
+  {
+    "evidence": {
+      "evidence_id": "T01:method_comparison:r019",
+      "source_id": "T01",
+      "file_name": "AFS_method_comparison_table.xlsx",
+      "source_sha256": "a6a83e976b12ebfc784eb69494fe2b1e71da878ae2b1b7c5ee54e701a6e387b6",
+      "page": 6,
+      "section": "Table 1",
+      "text": "method_no: 5; method: Fluorimetry; measurement_technique: cuvette 90 deg; physical_phenomenon: fluorescence (emission); sample_type: liquid; optical_path_or_depth: 10 mm; sensitivity: high; selectivity: low; cost: low",
+      "content_kind": "method_row",
+      "evidence_scope": "general_method",
+      "revision": "c7cfb80923411882d6f4127f",
+      "validation_status": "passed",
+      "human_review_status": "not_reviewed",
+      "retrieval_eligible": true,
+      "issues": [],
+      "corpus_version": "corpus-4aac882441587796afe5",
+      "evidence_url": "/api/evidence/T01%3Amethod_comparison%3Ar019?corpus_version=corpus-4aac882441587796afe5&revision=c7cfb80923411882d6f4127f",
+      "workbook_notes": [
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 1,
+          "text": "Source: \"Multispectral Laboratory of Optical Analysis Methods\", Table 1, page 6 (file S01)."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 2,
+          "text": "Transcribed from the rendered page because PDF text extraction interleaves the columns."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 3,
+          "text": "\"mu\" in the original means micrometres; written here as \"um\"."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 4,
+          "text": "Merged cells of the original are expanded, so each row is independent."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 5,
+          "text": "sensitivity / selectivity / cost are the original qualitative ratings (low / average / high), not measured values."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 6,
+          "text": "\"ATR probe*\" carries an asterisk in the original; no footnote is printed on that page."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 7,
+          "text": "Status: transcription for AFS review. Ratings are the source document's, not an AFS product specification."
+        }
+      ],
+      "sheet": "method_comparison",
+      "row": 19,
+      "method": "Fluorimetry",
+      "geometry": "cuvette 90 deg",
+      "raw_values": {
+        "method_no": 5,
+        "method": "Fluorimetry",
+        "measurement_technique": "cuvette 90 deg",
+        "physical_phenomenon": "fluorescence (emission)",
+        "sample_type": "liquid",
+        "optical_path_or_depth": "10 mm",
+        "sensitivity": "high",
+        "selectivity": "low",
+        "cost": "low"
+      },
+      "ratings_are_qualitative": true,
+      "underlying_citation": {
+        "source_id": "S01",
+        "page": 6,
+        "table": "Table 1",
+        "sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935"
+      },
+      "validation_basis": "Exact workbook cell import; underlying PDF transcription not human-reviewed"
+    },
+    "context_ids": [
+      "stream_1"
+    ],
+    "facets": [
+      "geometry"
+    ],
+    "matches": [
+      {
+        "query_id": "methods_stream_1",
+        "context_id": "stream_1",
+        "facets": [
+          "geometry"
+        ],
+        "admission": "structured",
+        "bm25_score": null,
+        "bm25_rank": null,
+        "cosine_score": null,
+        "dense_rank": null,
+        "rrf_score": 0.016129032258064516,
+        "matched_terms": [
+          "fluorescence",
+          "liquid"
+        ],
+        "matching_segment": null
+      }
+    ],
+    "score": 0.016129032258064516,
+    "selection_reasons": [
+      "additional admitted relevant evidence"
+    ]
+  },
+  {
+    "evidence": {
+      "evidence_id": "T01:method_comparison:r015",
+      "source_id": "T01",
+      "file_name": "AFS_method_comparison_table.xlsx",
+      "source_sha256": "a6a83e976b12ebfc784eb69494fe2b1e71da878ae2b1b7c5ee54e701a6e387b6",
+      "page": 6,
+      "section": "Table 1",
+      "text": "method_no: 4; method: UV/Visible spectroscopy; measurement_technique: ATR probe; physical_phenomenon: absorption; sample_type: liquid; optical_path_or_depth: 0.1-1 um; sensitivity: low; selectivity: low; cost: average",
+      "content_kind": "method_row",
+      "evidence_scope": "general_method",
+      "revision": "87782d22a8231ed6adee17db",
+      "validation_status": "passed",
+      "human_review_status": "not_reviewed",
+      "retrieval_eligible": true,
+      "issues": [],
+      "corpus_version": "corpus-4aac882441587796afe5",
+      "evidence_url": "/api/evidence/T01%3Amethod_comparison%3Ar015?corpus_version=corpus-4aac882441587796afe5&revision=87782d22a8231ed6adee17db",
+      "workbook_notes": [
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 1,
+          "text": "Source: \"Multispectral Laboratory of Optical Analysis Methods\", Table 1, page 6 (file S01)."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 2,
+          "text": "Transcribed from the rendered page because PDF text extraction interleaves the columns."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 3,
+          "text": "\"mu\" in the original means micrometres; written here as \"um\"."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 4,
+          "text": "Merged cells of the original are expanded, so each row is independent."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 5,
+          "text": "sensitivity / selectivity / cost are the original qualitative ratings (low / average / high), not measured values."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 6,
+          "text": "\"ATR probe*\" carries an asterisk in the original; no footnote is printed on that page."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 7,
+          "text": "Status: transcription for AFS review. Ratings are the source document's, not an AFS product specification."
+        }
+      ],
+      "sheet": "method_comparison",
+      "row": 15,
+      "method": "UV/Visible spectroscopy",
+      "geometry": "ATR probe",
+      "raw_values": {
+        "method_no": 4,
+        "method": "UV/Visible spectroscopy",
+        "measurement_technique": "ATR probe",
+        "physical_phenomenon": "absorption",
+        "sample_type": "liquid",
+        "optical_path_or_depth": "0.1-1 um",
+        "sensitivity": "low",
+        "selectivity": "low",
+        "cost": "average"
+      },
+      "ratings_are_qualitative": true,
+      "underlying_citation": {
+        "source_id": "S01",
+        "page": 6,
+        "table": "Table 1",
+        "sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935"
+      },
+      "validation_basis": "Exact workbook cell import; underlying PDF transcription not human-reviewed"
+    },
+    "context_ids": [
+      "stream_1"
+    ],
+    "facets": [
+      "geometry"
+    ],
+    "matches": [
+      {
+        "query_id": "methods_stream_1",
+        "context_id": "stream_1",
+        "facets": [
+          "geometry"
+        ],
+        "admission": "structured",
+        "bm25_score": null,
+        "bm25_rank": null,
+        "cosine_score": null,
+        "dense_rank": null,
+        "rrf_score": 0.015873015873015872,
+        "matched_terms": [
+          "atr",
+          "liquid",
+          "reflection"
+        ],
+        "matching_segment": null
+      }
+    ],
+    "score": 0.015873015873015872,
+    "selection_reasons": [
+      "additional admitted relevant evidence"
+    ]
+  }
+]

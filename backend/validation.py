@@ -25,6 +25,34 @@ CONSTRAINT_FIELDS = {"reference_assays", "process_constraints", "temperature", "
                      "response_time_raw", "response_time_s", "concentration_range", "required_error"}
 
 
+def canonical_source_quote(description: str, quote: str) -> str | None:
+    """Return the exact source slice for a quote with equivalent whitespace."""
+    normalized_quote = re.sub(r"\s+", " ", quote).strip()
+    if not normalized_quote:
+        return None
+    spans = []
+    normalized_parts = []
+    index = 0
+    while index < len(description):
+        if description[index].isspace():
+            end = index + 1
+            while end < len(description) and description[end].isspace():
+                end += 1
+            normalized_parts.append(" ")
+            spans.append((index, end))
+            index = end
+            continue
+        normalized_parts.append(description[index])
+        spans.append((index, index + 1))
+        index += 1
+    normalized_description = "".join(normalized_parts)
+    start = normalized_description.find(normalized_quote)
+    if start < 0:
+        return None
+    end = start + len(normalized_quote)
+    return description[spans[start][0]:spans[end - 1][1]]
+
+
 def validate_extraction(facts: CaseFacts, description: str) -> None:
     """Mechanical traceability checks; these cannot prove arbitrary prose entailment."""
     errors = []
@@ -56,7 +84,7 @@ def validate_extraction(facts: CaseFacts, description: str) -> None:
         expected[f"/shared_constraints/{i}"] = (text, [], "shared_constraints")
 
     def check_quote(quote, location):
-        if quote not in description:
+        if canonical_source_quote(description, quote) is None:
             errors.append(f"{location}: input_quote {quote!r} is not an exact substring of description; copy an actual source substring")
 
     seen = set()
@@ -73,7 +101,7 @@ def validate_extraction(facts: CaseFacts, description: str) -> None:
             errors.append(f"{location}: duplicate fact provenance pointer")
         if record.context_ids != context_ids:
             errors.append(f"{location}: context_ids do not match field_path")
-        if isinstance(value, str) and value not in record.input_quote:
+        if isinstance(value, str) and canonical_source_quote(record.input_quote, value) is None:
             errors.append(f"{record.field_path}: stated wording must occur verbatim in input_quote; do not infer or generalize")
         if name in CONSTRAINT_FIELDS and context_ids:
             key = (name, str(value), record.input_quote)

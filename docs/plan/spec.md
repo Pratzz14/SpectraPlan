@@ -612,6 +612,8 @@ Avoid claiming that the software has experimentally proven a recommended techniq
 
 ## 14. Definition of done (acceptance checklist)
 
+**Evidence reconciliation (2026-10-18):** See [the acceptance review](../acceptance_review.md) for every item's observed status and linked receipts. The original targets below remain visible; partial scientific-quality results are not marked complete. F09 artifact reproducibility and the revised F10 setup/documentation gate are verified separately. Section 13/demo/PPTX work is deferred by user request.
+
 - [ ] A fresh installation starts backend/frontend using README instructions.
 - [ ] An arbitrary natural-language customer enquiry can be submitted through the UI.
 - [ ] Extracted facts and unknowns are visibly separated; no unstated numbers are introduced.
@@ -633,7 +635,7 @@ Avoid claiming that the software has experimentally proven a recommended techniq
 
 ### 14.1 Post-hackathon backlog (not part of the 12 hours)
 
-Hybrid semantic/lexical retrieval, fully verified hardware/specification catalog, deterministic unit- and operating-envelope checks, assessment revision history, expert approval workflow, proper offline spectral CSV analysis, PDF export, and persistent case storage.
+Hybrid semantic/lexical retrieval, assessment revision history, PDF export and persistent case storage were subsequently implemented; they are no longer deferred. The remaining backlog includes a fully verified hardware/specification catalog, deterministic unit- and operating-envelope checks, expert approval workflow and proper offline spectral CSV analysis. See the acceptance review for implemented behavior and its limitations.
 
 ---
 

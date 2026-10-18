@@ -1,0 +1,495 @@
+[
+  {
+    "evidence": {
+      "evidence_id": "S01:p007:txt:551863e24544d004",
+      "source_id": "S01",
+      "file_name": "S01_Multispectral_Laboratory.pdf",
+      "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+      "page": 7,
+      "section": "Synergy of Combining Spectral Methods",
+      "text": "                           \n \n \nThe information provided by a particular optical spectral method may be insufficient when analyzing \nreal samples. These include complex multicomponent mixtures, most often of natural origin, such as \noil, milk, process media, fermentation media, and biological tissue. Analysis of such samples is often \ncomplicated by the overlap of several phenomena: absorption, Rayleigh and Raman scattering, and \nfluorescence. Morphological factors, such as sample inhomogeneity (e.g., biological tissue) or process \nturbulence, must also be considered when selecting a measurement technique. The analysis of such \nsystems may require a combination of two or even more spectral methods. This often provides a \nsynergistic effect, allowing one to solve a problem that either method alone cannot handle or only \npartially. Thus, the combination of NIR spectroscopy with fluorescence spectroscopy demonstrated \nthe possibility of more accurately determining the biomass content during yeast fermentation, as well \nas distinguishing between their intra- and extracellular metabolites. \n \nThe combination of NIR and IR spectroscopy showed benefits in determining tumor boundaries in \nmedical diagnostics. The combination of fluorescence and IR spectroscopy also proved necessary for \nclassifying biological tissues. Online analysis of the pellet coating process in a fluidized bed showed \nthe best results with the simultaneous use of NIR and Raman spectroscopy. There are many other \nexamples of the successful combination of various spectral methods in the problems of quantitative \ndetermination or classification of objects. This approach is called multispectral optical analysis, and it \nis finding increasing application in practice. The basis of the synergetic effect observed when using \nthese two or more methods is the combination of heterogeneous information about the object. This \nmay be chemical information of various kinds, such as in the combination of complementary \n",
+      "content_kind": "verbatim_text",
+      "evidence_scope": "general_method",
+      "revision": "0a69b28c3e8a18a04e6cb110",
+      "validation_status": "passed",
+      "human_review_status": "not_reviewed",
+      "retrieval_eligible": true,
+      "issues": [],
+      "corpus_version": "corpus-4aac882441587796afe5",
+      "evidence_url": "/api/evidence/S01%3Ap007%3Atxt%3A551863e24544d004?corpus_version=corpus-4aac882441587796afe5&revision=0a69b28c3e8a18a04e6cb110",
+      "workbook_notes": null,
+      "spans": [
+        {
+          "block_id": "b002",
+          "quote": null
+        }
+      ],
+      "region": null,
+      "transcription": null,
+      "interpretation": null,
+      "facts": [
+        {
+          "category": "method",
+          "statement": "Combining multiple optical spectral methods (e.g., NIR with fluorescence, IR, or Raman) can provide a synergistic effect for analyzing complex multicomponent samples where a single method is insufficient or limited.",
+          "support_quotes": [
+            "The analysis of such \nsystems may require a combination of two or even more spectral methods. This often provides a \nsynergistic effect, allowing one to solve a problem that either method alone cannot handle or only \npartially."
+          ],
+          "quantities": []
+        }
+      ],
+      "tags": [
+        "multispectral",
+        "fiber-optic",
+        "data-fusion",
+        "NIR+Raman"
+      ],
+      "source_spans": [
+        {
+          "block_id": "b002",
+          "quote": "                           \n \n \nThe information provided by a particular optical spectral method may be insufficient when analyzing \nreal samples. These include complex multicomponent mixtures, most often of natural origin, such as \noil, milk, process media, fermentation media, and biological tissue. Analysis of such samples is often \ncomplicated by the overlap of several phenomena: absorption, Rayleigh and Raman scattering, and \nfluorescence. Morphological factors, such as sample inhomogeneity (e.g., biological tissue) or process \nturbulence, must also be considered when selecting a measurement technique. The analysis of such \nsystems may require a combination of two or even more spectral methods. This often provides a \nsynergistic effect, allowing one to solve a problem that either method alone cannot handle or only \npartially. Thus, the combination of NIR spectroscopy with fluorescence spectroscopy demonstrated \nthe possibility of more accurately determining the biomass content during yeast fermentation, as well \nas distinguishing between their intra- and extracellular metabolites. \n \nThe combination of NIR and IR spectroscopy showed benefits in determining tumor boundaries in \nmedical diagnostics. The combination of fluorescence and IR spectroscopy also proved necessary for \nclassifying biological tissues. Online analysis of the pellet coating process in a fluidized bed showed \nthe best results with the simultaneous use of NIR and Raman spectroscopy. There are many other \nexamples of the successful combination of various spectral methods in the problems of quantitative \ndetermination or classification of objects. This approach is called multispectral optical analysis, and it \nis finding increasing application in practice. The basis of the synergetic effect observed when using \nthese two or more methods is the combination of heterogeneous information about the object. This \nmay be chemical information of various kinds, such as in the combination of complementary \n",
+          "start": 0,
+          "end": 2001,
+          "bbox": [
+            72.0250015258789,
+            436.8190002441406,
+            525.1260986328125,
+            769.1009521484375
+          ]
+        }
+      ],
+      "image": "assets/7026efe7266877b5/S01-p007.jpg",
+      "verification": {
+        "candidate_index": 0,
+        "status": "supported",
+        "reason": "The text in block b002 explicitly states that combining two or more spectral methods provides a synergistic effect for solving problems a single method cannot handle, citing NIR+fluorescence and NIR+IR examples."
+      },
+      "alternative_annotations": [
+        {
+          "section": "Multispectral Fiber System Configuration",
+          "facts": [
+            {
+              "category": "method",
+              "statement": "A modular multispectral fiber system integrates Raman, FTIR, Fluorescence, and NIR probes via chemometric data fusion to enable customized probe structures for process analysis.",
+              "support_quotes": [
+                "Online analysis of the pellet coating process in a fluidized bed showed \nthe best results with the simultaneous use of NIR and Raman spectroscopy."
+              ],
+              "quantities": []
+            }
+          ],
+          "verification": {
+            "candidate_index": 1,
+            "status": "unsupported",
+            "reason": "The text does not describe a modular system integrating all four methods or a specific fiber system configuration; it merely lists NIR and Raman for a specific coating process."
+          },
+          "issues": [
+            "Model verification: unsupported"
+          ],
+          "revision": "071a132f2e6dd9d596e8c23b"
+        }
+      ]
+    },
+    "context_ids": [
+      "stream_1"
+    ],
+    "facets": [
+      "application",
+      "limitations"
+    ],
+    "matches": [
+      {
+        "query_id": "initial_stream_1",
+        "context_id": "stream_1",
+        "facets": [
+          "application",
+          "limitations"
+        ],
+        "admission": "lexical",
+        "bm25_score": 43.98453750687433,
+        "bm25_rank": 1,
+        "cosine_score": 0.7351857268302127,
+        "dense_rank": 1,
+        "rrf_score": 0.03278688524590164,
+        "matched_terms": [
+          "basis",
+          "biomass",
+          "chemical",
+          "fermentation",
+          "fluorescence",
+          "media",
+          "optical"
+        ],
+        "matching_segment": "Synergy of Combining Spectral Methods\nThe information provided by a particular optical spectral method may be insufficient when analyzing \nreal samples.\n\nThese include complex multicomponent mixtures, most often of natural origin, such as \noil, milk, process media, fermentation media, and biological tissue.\n\nAnalysis of such samples is often \ncomplicated by the overlap of several phenomena: absorption, Rayleigh and Raman scattering, and \nfluorescence.\n\nMorphological factors, such as sample inhomogeneity (e.g., biological tissue) or process \nturbulence, must also be considered when selecting a measurement technique.\n\nThe analysis of such \nsystems may require a combination of two or even more spectral methods.\n\nThis often provides a \nsynergistic effect, allowing one to solve a problem that either method alone cannot handle or only \npartially.\n\nThus, the combination of NIR spectroscopy with fluorescence spectroscopy demonstrated \nthe possibility of more accurately determining the biomass content during yeast fermentation, as well \nas distinguishing between their intra- and extracellular metabolites.\n\nThe combination of NIR and IR spectroscopy showed benefits in determining tumor boundaries in \nmedical diagnostics.\n\nThe combination of fluorescence and IR spectroscopy also proved necessary for \nclassifying biological tissues.\n\nOnline analysis of the pellet coating process in a fluidized bed showed \nthe best results with the simultaneous use of NIR and Raman spectroscopy.\n\nThere are many other \nexamples of the successful combination of various spectral methods in the problems of quantitative \ndetermination or classification of objects.\n\nThis approach is called multispectral optical analysis, and it \nis finding increasing application in practice.\n\nThe basis of the synergetic effect observed when using \nthese two or more methods is the combination of heterogeneous information about the object.\n\nThis \nmay be chemical information of various kinds, such as in the combination of complementary"
+      }
+    ],
+    "score": 0.03278688524590164,
+    "selection_reasons": [
+      "application candidate for stream_1"
+    ]
+  },
+  {
+    "evidence": {
+      "evidence_id": "S01:p017:txt:03613ea0cb0945fb",
+      "source_id": "S01",
+      "file_name": "S01_Multispectral_Laboratory.pdf",
+      "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+      "page": 17,
+      "section": "Inline Milk Analysis: NIR Reflection",
+      "text": "4. Inline Milk Analysis. \n\n\nThe use of Near-Infrared (NIR) spectroscopy for the inline monitoring of milk is a cornerstone of \nmodern dairy \"Process Analytical Technology\" (PAT). Maintaining both NIR Reflection and NIR \nTransmission techniques in a lab environment provides a comprehensive analytical suite capable of \nhandling the diverse physical properties of dairy products. \n\n\n- \nNIR Reflection: Inline NIR Reflection is primarily used for opaque or highly concentrated dairy \nproducts, such as yogurt, butter, or whole milk concentrates. The main equipment includes a fiber \noptic probe where one set of fibers delivers light to the sample and the other collects the \n\"backscattered\" light. Experimentally, the probe is flush-mounted into a pipe or vat to interact \ndirectly with the flowing medium. Because the light does not penetrate deeply, the method is \nsensitive to the surface characteristics and fat globule size. Data processing may involve converting \nthe reflectance values to absorbance and applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations to remove physical interference caused by the \nscattering nature of the milk particles before using Partial Least Squares (PLS) regression to \nquantify fat and protein. \n",
+      "content_kind": "verbatim_text",
+      "evidence_scope": "application_example",
+      "revision": "9f5f308d1c6bf85bd2e441e0",
+      "validation_status": "passed",
+      "human_review_status": "not_reviewed",
+      "retrieval_eligible": true,
+      "issues": [],
+      "corpus_version": "corpus-4aac882441587796afe5",
+      "evidence_url": "/api/evidence/S01%3Ap017%3Atxt%3A03613ea0cb0945fb?corpus_version=corpus-4aac882441587796afe5&revision=9f5f308d1c6bf85bd2e441e0",
+      "workbook_notes": null,
+      "spans": [
+        {
+          "block_id": "b004",
+          "quote": null
+        },
+        {
+          "block_id": "b005",
+          "quote": null
+        },
+        {
+          "block_id": "b006",
+          "quote": null
+        }
+      ],
+      "region": null,
+      "transcription": null,
+      "interpretation": null,
+      "facts": [
+        {
+          "category": "method",
+          "statement": "NIR Reflection spectroscopy is used for opaque dairy products, with data processed using Multiplicative Scatter Correction (MSC) or Standard Normal Variate (SNV) and PLS regression.",
+          "support_quotes": [
+            "applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations",
+            "using Partial Least Squares (PLS) regression to \nquantify fat and protein."
+          ],
+          "quantities": []
+        }
+      ],
+      "tags": [],
+      "source_spans": [
+        {
+          "block_id": "b004",
+          "quote": "4. Inline Milk Analysis. \n",
+          "start": 0,
+          "end": 26,
+          "bbox": [
+            72.0250015258789,
+            521.9450073242188,
+            190.3300018310547,
+            534.2760009765625
+          ]
+        },
+        {
+          "block_id": "b005",
+          "quote": "The use of Near-Infrared (NIR) spectroscopy for the inline monitoring of milk is a cornerstone of \nmodern dairy \"Process Analytical Technology\" (PAT). Maintaining both NIR Reflection and NIR \nTransmission techniques in a lab environment provides a comprehensive analytical suite capable of \nhandling the diverse physical properties of dairy products. \n",
+          "start": 0,
+          "end": 352,
+          "bbox": [
+            72.0250015258789,
+            544.5989990234375,
+            526.20703125,
+            600.8059692382812
+          ]
+        },
+        {
+          "block_id": "b006",
+          "quote": "- \nNIR Reflection: Inline NIR Reflection is primarily used for opaque or highly concentrated dairy \nproducts, such as yogurt, butter, or whole milk concentrates. The main equipment includes a fiber \noptic probe where one set of fibers delivers light to the sample and the other collects the \n\"backscattered\" light. Experimentally, the probe is flush-mounted into a pipe or vat to interact \ndirectly with the flowing medium. Because the light does not penetrate deeply, the method is \nsensitive to the surface characteristics and fat globule size. Data processing may involve converting \nthe reflectance values to absorbance and applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations to remove physical interference caused by the \nscattering nature of the milk particles before using Partial Least Squares (PLS) regression to \nquantify fat and protein. \n",
+          "start": 0,
+          "end": 897,
+          "bbox": [
+            72.0250015258789,
+            610.9019775390625,
+            526.1729736328125,
+            756.3509521484375
+          ]
+        }
+      ],
+      "image": "assets/7026efe7266877b5/S01-p017.jpg",
+      "verification": {
+        "candidate_index": 1,
+        "status": "supported",
+        "reason": "The description of NIR Reflection spectroscopy for opaque dairy products and the specific data processing steps (MSC, SNV, and PLS regression) are accurately transcribed from the text blocks provided in b004 through b006."
+      }
+    },
+    "context_ids": [
+      "stream_1"
+    ],
+    "facets": [
+      "application",
+      "geometry",
+      "compatibility",
+      "limitations"
+    ],
+    "matches": [
+      {
+        "query_id": "initial_stream_1",
+        "context_id": "stream_1",
+        "facets": [
+          "application",
+          "geometry",
+          "compatibility",
+          "limitations"
+        ],
+        "admission": "semantic_only",
+        "bm25_score": null,
+        "bm25_rank": null,
+        "cosine_score": 0.7043326462695481,
+        "dense_rank": 10,
+        "rrf_score": 0.014285714285714285,
+        "matched_terms": [
+          "directly",
+          "interference",
+          "properties",
+          "sensitive"
+        ],
+        "matching_segment": "Inline Milk Analysis: NIR Reflection\n4.\n\nInline Milk Analysis.\n\nThe use of Near-Infrared (NIR) spectroscopy for the inline monitoring of milk is a cornerstone of \nmodern dairy \"Process Analytical Technology\" (PAT).\n\nMaintaining both NIR Reflection and NIR \nTransmission techniques in a lab environment provides a comprehensive analytical suite capable of \nhandling the diverse physical properties of dairy products.\n\n- \nNIR Reflection: Inline NIR Reflection is primarily used for opaque or highly concentrated dairy \nproducts, such as yogurt, butter, or whole milk concentrates.\n\nThe main equipment includes a fiber \noptic probe where one set of fibers delivers light to the sample and the other collects the \n\"backscattered\" light.\n\nExperimentally, the probe is flush-mounted into a pipe or vat to interact \ndirectly with the flowing medium.\n\nBecause the light does not penetrate deeply, the method is \nsensitive to the surface characteristics and fat globule size.\n\nData processing may involve converting \nthe reflectance values to absorbance and applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations to remove physical interference caused by the \nscattering nature of the milk particles before using Partial Least Squares (PLS) regression to \nquantify fat and protein."
+      }
+    ],
+    "score": 0.014285714285714285,
+    "selection_reasons": [
+      "source passage for method lookup in stream_1"
+    ]
+  },
+  {
+    "evidence": {
+      "evidence_id": "T01:method_comparison:r009",
+      "source_id": "T01",
+      "file_name": "AFS_method_comparison_table.xlsx",
+      "source_sha256": "a6a83e976b12ebfc784eb69494fe2b1e71da878ae2b1b7c5ee54e701a6e387b6",
+      "page": 6,
+      "section": "Table 1",
+      "text": "method_no: 2; method: NIR spectroscopy; measurement_technique: diffuse reflection probe; physical_phenomenon: diffuse reflection; sample_type: scattering media, powder; optical_path_or_depth: 0.5-1 mm; sensitivity: average; selectivity: average; cost: average",
+      "content_kind": "method_row",
+      "evidence_scope": "general_method",
+      "revision": "35fcea9a83b50462a2242420",
+      "validation_status": "passed",
+      "human_review_status": "not_reviewed",
+      "retrieval_eligible": true,
+      "issues": [],
+      "corpus_version": "corpus-4aac882441587796afe5",
+      "evidence_url": "/api/evidence/T01%3Amethod_comparison%3Ar009?corpus_version=corpus-4aac882441587796afe5&revision=35fcea9a83b50462a2242420",
+      "workbook_notes": [
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 1,
+          "text": "Source: \"Multispectral Laboratory of Optical Analysis Methods\", Table 1, page 6 (file S01)."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 2,
+          "text": "Transcribed from the rendered page because PDF text extraction interleaves the columns."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 3,
+          "text": "\"mu\" in the original means micrometres; written here as \"um\"."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 4,
+          "text": "Merged cells of the original are expanded, so each row is independent."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 5,
+          "text": "sensitivity / selectivity / cost are the original qualitative ratings (low / average / high), not measured values."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 6,
+          "text": "\"ATR probe*\" carries an asterisk in the original; no footnote is printed on that page."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 7,
+          "text": "Status: transcription for AFS review. Ratings are the source document's, not an AFS product specification."
+        }
+      ],
+      "sheet": "method_comparison",
+      "row": 9,
+      "method": "NIR spectroscopy",
+      "geometry": "diffuse reflection probe",
+      "raw_values": {
+        "method_no": 2,
+        "method": "NIR spectroscopy",
+        "measurement_technique": "diffuse reflection probe",
+        "physical_phenomenon": "diffuse reflection",
+        "sample_type": "scattering media, powder",
+        "optical_path_or_depth": "0.5-1 mm",
+        "sensitivity": "average",
+        "selectivity": "average",
+        "cost": "average"
+      },
+      "ratings_are_qualitative": true,
+      "underlying_citation": {
+        "source_id": "S01",
+        "page": 6,
+        "table": "Table 1",
+        "sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935"
+      },
+      "validation_basis": "Exact workbook cell import; underlying PDF transcription not human-reviewed"
+    },
+    "context_ids": [
+      "stream_1"
+    ],
+    "facets": [
+      "geometry"
+    ],
+    "matches": [
+      {
+        "query_id": "methods_stream_1",
+        "context_id": "stream_1",
+        "facets": [
+          "geometry"
+        ],
+        "admission": "structured",
+        "bm25_score": null,
+        "bm25_rank": null,
+        "cosine_score": null,
+        "dense_rank": null,
+        "rrf_score": 0.01639344262295082,
+        "matched_terms": [
+          "nir",
+          "reflectance",
+          "reflection"
+        ],
+        "matching_segment": null
+      }
+    ],
+    "score": 0.01639344262295082,
+    "selection_reasons": [
+      "structured method geometry for stream_1"
+    ]
+  },
+  {
+    "evidence": {
+      "evidence_id": "T01:method_comparison:r019",
+      "source_id": "T01",
+      "file_name": "AFS_method_comparison_table.xlsx",
+      "source_sha256": "a6a83e976b12ebfc784eb69494fe2b1e71da878ae2b1b7c5ee54e701a6e387b6",
+      "page": 6,
+      "section": "Table 1",
+      "text": "method_no: 5; method: Fluorimetry; measurement_technique: cuvette 90 deg; physical_phenomenon: fluorescence (emission); sample_type: liquid; optical_path_or_depth: 10 mm; sensitivity: high; selectivity: low; cost: low",
+      "content_kind": "method_row",
+      "evidence_scope": "general_method",
+      "revision": "c7cfb80923411882d6f4127f",
+      "validation_status": "passed",
+      "human_review_status": "not_reviewed",
+      "retrieval_eligible": true,
+      "issues": [],
+      "corpus_version": "corpus-4aac882441587796afe5",
+      "evidence_url": "/api/evidence/T01%3Amethod_comparison%3Ar019?corpus_version=corpus-4aac882441587796afe5&revision=c7cfb80923411882d6f4127f",
+      "workbook_notes": [
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 1,
+          "text": "Source: \"Multispectral Laboratory of Optical Analysis Methods\", Table 1, page 6 (file S01)."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 2,
+          "text": "Transcribed from the rendered page because PDF text extraction interleaves the columns."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 3,
+          "text": "\"mu\" in the original means micrometres; written here as \"um\"."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 4,
+          "text": "Merged cells of the original are expanded, so each row is independent."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 5,
+          "text": "sensitivity / selectivity / cost are the original qualitative ratings (low / average / high), not measured values."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 6,
+          "text": "\"ATR probe*\" carries an asterisk in the original; no footnote is printed on that page."
+        },
+        {
+          "source_id": "T01",
+          "sheet": "notes",
+          "row": 7,
+          "text": "Status: transcription for AFS review. Ratings are the source document's, not an AFS product specification."
+        }
+      ],
+      "sheet": "method_comparison",
+      "row": 19,
+      "method": "Fluorimetry",
+      "geometry": "cuvette 90 deg",
+      "raw_values": {
+        "method_no": 5,
+        "method": "Fluorimetry",
+        "measurement_technique": "cuvette 90 deg",
+        "physical_phenomenon": "fluorescence (emission)",
+        "sample_type": "liquid",
+        "optical_path_or_depth": "10 mm",
+        "sensitivity": "high",
+        "selectivity": "low",
+        "cost": "low"
+      },
+      "ratings_are_qualitative": true,
+      "underlying_citation": {
+        "source_id": "S01",
+        "page": 6,
+        "table": "Table 1",
+        "sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935"
+      },
+      "validation_basis": "Exact workbook cell import; underlying PDF transcription not human-reviewed"
+    },
+    "context_ids": [
+      "stream_1"
+    ],
+    "facets": [
+      "geometry"
+    ],
+    "matches": [
+      {
+        "query_id": "methods_stream_1",
+        "context_id": "stream_1",
+        "facets": [
+          "geometry"
+        ],
+        "admission": "structured",
+        "bm25_score": null,
+        "bm25_rank": null,
+        "cosine_score": null,
+        "dense_rank": null,
+        "rrf_score": 0.016129032258064516,
+        "matched_terms": [
+          "fluorescence"
+        ],
+        "matching_segment": null
+      }
+    ],
+    "score": 0.016129032258064516,
+    "selection_reasons": [
+      "additional admitted relevant evidence"
+    ]
+  }
+]

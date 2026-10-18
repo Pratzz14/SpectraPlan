@@ -91,6 +91,9 @@ def _final_case_blocks(source_text: str) -> list[dict]:
         start = match.end() if match.group("delimiter") == "|" else (
             match.start("inline") if match.group("inline") else match.end()
         )
+        leading_separator = re.match(r"[ \t]*={10,}[ \t]*(?:\r?\n|$)", source_text[start:])
+        if leading_separator:
+            start += leading_separator.end()
         end = matches[index + 1].start() if index + 1 < len(matches) else len(source_text)
         # Boundary newlines separate heading blocks, not enquiry characters.
         while end > start and source_text[end - 1] in "\r\n":

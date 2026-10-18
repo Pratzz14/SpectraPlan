@@ -38,6 +38,7 @@ test-results/
 
 # Organizer-supplied originals are provided separately
 /knowledge/original_sources/
+/customer_scenarios_for_final_evaluation.txt
 
 # OS and local editor files
 .DS_Store
@@ -54,6 +55,11 @@ Desktop.ini
 /outputs/assessment/[0-9]*.json
 /outputs/assessment/explainability.sqlite*
 /outputs/development/[0-9]*
+/outputs/runs/**/*.sqlite*
+/outputs/diagnostics/**/*.sqlite*
+# Redundant trace PDF renderings stay local; portable JSON traces are retained.
+/outputs/runs/**/*.trace.pdf
+/outputs/setup_checks/trace.pdf
 /outputs/test-tmp-*/
 !/outputs/assessment/20261017T204318Z_3ebb9b193319407aa703eca6dd222209.json
 !/outputs/assessment/20261018T031435Z_573cc337a2c7459cb0d31246fe0eebfe.json

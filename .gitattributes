@@ -1,0 +1,10 @@
+# Evaluation artifacts are hashed as raw bytes, including archived source files.
+# Preserve them exactly across Windows and Unix checkouts.
+/outputs/runs/** -text -whitespace
+/outputs/diagnostics/** -text -whitespace
+/outputs/H0[1-6].json -text -whitespace
+/outputs/run_manifest.json -text -whitespace
+/evaluation/final.json -text -whitespace
+/outputs/setup_checks/** -text -whitespace
+/outputs/setup_verification.json -text -whitespace
+/outputs/submission_verification.json -text -whitespace

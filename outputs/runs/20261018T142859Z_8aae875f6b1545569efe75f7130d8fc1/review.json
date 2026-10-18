@@ -1,0 +1,287 @@
+{
+  "batch_id": "8aae875f6b1545569efe75f7130d8fc1",
+  "generated_at": "2026-10-18T14:31:18.264642+00:00",
+  "review_scope": "development output inventory and mechanical provenance; semantic support remains explicitly reviewable",
+  "cases": [
+    {
+      "case_id": "H01",
+      "run_id": "7a1d0171e8bd418a98883b835374dc9e",
+      "run_status": "complete",
+      "decision_status": "provisional",
+      "cited_sources": [
+        {
+          "evidence_id": "S01:p017:txt:03613ea0cb0945fb",
+          "citation": "S01 p.17",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 17,
+          "sheet": null,
+          "row": null,
+          "revision": "9f5f308d1c6bf85bd2e441e0",
+          "corpus_version": "corpus-4aac882441587796afe5",
+          "evidence_url": "/api/evidence/S01%3Ap017%3Atxt%3A03613ea0cb0945fb?corpus_version=corpus-4aac882441587796afe5&revision=9f5f308d1c6bf85bd2e441e0"
+        },
+        {
+          "evidence_id": "T01:method_comparison:r009",
+          "citation": "T01 method_comparison row 9 (S01 Table 1 p.6)",
+          "source_id": "T01",
+          "file_name": "AFS_method_comparison_table.xlsx",
+          "source_sha256": "a6a83e976b12ebfc784eb69494fe2b1e71da878ae2b1b7c5ee54e701a6e387b6",
+          "page": 6,
+          "sheet": "method_comparison",
+          "row": 9,
+          "revision": "35fcea9a83b50462a2242420",
+          "corpus_version": "corpus-4aac882441587796afe5",
+          "evidence_url": "/api/evidence/T01%3Amethod_comparison%3Ar009?corpus_version=corpus-4aac882441587796afe5&revision=35fcea9a83b50462a2242420"
+        },
+        {
+          "evidence_id": "T01:method_comparison:r013",
+          "citation": "T01 method_comparison row 13 (S01 Table 1 p.6)",
+          "source_id": "T01",
+          "file_name": "AFS_method_comparison_table.xlsx",
+          "source_sha256": "a6a83e976b12ebfc784eb69494fe2b1e71da878ae2b1b7c5ee54e701a6e387b6",
+          "page": 6,
+          "sheet": "method_comparison",
+          "row": 13,
+          "revision": "af1391fadb3f95edc9f617d0",
+          "corpus_version": "corpus-4aac882441587796afe5",
+          "evidence_url": "/api/evidence/T01%3Amethod_comparison%3Ar013?corpus_version=corpus-4aac882441587796afe5&revision=af1391fadb3f95edc9f617d0"
+        }
+      ],
+      "retrieved_evidence_count": 4,
+      "critical_missing_questions": [
+        "What are the identities of the new API and excipient blend components, and how do they differ from the existing formulation in terms of chemical structure, particle size, and scattering properties?",
+        "What are the performance specifications or error requirements (e.g., acceptable bias, precision, response time) for the existing NIR calibration, and are these requirements unchanged for the new blend?",
+        "What is the specific sensor location and measurement geometry (e.g., diffuse reflection, transmission) of the existing NIR pilot in the tablet press feed frame?",
+        "What is the identity and specification of the proposed Raman sensor or instrument, and what is the rationale for its addition beyond the customer's claim?"
+      ],
+      "independent_validation": {
+        "proposed": true,
+        "validation_groups": [
+          {
+            "context_ids": [
+              "stream_1"
+            ],
+            "independent_unit": "unresolved",
+            "study_type": "targeted_feasibility"
+          }
+        ]
+      },
+      "claim_support_review": {
+        "mechanical_reference_check": "passed by validated API",
+        "method_rationale_consistency": "passed by validated API",
+        "semantic_source_entailment": "unreviewed",
+        "unsupported_claim_count": null,
+        "reviewer_type": "automated boundary inspection; independent scientific review not performed"
+      },
+      "residual_limitations": [
+        "Citation membership and source excerpts do not establish arbitrary scientific entailment.",
+        "Saved results are provisional and do not establish spectroscopy performance."
+      ]
+    },
+    {
+      "case_id": "H02",
+      "run_id": "c6b7a30022094ac4b1d2e79f598238e4",
+      "run_status": "complete",
+      "decision_status": "provisional",
+      "cited_sources": [
+        {
+          "evidence_id": "S01:p018:txt:250c09c5fdb749b3",
+          "citation": "S01 p.18",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 18,
+          "sheet": null,
+          "row": null,
+          "revision": "3dbc2c1783f50b4c3f9e11c9",
+          "corpus_version": "corpus-4aac882441587796afe5",
+          "evidence_url": "/api/evidence/S01%3Ap018%3Atxt%3A250c09c5fdb749b3?corpus_version=corpus-4aac882441587796afe5&revision=3dbc2c1783f50b4c3f9e11c9"
+        },
+        {
+          "evidence_id": "S01:p017:txt:03613ea0cb0945fb",
+          "citation": "S01 p.17",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 17,
+          "sheet": null,
+          "row": null,
+          "revision": "9f5f308d1c6bf85bd2e441e0",
+          "corpus_version": "corpus-4aac882441587796afe5",
+          "evidence_url": "/api/evidence/S01%3Ap017%3Atxt%3A03613ea0cb0945fb?corpus_version=corpus-4aac882441587796afe5&revision=9f5f308d1c6bf85bd2e441e0"
+        },
+        {
+          "evidence_id": "S01:p018:txt:076b268969e39637",
+          "citation": "S01 p.18",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 18,
+          "sheet": null,
+          "row": null,
+          "revision": "75c335d55f1ec607f483b647",
+          "corpus_version": "corpus-4aac882441587796afe5",
+          "evidence_url": "/api/evidence/S01%3Ap018%3Atxt%3A076b268969e39637?corpus_version=corpus-4aac882441587796afe5&revision=75c335d55f1ec607f483b647"
+        }
+      ],
+      "retrieved_evidence_count": 4,
+      "critical_missing_questions": [
+        "Are protein and fat both relevant for the whey stream and the milk concentrate stream, or only one of them per stream?",
+        "What are the acceptable error limits or accuracy requirements for the composition monitoring?",
+        "What are the specific measurement interfaces available for comparison?",
+        "What are the specific variables relevant for each stream regarding composition monitoring?"
+      ],
+      "independent_validation": {
+        "proposed": true,
+        "validation_groups": [
+          {
+            "context_ids": [
+              "stream_1"
+            ],
+            "independent_unit": "unresolved",
+            "study_type": "characterization"
+          },
+          {
+            "context_ids": [
+              "stream_2"
+            ],
+            "independent_unit": "unresolved",
+            "study_type": "characterization"
+          }
+        ]
+      },
+      "claim_support_review": {
+        "mechanical_reference_check": "passed by validated API",
+        "method_rationale_consistency": "passed by validated API",
+        "semantic_source_entailment": "unreviewed",
+        "unsupported_claim_count": null,
+        "reviewer_type": "automated boundary inspection; independent scientific review not performed"
+      },
+      "residual_limitations": [
+        "Citation membership and source excerpts do not establish arbitrary scientific entailment.",
+        "Saved results are provisional and do not establish spectroscopy performance."
+      ]
+    },
+    {
+      "case_id": "H03",
+      "run_id": "7337448eb5dd4a598b4a64ed4e59104d",
+      "run_status": "complete",
+      "decision_status": "insufficient_information",
+      "cited_sources": [],
+      "retrieved_evidence_count": 5,
+      "critical_missing_questions": [
+        "What specific fluorescent target, marker, or validated proxy is available for glucose and viable biomass in this fermentation matrix, and what is the reference relationship between the fluorescence signal and the analyte concentration?",
+        "What are the acceptable error limits, bias, and response time requirements for reporting glucose concentration and viable biomass during fermentation?",
+        "What is the expected concentration range for glucose and viable biomass in the fermentation process, and what is the representative variation in the sample matrix?",
+        "What reference assays are currently used to measure glucose concentration and viable biomass, and what is their uncertainty?"
+      ],
+      "independent_validation": {
+        "proposed": true,
+        "validation_groups": [
+          {
+            "context_ids": [
+              "stream_1"
+            ],
+            "independent_unit": "unresolved",
+            "study_type": "targeted_feasibility"
+          }
+        ]
+      },
+      "claim_support_review": {
+        "mechanical_reference_check": "passed by validated API",
+        "method_rationale_consistency": "passed by validated API",
+        "semantic_source_entailment": "unreviewed",
+        "unsupported_claim_count": null,
+        "reviewer_type": "automated boundary inspection; independent scientific review not performed"
+      },
+      "residual_limitations": [
+        "Citation membership and source excerpts do not establish arbitrary scientific entailment.",
+        "Saved results are provisional and do not establish spectroscopy performance."
+      ]
+    },
+    {
+      "case_id": "H04",
+      "run_id": "387cfdc2f7fb4d53889956a1f9ad7c86",
+      "run_status": "incomplete",
+      "decision_status": null,
+      "cited_sources": [],
+      "retrieved_evidence_count": 0,
+      "critical_missing_questions": [],
+      "independent_validation": {
+        "proposed": false,
+        "validation_groups": []
+      },
+      "claim_support_review": {
+        "mechanical_reference_check": "not available",
+        "method_rationale_consistency": "not available",
+        "semantic_source_entailment": "unreviewed",
+        "unsupported_claim_count": null,
+        "reviewer_type": "automated boundary inspection; independent scientific review not performed"
+      },
+      "residual_limitations": [
+        "Citation membership and source excerpts do not establish arbitrary scientific entailment.",
+        "Saved results are provisional and do not establish spectroscopy performance."
+      ]
+    },
+    {
+      "case_id": "H05",
+      "run_id": "8211e7a7d45547f9ae343f7880639fa4",
+      "run_status": "complete",
+      "decision_status": "insufficient_information",
+      "cited_sources": [],
+      "retrieved_evidence_count": 0,
+      "critical_missing_questions": [
+        "What is the identity of the suspected contaminant or the specific quality variable that is going off specification?",
+        "What is the acceptable error or bias limit for the measurement of the affected quality variable?",
+        "What is the required response time for the spectroscopy measurement in the process?",
+        "What is the reference assay or method used to determine the true value of the affected quality variable?"
+      ],
+      "independent_validation": {
+        "proposed": true,
+        "validation_groups": []
+      },
+      "claim_support_review": {
+        "mechanical_reference_check": "passed by validated API",
+        "method_rationale_consistency": "passed by validated API",
+        "semantic_source_entailment": "unreviewed",
+        "unsupported_claim_count": null,
+        "reviewer_type": "automated boundary inspection; independent scientific review not performed"
+      },
+      "residual_limitations": [
+        "Citation membership and source excerpts do not establish arbitrary scientific entailment.",
+        "Saved results are provisional and do not establish spectroscopy performance."
+      ]
+    },
+    {
+      "case_id": "H06",
+      "run_id": "c9dd14df492148aabea25f00eec1dd92",
+      "run_status": "complete",
+      "decision_status": "insufficient_information",
+      "cited_sources": [],
+      "retrieved_evidence_count": 0,
+      "critical_missing_questions": [
+        "What is the identity and operating principle of the proposed sensor, and what specific tumor boundary decision is it intended to support?",
+        "What are the specific details of the supplied LED NIR kidney study, including the study design, sample type (in vitro vs. in vivo), and reported performance metrics?",
+        "What are the acceptable error limits, response time requirements, and robustness criteria for the tumor boundary decision in the live surgery context?",
+        "What is the current status of validation on the customer's own setup, and what specific in vivo data is missing?"
+      ],
+      "independent_validation": {
+        "proposed": true,
+        "validation_groups": []
+      },
+      "claim_support_review": {
+        "mechanical_reference_check": "passed by validated API",
+        "method_rationale_consistency": "passed by validated API",
+        "semantic_source_entailment": "unreviewed",
+        "unsupported_claim_count": null,
+        "reviewer_type": "automated boundary inspection; independent scientific review not performed"
+      },
+      "residual_limitations": [
+        "Citation membership and source excerpts do not establish arbitrary scientific entailment.",
+        "Saved results are provisional and do not establish spectroscopy performance."
+      ]
+    }
+  ]
+}

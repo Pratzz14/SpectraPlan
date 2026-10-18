@@ -432,6 +432,16 @@ def test_invalid_fact_pointer_rejected_before_synthesis():
         invoke(draft(), facts=facts)
 
 
+def test_requirements_accept_wrapped_source_quotes():
+    from backend.agent import _requirements
+    facts = powder()
+    for record in facts.fact_provenance:
+        record.input_quote = record.input_quote.replace(" ", "\n")
+    result = _requirements(facts, [])
+    assert result.stated
+    assert result.stated[0].input_quote == facts.fact_provenance[0].input_quote
+
+
 def test_public_contract_round_trip_and_question_priority_order():
     data = draft()
     question = deepcopy(data["clarification_questions"][0])

@@ -93,3 +93,14 @@ LLMTech/Groq Qwen fallback. Every provider must satisfy the same quote-provenanc
 and evidence checks. Clarification answers are assembled on the backend and linked
 to their originating questions in saved enquiry history. See
 [provider configuration](providers.md) and [explainability](explainability.md).
+
+## Recovering usable extractions
+
+The assessment route recovers optional fields individually before validation. When a
+model paraphrases a value but supplies a verified customer quote, the app stores
+the original quote as the value. This preserves the customer's numbers, units,
+qualifiers and negation without relying on automated paraphrase interpretation.
+Optional fields and attributed statements with unverifiable quotes are omitted
+and reported as open items. Recovery warnings also appear in the run envelope and
+trace. Invalid context identities, malformed output and unsupported evidence
+references still fail validation. Recovery does not establish scientific correctness.

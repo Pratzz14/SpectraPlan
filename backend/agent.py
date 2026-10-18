@@ -23,7 +23,7 @@ from backend.validation import (
     ExtractionValidationError, AssessmentValidationError, validate_extraction,
     _assertion_choices, _method_choices, _validation_options, _spectral_intervals,
     _check_synthesis_inputs, _cited_ids, validate_synthesis, validate_final, authenticate_ledger,
-    validation_groups, acceptance_criteria, customer_summary,
+    validation_groups, acceptance_criteria, customer_summary, canonical_source_quote,
 )
 
 EXTRACTION_PROMPT_VERSION = "extraction-v7"
@@ -142,7 +142,12 @@ class ExtractionOutput(FactModel):
     shared_constraints: list[QuotedText]
     missing_information: list[Text]
 
-    def to_facts(self) -> CaseFacts:
+    def to_facts(self, description: str | None = None) -> CaseFacts:
+        def source_quote(quote: str) -> str:
+            if description is None:
+                return quote
+            return canonical_source_quote(description, quote) or quote
+
         contexts = []
         provenance = []
         for i, context in enumerate(self.contexts):
@@ -155,15 +160,19 @@ class ExtractionOutput(FactModel):
                     values[name] = [item.value for item in value]
                     for j, item in enumerate(value):
                         provenance.append(FactProvenance(field_path=f"/contexts/{i}/{name}/{j}",
-                                                         context_ids=[context.context_id], input_quote=item.input_quote))
+                                                         context_ids=[context.context_id], input_quote=source_quote(item.input_quote)))
                 else:
                     values[name] = value.value
                     provenance.append(FactProvenance(field_path=f"/contexts/{i}/{name}",
-                                                     context_ids=[context.context_id], input_quote=value.input_quote))
+                                                     context_ids=[context.context_id], input_quote=source_quote(value.input_quote)))
             contexts.append(MeasurementContext.model_validate(values))
         for i, item in enumerate(self.shared_constraints):
-            provenance.append(FactProvenance(field_path=f"/shared_constraints/{i}", input_quote=item.input_quote))
-        return CaseFacts(contexts=contexts, customer_claims_and_requests=self.customer_claims_and_requests,
+            provenance.append(FactProvenance(field_path=f"/shared_constraints/{i}", input_quote=source_quote(item.input_quote)))
+        statements = [
+            statement.model_copy(update={"input_quote": source_quote(statement.input_quote)})
+            for statement in self.customer_claims_and_requests
+        ]
+        return CaseFacts(contexts=contexts, customer_claims_and_requests=statements,
                          shared_constraints=[item.value for item in self.shared_constraints],
                          missing_information=self.missing_information, fact_provenance=provenance)
 
@@ -179,6 +188,47 @@ class ExtractionOutput(FactModel):
         schema = cls.model_json_schema()
         _check_required(value, schema, schema)
         return value
+
+
+def recover_extraction_fields(output: ExtractionOutput, description: str):
+    """Keep source-backed wording; omit unsupported optional fields individually."""
+    data = output.model_dump()
+    warnings = []
+
+    def recover(item, path):
+        quote = canonical_source_quote(description, item["input_quote"])
+        if quote is None:
+            warnings.append(f"Extraction warning: omitted {path}; its supporting quote could not be verified.")
+            return None
+        item["input_quote"] = quote
+        if isinstance(item["value"], str) and canonical_source_quote(quote, item["value"]) is None:
+            # Store the actual customer wording, preserving numbers, units and
+            # negation rather than trying to judge a paraphrase's entailment.
+            item["value"] = quote
+            warnings.append(f"Extraction warning: used original customer wording for {path} instead of the model paraphrase.")
+        return item
+
+    for i, context in enumerate(data["contexts"]):
+        for name, value in list(context.items()):
+            path = f"/contexts/{i}/{name}"
+            if isinstance(value, dict) and name != "label":
+                context[name] = recover(value, path)
+            elif isinstance(value, list) and name != "missing_information":
+                context[name] = [kept for j, item in enumerate(value)
+                                 if (kept := recover(item, f"{path}/{j}")) is not None]
+    data["shared_constraints"] = [kept for i, item in enumerate(data["shared_constraints"])
+                                  if (kept := recover(item, f"/shared_constraints/{i}")) is not None]
+    statements = []
+    for i, item in enumerate(data["customer_claims_and_requests"]):
+        quote = canonical_source_quote(description, item["input_quote"])
+        if quote is None:
+            warnings.append(f"Extraction warning: omitted /customer_claims_and_requests/{i}; its supporting quote could not be verified.")
+        else:
+            item["input_quote"] = quote
+            statements.append(item)
+    data["customer_claims_and_requests"] = statements
+    data["missing_information"].extend(warnings)
+    return ExtractionOutput.model_validate(data), warnings
 
 
 async def extract_case(description: str, settings: Settings | None = None, *,
@@ -205,8 +255,13 @@ async def extract_case(description: str, settings: Settings | None = None, *,
                 messages, ExtractionOutput, deadline=stop_at,
                 max_completion_tokens=min(config.extraction_max_completion_tokens, config.provider_max_completion_tokens),
             )
-            facts = output.to_facts()
+            output, recovery_warnings = recover_extraction_fields(output, description)
+            facts = output.to_facts(description)
             validate_extraction(facts, description)
+            if recovery_warnings:
+                adapter.extraction_warnings = recovery_warnings
+                if hasattr(adapter, "emit"):
+                    adapter.emit("extraction_recovered", {"warnings": recovery_warnings})
             return facts
         except ExtractionValidationError as error:
             feedback = error.errors
@@ -249,7 +304,7 @@ async def extract_case(description: str, settings: Settings | None = None, *,
 
 
 SYNTHESIS_PROMPT_VERSION = "synthesis-v11"
-PIPELINE_VERSION = "assessment-v5"
+PIPELINE_VERSION = "assessment-v7"
 SYNTHESIS_PROMPT = (Path(__file__).with_name("prompts") / "assessment_synthesis.txt").read_text(encoding="utf-8")
 
 
@@ -452,7 +507,8 @@ def _requirements(facts: CaseFacts, unknowns: list[str]) -> Requirements:
                 expected_context, field = None, "shared_constraints"
             else:
                 raise ValueError
-            if isinstance(value, str) and value not in record.input_quote:
+            from backend.validation import canonical_source_quote
+            if isinstance(value, str) and canonical_source_quote(record.input_quote, value) is None:
                 raise ValueError
         except (KeyError, IndexError, TypeError, ValueError):
             raise AssessmentValidationError(["Invalid extracted fact-provenance pointer or value"]) from None
@@ -670,6 +726,6 @@ async def assess_case(description: str, settings: Settings | None = None, *,
         provider_trace=list(adapter.trace_events))
     return AssessmentRun(run_status="incomplete" if errors else "complete", facts=facts, retrieval=retrieval,
         assessment=assessment, errors=errors, metadata=metadata,
-        warnings=[*(retrieval.warnings if retrieval else []),
+        warnings=[*getattr(adapter, "extraction_warnings", []), *(retrieval.warnings if retrieval else []),
                   "Mechanical validation establishes traceability, not scientific correctness; inspect source relevance and scope.",
                   "Automated checks and agent inspection do not constitute independent human or scientific validation."])

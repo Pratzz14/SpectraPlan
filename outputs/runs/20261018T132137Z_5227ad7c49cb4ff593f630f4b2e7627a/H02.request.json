@@ -1,0 +1,3 @@
+{
+  "description": "Composition monitoring across two dairy streams\n==============================================================================\n\nOur dairy process handles both a relatively clear whey stream and an opaque\nmilk concentrate. We want a pilot for composition monitoring, using laboratory\nprotein and fat results where those variables are relevant. We can compare\ndifferent measurement interfaces before choosing the installation. What first\nmeasurement concepts and comparison experiment would make sense for these two\nstreams?\n\n=============================================================================="
+}

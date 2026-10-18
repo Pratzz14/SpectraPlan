@@ -1,0 +1,2680 @@
+{
+  "run_status": "complete",
+  "facts": {
+    "contexts": [
+      {
+        "context_id": "stream_1",
+        "label": "powder blend",
+        "target_analytes": [],
+        "measurement_goals": [
+          "follow API concentration changes"
+        ],
+        "sample_matrix": "powder blend containing an active pharmaceutical ingredient and excipients",
+        "sample_phase": "powder blend",
+        "appearance": null,
+        "temperature": null,
+        "pressure": null,
+        "response_time_raw": null,
+        "response_time_s": null,
+        "concentration_range": null,
+        "required_error": null,
+        "reference_assays": [
+          "Laboratory checks tell us whether the blend is on target"
+        ],
+        "process_constraints": [
+          "results arrive after the material has moved through the press"
+        ],
+        "missing_information": [
+          "What are the specific excipients in the powder blend?",
+          "What is the target API concentration range?",
+          "What is the required measurement error tolerance?",
+          "What is the specific location of the 'feed frame' relative to the press?"
+        ]
+      }
+    ],
+    "customer_claims_and_requests": [
+      {
+        "text": "We want to assess whether a fiber based measurement in the feed frame could follow API concentration changes.",
+        "kind": "requested_outcome",
+        "context_ids": [
+          "stream_1"
+        ],
+        "input_quote": "We want to assess whether a fiber based measurement in the feed frame could follow API concentration changes."
+      },
+      {
+        "text": "Our first pilot should compare reasonable measurement options before we commit to production equipment.",
+        "kind": "requested_outcome",
+        "context_ids": [
+          "stream_1"
+        ],
+        "input_quote": "Our first pilot should compare reasonable measurement options before we commit to production equipment."
+      },
+      {
+        "text": "We manufacture tablets from a powder blend containing an active pharmaceutical ingredient and excipients.",
+        "kind": "reported_fact",
+        "context_ids": [
+          "stream_1"
+        ],
+        "input_quote": "We manufacture tablets from a powder blend containing an active pharmaceutical ingredient and excipients."
+      }
+    ],
+    "shared_constraints": [
+      "compare reasonable measurement options before we commit to production equipment"
+    ],
+    "missing_information": [],
+    "fact_provenance": [
+      {
+        "field_path": "/contexts/0/label",
+        "context_ids": [
+          "stream_1"
+        ],
+        "input_quote": "a powder blend containing an active pharmaceutical ingredient and excipients"
+      },
+      {
+        "field_path": "/contexts/0/measurement_goals/0",
+        "context_ids": [
+          "stream_1"
+        ],
+        "input_quote": "follow API concentration changes"
+      },
+      {
+        "field_path": "/contexts/0/sample_matrix",
+        "context_ids": [
+          "stream_1"
+        ],
+        "input_quote": "a powder blend containing an active pharmaceutical ingredient and excipients"
+      },
+      {
+        "field_path": "/contexts/0/sample_phase",
+        "context_ids": [
+          "stream_1"
+        ],
+        "input_quote": "a powder blend containing an active pharmaceutical ingredient and excipients"
+      },
+      {
+        "field_path": "/contexts/0/reference_assays/0",
+        "context_ids": [
+          "stream_1"
+        ],
+        "input_quote": "Laboratory checks tell us whether the blend is on target"
+      },
+      {
+        "field_path": "/contexts/0/process_constraints/0",
+        "context_ids": [
+          "stream_1"
+        ],
+        "input_quote": "results arrive after the material has moved through the press"
+      },
+      {
+        "field_path": "/shared_constraints/0",
+        "context_ids": [],
+        "input_quote": "compare reasonable measurement options before we commit to production equipment"
+      }
+    ]
+  },
+  "retrieval": {
+    "status": "ok",
+    "corpus_version": "corpus-5c462abafd6240aa941e",
+    "retrieval_version": "context-hybrid-v1",
+    "ranking": "BM25 + local BGE cosine, RRF k=60; structured method lookup",
+    "semantic_min_score": 0.65,
+    "max_records": 8,
+    "search_rounds": 1,
+    "evidence": [
+      {
+        "evidence": {
+          "evidence_id": "S01:p014:txt:727f9ea2c0b286a3",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 14,
+          "section": "Pharmaceutical Manufacturing Monitoring",
+          "text": "2. Pharmaceutical Manufacturing - In-line Monitoring of Blend Potency and Coating \nProcesses \n\n\nA multispectral lab can be also focused on ensuring the quality and consistency of pharmaceutical \nproducts through in-line monitoring of critical manufacturing stages, such as powder blending and pellet \ncoating. The primary objective is to determine \"blend potency\" - the precise concentration and \nuniformity of the Active Pharmaceutical Ingredient (API) - directly within the production line, \nspecifically in the feed frame of a rotary tablet press. In the pharmaceutical industry, the most popular \n",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "application_example",
+          "revision": "99b7900567223bc8f2de03b6",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "issues": [],
+          "corpus_version": "corpus-5c462abafd6240aa941e",
+          "evidence_url": "/api/evidence/S01%3Ap014%3Atxt%3A727f9ea2c0b286a3?corpus_version=corpus-5c462abafd6240aa941e&revision=99b7900567223bc8f2de03b6",
+          "workbook_notes": null,
+          "spans": [
+            {
+              "block_id": "b006",
+              "quote": null
+            },
+            {
+              "block_id": "b007",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "method",
+              "statement": "Multispectral lab approaches can be used for in-line monitoring of blend potency, specifically in the feed frame of a rotary tablet press.",
+              "support_quotes": [
+                "determine \"blend potency\" - the precise concentration and \nuniformity of the Active Pharmaceutical Ingredient (API) - directly within the production line, \nspecifically in the feed frame of a rotary tablet press"
+              ],
+              "quantities": []
+            }
+          ],
+          "tags": [
+            "pharmaceutical",
+            "in-line monitoring",
+            "blend potency",
+            "API"
+          ],
+          "source_spans": [
+            {
+              "block_id": "b006",
+              "quote": "2. Pharmaceutical Manufacturing - In-line Monitoring of Blend Potency and Coating \nProcesses \n",
+              "start": 0,
+              "end": 94,
+              "bbox": [
+                90.05000305175781,
+                653.7449951171875,
+                498.2659606933594,
+                680.8259887695312
+              ]
+            },
+            {
+              "block_id": "b007",
+              "quote": "A multispectral lab can be also focused on ensuring the quality and consistency of pharmaceutical \nproducts through in-line monitoring of critical manufacturing stages, such as powder blending and pellet \ncoating. The primary objective is to determine \"blend potency\" - the precise concentration and \nuniformity of the Active Pharmaceutical Ingredient (API) - directly within the production line, \nspecifically in the feed frame of a rotary tablet press. In the pharmaceutical industry, the most popular \n",
+              "start": 0,
+              "end": 505,
+              "bbox": [
+                72.0250015258789,
+                691.1489868164062,
+                526.0951538085938,
+                762.1009521484375
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p014.jpg",
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "Candidate 1 correctly describes the in-line monitoring application. Block b007 explicitly supports the statement that blend potency is determined in the feed frame of a rotary tablet press to ensure API concentration and uniformity."
+          }
+        },
+        "context_ids": [
+          "stream_1"
+        ],
+        "facets": [
+          "application"
+        ],
+        "matches": [
+          {
+            "query_id": "initial_stream_1",
+            "context_id": "stream_1",
+            "facets": [
+              "application"
+            ],
+            "admission": "lexical",
+            "bm25_score": 71.55728438259841,
+            "bm25_rank": 1,
+            "cosine_score": 0.7985701879622492,
+            "dense_rank": 1,
+            "rrf_score": 0.03278688524590164,
+            "matched_terms": [
+              "active",
+              "api",
+              "blend",
+              "feed",
+              "frame",
+              "ingredient",
+              "pharmaceutical",
+              "powder",
+              "press"
+            ],
+            "matching_segment": "Pharmaceutical Manufacturing Monitoring\n2.\n\nPharmaceutical Manufacturing - In-line Monitoring of Blend Potency and Coating \nProcesses\n\nA multispectral lab can be also focused on ensuring the quality and consistency of pharmaceutical \nproducts through in-line monitoring of critical manufacturing stages, such as powder blending and pellet \ncoating.\n\nThe primary objective is to determine \"blend potency\" - the precise concentration and \nuniformity of the Active Pharmaceutical Ingredient (API) - directly within the production line, \nspecifically in the feed frame of a rotary tablet press.\n\nIn the pharmaceutical industry, the most popular"
+          }
+        ],
+        "score": 0.03278688524590164,
+        "selection_reasons": [
+          "application candidate for stream_1"
+        ]
+      },
+      {
+        "evidence": {
+          "evidence_id": "S01:p015:txt:5d65dd1642425d18",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 15,
+          "section": "Data fusion and modeling",
+          "text": "Data processing for pharmaceutical tasks relies on \"low-level data fusion,\" where the synchronized NIR \nand Raman spectra are merged into a single augmented matrix. Then regression models, such as Partial \nLeast Squares (PLS), are applied to these fused datasets. By combining Raman and NIR, these models \ncan predict API potency or coating thickness with higher accuracy and robustness than single-method \nmodels.  \n\n\nFig. 6. A multispectral NIRaman fiber probe has industrial grade design that combines NIR reflection \nand Raman optical techniques in a compact shaft that fits in a tablet press feed frame. \n",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "application_example",
+          "revision": "9a22b6758c23f5a6ea8e1b7a",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "issues": [],
+          "corpus_version": "corpus-5c462abafd6240aa941e",
+          "evidence_url": "/api/evidence/S01%3Ap015%3Atxt%3A5d65dd1642425d18?corpus_version=corpus-5c462abafd6240aa941e&revision=9a22b6758c23f5a6ea8e1b7a",
+          "workbook_notes": null,
+          "spans": [
+            {
+              "block_id": "b005",
+              "quote": null
+            },
+            {
+              "block_id": "b006",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "method",
+              "statement": "Synchronized NIR and Raman spectra are fused into one matrix and PLS models are applied to predict API potency or coating thickness.",
+              "support_quotes": [
+                "By combining Raman and NIR, these models \ncan predict API potency or coating thickness with higher accuracy and robustness than single-method \nmodels."
+              ],
+              "quantities": []
+            }
+          ],
+          "tags": [],
+          "source_spans": [
+            {
+              "block_id": "b005",
+              "quote": "Data processing for pharmaceutical tasks relies on \"low-level data fusion,\" where the synchronized NIR \nand Raman spectra are merged into a single augmented matrix. Then regression models, such as Partial \nLeast Squares (PLS), are applied to these fused datasets. By combining Raman and NIR, these models \ncan predict API potency or coating thickness with higher accuracy and robustness than single-method \nmodels.  \n",
+              "start": 0,
+              "end": 417,
+              "bbox": [
+                72.0250015258789,
+                317.5489807128906,
+                526.1970825195312,
+                388.2460021972656
+              ]
+            },
+            {
+              "block_id": "b006",
+              "quote": "Fig. 6. A multispectral NIRaman fiber probe has industrial grade design that combines NIR reflection \nand Raman optical techniques in a compact shaft that fits in a tablet press feed frame. \n",
+              "start": 0,
+              "end": 191,
+              "bbox": [
+                72.0250015258789,
+                599.6189575195312,
+                522.6911010742188,
+                626.5459594726562
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p015.jpg",
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "Block b005 confirms that synchronized NIR and Raman spectra are fused and PLS models are applied to predict API potency or coating thickness."
+          }
+        },
+        "context_ids": [
+          "stream_1"
+        ],
+        "facets": [
+          "application",
+          "geometry",
+          "compatibility"
+        ],
+        "matches": [
+          {
+            "query_id": "initial_stream_1",
+            "context_id": "stream_1",
+            "facets": [
+              "application",
+              "geometry",
+              "compatibility"
+            ],
+            "admission": "lexical",
+            "bm25_score": 28.977742163314176,
+            "bm25_rank": 3,
+            "cosine_score": 0.6745913244094924,
+            "dense_rank": 3,
+            "rrf_score": 0.031746031746031744,
+            "matched_terms": [
+              "api",
+              "feed",
+              "fiber",
+              "frame",
+              "pharmaceutical",
+              "press"
+            ],
+            "matching_segment": "Data fusion and modeling\nData processing for pharmaceutical tasks relies on \"low-level data fusion,\" where the synchronized NIR \nand Raman spectra are merged into a single augmented matrix.\n\nThen regression models, such as Partial \nLeast Squares (PLS), are applied to these fused datasets.\n\nBy combining Raman and NIR, these models \ncan predict API potency or coating thickness with higher accuracy and robustness than single-method \nmodels.\n\nFig. 6.\n\nA multispectral NIRaman fiber probe has industrial grade design that combines NIR reflection \nand Raman optical techniques in a compact shaft that fits in a tablet press feed frame."
+          }
+        ],
+        "score": 0.031746031746031744,
+        "selection_reasons": [
+          "source passage for method lookup in stream_1"
+        ]
+      },
+      {
+        "evidence": {
+          "evidence_id": "T01:method_comparison:r009",
+          "source_id": "T01",
+          "file_name": "AFS_method_comparison_table.xlsx",
+          "source_sha256": "a6a83e976b12ebfc784eb69494fe2b1e71da878ae2b1b7c5ee54e701a6e387b6",
+          "page": 6,
+          "section": "Table 1",
+          "text": "method_no: 2; method: NIR spectroscopy; measurement_technique: diffuse reflection probe; physical_phenomenon: diffuse reflection; sample_type: scattering media, powder; optical_path_or_depth: 0.5-1 mm; sensitivity: average; selectivity: average; cost: average",
+          "content_kind": "method_row",
+          "evidence_scope": "general_method",
+          "revision": "35fcea9a83b50462a2242420",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "issues": [],
+          "corpus_version": "corpus-5c462abafd6240aa941e",
+          "evidence_url": "/api/evidence/T01%3Amethod_comparison%3Ar009?corpus_version=corpus-5c462abafd6240aa941e&revision=35fcea9a83b50462a2242420",
+          "workbook_notes": [
+            {
+              "source_id": "T01",
+              "sheet": "notes",
+              "row": 1,
+              "text": "Source: \"Multispectral Laboratory of Optical Analysis Methods\", Table 1, page 6 (file S01)."
+            },
+            {
+              "source_id": "T01",
+              "sheet": "notes",
+              "row": 2,
+              "text": "Transcribed from the rendered page because PDF text extraction interleaves the columns."
+            },
+            {
+              "source_id": "T01",
+              "sheet": "notes",
+              "row": 3,
+              "text": "\"mu\" in the original means micrometres; written here as \"um\"."
+            },
+            {
+              "source_id": "T01",
+              "sheet": "notes",
+              "row": 4,
+              "text": "Merged cells of the original are expanded, so each row is independent."
+            },
+            {
+              "source_id": "T01",
+              "sheet": "notes",
+              "row": 5,
+              "text": "sensitivity / selectivity / cost are the original qualitative ratings (low / average / high), not measured values."
+            },
+            {
+              "source_id": "T01",
+              "sheet": "notes",
+              "row": 6,
+              "text": "\"ATR probe*\" carries an asterisk in the original; no footnote is printed on that page."
+            },
+            {
+              "source_id": "T01",
+              "sheet": "notes",
+              "row": 7,
+              "text": "Status: transcription for AFS review. Ratings are the source document's, not an AFS product specification."
+            }
+          ],
+          "sheet": "method_comparison",
+          "row": 9,
+          "method": "NIR spectroscopy",
+          "geometry": "diffuse reflection probe",
+          "raw_values": {
+            "method_no": 2,
+            "method": "NIR spectroscopy",
+            "measurement_technique": "diffuse reflection probe",
+            "physical_phenomenon": "diffuse reflection",
+            "sample_type": "scattering media, powder",
+            "optical_path_or_depth": "0.5-1 mm",
+            "sensitivity": "average",
+            "selectivity": "average",
+            "cost": "average"
+          },
+          "ratings_are_qualitative": true,
+          "underlying_citation": {
+            "source_id": "S01",
+            "page": 6,
+            "table": "Table 1",
+            "sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935"
+          },
+          "validation_basis": "Exact workbook cell import; underlying PDF transcription not human-reviewed"
+        },
+        "context_ids": [
+          "stream_1"
+        ],
+        "facets": [
+          "geometry"
+        ],
+        "matches": [
+          {
+            "query_id": "methods_stream_1",
+            "context_id": "stream_1",
+            "facets": [
+              "geometry"
+            ],
+            "admission": "structured",
+            "bm25_score": null,
+            "bm25_rank": null,
+            "cosine_score": null,
+            "dense_rank": null,
+            "rrf_score": 0.01639344262295082,
+            "matched_terms": [
+              "nir",
+              "powder",
+              "reflectance",
+              "reflection"
+            ],
+            "matching_segment": null
+          }
+        ],
+        "score": 0.01639344262295082,
+        "selection_reasons": [
+          "structured method geometry for stream_1"
+        ]
+      },
+      {
+        "evidence": {
+          "evidence_id": "S01:p018:txt:250c09c5fdb749b3",
+          "source_id": "S01",
+          "file_name": "S01_Multispectral_Laboratory.pdf",
+          "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+          "page": 18,
+          "section": "Dual-Technique Advantage and Advanced Methods",
+          "text": " \n- \nThe Advantage of Dual-Technique Availability: having both fiber optic techniques available in a \nlab rather than relying on one provides the flexibility needed to monitor the entire production chain. \nWhile transmission is superior for the high-precision analysis of dilute process streams (like whey \nfiltration), it fails when the milk becomes too \"thick\" or fat-rich, as the light cannot penetrate the \nsample. Conversely, reflection can work well in highly scattering environments but can be less \nrepresentative for clear liquids. By maintaining both, a lab can calibrate models for every stage of \nproduction - from raw milk intake to final evaporation - ensuring that no matter how the physical \nstate of the milk changes during processing, the inline monitoring remains accurate and robust. In \nsome cases, a Transflection probe can already be a combined solution working well for low-fat and \nhigh-fat containing milk products. NIR Spectrometer and NIR light source remain the same for both \nreflection and transmission techniques. \n\n\nWhile NIR is the workhorse of the dairy industry, advanced labs often incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques to capture specific chemical or structural \ninformation that NIR might miss. These methods provide a higher level of \"molecular specificity,\" \nmaking them useful for specialized monitoring in milk analysis. \n",
+          "content_kind": "verbatim_text",
+          "evidence_scope": "general_method",
+          "revision": "3dbc2c1783f50b4c3f9e11c9",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "issues": [],
+          "corpus_version": "corpus-5c462abafd6240aa941e",
+          "evidence_url": "/api/evidence/S01%3Ap018%3Atxt%3A250c09c5fdb749b3?corpus_version=corpus-5c462abafd6240aa941e&revision=3dbc2c1783f50b4c3f9e11c9",
+          "workbook_notes": null,
+          "spans": [
+            {
+              "block_id": "b002",
+              "quote": null
+            },
+            {
+              "block_id": "b003",
+              "quote": null
+            }
+          ],
+          "region": null,
+          "transcription": null,
+          "interpretation": null,
+          "facts": [
+            {
+              "category": "method",
+              "statement": "Advanced labs often incorporate Fluorescence, Raman, and Mid-Infrared (MIR) ATR techniques alongside NIR to capture specific chemical or structural information.",
+              "support_quotes": [
+                "incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques"
+              ],
+              "quantities": []
+            }
+          ],
+          "tags": [
+            "multi-technique",
+            "Raman",
+            "Fluorescence",
+            "MIR"
+          ],
+          "source_spans": [
+            {
+              "block_id": "b002",
+              "quote": " \n- \nThe Advantage of Dual-Technique Availability: having both fiber optic techniques available in a \nlab rather than relying on one provides the flexibility needed to monitor the entire production chain. \nWhile transmission is superior for the high-precision analysis of dilute process streams (like whey \nfiltration), it fails when the milk becomes too \"thick\" or fat-rich, as the light cannot penetrate the \nsample. Conversely, reflection can work well in highly scattering environments but can be less \nrepresentative for clear liquids. By maintaining both, a lab can calibrate models for every stage of \nproduction - from raw milk intake to final evaporation - ensuring that no matter how the physical \nstate of the milk changes during processing, the inline monitoring remains accurate and robust. In \nsome cases, a Transflection probe can already be a combined solution working well for low-fat and \nhigh-fat containing milk products. NIR Spectrometer and NIR light source remain the same for both \nreflection and transmission techniques. \n",
+              "start": 0,
+              "end": 1047,
+              "bbox": [
+                72.0250015258789,
+                225.77902221679688,
+                526.22998046875,
+                400.2460021972656
+              ]
+            },
+            {
+              "block_id": "b003",
+              "quote": "While NIR is the workhorse of the dairy industry, advanced labs often incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques to capture specific chemical or structural \ninformation that NIR might miss. These methods provide a higher level of \"molecular specificity,\" \nmaking them useful for specialized monitoring in milk analysis. \n",
+              "start": 0,
+              "end": 362,
+              "bbox": [
+                72.0250015258789,
+                410.8190002441406,
+                528.969970703125,
+                466.9960021972656
+              ]
+            }
+          ],
+          "image": "assets/7026efe7266877b5/S01-p018.jpg",
+          "verification": {
+            "candidate_index": 1,
+            "status": "supported",
+            "reason": "The text confirms advanced labs incorporate Fluorescence, Raman, and MIR ATR techniques to capture specific molecular information."
+          }
+        },
+        "context_ids": [
+          "stream_1"
+        ],
+        "facets": [
+          "geometry",
+          "compatibility",
+          "limitations"
+        ],
+        "matches": [
+          {
+            "query_id": "initial_stream_1",
+            "context_id": "stream_1",
+            "facets": [
+              "geometry",
+              "compatibility",
+              "limitations"
+            ],
+            "admission": "lexical",
+            "bm25_score": 16.675034332455965,
+            "bm25_rank": 11,
+            "cosine_score": 0.673173106543582,
+            "dense_rank": 4,
+            "rrf_score": 0.029709507042253523,
+            "matched_terms": [
+              "fiber"
+            ],
+            "matching_segment": "Dual-Technique Advantage and Advanced Methods\n- \nThe Advantage of Dual-Technique Availability: having both fiber optic techniques available in a \nlab rather than relying on one provides the flexibility needed to monitor the entire production chain.\n\nWhile transmission is superior for the high-precision analysis of dilute process streams (like whey \nfiltration), it fails when the milk becomes too \"thick\" or fat-rich, as the light cannot penetrate the \nsample.\n\nConversely, reflection can work well in highly scattering environments but can be less \nrepresentative for clear liquids.\n\nBy maintaining both, a lab can calibrate models for every stage of \nproduction - from raw milk intake to final evaporation - ensuring that no matter how the physical \nstate of the milk changes during processing, the inline monitoring remains accurate and robust.\n\nIn \nsome cases, a Transflection probe can already be a combined solution working well for low-fat and \nhigh-fat containing milk products.\n\nNIR Spectrometer and NIR light source remain the same for both \nreflection and transmission techniques.\n\nWhile NIR is the workhorse of the dairy industry, advanced labs often incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques to capture specific chemical or structural \ninformation that NIR might miss.\n\nThese methods provide a higher level of \"molecular specificity,\" \nmaking them useful for specialized monitoring in milk analysis."
+          }
+        ],
+        "score": 0.029709507042253523,
+        "selection_reasons": [
+          "adds context/facet coverage"
+        ]
+      },
+      {
+        "evidence": {
+          "evidence_id": "T01:method_comparison:r013",
+          "source_id": "T01",
+          "file_name": "AFS_method_comparison_table.xlsx",
+          "source_sha256": "a6a83e976b12ebfc784eb69494fe2b1e71da878ae2b1b7c5ee54e701a6e387b6",
+          "page": 6,
+          "section": "Table 1",
+          "text": "method_no: 3; method: Raman spectroscopy; measurement_technique: Raman probe; physical_phenomenon: Raman scattering (emission); sample_type: liquid, powder, solid; optical_path_or_depth: 2-5 mm; sensitivity: average; selectivity: high; cost: high",
+          "content_kind": "method_row",
+          "evidence_scope": "general_method",
+          "revision": "af1391fadb3f95edc9f617d0",
+          "validation_status": "passed",
+          "human_review_status": "not_reviewed",
+          "retrieval_eligible": true,
+          "issues": [],
+          "corpus_version": "corpus-5c462abafd6240aa941e",
+          "evidence_url": "/api/evidence/T01%3Amethod_comparison%3Ar013?corpus_version=corpus-5c462abafd6240aa941e&revision=af1391fadb3f95edc9f617d0",
+          "workbook_notes": [
+            {
+              "source_id": "T01",
+              "sheet": "notes",
+              "row": 1,
+              "text": "Source: \"Multispectral Laboratory of Optical Analysis Methods\", Table 1, page 6 (file S01)."
+            },
+            {
+              "source_id": "T01",
+              "sheet": "notes",
+              "row": 2,
+              "text": "Transcribed from the rendered page because PDF text extraction interleaves the columns."
+            },
+            {
+              "source_id": "T01",
+              "sheet": "notes",
+              "row": 3,
+              "text": "\"mu\" in the original means micrometres; written here as \"um\"."
+            },
+            {
+              "source_id": "T01",
+              "sheet": "notes",
+              "row": 4,
+              "text": "Merged cells of the original are expanded, so each row is independent."
+            },
+            {
+              "source_id": "T01",
+              "sheet": "notes",
+              "row": 5,
+              "text": "sensitivity / selectivity / cost are the original qualitative ratings (low / average / high), not measured values."
+            },
+            {
+              "source_id": "T01",
+              "sheet": "notes",
+              "row": 6,
+              "text": "\"ATR probe*\" carries an asterisk in the original; no footnote is printed on that page."
+            },
+            {
+              "source_id": "T01",
+              "sheet": "notes",
+              "row": 7,
+              "text": "Status: transcription for AFS review. Ratings are the source document's, not an AFS product specification."
+            }
+          ],
+          "sheet": "method_comparison",
+          "row": 13,
+          "method": "Raman spectroscopy",
+          "geometry": "Raman probe",
+          "raw_values": {
+            "method_no": 3,
+            "method": "Raman spectroscopy",
+            "measurement_technique": "Raman probe",
+            "physical_phenomenon": "Raman scattering (emission)",
+            "sample_type": "liquid, powder, solid",
+            "optical_path_or_depth": "2-5 mm",
+            "sensitivity": "average",
+            "selectivity": "high",
+            "cost": "high"
+          },
+          "ratings_are_qualitative": true,
+          "underlying_citation": {
+            "source_id": "S01",
+            "page": 6,
+            "table": "Table 1",
+            "sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935"
+          },
+          "validation_basis": "Exact workbook cell import; underlying PDF transcription not human-reviewed"
+        },
+        "context_ids": [
+          "stream_1"
+        ],
+        "facets": [
+          "geometry"
+        ],
+        "matches": [
+          {
+            "query_id": "methods_stream_1",
+            "context_id": "stream_1",
+            "facets": [
+              "geometry"
+            ],
+            "admission": "structured",
+            "bm25_score": null,
+            "bm25_rank": null,
+            "cosine_score": null,
+            "dense_rank": null,
+            "rrf_score": 0.016129032258064516,
+            "matched_terms": [
+              "powder",
+              "raman"
+            ],
+            "matching_segment": null
+          }
+        ],
+        "score": 0.016129032258064516,
+        "selection_reasons": [
+          "additional admitted relevant evidence"
+        ]
+      }
+    ],
+    "queries": [
+      {
+        "query_id": "initial_stream_1",
+        "context_id": "stream_1",
+        "facet": "context",
+        "round": 1,
+        "query": "powder follow results compare we what blend api arrive reasonable want are containing concentration after measurement to the an changes options assess specific active material before whether excipients pharmaceutical has a in ingredient moved commit fiber and through based production press equipment is feed frame target could range our first required pilot should error tolerance location of relative manufacture tablets from",
+        "source_fields": {
+          "target": [],
+          "matrix": [
+            "powder blend containing an active pharmaceutical ingredient and excipients"
+          ],
+          "phase_appearance": [
+            "powder blend"
+          ],
+          "goals": [
+            "follow API concentration changes"
+          ],
+          "process": [
+            "results arrive after the material has moved through the press"
+          ],
+          "shared_constraints": [
+            "compare reasonable measurement options before we commit to production equipment"
+          ],
+          "statements": [
+            "We want to assess whether a fiber based measurement in the feed frame could follow API concentration changes.",
+            "Our first pilot should compare reasonable measurement options before we commit to production equipment.",
+            "We manufacture tablets from a powder blend containing an active pharmaceutical ingredient and excipients."
+          ],
+          "unknowns": [
+            "What are the specific excipients in the powder blend?",
+            "What is the target API concentration range?",
+            "What is the required measurement error tolerance?",
+            "What is the specific location of the 'feed frame' relative to the press?"
+          ]
+        },
+        "omitted_terms": [],
+        "expanded_terms": [
+          "fibre"
+        ],
+        "statements": [
+          {
+            "text": "We want to assess whether a fiber based measurement in the feed frame could follow API concentration changes.",
+            "kind": "requested_outcome",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "We want to assess whether a fiber based measurement in the feed frame could follow API concentration changes."
+          },
+          {
+            "text": "Our first pilot should compare reasonable measurement options before we commit to production equipment.",
+            "kind": "requested_outcome",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "Our first pilot should compare reasonable measurement options before we commit to production equipment."
+          },
+          {
+            "text": "We manufacture tablets from a powder blend containing an active pharmaceutical ingredient and excipients.",
+            "kind": "reported_fact",
+            "context_ids": [
+              "stream_1"
+            ],
+            "input_quote": "We manufacture tablets from a powder blend containing an active pharmaceutical ingredient and excipients."
+          }
+        ],
+        "candidates": [
+          {
+            "evidence_id": "S01:p014:txt:727f9ea2c0b286a3",
+            "admitted": true,
+            "reason": "meaningful_keyword_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "application"
+              ],
+              "admission": "lexical",
+              "bm25_score": 71.55728438259841,
+              "bm25_rank": 1,
+              "cosine_score": 0.7985701879622492,
+              "dense_rank": 1,
+              "rrf_score": 0.03278688524590164,
+              "matched_terms": [
+                "active",
+                "api",
+                "blend",
+                "feed",
+                "frame",
+                "ingredient",
+                "pharmaceutical",
+                "powder",
+                "press"
+              ],
+              "matching_segment": "Pharmaceutical Manufacturing Monitoring\n2.\n\nPharmaceutical Manufacturing - In-line Monitoring of Blend Potency and Coating \nProcesses\n\nA multispectral lab can be also focused on ensuring the quality and consistency of pharmaceutical \nproducts through in-line monitoring of critical manufacturing stages, such as powder blending and pellet \ncoating.\n\nThe primary objective is to determine \"blend potency\" - the precise concentration and \nuniformity of the Active Pharmaceutical Ingredient (API) - directly within the production line, \nspecifically in the feed frame of a rotary tablet press.\n\nIn the pharmaceutical industry, the most popular"
+            },
+            "source_id": "S01",
+            "file_name": "S01_Multispectral_Laboratory.pdf"
+          },
+          {
+            "evidence_id": "S01:p015:txt:5d65dd1642425d18",
+            "admitted": true,
+            "reason": "meaningful_keyword_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "application",
+                "geometry",
+                "compatibility"
+              ],
+              "admission": "lexical",
+              "bm25_score": 28.977742163314176,
+              "bm25_rank": 3,
+              "cosine_score": 0.6745913244094924,
+              "dense_rank": 3,
+              "rrf_score": 0.031746031746031744,
+              "matched_terms": [
+                "api",
+                "feed",
+                "fiber",
+                "frame",
+                "pharmaceutical",
+                "press"
+              ],
+              "matching_segment": "Data fusion and modeling\nData processing for pharmaceutical tasks relies on \"low-level data fusion,\" where the synchronized NIR \nand Raman spectra are merged into a single augmented matrix.\n\nThen regression models, such as Partial \nLeast Squares (PLS), are applied to these fused datasets.\n\nBy combining Raman and NIR, these models \ncan predict API potency or coating thickness with higher accuracy and robustness than single-method \nmodels.\n\nFig. 6.\n\nA multispectral NIRaman fiber probe has industrial grade design that combines NIR reflection \nand Raman optical techniques in a compact shaft that fits in a tablet press feed frame."
+            },
+            "source_id": "S01",
+            "file_name": "S01_Multispectral_Laboratory.pdf"
+          },
+          {
+            "evidence_id": "S01:p015:txt:3fa6d0000254f55e",
+            "admitted": true,
+            "reason": "meaningful_keyword_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "application",
+                "geometry",
+                "compatibility"
+              ],
+              "admission": "lexical",
+              "bm25_score": 30.39864593865729,
+              "bm25_rank": 2,
+              "cosine_score": 0.6609629154388008,
+              "dense_rank": 6,
+              "rrf_score": 0.03128054740957967,
+              "matched_terms": [
+                "blend",
+                "feed",
+                "fiber",
+                "frame",
+                "powder",
+                "press"
+              ],
+              "matching_segment": "Combined NIR and Raman spectroscopy\nand widely implemented spectral techniques are Near-Infrared (NIR) and Raman spectroscopy.\n\nThe \ncombination of these techniques is particularly effective because it captures complementary chemical \ninformation: NIR detects hydrogen bonds and asymmetric polar groups, while Raman provides \ninformation on the molecular backbone and symmetrical non-polar groups.\n\nThe equipment used for such task involves next spectral systems:\n\n- \nNIR spectrometer and light source coupled with a NIR reflection probe \n- \nRaman spectrometer and Raman fiber probe for contact measurements with 785 nm excitation \nwavelength\n\nDuring the experimental action, the probes are inserted directly into the process environment, such as \nthe feed frame of a rotary tablet press.\n\nAs the powder blend passes the probe tip, the system captures \nspectra at high speeds without interrupting the production flow.\n\nThis setup allows the laboratory to track \ndynamic changes, such as the gradual increase in coating thickness or the homogenization of a multi-\ncomponent blend, in real-time.\n\nThe use of fiber optics is critical here, as it allows the sensitive \nspectrometers to be located safely away from the vibration and dust of the manufacturing floor."
+            },
+            "source_id": "S01",
+            "file_name": "S01_Multispectral_Laboratory.pdf"
+          },
+          {
+            "evidence_id": "S01:p018:txt:250c09c5fdb749b3",
+            "admitted": true,
+            "reason": "meaningful_keyword_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry",
+                "compatibility",
+                "limitations"
+              ],
+              "admission": "lexical",
+              "bm25_score": 16.675034332455965,
+              "bm25_rank": 11,
+              "cosine_score": 0.673173106543582,
+              "dense_rank": 4,
+              "rrf_score": 0.029709507042253523,
+              "matched_terms": [
+                "fiber"
+              ],
+              "matching_segment": "Dual-Technique Advantage and Advanced Methods\n- \nThe Advantage of Dual-Technique Availability: having both fiber optic techniques available in a \nlab rather than relying on one provides the flexibility needed to monitor the entire production chain.\n\nWhile transmission is superior for the high-precision analysis of dilute process streams (like whey \nfiltration), it fails when the milk becomes too \"thick\" or fat-rich, as the light cannot penetrate the \nsample.\n\nConversely, reflection can work well in highly scattering environments but can be less \nrepresentative for clear liquids.\n\nBy maintaining both, a lab can calibrate models for every stage of \nproduction - from raw milk intake to final evaporation - ensuring that no matter how the physical \nstate of the milk changes during processing, the inline monitoring remains accurate and robust.\n\nIn \nsome cases, a Transflection probe can already be a combined solution working well for low-fat and \nhigh-fat containing milk products.\n\nNIR Spectrometer and NIR light source remain the same for both \nreflection and transmission techniques.\n\nWhile NIR is the workhorse of the dairy industry, advanced labs often incorporate Fluorescence, Raman, \nand Mid-Infrared (MIR) ATR fiber optic techniques to capture specific chemical or structural \ninformation that NIR might miss.\n\nThese methods provide a higher level of \"molecular specificity,\" \nmaking them useful for specialized monitoring in milk analysis."
+            },
+            "source_id": "S01",
+            "file_name": "S01_Multispectral_Laboratory.pdf"
+          },
+          {
+            "evidence_id": "S01:p005:txt:ee0eed1e1fed5e85",
+            "admitted": true,
+            "reason": "meaningful_keyword_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry",
+                "compatibility",
+                "limitations"
+              ],
+              "admission": "lexical",
+              "bm25_score": 15.615400621940346,
+              "bm25_rank": 15,
+              "cosine_score": 0.6822386757005237,
+              "dense_rank": 2,
+              "rrf_score": 0.02946236559139785,
+              "matched_terms": [
+                "fiber"
+              ],
+              "matching_segment": "Spectral Method Capabilities and Penetration Depth\nChemometric algorithms are implemented in specialized software that enables \npreliminary data preparation (preprocessing), construction, validation, and application of predictive \nmodels, specifically calibration or classification models.\n\nImmersible fiber optic probes operating in various spectral regions from UV to mid-IR are \nincreasingly being used for measuring liquid and soft or powdered solid samples.\n\nThey can be used to \nobtain absorption, diffuse reflectance or transmission, Raman, and ATR spectra.\n\nThe use of these \nprobes can be essential for in-situ analysis—in the field or in an ongoing process.\n\nOnline \nmeasurements require high-speed spectral acquisition.\n\nOften, analytical results must be obtained in real time to be used for management decisions.\n\nAn analysis of individual spectral methods, their capabilities, and limitations, demonstrates that \ndeveloping an optimal instrumental methodology for solving a given analytical problem requires \nconsidering many different factors.\n\nThus, selecting a spectral method for a specific analytical problem \nis a complex task requiring specialized knowledge in chemistry, physics, and mathematics.\n\nThis is \nespecially true for equipping an entire laboratory for future needs, since the need for a particular \noptical analysis method is difficult to predict in advance.\n\nIn the equipment package offered here, \ncalled a multispectral laboratory, experts from various fields have already worked hard to select the \noptimal solutions."
+            },
+            "source_id": "S01",
+            "file_name": "S01_Multispectral_Laboratory.pdf"
+          },
+          {
+            "evidence_id": "S01:p001:txt:85f2c4cc9665521f",
+            "admitted": true,
+            "reason": "meaningful_keyword_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry",
+                "compatibility"
+              ],
+              "admission": "lexical",
+              "bm25_score": 17.178843514520686,
+              "bm25_rank": 9,
+              "cosine_score": 0.6519504340858213,
+              "dense_rank": 8,
+              "rrf_score": 0.02919863597612958,
+              "matched_terms": [
+                "fiber"
+              ],
+              "matching_segment": "Multispectral Laboratory Concept\nThis paper describes in detail the concept of an innovative multispectral \nlaboratory, as well as new methods for the spectral analysis of liquids, \nsolids, and gases based on an inter spectral chemometric approach.\n\nIt is \nintended for researchers in educational and scientific laboratories.\n\nThe multispectral laboratory concept is presented by MIR Photonics \nLLC, acting as a system integrator that combines spectrometers, fiber \noptic probes, and chemometric methods into complete analytical \nsolutions.\n\nThe multimodal fiber optic probes used in these systems are developed \nand manufactured by art photonics GmbH (Berlin, Germany), a global \nOEM supplier of fiber optic sensing solutions covering the spectral range \nfrom UV to Mid IR. art photonics provides both standard products and \ncustomer specific probe designs, including multimodal and application \ntailored solutions."
+            },
+            "source_id": "S01",
+            "file_name": "S01_Multispectral_Laboratory.pdf"
+          },
+          {
+            "evidence_id": "S03:p006:txt:7906a67b623f5ead",
+            "admitted": false,
+            "reason": "below_relevance_gate",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "limitations"
+              ],
+              "admission": "semantic_only",
+              "bm25_score": 22.165623553318166,
+              "bm25_rank": 5,
+              "cosine_score": 0.6398903745133833,
+              "dense_rank": 14,
+              "rrf_score": 0.0288981288981289,
+              "matched_terms": [],
+              "matching_segment": "Model Validation and Sample Availability\n2.5.\n\nModel Validation\n\nConsidering the limited availability of the biopsy material and the ethical aspects of its use,\nconclusions about the general suitability of the NIR sensor analysis for cancer diagnostics and,\nin particular, of four theoretically chosen LEDs are made on the basis of a very limited number\nof investigated patients.\n\nThe necessary pairs of healthy and tumor biopsies could only be obtained\nfrom the whole kidney after nephrectomy, which constituted only about 30% of the total operation\nmaterial (in accordance with the internal statistics of Charité).\n\nThis was an additional complication\nlimiting the sample availability.\n\nIn order to reduce the risk of overﬁtting caused by the limited experimental data volume,\na thorough validation of the discrimination models was required.\n\nThree validation methods were\napplied to calculate the prediction statistics for each model: two types of cross-validation (CV)\nand a random-subset validation (RSV).\n\nThe CV methods were full leave-one-out (LOO) CV and\nsegmented CV procedures, for which the segments were formed by repeated measurements in\ndifferent sample positions. (In Series A, for which arbitrary measurement positions were used,\nthe segments were formed by six individual kidney samples.)\nIn the third validation method,\na random subset of measurements containing about 15% of the whole data set (the number of\nvalidation samples was chosen to be closest to this value) was excluded at the model building stage"
+            },
+            "source_id": "S03",
+            "file_name": "S03_LED_Kidney_Study_2017.pdf"
+          },
+          {
+            "evidence_id": "S01:p008:txt:be6f9ab28134f796",
+            "admitted": true,
+            "reason": "meaningful_keyword_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry",
+                "compatibility"
+              ],
+              "admission": "lexical",
+              "bm25_score": 17.444596052382987,
+              "bm25_rank": 8,
+              "cosine_score": 0.6363540981308162,
+              "dense_rank": 20,
+              "rrf_score": 0.027205882352941177,
+              "matched_terms": [
+                "fiber"
+              ],
+              "matching_segment": "Obtaining and analyzing multispectral data\nvibrational IR and Raman spectra of molecules.\n\nIt may also be morphological information about the \nsizes of scattering particles, as in milk analysis.\n\nInformation can also be obtained from various depths, \nas in the analysis of biological tissue samples using Mid-IR and NIR spectroscopy with fiber-optic \nprobes.\n\n3.3.\n\nObtaining and analyzing multispectral data\n\nTo maximize the benefits of a multispectral approach, it is necessary to properly collect and analyze \nthe obtained data, which can be quite diverse in properties, form, and content.\n\nSpecialized \nmeasurement interfaces, such as probes, have been and continue to be developed for collecting \nmultispectral data, and special chemometric algorithms are being developed for their effective \nanalysis.\n\nThe main challenges of multispectral analysis and their solutions are presented below.\n\n3.3.1 Simultaneous Measurement by Two or More Spectral Methods\n\nAnalysis of solid, inhomogeneous samples, such as biological tissue, is often performed using fiber-\noptic probes.\n\nIt is crucial that the spectral information obtained by different methods—Mid-IR, NIR, \nRaman, and fluorescence spectra—is collected from the same small, even pinpoint, area of the \nsample.\n\nThis is difficult to achieve by using two probes alternately for measurements.\n\nHigh accuracy \ncan be achieved by using specially developed multispectral probes.\n\nOne such probe, optionally \nsupplied with the multispectral laboratory, allows for the combination of Mid-IR spectral \nmeasurements using the ATR method with fluorescence and even Raman spectra.\n\nAdditional \nmeasurements are performed through an ATR zirconium oxide crystal, shaped like a truncated cone.\n\nFor this purpose, an additional pair of silica fibers transmitting in the UV and visible regions is \nconnected to the base of the crystal.\n\nAnother multispectral probe is also under development, \ncombining four spectral methods: Mid-IR, NIR, Raman, and fluorescence.\n\nThe problem of \nsimultaneous measurements also arises in the multispectral study of fast processes."
+            },
+            "source_id": "S01",
+            "file_name": "S01_Multispectral_Laboratory.pdf"
+          },
+          {
+            "evidence_id": "S01:p011:txt:ee39a8c2c17806d6",
+            "admitted": true,
+            "reason": "meaningful_keyword_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry",
+                "compatibility"
+              ],
+              "admission": "lexical",
+              "bm25_score": 16.210187148632226,
+              "bm25_rank": 13,
+              "cosine_score": 0.6368424113365921,
+              "dense_rank": 17,
+              "rrf_score": 0.02668564312399929,
+              "matched_terms": [
+                "fiber"
+              ],
+              "matching_segment": "Raman Spectrometer Capabilities and Applications\nBecause of these \ncharacteristics, a Raman spectrometer has significant design differences from a spectrometer for \nrecording absorption spectra, which operates in the same spectral region (400–1100 nm) of visible and \nshortwave NIR radiation.\n\nThe Raman spectrometer supplied with this multispectral laboratory is designed to record Raman \nspectra of various samples, such as liquid mixtures containing organic and inorganic substances, \nbiological tissue, powdered materials of various origins, etc.\n\nThe resulting spectra can be used for \nboth qualitative and quantitative analysis of mixtures.\n\nMeasuring the IR and Raman spectra of the \nsame sample can be helpful in interpreting complex organic molecules.\n\nThe Raman signal's"
+            },
+            "source_id": "S01",
+            "file_name": "S01_Multispectral_Laboratory.pdf"
+          },
+          {
+            "evidence_id": "S04:p003:txt:63787604987d3bce",
+            "admitted": false,
+            "reason": "below_relevance_gate",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry",
+                "compatibility",
+                "limitations"
+              ],
+              "admission": "semantic_only",
+              "bm25_score": 14.911410510245204,
+              "bm25_rank": 18,
+              "cosine_score": 0.6403505230422628,
+              "dense_rank": 13,
+              "rrf_score": 0.02651914295749912,
+              "matched_terms": [],
+              "matching_segment": "Multispectral Classification of Biological Tissue\nThis fact\nalso explains the presence of protein amide I and II bands in\nthe IR spectra of fat in Figure 2a, making those bands less\nuseful for the sample classiﬁcation.\n\nThe ﬂuorescence spectra (Figure S-5 in the Supporting\nInformation) after standard normal variate (SNV)22 correction\nlook very similar below 600 nm (Figure 2b).\n\nLow standard\ndeviations of the preprocessed spectra indicate homogeneity of\nthe samples from the ﬂuorimetric point of view (considering\nlarger analyzed volumes).\n\nThe observed broad band with the\nmaximum between 520 and 530 nm is formed by the emission\nof intracellular ﬂuorophores with the dominating contribution\nof ﬂavin adenine dinucleotide (FAD)23 that can be aﬀected by\nthe overlaying laser emission peak “tail” passed through the\noptical ﬁlter used (Supporting Information).\n\nThis possible\ndistortion, however, does not play any signiﬁcant role in the\nsample classiﬁcation.\n\nThe most selective peak at 613 nm, which\ncan be assigned to porphyrins, has suﬃcient speciﬁcity to\ndistinguish the liver from other measured samples.\n\nThe\nincreased content of this protein in the liver is expected,\nsince the liver has a central role in the metabolism of haem and\nporphyrins/porphyrinogens, which are intermediates in the\nhaem biosynthetic pathway.24\n\nPrincipal component analysis (PCA)25 was used to evaluate\nthe advantage of multispectral measurement with the\ndeveloped probe for multivariate sample classiﬁcation.\n\nIR\nand ﬂuorescence data parts presented in Figure 2 were\nanalyzed both separately and jointly without any further\nmodiﬁcation, thus enabling a direct comparison of the results.\n\nFor the joint analysis, the IR and ﬂuorescence spectra rescaled\nto have intensities between 0 and 1 were fused into a single\nmatrix X (45 × 823) with the augmented spectral axis: X =\n[XIRXFL].\n\nThe purpose of the data analysis was to investigate"
+            },
+            "source_id": "S04",
+            "file_name": "S04_Combi_MIR_Fluorescence_2021.pdf"
+          },
+          {
+            "evidence_id": "S01:p003:txt:f276d73f52042570",
+            "admitted": true,
+            "reason": "meaningful_keyword_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "application",
+                "geometry",
+                "compatibility"
+              ],
+              "admission": "lexical",
+              "bm25_score": 23.2898706385054,
+              "bm25_rank": 4,
+              "cosine_score": null,
+              "dense_rank": null,
+              "rrf_score": 0.015625,
+              "matched_terms": [
+                "fiber",
+                "pharmaceutical"
+              ],
+              "matching_segment": null
+            },
+            "source_id": "S01",
+            "file_name": "S01_Multispectral_Laboratory.pdf"
+          },
+          {
+            "evidence_id": "T01:method_comparison:r013",
+            "admitted": false,
+            "reason": "requires_structured_context_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry"
+              ],
+              "admission": "semantic_only",
+              "bm25_score": null,
+              "bm25_rank": null,
+              "cosine_score": 0.6636933548679558,
+              "dense_rank": 5,
+              "rrf_score": 0.015384615384615385,
+              "matched_terms": [
+                "powder"
+              ],
+              "matching_segment": "Table 1\nmethod_no: 3; method: Raman spectroscopy; measurement_technique: Raman probe; physical_phenomenon: Raman scattering (emission); sample_type: liquid, powder, solid; optical_path_or_depth: 2-5 mm; sensitivity: average; selectivity: high; cost: high"
+            },
+            "source_id": "T01",
+            "file_name": "AFS_method_comparison_table.xlsx"
+          },
+          {
+            "evidence_id": "S03:p014:txt:a259419b88f6c155",
+            "admitted": false,
+            "reason": "below_relevance_gate",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry",
+                "compatibility",
+                "limitations"
+              ],
+              "admission": "semantic_only",
+              "bm25_score": 19.463920892809547,
+              "bm25_rank": 6,
+              "cosine_score": null,
+              "dense_rank": null,
+              "rrf_score": 0.015151515151515152,
+              "matched_terms": [],
+              "matching_segment": null
+            },
+            "source_id": "S03",
+            "file_name": "S03_LED_Kidney_Study_2017.pdf"
+          },
+          {
+            "evidence_id": "S01:p002:txt:966d70c36f515209",
+            "admitted": true,
+            "reason": "meaningful_keyword_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry",
+                "compatibility"
+              ],
+              "admission": "lexical",
+              "bm25_score": 19.3583707456646,
+              "bm25_rank": 7,
+              "cosine_score": null,
+              "dense_rank": null,
+              "rrf_score": 0.014925373134328358,
+              "matched_terms": [
+                "fiber"
+              ],
+              "matching_segment": null
+            },
+            "source_id": "S01",
+            "file_name": "S01_Multispectral_Laboratory.pdf"
+          },
+          {
+            "evidence_id": "T01:method_comparison:r016",
+            "admitted": false,
+            "reason": "requires_structured_context_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry"
+              ],
+              "admission": "semantic_only",
+              "bm25_score": null,
+              "bm25_rank": null,
+              "cosine_score": 0.6539524655168338,
+              "dense_rank": 7,
+              "rrf_score": 0.014925373134328358,
+              "matched_terms": [],
+              "matching_segment": "Table 1\nmethod_no: 4; method: UV/Visible spectroscopy; measurement_technique: diffuse reflection probe; physical_phenomenon: diffuse reflection; sample_type: solid, pill; optical_path_or_depth: 1-5 mm; sensitivity: low; selectivity: low; cost: low"
+            },
+            "source_id": "T01",
+            "file_name": "AFS_method_comparison_table.xlsx"
+          },
+          {
+            "evidence_id": "T01:method_comparison:r009",
+            "admitted": false,
+            "reason": "requires_structured_context_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry"
+              ],
+              "admission": "semantic_only",
+              "bm25_score": null,
+              "bm25_rank": null,
+              "cosine_score": 0.6440618329119852,
+              "dense_rank": 9,
+              "rrf_score": 0.014492753623188406,
+              "matched_terms": [
+                "powder"
+              ],
+              "matching_segment": "Table 1\nmethod_no: 2; method: NIR spectroscopy; measurement_technique: diffuse reflection probe; physical_phenomenon: diffuse reflection; sample_type: scattering media, powder; optical_path_or_depth: 0.5-1 mm; sensitivity: average; selectivity: average; cost: average"
+            },
+            "source_id": "T01",
+            "file_name": "AFS_method_comparison_table.xlsx"
+          },
+          {
+            "evidence_id": "S01:p016:txt:4dd017492ebd6338",
+            "admitted": false,
+            "reason": "below_relevance_gate",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "compatibility"
+              ],
+              "admission": "semantic_only",
+              "bm25_score": null,
+              "bm25_rank": null,
+              "cosine_score": 0.6431859009761522,
+              "dense_rank": 10,
+              "rrf_score": 0.014285714285714285,
+              "matched_terms": [
+                "fiber"
+              ],
+              "matching_segment": "Fiber Optic Techniques for Real-Time Monitoring of Bioprocessing\n3.\n\nFiber Optic Techniques for Real-Time Monitoring of Bioprocessing.\n\nHaving access to a full suite of fiber-optic spectroscopic techniques - rather than relying on a single \nmethod - allows a lab to address the diverse analytical challenges of bioprocessing, where no single \nsensor is universally optimal for every analyte or condition.\n\nEach technique offers distinct advantages \nin sensitivity, specificity, and cost-effectiveness that can be strategically combined to optimize \nproduction."
+            },
+            "source_id": "S01",
+            "file_name": "S01_Multispectral_Laboratory.pdf"
+          },
+          {
+            "evidence_id": "S03:p013:txt:8864377c096eee9e",
+            "admitted": false,
+            "reason": "below_relevance_gate",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "limitations"
+              ],
+              "admission": "semantic_only",
+              "bm25_score": 16.9511462617766,
+              "bm25_rank": 10,
+              "cosine_score": null,
+              "dense_rank": null,
+              "rrf_score": 0.014285714285714285,
+              "matched_terms": [],
+              "matching_segment": null
+            },
+            "source_id": "S03",
+            "file_name": "S03_LED_Kidney_Study_2017.pdf"
+          },
+          {
+            "evidence_id": "T01:method_comparison:r010",
+            "admitted": false,
+            "reason": "requires_structured_context_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry"
+              ],
+              "admission": "semantic_only",
+              "bm25_score": null,
+              "bm25_rank": null,
+              "cosine_score": 0.641798806622161,
+              "dense_rank": 11,
+              "rrf_score": 0.014084507042253521,
+              "matched_terms": [
+                "powder"
+              ],
+              "matching_segment": "Table 1\nmethod_no: 2; method: NIR spectroscopy; measurement_technique: integrating sphere; physical_phenomenon: diffuse reflection; sample_type: solid, powder; optical_path_or_depth: 5-10 mm; sensitivity: average; selectivity: average; cost: average"
+            },
+            "source_id": "T01",
+            "file_name": "AFS_method_comparison_table.xlsx"
+          },
+          {
+            "evidence_id": "S03:p002:txt:fcebfbe576cee0fa",
+            "admitted": false,
+            "reason": "below_relevance_gate",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [],
+              "admission": "semantic_only",
+              "bm25_score": 16.44244758428798,
+              "bm25_rank": 12,
+              "cosine_score": null,
+              "dense_rank": null,
+              "rrf_score": 0.013888888888888888,
+              "matched_terms": [],
+              "matching_segment": null
+            },
+            "source_id": "S03",
+            "file_name": "S03_LED_Kidney_Study_2017.pdf"
+          },
+          {
+            "evidence_id": "T01:method_comparison:r011",
+            "admitted": false,
+            "reason": "requires_structured_context_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry"
+              ],
+              "admission": "semantic_only",
+              "bm25_score": null,
+              "bm25_rank": null,
+              "cosine_score": 0.6403771374659809,
+              "dense_rank": 12,
+              "rrf_score": 0.013888888888888888,
+              "matched_terms": [
+                "powder"
+              ],
+              "matching_segment": "Table 1\nmethod_no: 2; method: NIR spectroscopy; measurement_technique: surface at a distance; physical_phenomenon: diffuse reflection; sample_type: solid, powder; optical_path_or_depth: 2-5 mm; sensitivity: average; selectivity: average; cost: average"
+            },
+            "source_id": "T01",
+            "file_name": "AFS_method_comparison_table.xlsx"
+          },
+          {
+            "evidence_id": "S01:p013:txt:a8994bbdce59fadc",
+            "admitted": true,
+            "reason": "meaningful_keyword_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry",
+                "compatibility"
+              ],
+              "admission": "lexical",
+              "bm25_score": 15.702645815027754,
+              "bm25_rank": 14,
+              "cosine_score": null,
+              "dense_rank": null,
+              "rrf_score": 0.013513513513513514,
+              "matched_terms": [
+                "fiber"
+              ],
+              "matching_segment": null
+            },
+            "source_id": "S01",
+            "file_name": "S01_Multispectral_Laboratory.pdf"
+          },
+          {
+            "evidence_id": "S01:p010:txt:55edab893d1b49cc",
+            "admitted": false,
+            "reason": "below_relevance_gate",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry",
+                "compatibility"
+              ],
+              "admission": "semantic_only",
+              "bm25_score": null,
+              "bm25_rank": null,
+              "cosine_score": 0.6388539204517516,
+              "dense_rank": 15,
+              "rrf_score": 0.013333333333333334,
+              "matched_terms": [
+                "fiber"
+              ],
+              "matching_segment": "ATR Fiber Probes\nATR fiber probes (Fig.1) enable the analysis of liquids and solid elastic samples, such as biological \ntissue, using specialized probes utilizing high-transmission fiber optics in the Mid-IR region.\n\nThese immersion probes operate on the ATR principle but allow analysis at a significant distance from \nthe spectrometer, without the need for sampling.\n\nProbe-based analysis is gaining widespread use in \nonline analysis, such as in-line, in-process (chemical, biotechnological, natural) environments, as well \nas in-situ measurements, such as for field testing or for spectral diagnostics during surgery.\n\nFig.1 ATR fiber probe.\n\nImages courtesy of art photonics GmbH."
+            },
+            "source_id": "S01",
+            "file_name": "S01_Multispectral_Laboratory.pdf"
+          },
+          {
+            "evidence_id": "S03:p012:txt:e19aa643001dad23",
+            "admitted": false,
+            "reason": "below_relevance_gate",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [],
+              "admission": "semantic_only",
+              "bm25_score": 15.326697450263046,
+              "bm25_rank": 16,
+              "cosine_score": null,
+              "dense_rank": null,
+              "rrf_score": 0.013157894736842105,
+              "matched_terms": [],
+              "matching_segment": null
+            },
+            "source_id": "S03",
+            "file_name": "S03_LED_Kidney_Study_2017.pdf"
+          },
+          {
+            "evidence_id": "T01:method_comparison:r020",
+            "admitted": false,
+            "reason": "requires_structured_context_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry"
+              ],
+              "admission": "semantic_only",
+              "bm25_score": null,
+              "bm25_rank": null,
+              "cosine_score": 0.6370990939143544,
+              "dense_rank": 16,
+              "rrf_score": 0.013157894736842105,
+              "matched_terms": [],
+              "matching_segment": "Table 1\nmethod_no: 5; method: Fluorimetry; measurement_technique: fluorimetric probe; physical_phenomenon: fluorescence (emission); sample_type: liquid, solid; optical_path_or_depth: 1-5 mm; sensitivity: high; selectivity: low; cost: low"
+            },
+            "source_id": "T01",
+            "file_name": "AFS_method_comparison_table.xlsx"
+          },
+          {
+            "evidence_id": "S01:p009:txt:fafd6a6388e4e7dd",
+            "admitted": true,
+            "reason": "meaningful_keyword_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry",
+                "compatibility",
+                "limitations"
+              ],
+              "admission": "lexical",
+              "bm25_score": 15.039135327855776,
+              "bm25_rank": 17,
+              "cosine_score": null,
+              "dense_rank": null,
+              "rrf_score": 0.012987012987012988,
+              "matched_terms": [
+                "fiber"
+              ],
+              "matching_segment": null
+            },
+            "source_id": "S01",
+            "file_name": "S01_Multispectral_Laboratory.pdf"
+          },
+          {
+            "evidence_id": "S04:p002:txt:03dcde12ac2e1282",
+            "admitted": false,
+            "reason": "below_relevance_gate",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry",
+                "compatibility",
+                "limitations"
+              ],
+              "admission": "semantic_only",
+              "bm25_score": null,
+              "bm25_rank": null,
+              "cosine_score": 0.6364123091826499,
+              "dense_rank": 18,
+              "rrf_score": 0.01282051282051282,
+              "matched_terms": [
+                "fiber"
+              ],
+              "matching_segment": "Purpose of the Study\nThe purpose of this study was to develop, assemble, and\nevaluate a multispectral ﬁber optic probe for the simultaneous\nanalysis of test liquids and biological tissue samples by ATR IR\nspectroscopy and ﬂuorimetry.\n\nThe main problem to be solved\nin this case is the probe design, including the optimal\nmeasurement geometry and the choice of necessary materials\nin order to provide suﬃcient quality of the signals detected by\neach technique, despite the very diﬀerent optical characteristics\nof the construction elements.\n■RESULTS AND DISCUSSION\n\n(UV−vis) light used in ﬂuorimetry can penetrate to the depth\nof a few millimeters into the tissue18 helping to detect the\ntumor border more reliably.\n\nThe main challenge of such local\nmultispectral analysis is related to the necessity to perform\ndiﬀerent spectroscopic measurements at the same point\nsimultaneously.\n\nFor instance, a marking grid was applied in a\nlab experiment14 to ensure the compatibility of separate\nmeasurements on the same points using IR and ﬂuorescence\nprobes.\n\nSuch alternating multispectral measurements cannot\nguarantee complete coincidence of the spots analyzed by both\nmethods and, moreover, cannot be used in the clinical surgery\npractice."
+            },
+            "source_id": "S04",
+            "file_name": "S04_Combi_MIR_Fluorescence_2021.pdf"
+          },
+          {
+            "evidence_id": "S01:p017:txt:03613ea0cb0945fb",
+            "admitted": false,
+            "reason": "below_relevance_gate",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "application",
+                "geometry",
+                "compatibility",
+                "limitations"
+              ],
+              "admission": "semantic_only",
+              "bm25_score": null,
+              "bm25_rank": null,
+              "cosine_score": 0.6363693683611356,
+              "dense_rank": 19,
+              "rrf_score": 0.012658227848101266,
+              "matched_terms": [
+                "fiber"
+              ],
+              "matching_segment": "Inline Milk Analysis: NIR Reflection\n4.\n\nInline Milk Analysis.\n\nThe use of Near-Infrared (NIR) spectroscopy for the inline monitoring of milk is a cornerstone of \nmodern dairy \"Process Analytical Technology\" (PAT).\n\nMaintaining both NIR Reflection and NIR \nTransmission techniques in a lab environment provides a comprehensive analytical suite capable of \nhandling the diverse physical properties of dairy products.\n\n- \nNIR Reflection: Inline NIR Reflection is primarily used for opaque or highly concentrated dairy \nproducts, such as yogurt, butter, or whole milk concentrates.\n\nThe main equipment includes a fiber \noptic probe where one set of fibers delivers light to the sample and the other collects the \n\"backscattered\" light.\n\nExperimentally, the probe is flush-mounted into a pipe or vat to interact \ndirectly with the flowing medium.\n\nBecause the light does not penetrate deeply, the method is \nsensitive to the surface characteristics and fat globule size.\n\nData processing may involve converting \nthe reflectance values to absorbance and applying Multiplicative Scatter Correction (MSC) or \nStandard Normal Variate (SNV) transformations to remove physical interference caused by the \nscattering nature of the milk particles before using Partial Least Squares (PLS) regression to \nquantify fat and protein."
+            },
+            "source_id": "S01",
+            "file_name": "S01_Multispectral_Laboratory.pdf"
+          },
+          {
+            "evidence_id": "S03:p003:txt:629d156d9d6a874e",
+            "admitted": false,
+            "reason": "below_relevance_gate",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [],
+              "admission": "semantic_only",
+              "bm25_score": 14.663054635689216,
+              "bm25_rank": 19,
+              "cosine_score": null,
+              "dense_rank": null,
+              "rrf_score": 0.012658227848101266,
+              "matched_terms": [],
+              "matching_segment": null
+            },
+            "source_id": "S03",
+            "file_name": "S03_LED_Kidney_Study_2017.pdf"
+          },
+          {
+            "evidence_id": "S02:p009:fig:6805da4f7898f361",
+            "admitted": true,
+            "reason": "meaningful_keyword_match",
+            "match": {
+              "query_id": "initial_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry",
+                "compatibility"
+              ],
+              "admission": "lexical",
+              "bm25_score": 14.546364753577679,
+              "bm25_rank": 20,
+              "cosine_score": null,
+              "dense_rank": null,
+              "rrf_score": 0.0125,
+              "matched_terms": [
+                "fibre"
+              ],
+              "matching_segment": null
+            },
+            "source_id": "S02",
+            "file_name": "S02_AFS_Process_Control_Slides.pdf"
+          }
+        ],
+        "bm25_tokens": [
+          "powder",
+          "follow",
+          "results",
+          "compare",
+          "we",
+          "what",
+          "blend",
+          "api",
+          "arrive",
+          "reasonable",
+          "want",
+          "are",
+          "containing",
+          "concentration",
+          "after",
+          "measurement",
+          "to",
+          "the",
+          "an",
+          "changes",
+          "options",
+          "assess",
+          "specific",
+          "active",
+          "material",
+          "before",
+          "whether",
+          "excipients",
+          "pharmaceutical",
+          "has",
+          "a",
+          "in",
+          "ingredient",
+          "moved",
+          "commit",
+          "fiber",
+          "and",
+          "through",
+          "based",
+          "production",
+          "press",
+          "equipment",
+          "is",
+          "feed",
+          "frame",
+          "target",
+          "could",
+          "range",
+          "our",
+          "first",
+          "required",
+          "pilot",
+          "should",
+          "error",
+          "tolerance",
+          "location",
+          "of",
+          "relative",
+          "manufacture",
+          "tablets",
+          "from",
+          "active",
+          "pharmaceutical",
+          "ingredient",
+          "fibre"
+        ],
+        "embedding_input": "Represent this sentence for searching relevant passages: powder follow results compare we what blend api arrive reasonable want are containing concentration after measurement to the an changes options assess specific active material before whether excipients pharmaceutical has a in ingredient moved commit fiber and through based production press equipment is feed frame target could range our first required pilot should error tolerance location of relative manufacture tablets from",
+        "branch_rankings": {
+          "bm25": [
+            {
+              "evidence_id": "S01:p014:txt:727f9ea2c0b286a3",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 71.55728438259841,
+              "rank": 1
+            },
+            {
+              "evidence_id": "S01:p015:txt:3fa6d0000254f55e",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 30.39864593865729,
+              "rank": 2
+            },
+            {
+              "evidence_id": "S01:p015:txt:5d65dd1642425d18",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 28.977742163314176,
+              "rank": 3
+            },
+            {
+              "evidence_id": "S01:p003:txt:f276d73f52042570",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 23.2898706385054,
+              "rank": 4
+            },
+            {
+              "evidence_id": "S03:p006:txt:7906a67b623f5ead",
+              "source_id": "S03",
+              "file_name": "S03_LED_Kidney_Study_2017.pdf",
+              "score": 22.165623553318166,
+              "rank": 5
+            },
+            {
+              "evidence_id": "S03:p014:txt:a259419b88f6c155",
+              "source_id": "S03",
+              "file_name": "S03_LED_Kidney_Study_2017.pdf",
+              "score": 19.463920892809547,
+              "rank": 6
+            },
+            {
+              "evidence_id": "S01:p002:txt:966d70c36f515209",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 19.3583707456646,
+              "rank": 7
+            },
+            {
+              "evidence_id": "S01:p008:txt:be6f9ab28134f796",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 17.444596052382987,
+              "rank": 8
+            },
+            {
+              "evidence_id": "S01:p001:txt:85f2c4cc9665521f",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 17.178843514520686,
+              "rank": 9
+            },
+            {
+              "evidence_id": "S03:p013:txt:8864377c096eee9e",
+              "source_id": "S03",
+              "file_name": "S03_LED_Kidney_Study_2017.pdf",
+              "score": 16.9511462617766,
+              "rank": 10
+            },
+            {
+              "evidence_id": "S01:p018:txt:250c09c5fdb749b3",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 16.675034332455965,
+              "rank": 11
+            },
+            {
+              "evidence_id": "S03:p002:txt:fcebfbe576cee0fa",
+              "source_id": "S03",
+              "file_name": "S03_LED_Kidney_Study_2017.pdf",
+              "score": 16.44244758428798,
+              "rank": 12
+            },
+            {
+              "evidence_id": "S01:p011:txt:ee39a8c2c17806d6",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 16.210187148632226,
+              "rank": 13
+            },
+            {
+              "evidence_id": "S01:p013:txt:a8994bbdce59fadc",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 15.702645815027754,
+              "rank": 14
+            },
+            {
+              "evidence_id": "S01:p005:txt:ee0eed1e1fed5e85",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 15.615400621940346,
+              "rank": 15
+            },
+            {
+              "evidence_id": "S03:p012:txt:e19aa643001dad23",
+              "source_id": "S03",
+              "file_name": "S03_LED_Kidney_Study_2017.pdf",
+              "score": 15.326697450263046,
+              "rank": 16
+            },
+            {
+              "evidence_id": "S01:p009:txt:fafd6a6388e4e7dd",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 15.039135327855776,
+              "rank": 17
+            },
+            {
+              "evidence_id": "S04:p003:txt:63787604987d3bce",
+              "source_id": "S04",
+              "file_name": "S04_Combi_MIR_Fluorescence_2021.pdf",
+              "score": 14.911410510245204,
+              "rank": 18
+            },
+            {
+              "evidence_id": "S03:p003:txt:629d156d9d6a874e",
+              "source_id": "S03",
+              "file_name": "S03_LED_Kidney_Study_2017.pdf",
+              "score": 14.663054635689216,
+              "rank": 19
+            },
+            {
+              "evidence_id": "S02:p009:fig:6805da4f7898f361",
+              "source_id": "S02",
+              "file_name": "S02_AFS_Process_Control_Slides.pdf",
+              "score": 14.546364753577679,
+              "rank": 20
+            }
+          ],
+          "qdrant": [
+            {
+              "evidence_id": "S01:p014:txt:727f9ea2c0b286a3",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.7985701879622492,
+              "rank": 1
+            },
+            {
+              "evidence_id": "S01:p005:txt:ee0eed1e1fed5e85",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.6822386757005237,
+              "rank": 2
+            },
+            {
+              "evidence_id": "S01:p015:txt:5d65dd1642425d18",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.6745913244094924,
+              "rank": 3
+            },
+            {
+              "evidence_id": "S01:p018:txt:250c09c5fdb749b3",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.673173106543582,
+              "rank": 4
+            },
+            {
+              "evidence_id": "T01:method_comparison:r013",
+              "source_id": "T01",
+              "file_name": "AFS_method_comparison_table.xlsx",
+              "score": 0.6636933548679558,
+              "rank": 5
+            },
+            {
+              "evidence_id": "S01:p015:txt:3fa6d0000254f55e",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.6609629154388008,
+              "rank": 6
+            },
+            {
+              "evidence_id": "T01:method_comparison:r016",
+              "source_id": "T01",
+              "file_name": "AFS_method_comparison_table.xlsx",
+              "score": 0.6539524655168338,
+              "rank": 7
+            },
+            {
+              "evidence_id": "S01:p001:txt:85f2c4cc9665521f",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.6519504340858213,
+              "rank": 8
+            },
+            {
+              "evidence_id": "T01:method_comparison:r009",
+              "source_id": "T01",
+              "file_name": "AFS_method_comparison_table.xlsx",
+              "score": 0.6440618329119852,
+              "rank": 9
+            },
+            {
+              "evidence_id": "S01:p016:txt:4dd017492ebd6338",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.6431859009761522,
+              "rank": 10
+            },
+            {
+              "evidence_id": "T01:method_comparison:r010",
+              "source_id": "T01",
+              "file_name": "AFS_method_comparison_table.xlsx",
+              "score": 0.641798806622161,
+              "rank": 11
+            },
+            {
+              "evidence_id": "T01:method_comparison:r011",
+              "source_id": "T01",
+              "file_name": "AFS_method_comparison_table.xlsx",
+              "score": 0.6403771374659809,
+              "rank": 12
+            },
+            {
+              "evidence_id": "S04:p003:txt:63787604987d3bce",
+              "source_id": "S04",
+              "file_name": "S04_Combi_MIR_Fluorescence_2021.pdf",
+              "score": 0.6403505230422628,
+              "rank": 13
+            },
+            {
+              "evidence_id": "S03:p006:txt:7906a67b623f5ead",
+              "source_id": "S03",
+              "file_name": "S03_LED_Kidney_Study_2017.pdf",
+              "score": 0.6398903745133833,
+              "rank": 14
+            },
+            {
+              "evidence_id": "S01:p010:txt:55edab893d1b49cc",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.6388539204517516,
+              "rank": 15
+            },
+            {
+              "evidence_id": "T01:method_comparison:r020",
+              "source_id": "T01",
+              "file_name": "AFS_method_comparison_table.xlsx",
+              "score": 0.6370990939143544,
+              "rank": 16
+            },
+            {
+              "evidence_id": "S01:p011:txt:ee39a8c2c17806d6",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.6368424113365921,
+              "rank": 17
+            },
+            {
+              "evidence_id": "S04:p002:txt:03dcde12ac2e1282",
+              "source_id": "S04",
+              "file_name": "S04_Combi_MIR_Fluorescence_2021.pdf",
+              "score": 0.6364123091826499,
+              "rank": 18
+            },
+            {
+              "evidence_id": "S01:p017:txt:03613ea0cb0945fb",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.6363693683611356,
+              "rank": 19
+            },
+            {
+              "evidence_id": "S01:p008:txt:be6f9ab28134f796",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.6363540981308162,
+              "rank": 20
+            }
+          ],
+          "hybrid": [
+            {
+              "evidence_id": "S01:p014:txt:727f9ea2c0b286a3",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.03278688524590164,
+              "rank": 1
+            },
+            {
+              "evidence_id": "S01:p015:txt:5d65dd1642425d18",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.031746031746031744,
+              "rank": 2
+            },
+            {
+              "evidence_id": "S01:p015:txt:3fa6d0000254f55e",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.03128054740957967,
+              "rank": 3
+            },
+            {
+              "evidence_id": "S01:p018:txt:250c09c5fdb749b3",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.029709507042253523,
+              "rank": 4
+            },
+            {
+              "evidence_id": "S01:p005:txt:ee0eed1e1fed5e85",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.02946236559139785,
+              "rank": 5
+            },
+            {
+              "evidence_id": "S01:p001:txt:85f2c4cc9665521f",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.02919863597612958,
+              "rank": 6
+            },
+            {
+              "evidence_id": "S03:p006:txt:7906a67b623f5ead",
+              "source_id": "S03",
+              "file_name": "S03_LED_Kidney_Study_2017.pdf",
+              "score": 0.0288981288981289,
+              "rank": 7
+            },
+            {
+              "evidence_id": "S01:p008:txt:be6f9ab28134f796",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.027205882352941177,
+              "rank": 8
+            },
+            {
+              "evidence_id": "S01:p011:txt:ee39a8c2c17806d6",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.02668564312399929,
+              "rank": 9
+            },
+            {
+              "evidence_id": "S04:p003:txt:63787604987d3bce",
+              "source_id": "S04",
+              "file_name": "S04_Combi_MIR_Fluorescence_2021.pdf",
+              "score": 0.02651914295749912,
+              "rank": 10
+            },
+            {
+              "evidence_id": "S01:p003:txt:f276d73f52042570",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.015625,
+              "rank": 11
+            },
+            {
+              "evidence_id": "T01:method_comparison:r013",
+              "source_id": "T01",
+              "file_name": "AFS_method_comparison_table.xlsx",
+              "score": 0.015384615384615385,
+              "rank": 12
+            },
+            {
+              "evidence_id": "S03:p014:txt:a259419b88f6c155",
+              "source_id": "S03",
+              "file_name": "S03_LED_Kidney_Study_2017.pdf",
+              "score": 0.015151515151515152,
+              "rank": 13
+            },
+            {
+              "evidence_id": "S01:p002:txt:966d70c36f515209",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.014925373134328358,
+              "rank": 14
+            },
+            {
+              "evidence_id": "T01:method_comparison:r016",
+              "source_id": "T01",
+              "file_name": "AFS_method_comparison_table.xlsx",
+              "score": 0.014925373134328358,
+              "rank": 15
+            },
+            {
+              "evidence_id": "T01:method_comparison:r009",
+              "source_id": "T01",
+              "file_name": "AFS_method_comparison_table.xlsx",
+              "score": 0.014492753623188406,
+              "rank": 16
+            },
+            {
+              "evidence_id": "S01:p016:txt:4dd017492ebd6338",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.014285714285714285,
+              "rank": 17
+            },
+            {
+              "evidence_id": "S03:p013:txt:8864377c096eee9e",
+              "source_id": "S03",
+              "file_name": "S03_LED_Kidney_Study_2017.pdf",
+              "score": 0.014285714285714285,
+              "rank": 18
+            },
+            {
+              "evidence_id": "T01:method_comparison:r010",
+              "source_id": "T01",
+              "file_name": "AFS_method_comparison_table.xlsx",
+              "score": 0.014084507042253521,
+              "rank": 19
+            },
+            {
+              "evidence_id": "S03:p002:txt:fcebfbe576cee0fa",
+              "source_id": "S03",
+              "file_name": "S03_LED_Kidney_Study_2017.pdf",
+              "score": 0.013888888888888888,
+              "rank": 20
+            },
+            {
+              "evidence_id": "T01:method_comparison:r011",
+              "source_id": "T01",
+              "file_name": "AFS_method_comparison_table.xlsx",
+              "score": 0.013888888888888888,
+              "rank": 21
+            },
+            {
+              "evidence_id": "S01:p013:txt:a8994bbdce59fadc",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.013513513513513514,
+              "rank": 22
+            },
+            {
+              "evidence_id": "S01:p010:txt:55edab893d1b49cc",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.013333333333333334,
+              "rank": 23
+            },
+            {
+              "evidence_id": "S03:p012:txt:e19aa643001dad23",
+              "source_id": "S03",
+              "file_name": "S03_LED_Kidney_Study_2017.pdf",
+              "score": 0.013157894736842105,
+              "rank": 24
+            },
+            {
+              "evidence_id": "T01:method_comparison:r020",
+              "source_id": "T01",
+              "file_name": "AFS_method_comparison_table.xlsx",
+              "score": 0.013157894736842105,
+              "rank": 25
+            },
+            {
+              "evidence_id": "S01:p009:txt:fafd6a6388e4e7dd",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.012987012987012988,
+              "rank": 26
+            },
+            {
+              "evidence_id": "S04:p002:txt:03dcde12ac2e1282",
+              "source_id": "S04",
+              "file_name": "S04_Combi_MIR_Fluorescence_2021.pdf",
+              "score": 0.01282051282051282,
+              "rank": 27
+            },
+            {
+              "evidence_id": "S01:p017:txt:03613ea0cb0945fb",
+              "source_id": "S01",
+              "file_name": "S01_Multispectral_Laboratory.pdf",
+              "score": 0.012658227848101266,
+              "rank": 28
+            },
+            {
+              "evidence_id": "S03:p003:txt:629d156d9d6a874e",
+              "source_id": "S03",
+              "file_name": "S03_LED_Kidney_Study_2017.pdf",
+              "score": 0.012658227848101266,
+              "rank": 29
+            },
+            {
+              "evidence_id": "S02:p009:fig:6805da4f7898f361",
+              "source_id": "S02",
+              "file_name": "S02_AFS_Process_Control_Slides.pdf",
+              "score": 0.0125,
+              "rank": 30
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "methods_stream_1",
+        "context_id": "stream_1",
+        "facet": "method_table",
+        "round": 1,
+        "query": "structured method/geometry/sample-type lookup",
+        "source_fields": {
+          "methods": [
+            "nir",
+            "raman"
+          ],
+          "explicit_phase": [
+            "powder blend"
+          ],
+          "application_evidence_ids": [
+            "S01:p015:txt:5d65dd1642425d18"
+          ]
+        },
+        "omitted_terms": [],
+        "expanded_terms": [],
+        "statements": [],
+        "candidates": [
+          {
+            "evidence_id": "T01:method_comparison:r009",
+            "admitted": true,
+            "reason": "structured_method_or_sample_match",
+            "match": {
+              "query_id": "methods_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry"
+              ],
+              "admission": "structured",
+              "bm25_score": null,
+              "bm25_rank": null,
+              "cosine_score": null,
+              "dense_rank": null,
+              "rrf_score": 0.01639344262295082,
+              "matched_terms": [
+                "nir",
+                "powder",
+                "reflectance",
+                "reflection"
+              ],
+              "matching_segment": null
+            },
+            "source_id": "T01",
+            "file_name": "AFS_method_comparison_table.xlsx"
+          },
+          {
+            "evidence_id": "T01:method_comparison:r013",
+            "admitted": true,
+            "reason": "structured_method_or_sample_match",
+            "match": {
+              "query_id": "methods_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry"
+              ],
+              "admission": "structured",
+              "bm25_score": null,
+              "bm25_rank": null,
+              "cosine_score": null,
+              "dense_rank": null,
+              "rrf_score": 0.016129032258064516,
+              "matched_terms": [
+                "powder",
+                "raman"
+              ],
+              "matching_segment": null
+            },
+            "source_id": "T01",
+            "file_name": "AFS_method_comparison_table.xlsx"
+          },
+          {
+            "evidence_id": "T01:method_comparison:r010",
+            "admitted": true,
+            "reason": "structured_method_or_sample_match",
+            "match": {
+              "query_id": "methods_stream_1",
+              "context_id": "stream_1",
+              "facets": [
+                "geometry"
+              ],
+              "admission": "structured",
+              "bm25_score": null,
+              "bm25_rank": null,
+              "cosine_score": null,
+              "dense_rank": null,
+              "rrf_score": 0.015873015873015872,
+              "matched_terms": [
+                "nir",
+                "powder"
+              ],
+              "matching_segment": null
+            },
+            "source_id": "T01",
+            "file_name": "AFS_method_comparison_table.xlsx"
+          }
+        ],
+        "bm25_tokens": [],
+        "embedding_input": null,
+        "branch_rankings": {}
+      }
+    ],
+    "coverage": [
+      {
+        "context_id": "stream_1",
+        "facet": "application",
+        "status": "candidate_found",
+        "evidence_ids": [
+          "S01:p014:txt:727f9ea2c0b286a3",
+          "S01:p015:txt:5d65dd1642425d18"
+        ]
+      },
+      {
+        "context_id": "stream_1",
+        "facet": "geometry",
+        "status": "candidate_found",
+        "evidence_ids": [
+          "S01:p015:txt:5d65dd1642425d18",
+          "T01:method_comparison:r009",
+          "S01:p018:txt:250c09c5fdb749b3",
+          "T01:method_comparison:r013"
+        ]
+      },
+      {
+        "context_id": "stream_1",
+        "facet": "compatibility",
+        "status": "candidate_found",
+        "evidence_ids": [
+          "S01:p015:txt:5d65dd1642425d18",
+          "S01:p018:txt:250c09c5fdb749b3"
+        ]
+      },
+      {
+        "context_id": "stream_1",
+        "facet": "limitations",
+        "status": "candidate_found",
+        "evidence_ids": [
+          "S01:p018:txt:250c09c5fdb749b3"
+        ]
+      }
+    ],
+    "gaps": [],
+    "warnings": [
+      "Coverage identifies relevant candidates, not verified scientific claim support.",
+      "Semantic-only matches use a heuristic cosine threshold; inspect source text and evidence scope.",
+      "Automated source checks do not imply human verification or AFS approval."
+    ],
+    "model_calls": 0
+  },
+  "assessment": {
+    "decision_status": "provisional",
+    "decision_reason": "Application and conditional method hypothesis are supported by the evidence ledger; missing error limits, response times, and concentration ranges are handled via conditional_on_clarification.",
+    "case_summary": "powder blend (stream_1); material: powder blend containing an active pharmaceutical ingredient and excipients; phase: powder blend; requested outcomes: follow API concentration changes; reported reference checks: Laboratory checks tell us whether the blend is on target; stated constraints: results arrive after the material has moved through the press. Case-wide customer wording: compare reasonable measurement options before we commit to production equipment",
+    "clarification_questions": [
+      {
+        "priority": 1,
+        "context_ids": [
+          "stream_1"
+        ],
+        "question": "What is the target API concentration range and the required measurement error tolerance for the powder blend?",
+        "reason": {
+          "text": "Customer clarification is needed before finalizing the proposed feasibility study.",
+          "evidence_ids": []
+        },
+        "affects": [
+          "experiment.acceptance_criteria",
+          "experiment.proposed_settings"
+        ]
+      },
+      {
+        "priority": 2,
+        "context_ids": [
+          "stream_1"
+        ],
+        "question": "What is the specific location of the 'feed frame' relative to the press, and what are the specific excipients in the powder blend?",
+        "reason": {
+          "text": "Customer clarification is needed before finalizing the proposed feasibility study.",
+          "evidence_ids": []
+        },
+        "affects": [
+          "experiment.proposed_settings",
+          "experiment.validation"
+        ]
+      },
+      {
+        "priority": 3,
+        "context_ids": [
+          "stream_1"
+        ],
+        "question": "What is the acceptable response time for the measurement to be considered useful for process control?",
+        "reason": {
+          "text": "Customer clarification is needed before finalizing the proposed feasibility study.",
+          "evidence_ids": []
+        },
+        "affects": [
+          "experiment.acceptance_criteria"
+        ]
+      }
+    ],
+    "recommendations": [
+      {
+        "context_ids": [
+          "stream_1"
+        ],
+        "method": "NIR",
+        "geometry": "diffuse reflection probe",
+        "measurement_location": "feed frame of a rotary tablet press",
+        "spectral_range": {
+          "text": "Coverage interval is undetermined for the proposed configuration; usable equipment coverage remains unverified.",
+          "evidence_ids": [],
+          "kind": "undetermined",
+          "interval": null,
+          "raman_excitation": null,
+          "raman_shift": null
+        },
+        "rationale": {
+          "text": "Source excerpt (application_example): A multispectral NIRaman fiber probe has industrial grade design that combines NIR reflection and Raman optical techniques in a compact shaft that fits in a tablet press feed frame.",
+          "evidence_ids": [
+            "S01:p015:txt:5d65dd1642425d18"
+          ]
+        },
+        "assumptions": [
+          "The powder blend is sufficiently homogeneous and representative for diffuse reflection measurement at the feed frame.",
+          "The API and excipients have distinct NIR spectral features that can be resolved by the probe."
+        ],
+        "limitations": [
+          {
+            "text": "Source excerpt (general_method): While transmission is superior for the high-precision analysis of dilute process streams (like whey filtration), it fails when the milk becomes too \"thick\" or fat-rich, as the light cannot penetrate the sample.",
+            "evidence_ids": [
+              "S01:p018:txt:250c09c5fdb749b3"
+            ]
+          },
+          {
+            "text": "Source excerpt (general_method): method_no: 2; method: NIR spectroscopy; measurement_technique: diffuse reflection probe; physical_phenomenon: diffuse reflection; sample_type: scattering media, powder; optical_path_or_depth: 0.5-1 mm; sensitivity: average; selectivity: average; cost: average",
+            "evidence_ids": [
+              "T01:method_comparison:r009"
+            ]
+          }
+        ],
+        "status": "conditional_on_clarification"
+      },
+      {
+        "context_ids": [
+          "stream_1"
+        ],
+        "method": "Raman",
+        "geometry": "Raman probe",
+        "measurement_location": "feed frame of a rotary tablet press",
+        "spectral_range": {
+          "text": "Coverage interval is undetermined for the proposed configuration; usable equipment coverage remains unverified.",
+          "evidence_ids": [],
+          "kind": "undetermined",
+          "interval": null,
+          "raman_excitation": null,
+          "raman_shift": null
+        },
+        "rationale": {
+          "text": "Source excerpt (general_method): method_no: 3; method: Raman spectroscopy; measurement_technique: Raman probe; physical_phenomenon: Raman scattering (emission); sample_type: liquid, powder, solid; optical_path_or_depth: 2-5 mm; sensitivity: average; selectivity: high; cost: high",
+          "evidence_ids": [
+            "T01:method_comparison:r013"
+          ]
+        },
+        "assumptions": [
+          "The powder blend is sufficiently homogeneous and representative for Raman measurement at the feed frame.",
+          "The API and excipients have distinct Raman spectral features that can be resolved by the probe."
+        ],
+        "limitations": [
+          {
+            "text": "Source excerpt (general_method): method_no: 3; method: Raman spectroscopy; measurement_technique: Raman probe; physical_phenomenon: Raman scattering (emission); sample_type: liquid, powder, solid; optical_path_or_depth: 2-5 mm; sensitivity: average; selectivity: high; cost: high",
+            "evidence_ids": [
+              "T01:method_comparison:r013"
+            ]
+          }
+        ],
+        "status": "conditional_on_clarification"
+      }
+    ],
+    "risks": [
+      {
+        "text": "Source excerpt (general_method): While transmission is superior for the high-precision analysis of dilute process streams (like whey filtration), it fails when the milk becomes too \"thick\" or fat-rich, as the light cannot penetrate the sample.",
+        "evidence_ids": [
+          "S01:p018:txt:250c09c5fdb749b3"
+        ],
+        "context_ids": [
+          "stream_1"
+        ]
+      },
+      {
+        "text": "Source excerpt (general_method): method_no: 2; method: NIR spectroscopy; measurement_technique: diffuse reflection probe; physical_phenomenon: diffuse reflection; sample_type: scattering media, powder; optical_path_or_depth: 0.5-1 mm; sensitivity: average; selectivity: average; cost: average",
+        "evidence_ids": [
+          "T01:method_comparison:r009"
+        ],
+        "context_ids": [
+          "stream_1"
+        ]
+      }
+    ],
+    "experiment": {
+      "context_ids": [
+        "stream_1"
+      ],
+      "objective": "Proposed: Compare NIR and Raman measurement options for following API concentration changes in a powder blend at the feed frame of a rotary tablet press.",
+      "samples": [
+        "Proposed: Representative acceptable powder blend samples",
+        "Proposed: Representative off-spec powder blend samples"
+      ],
+      "measurements": [
+        "Proposed: NIR diffuse reflection spectra at the feed frame",
+        "Proposed: Raman spectra at the feed frame",
+        "Proposed: pair spectra and independent laboratory references at aligned sample locations and times; confirm assay identity, uncertainty and sampling lag with the customer.",
+        "Proposed: stream_1: agree quality variables and independently characterize representative acceptable/off-specification material before analyte calibration or exact configuration selection."
+      ],
+      "comparisons": [
+        "Proposed (stream_1): evaluate NIR individually against aligned independent laboratory reference measurements.",
+        "Proposed (stream_1): evaluate Raman individually against aligned independent laboratory reference measurements.",
+        "Proposed (stream_1): retain a combined model only if it improves the client-defined decision on independent material over the individual methods."
+      ],
+      "validation": "Proposed (stream_1): keep related scans together and hold out entire independent run units for evaluation.",
+      "decision_criteria": "Proposed: Go/no-go proposal: proceed only if evaluation on independent material meets agreed customer-defined error, bias, response time and robustness criteria. Stated requirements and constraints: Case-wide customer constraint: compare reasonable measurement options before we commit to production equipment (customer requirement /shared_constraints/0). Missing thresholds remain open; inconclusive results require clarification or further characterization.",
+      "open_items": [
+        "Target API concentration range",
+        "Required measurement error tolerance",
+        "Acceptable response time",
+        "Specific excipients in the powder blend",
+        "Specific location of the 'feed frame' relative to the press",
+        "stream_1: clarify the target and independent characterization/reference method.",
+        "stream_1: agree required_error acceptance threshold with the customer.",
+        "stream_1: agree response_time_raw acceptance threshold with the customer.",
+        "stream_1: agree bias acceptance threshold with the customer.",
+        "stream_1: agree robustness acceptance threshold with the customer."
+      ],
+      "variation": [
+        "Proposed: variation in API concentration within the target range",
+        "Proposed: variation in excipient composition"
+      ],
+      "proposed_settings": [],
+      "validation_groups": [
+        {
+          "context_ids": [
+            "stream_1"
+          ],
+          "independent_unit": "run",
+          "study_type": "characterization"
+        }
+      ],
+      "acceptance_criteria": [
+        {
+          "context_id": "stream_1",
+          "metric": "required_error",
+          "threshold": null,
+          "requirement_path": null,
+          "origin": "unknown"
+        },
+        {
+          "context_id": "stream_1",
+          "metric": "response_time_raw",
+          "threshold": null,
+          "requirement_path": null,
+          "origin": "unknown"
+        },
+        {
+          "context_id": "stream_1",
+          "metric": "bias",
+          "threshold": null,
+          "requirement_path": null,
+          "origin": "unknown"
+        },
+        {
+          "context_id": "stream_1",
+          "metric": "robustness",
+          "threshold": null,
+          "requirement_path": null,
+          "origin": "unknown"
+        }
+      ]
+    },
+    "requirements": {
+      "stated": [
+        {
+          "context_id": "stream_1",
+          "field": "label",
+          "field_path": "/contexts/0/label",
+          "value": "powder blend",
+          "origin": "customer",
+          "input_quote": "a powder blend containing an active pharmaceutical ingredient and excipients"
+        },
+        {
+          "context_id": "stream_1",
+          "field": "measurement_goals",
+          "field_path": "/contexts/0/measurement_goals/0",
+          "value": "follow API concentration changes",
+          "origin": "customer",
+          "input_quote": "follow API concentration changes"
+        },
+        {
+          "context_id": "stream_1",
+          "field": "sample_matrix",
+          "field_path": "/contexts/0/sample_matrix",
+          "value": "powder blend containing an active pharmaceutical ingredient and excipients",
+          "origin": "customer",
+          "input_quote": "a powder blend containing an active pharmaceutical ingredient and excipients"
+        },
+        {
+          "context_id": "stream_1",
+          "field": "sample_phase",
+          "field_path": "/contexts/0/sample_phase",
+          "value": "powder blend",
+          "origin": "customer",
+          "input_quote": "a powder blend containing an active pharmaceutical ingredient and excipients"
+        },
+        {
+          "context_id": "stream_1",
+          "field": "reference_assays",
+          "field_path": "/contexts/0/reference_assays/0",
+          "value": "Laboratory checks tell us whether the blend is on target",
+          "origin": "customer",
+          "input_quote": "Laboratory checks tell us whether the blend is on target"
+        },
+        {
+          "context_id": "stream_1",
+          "field": "process_constraints",
+          "field_path": "/contexts/0/process_constraints/0",
+          "value": "results arrive after the material has moved through the press",
+          "origin": "customer",
+          "input_quote": "results arrive after the material has moved through the press"
+        },
+        {
+          "context_id": null,
+          "field": "shared_constraints",
+          "field_path": "/shared_constraints/0",
+          "value": "compare reasonable measurement options before we commit to production equipment",
+          "origin": "customer",
+          "input_quote": "compare reasonable measurement options before we commit to production equipment"
+        }
+      ],
+      "unknowns": [
+        "powder blend (stream_1): What are the specific excipients in the powder blend?",
+        "powder blend (stream_1): What is the target API concentration range?",
+        "powder blend (stream_1): What is the required measurement error tolerance?",
+        "powder blend (stream_1): What is the specific location of the 'feed frame' relative to the press?",
+        "Specific excipients in the powder blend",
+        "Target API concentration range",
+        "Required measurement error tolerance",
+        "Acceptable response time",
+        "Specific location of the 'feed frame' relative to the press"
+      ]
+    },
+    "source_index": [
+      {
+        "evidence_id": "S01:p015:txt:5d65dd1642425d18",
+        "citation": "S01 p.15",
+        "source_id": "S01",
+        "file_name": "S01_Multispectral_Laboratory.pdf",
+        "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+        "page": 15,
+        "sheet": null,
+        "row": null,
+        "revision": "9a22b6758c23f5a6ea8e1b7a",
+        "corpus_version": "corpus-5c462abafd6240aa941e",
+        "evidence_url": "/api/evidence/S01%3Ap015%3Atxt%3A5d65dd1642425d18?corpus_version=corpus-5c462abafd6240aa941e&revision=9a22b6758c23f5a6ea8e1b7a"
+      },
+      {
+        "evidence_id": "T01:method_comparison:r009",
+        "citation": "T01 method_comparison row 9 (S01 Table 1 p.6)",
+        "source_id": "T01",
+        "file_name": "AFS_method_comparison_table.xlsx",
+        "source_sha256": "a6a83e976b12ebfc784eb69494fe2b1e71da878ae2b1b7c5ee54e701a6e387b6",
+        "page": 6,
+        "sheet": "method_comparison",
+        "row": 9,
+        "revision": "35fcea9a83b50462a2242420",
+        "corpus_version": "corpus-5c462abafd6240aa941e",
+        "evidence_url": "/api/evidence/T01%3Amethod_comparison%3Ar009?corpus_version=corpus-5c462abafd6240aa941e&revision=35fcea9a83b50462a2242420"
+      },
+      {
+        "evidence_id": "S01:p018:txt:250c09c5fdb749b3",
+        "citation": "S01 p.18",
+        "source_id": "S01",
+        "file_name": "S01_Multispectral_Laboratory.pdf",
+        "source_sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+        "page": 18,
+        "sheet": null,
+        "row": null,
+        "revision": "3dbc2c1783f50b4c3f9e11c9",
+        "corpus_version": "corpus-5c462abafd6240aa941e",
+        "evidence_url": "/api/evidence/S01%3Ap018%3Atxt%3A250c09c5fdb749b3?corpus_version=corpus-5c462abafd6240aa941e&revision=3dbc2c1783f50b4c3f9e11c9"
+      },
+      {
+        "evidence_id": "T01:method_comparison:r013",
+        "citation": "T01 method_comparison row 13 (S01 Table 1 p.6)",
+        "source_id": "T01",
+        "file_name": "AFS_method_comparison_table.xlsx",
+        "source_sha256": "a6a83e976b12ebfc784eb69494fe2b1e71da878ae2b1b7c5ee54e701a6e387b6",
+        "page": 6,
+        "sheet": "method_comparison",
+        "row": 13,
+        "revision": "af1391fadb3f95edc9f617d0",
+        "corpus_version": "corpus-5c462abafd6240aa941e",
+        "evidence_url": "/api/evidence/T01%3Amethod_comparison%3Ar013?corpus_version=corpus-5c462abafd6240aa941e&revision=af1391fadb3f95edc9f617d0"
+      }
+    ]
+  },
+  "errors": [],
+  "metadata": {
+    "run_id": "4334f617cc9d4f39a8312b00794b8082",
+    "generated_at": "2026-10-18T16:58:23.434590+00:00",
+    "pipeline_version": "assessment-v7",
+    "provider": "llmtech",
+    "model": "nvidia/Qwen3.8-27B-NVFP4",
+    "returned_models": {
+      "extraction": "qwen38",
+      "synthesis": "qwen38"
+    },
+    "endpoint": "https://api.llmtech.eu/v1",
+    "corpus_version": "corpus-5c462abafd6240aa941e",
+    "retrieval_version": "context-hybrid-v1",
+    "prompt_versions": {
+      "extraction": "extraction-v7",
+      "synthesis": "synthesis-v11"
+    },
+    "prompt_sha256": {
+      "extraction": "38afb3f0f002d048c5efd59aefde838b98e29c287983bdb7e4bd9c2a2d226769",
+      "synthesis": "9b39863d0339a88e2c5ec63b16d03de1bf48a3e8fb8027d4821f0bcafa8d0fce"
+    },
+    "schema_sha256": {
+      "extraction": "9f318dbc9b6b577346ce7a962d93d4f2c34c807a611b6ed26e461e650d9d5045",
+      "synthesis": "4069d384337e68ed9e903d0081b5d15580e939416d001372b055668e2bd03883"
+    },
+    "stage_elapsed_s": {
+      "extraction": 6,
+      "retrieval": 1.75,
+      "synthesis": 16.0470000000023
+    },
+    "last_successful_call_usage": {
+      "extraction": {
+        "prompt_tokens": 767,
+        "completion_tokens": 746,
+        "total_tokens": 1513
+      },
+      "synthesis": {
+        "prompt_tokens": 8187,
+        "completion_tokens": 2204,
+        "total_tokens": 10391
+      }
+    },
+    "call_timeout_s": 30,
+    "request_deadline_s": 90,
+    "provider_max_retries": 2,
+    "provider_max_completion_tokens": 4096,
+    "extraction_max_completion_tokens": 3072,
+    "synthesis_max_completion_tokens": 4096,
+    "synthesis_temperature": 0,
+    "repair_counts": {
+      "extraction": 0,
+      "synthesis": 0
+    },
+    "provider_mode": "llmtech",
+    "enquiry_id": "2ca4186823e4421bb63c8f465e9ce5a5",
+    "parent_run_id": null,
+    "round_no": 1,
+    "question_ids": [
+      "0029506e7684111ea43f99ea",
+      "a6284767cf218ca9322edbe0",
+      "184658f5fc88c997b19ae76a"
+    ],
+    "stage_providers": {
+      "extraction": {
+        "provider": "llmtech",
+        "model": "nvidia/Qwen3.8-27B-NVFP4",
+        "endpoint": "https://api.llmtech.eu/v1",
+        "returned_model": "qwen38"
+      },
+      "synthesis": {
+        "provider": "llmtech",
+        "model": "nvidia/Qwen3.8-27B-NVFP4",
+        "endpoint": "https://api.llmtech.eu/v1",
+        "returned_model": "qwen38"
+      }
+    },
+    "provider_attempts": [],
+    "provider_trace": []
+  },
+  "warnings": [
+    "Coverage identifies relevant candidates, not verified scientific claim support.",
+    "Semantic-only matches use a heuristic cosine threshold; inspect source text and evidence scope.",
+    "Automated source checks do not imply human verification or AFS approval.",
+    "Mechanical validation establishes traceability, not scientific correctness; inspect source relevance and scope.",
+    "Automated checks and agent inspection do not constitute independent human or scientific validation."
+  ]
+}
