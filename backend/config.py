@@ -15,16 +15,19 @@ class Settings(BaseSettings):
     )
 
     groq_api_key: SecretStr = SecretStr("")
+    regolo_api_key: SecretStr = SecretStr("")
     llmtech_api_key: SecretStr = SecretStr("")
     gemini_api_key: SecretStr = SecretStr("")
     gemini_model: str = "models/gemini-3.8-flash"
     gemini_base_url: str = "https://generativelanguage.googleapis.com"
     gemini_max_output_tokens: int = Field(default=2048, ge=128, le=65536)
     gemini_thinking_level: Literal["low", "medium", "high"] = "medium"
-    provider_name: Literal["auto", "gemini", "groq", "llmtech"] = "auto"
+    provider_name: Literal["auto", "gemini", "groq", "llmtech", "regolo"] = "auto"
     provider_order: str = "gemini,llmtech,groq"
     groq_base_url: str = "https://api.groq.com/openai/v1"
     groq_model: str = "qwen/qwen3.8-27b"
+    regolo_base_url: str = "https://api.regolo.ai/v1"
+    regolo_model: str = "Llama-3.3-70B-Instruct"
     llmtech_base_url: str = "https://api.llmtech.eu/v1"
     llmtech_model: str = "nvidia/Qwen3.8-27B-NVFP4"
     # Legacy single-provider overrides apply only in explicit/pinned mode.
@@ -58,7 +61,7 @@ class Settings(BaseSettings):
     def resolve_path(cls, value: Path) -> Path:
         return value.resolve() if value.is_absolute() else (PROJECT_ROOT / value).resolve()
 
-    @field_validator("provider_base_url", "groq_base_url", "llmtech_base_url", "gemini_base_url")
+    @field_validator("provider_base_url", "groq_base_url", "llmtech_base_url", "gemini_base_url", "regolo_base_url")
     @classmethod
     def validate_base_url(cls, value: str | None) -> str | None:
         from urllib.parse import urlsplit
@@ -77,7 +80,7 @@ class Settings(BaseSettings):
             raise ValueError("Use an HTTP(S) base URL without credentials, query or fragment")
         return value.rstrip("/")
 
-    @field_validator("provider_model", "groq_model", "llmtech_model", "gemini_model")
+    @field_validator("provider_model", "groq_model", "llmtech_model", "gemini_model", "regolo_model")
     @classmethod
     def nonblank_model(cls, value: str | None) -> str | None:
         if value is None:
@@ -90,11 +93,15 @@ class Settings(BaseSettings):
     @classmethod
     def valid_order(cls, value: str) -> str:
         names = [v.strip().lower() for v in value.split(",")]
-        # Upgrade existing two-provider configuration without editing local keys.
+        # Keep the original three-provider configuration valid while allowing
+        # Regolo to be appended as an optional OpenAI-compatible fallback.
         if sorted(names) == ["groq", "llmtech"]:
             names.insert(0, "gemini")
-        if sorted(names) != ["gemini", "groq", "llmtech"]:
-            raise ValueError("PROVIDER_ORDER must contain gemini, llmtech and groq exactly once")
+        allowed = {"gemini", "llmtech", "groq", "regolo"}
+        if len(names) not in {3, 4} or len(set(names)) != len(names) or not set(names) <= allowed:
+            raise ValueError("PROVIDER_ORDER must contain three or four distinct supported providers")
+        if not {"gemini", "llmtech", "groq"} <= set(names):
+            raise ValueError("PROVIDER_ORDER must include gemini, llmtech and groq")
         return ",".join(names)
 
     @model_validator(mode="after")
@@ -108,10 +115,15 @@ class Settings(BaseSettings):
 
     @property
     def provider_names(self) -> list[str]:
-        return self.provider_order.split(",") if self.provider_name == "auto" else [self.provider_name]
+        if self.provider_name != "auto":
+            return [self.provider_name]
+        names = self.provider_order.split(",")
+        if "regolo" not in names and self.usable_key(self.regolo_api_key):
+            names.append("regolo")
+        return names
 
     def for_provider(self, name: str) -> "Settings":
-        if name not in {"gemini", "groq", "llmtech", "auto"}:
+        if name not in {"gemini", "groq", "llmtech", "regolo", "auto"}:
             raise ValueError("Unknown provider mode")
         values = self.model_dump()
         values.update(provider_name=name, provider_base_url=None, provider_model=None)

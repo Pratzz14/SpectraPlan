@@ -80,7 +80,7 @@ def _final_case_blocks(source_text: str) -> list[dict]:
     # Horizontal whitespace only: \\s would consume line endings and alter bodies.
     # Same-line enquiries require an explicit delimiter to avoid guessing titles.
     matches = list(re.finditer(
-        r"(?m)^(?:\ufeff)?[ \t]*(H[0-9]{2})[ \t]*(?:[:.)-][ \t]*(?P<inline>[^\r\n]*))?(?:\r?\n|$)",
+        r"(?m)^(?:\ufeff)?[ \t]*(H[0-9]{2})[ \t]*(?:(?P<delimiter>[:.)-|])[ \t]*(?P<inline>[^\r\n]*))?(?:\r?\n|$)",
         source_text,
     ))
     if not matches:
@@ -88,11 +88,19 @@ def _final_case_blocks(source_text: str) -> list[dict]:
     cases = []
     for index, match in enumerate(matches):
         case_id = match.group(1)
-        start = match.start("inline") if match.group("inline") else match.end()
+        start = match.end() if match.group("delimiter") == "|" else (
+            match.start("inline") if match.group("inline") else match.end()
+        )
         end = matches[index + 1].start() if index + 1 < len(matches) else len(source_text)
         # Boundary newlines separate heading blocks, not enquiry characters.
         while end > start and source_text[end - 1] in "\r\n":
             end -= 1
+        block = source_text[start:end]
+        separator = re.search(r"(?:\r?\n)[ \t]*={10,}[ \t]*$", block)
+        if separator:
+            end = start + separator.start()
+            while end > start and source_text[end - 1] in "\r\n":
+                end -= 1
         description = source_text[start:end]
         if not description.strip():
             raise ValueError(f"{case_id} has an empty enquiry")
