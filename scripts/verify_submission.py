@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from evaluation.run_evaluation import audit_final_inputs, load_final_cases, verify_manifest
-from backend.config import Settings
+from backend.core.config import Settings
 
 
 def sha256(path):

@@ -12,11 +12,11 @@ Machine-readable inputs and bindings: [tool_catalog.json](tool_catalog.json). Se
 | `knowledge_search` | `POST /api/search`; `SearchService.compare(...)` | Queries existing local indexes | None |
 | `case_evidence_retrieval` | `POST /api/retrieve`; `CaseRetrievalService.retrieve_case(...)` | Builds a bounded context-aware technical evidence ledger | None |
 | `evidence_resolve` | `GET /api/evidence/{evidence_id}`; `load_snapshot(...).resolve(...)` | Resolves an eligible record from a pinned technical corpus | None |
-| `website_refresh` | `python -m backend.web_ingest crawl`; `crawl(settings, ...)` | Fetches public HTML, saves snapshots, builds indexes and changes the website pointer | None |
-| `website_validate` | `python -m backend.web_ingest validate`; `validate_web(web_directory(settings.web_corpus_dir))` | Reads and validates the active website snapshot and index artifacts | None |
-| `technical_corpus_validate` | `python -m backend.ingest validate` | Reads and deeply validates the published technical corpus against supplied originals | None |
+| `website_refresh` | `python -m backend.pipelines.website.ingest crawl`; `crawl(settings, ...)` | Fetches public HTML, saves snapshots, builds indexes and changes the website pointer | None |
+| `website_validate` | `python -m backend.pipelines.website.ingest validate`; `validate_web(web_directory(settings.web_corpus_dir))` | Reads and validates the active website snapshot and index artifacts | None |
+| `technical_corpus_validate` | `python -m backend.cli.ingest validate` | Reads and deeply validates the published technical corpus against supplied originals | None |
 
-Python locations: `backend/search_service.py`, `backend/main.py`, `backend/web_ingest.py`, `backend/knowledge_store.py`. The UI at `http://127.0.0.1:5173/#search` exercises the same search API. HTTP paths are relative to the backend (normally port 8000) or the frontend proxy (normally port 5173). `GET /openapi.json` exposes the current HTTP request contract.
+Python locations: `backend/services/search/search_service.py`, `backend/main.py`, `backend/web_ingest.py`, `backend/services/knowledge/knowledge_store.py`. The UI at `http://127.0.0.1:5173/#search` exercises the same search API. HTTP paths are relative to the backend (normally port 8000) or the frontend proxy (normally port 5173). `GET /openapi.json` exposes the current HTTP request contract.
 
 ## `knowledge_search_status`
 
@@ -91,7 +91,7 @@ This is a maintenance operation with external network access and local writes. I
 Inputs: `max_pages` (integer 1–40, default 20), `max_depth` (integer 0–3, default 2). The seed is read from `SOURCE_DIR/S06_Laboratory_Link.txt`; storage is configured by `WEB_CORPUS_DIR` (default `knowledge/web`). Python's optional `transport` parameter is test injection, not a model-facing argument.
 
 ```powershell
-.\.venv\Scripts\python.exe -m backend.web_ingest crawl --max-pages 20 --max-depth 2
+.\.venv\Scripts\python.exe -m backend.pipelines.website.ingest crawl --max-pages 20 --max-depth 2
 ```
 
 Behavior:

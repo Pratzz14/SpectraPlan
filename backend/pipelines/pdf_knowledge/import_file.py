@@ -11,8 +11,8 @@ from uuid import uuid4
 
 from filelock import FileLock, Timeout
 
-from backend.config import PROJECT_ROOT
-from backend.knowledge_store import read_json, write_json, inside
+from backend.core.config import PROJECT_ROOT
+from backend.services.knowledge.knowledge_store import read_json, write_json, inside
 from backend.pipelines.pdf_knowledge.extract import extract_all
 from backend.pipelines.pdf_knowledge.registry import register_file
 from backend.pipelines.pdf_knowledge.store import publish_extraction
@@ -132,7 +132,7 @@ def start_worker(settings, file, filename, role):
                KNOWLEDGE_OCR_LANGUAGE=settings.knowledge_ocr_language,
                KNOWLEDGE_OCR_TIMEOUT_S=str(settings.knowledge_ocr_timeout_s),
                KNOWLEDGE_OCR_TESSDATA=settings.knowledge_ocr_tessdata or '')
-    command = [sys.executable, "-X", "utf8", "-m", "backend.ingest", "add", "--file", str(file), "--name", filename,
+    command = [sys.executable, "-X", "utf8", "-m", "backend.cli.ingest", "add", "--file", str(file), "--name", filename,
                "--role", role, "--job-file", str(job_file)]
     try:
         with (root / "worker.log").open("w", encoding="utf-8") as log:

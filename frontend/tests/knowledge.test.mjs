@@ -1,9 +1,6 @@
 import assert from 'node:assert/strict'
-import { readFile } from 'node:fs/promises'
-import test from 'node:test'
-import { transformWithOxc } from 'vite'
-const { code } = await transformWithOxc(await readFile(new URL('../src/knowledge.ts', import.meta.url), 'utf8'), 'knowledge.ts')
-const { sourcePageUrl, sourcePageFor, sourceUnitKey, isKnowledgeInspection, recordTitle } = await import(`data:text/javascript;base64,${Buffer.from(code).toString('base64')}`)
+import { test } from 'vitest'
+import { sourcePageUrl, sourcePageFor, sourceUnitKey, isKnowledgeInspection, recordTitle } from '../src/features/knowledge/knowledge'
 
 test('source images stay inside the pinned corpus route', () => {
   const data = { artifact_base: '/api/knowledge/versions/corpus-aaaaaaaaaaaaaaaaaaaa/' }

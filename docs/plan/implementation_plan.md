@@ -88,7 +88,7 @@ The timeboxes retain the specification's original proposed 12-hour budget for re
 
 **Outcome:** Reproducible technical evidence with source locations, automated validation and optional manual verification. No mandatory approval workflow.\
 **Spec:** Section 5 and `docs/knowledge_pipeline.md`.\
-**Primary files:** `backend/ingest.py`, `knowledge/source_manifest.json`, `knowledge/passages.jsonl`, `knowledge/methods.json`.
+**Primary files:** `backend/cli/ingest.py`, `knowledge/source_manifest.json`, `knowledge/passages.jsonl`, `knowledge/methods.json`.
 
 - [x] **F02.1 — Inventory and separate materials**
   - [x] Map S01–S06 and T01 to exact filenames; compute hashes, PDF page counts and workbook dimensions.
@@ -116,7 +116,7 @@ The timeboxes retain the specification's original proposed 12-hour budget for re
 
 **Outcome:** Typed customer facts with unknowns and multiple process streams preserved.\
 **Spec:** Sections 6.1 and 9.2.\
-**Primary files:** `backend/models.py`, `backend/agent.py`, `tests/`.
+**Primary files:** `backend/schemas/models.py`, `backend/agent.py`, `tests/`.
 
 - [x] **F03.1 — Define fact and provenance models**
   - [x] Implement `CaseFacts`, `MeasurementContext`, `CustomerStatement` and fact-provenance records with safe collection defaults.
@@ -142,7 +142,7 @@ The timeboxes retain the specification's original proposed 12-hour budget for re
 
 **Outcome:** A bounded, inspectable evidence set that supports the assessment.\
 **Spec:** Sections 5 and 9.1.\
-**Primary files:** `backend/retrieval.py`, `tests/`.
+**Primary files:** `backend/services/search/retrieval.py`, `tests/`.
 
 - [x] **F04.1 — Implement lexical search**
   - [x] Build BM25 over reviewed technical passages and expose a deterministic search function.
@@ -168,7 +168,7 @@ The timeboxes retain the specification's original proposed 12-hour budget for re
 
 **Outcome:** A real first assessment with conditional method choices, questions and source-backed reasoning.\
 **Spec:** Sections 6.2, 9.3 and 5.1.\
-**Primary files:** `backend/models.py`, `backend/agent.py`.
+**Primary files:** `backend/schemas/models.py`, `backend/agent.py`.
 
 - [x] **F05.1 — Define the assessment contract**
   - [x] Implement requirements, prioritized questions, recommendations, spectral ranges, assumptions, risks and experiment fields from the specification.
@@ -194,7 +194,7 @@ The timeboxes retain the specification's original proposed 12-hour budget for re
 
 **Outcome:** A complete assessment API with a practical first experiment and explicit failure behavior.\
 **Spec:** Sections 6.3, 7 and 9.3–9.4.\
-**Primary files:** `backend/agent.py`, `backend/validation.py`, `backend/main.py`, `backend/models.py`, `tests/`.
+**Primary files:** `backend/agent.py`, `backend/validation.py`, `backend/main.py`, `backend/schemas/models.py`, `tests/`.
 
 - [x] **F06.1 — Complete feasibility-study output**
   - [x] Generate objective, representative samples/process states, independent reference measurements and relevant variation to cover.
@@ -235,7 +235,7 @@ These additions are implemented; Gemini-specific live generation and original-fi
 
 **Outcome:** Responsive workspaces for entering enquiries, continuing saved rounds, reviewing evidence and exporting actual results.\
 **Spec:** Sections 3 and 8.\
-**Primary files:** `frontend/src/App.tsx`, `frontend/src/api.ts`, `frontend/src/assessment.ts`, `frontend/src/components/`, `backend/explainability.py`, `backend/history_pdf.py`.
+**Primary files:** `frontend/src/App.tsx`, `frontend/src/api.ts`, `frontend/src/assessment.ts`, `frontend/src/components/`, `backend/services/history/explainability.py`, `backend/services/history/history_pdf.py`.
 
 - [x] **F07.1 — Build the enquiry and request flow**
   - [x] Add a labeled enquiry textarea, Analyze action and blank-input prevention.
@@ -282,9 +282,9 @@ These additions are implemented; Gemini-specific live generation and original-fi
 
 **Outcome:** General pipeline problems are found and corrected before final evaluation.\
 **Spec:** Section 10 and the acceptance checklist in section 14.\
-**Primary files:** `evaluation/development.json`, `evaluation/run_evaluation.py` (new), `tests/`, `frontend/tests/`, `outputs/development/`; general fixes in `backend/agent.py`, `backend/retrieval.py`, `backend/validation.py` and affected UI modules only as justified by findings.
+**Primary files:** `evaluation/development.json`, `evaluation/run_evaluation.py` (new), `tests/`, `frontend/tests/`, `outputs/development/`; general fixes in `backend/agent.py`, `backend/services/search/retrieval.py`, `backend/validation.py` and affected UI modules only as justified by findings.
 
-**Starting point:** Keep F01–F07 and the published corpus as the baseline. Reuse `backend/smoke_assessment.py`'s input/hash/output handling and in-process ASGI route invocation where useful. Its current defaults cover D01/D02 with 180-second request / 60-second call limits; a general evaluation runner still needs all eight inputs, a manifest and explicit production-equivalent limits. Use 90 seconds total / 30 seconds per call unless a different evaluation profile is deliberately recorded.
+**Starting point:** Keep F01–F07 and the published corpus as the baseline. Reuse `backend/cli/smoke_assessment.py`'s input/hash/output handling and in-process ASGI route invocation where useful. Its current defaults cover D01/D02 with 180-second request / 60-second call limits; a general evaluation runner still needs all eight inputs, a manifest and explicit production-equivalent limits. Use 90 seconds total / 30 seconds per call unless a different evaluation profile is deliberately recorded.
 
 - [ ] **F08.1 — Prepare a generic development runner**
   - [x] Complete D01–D08 inputs from the supplied original, preserving exact enquiry wording, source hash and source locations; keep organizer worked answers available only for review.
@@ -404,9 +404,9 @@ Entries below are historical checkpoints. Their then-current next steps, provide
 |---|---|---|---|---|---|
 | 2026-10-17 | F01.1, F01.2 configuration/adapter, F01.3 | Local foundation verified; live gate open | Backend configuration/health/provider/smoke modules; frontend; pinned dependencies; `.env.example`; ignore rules; tests; README | `python -m pytest -q --basetemp=tmp/pytest-runtime`: 50 passed; `python -m pip check`: no broken requirements; `npm run build`: typecheck and Vite build passed; direct backend and Vite-proxied `/api/health`: HTTP 200, service running, ready false; ignore checks preserve required outputs | API key not supplied; F01.2 live response unresolved |
 | 2026-10-17 | F01.3 browser verification | Passed | React readiness page and Vite proxy | Installed Chrome via bundled Playwright (Browser plugin unavailable), 1440×1000 and 390×844: correct page identity, meaningful content, no framework overlay or normal console errors, loading, real proxy refresh, keyboard refresh, no horizontal overflow, simulated HTTP 503 error and recovery through the real backend. Screenshots inspected outside the repository. | Assessment workflow and scientific validation belong to later features |
-| 2026-10-17 | F01.2 live smoke attempt | Unresolved dependency | Timestamped record under `outputs/provider_smoke/` | `python -m backend.smoke_provider`: exit 1, `provider_not_configured`, no model call; run ID `d3e51022e47a4ec4ab8a9cfb114b34f3` | Supply backend-only `GROQ_API_KEY`, rerun, preserve this earlier record |
-| 2026-10-17 | F01.2 live provider verification; overall F01 gate | Complete | New timestamped smoke record; README; checklist | `python -m backend.smoke_provider`: exit 0; real Groq `qwen/qwen3.8-27b` response passes strict local schema and synthetic-fact checks (`powder`, `moisture`); run ID `0cb5a2339fbc465d895e14d32f6745ea`. Earlier missing-key record retained. Backend restarted; real browser refresh confirms provider configured, corpus missing and ready false, with no console errors. `.env` remains ignored; smoke records contain no API key. | F02 reviewed knowledge base; missing corpus readiness remains expected |
-| 2026-10-17 | F02.2, F02.4 | Complete | `backend/ingest.py`, `backend/retrieval.py`, published `knowledge/versions/corpus-4aac882441587796afe5`, `README.md`, this plan | `python -m backend.ingest build --provider llmtech --public-trial`: all 64 pages processed and publication passed; `python -m backend.ingest validate`: passed; representative powder/API and opaque-dairy searches returned both `bm25` and `qdrant` branches; `python -m backend.ingest report`: report rendered; unchanged cached rebuild preserved corpus version and evidence IDs/revisions; backend `pytest`: 69 passed; frontend `npm run build`: passed | F03 customer enquiry extraction is next. The missing final-evaluation scenario file is intentionally excluded from F02 and remains an F09 dependency |
+| 2026-10-17 | F01.2 live smoke attempt | Unresolved dependency | Timestamped record under `outputs/provider_smoke/` | `python -m backend.cli.smoke_provider`: exit 1, `provider_not_configured`, no model call; run ID `d3e51022e47a4ec4ab8a9cfb114b34f3` | Supply backend-only `GROQ_API_KEY`, rerun, preserve this earlier record |
+| 2026-10-17 | F01.2 live provider verification; overall F01 gate | Complete | New timestamped smoke record; README; checklist | `python -m backend.cli.smoke_provider`: exit 0; real Groq `qwen/qwen3.8-27b` response passes strict local schema and synthetic-fact checks (`powder`, `moisture`); run ID `0cb5a2339fbc465d895e14d32f6745ea`. Earlier missing-key record retained. Backend restarted; real browser refresh confirms provider configured, corpus missing and ready false, with no console errors. `.env` remains ignored; smoke records contain no API key. | F02 reviewed knowledge base; missing corpus readiness remains expected |
+| 2026-10-17 | F02.2, F02.4 | Complete | `backend/cli/ingest.py`, `backend/services/search/retrieval.py`, published `knowledge/versions/corpus-4aac882441587796afe5`, `README.md`, this plan | `python -m backend.cli.ingest build --provider llmtech --public-trial`: all 64 pages processed and publication passed; `python -m backend.cli.ingest validate`: passed; representative powder/API and opaque-dairy searches returned both `bm25` and `qdrant` branches; `python -m backend.cli.ingest report`: report rendered; unchanged cached rebuild preserved corpus version and evidence IDs/revisions; backend `pytest`: 69 passed; frontend `npm run build`: passed | F03 customer enquiry extraction is next. The missing final-evaluation scenario file is intentionally excluded from F02 and remains an F09 dependency |
 
 **Runner note:** Python asynchronous networking and the Vite proxy stalled inside the restricted Windows sandbox. Tests and both servers were verified outside it; a minimal traceback located the stall in Windows `socketpair` during event-loop creation. Workspace-local temporary paths resolved the separate `ensurepip` write restriction. These accommodations do not change application behavior.
 
@@ -427,7 +427,7 @@ Verification evidence:
 - Inventory confirms all eight supplied files and 64 PDF pages. The live Qwen pilot extracts and separately verifies an eligible S01 p.10 passage. S02 p.6 fails provider strict JSON generation after the bounded retry (`HTTP 400`, `json_validate_failed`). No full corpus or partial pilot is published. See `outputs/ingest/live_validation.json`.
 - API errors additionally report 7K input TPM and 1K output TPM within the account's displayed 8K TPM. Compact references, token pacing, separate stage caches and bounded JSON-generation retries are implemented. The original interactive provider setting remains unchanged.
 
-Remaining gate: resolve the live visual extraction output-budget failure, complete all supplied-source page jobs, deeply validate/publish, repeat an unchanged cached rebuild and verify real D01/D02-related hybrid searches. `python -m backend.ingest build` resumes compatible caches. F02 is not marked complete.
+Remaining gate: resolve the live visual extraction output-budget failure, complete all supplied-source page jobs, deeply validate/publish, repeat an unchanged cached rebuild and verify real D01/D02-related hybrid searches. `python -m backend.cli.ingest build` resumes compatible caches. F02 is not marked complete.
 
 ### 2026-10-17 — LLMTech extraction checkpoint
 
@@ -462,17 +462,17 @@ Remaining checkpoints, in order:
 Resume from the project root:
 
 ```powershell
-.\.venv\Scripts\python.exe -m backend.ingest build --provider llmtech --public-trial
+.\.venv\Scripts\python.exe -m backend.cli.ingest build --provider llmtech --public-trial
 ```
 
 After successful publication:
 
 ```powershell
-.\.venv\Scripts\python.exe -m backend.ingest validate
-.\.venv\Scripts\python.exe -m backend.ingest build --provider llmtech --public-trial
-.\.venv\Scripts\python.exe -m backend.ingest search --query "powder blend active pharmaceutical ingredient concentration"
-.\.venv\Scripts\python.exe -m backend.ingest search --query "opaque dairy fat protein"
-.\.venv\Scripts\python.exe -m backend.ingest report
+.\.venv\Scripts\python.exe -m backend.cli.ingest validate
+.\.venv\Scripts\python.exe -m backend.cli.ingest build --provider llmtech --public-trial
+.\.venv\Scripts\python.exe -m backend.cli.ingest search --query "powder blend active pharmaceutical ingredient concentration"
+.\.venv\Scripts\python.exe -m backend.cli.ingest search --query "opaque dairy fat protein"
+.\.venv\Scripts\python.exe -m backend.cli.ingest report
 ```
 
 Keep existing caches and the saved snapshot. Interactive Groq configuration remains unchanged. LLMTech is temporary; check its documented shutdown date before a later resume. F02 remains unfinished until publication, reproducibility, real retrieval and browser checks pass.
@@ -500,7 +500,7 @@ Added a separately versioned S06 website snapshot and a frontend for manually te
 - [x] TypeScript/production build passes. **74 backend tests pass** in the final regression run (`tmp/search_web_tests.xml`). Coverage includes HTML extraction, URL/robots boundaries, snapshot integrity and stable IDs, technical/business isolation, independent search branches, concurrent Qdrant requests, query validation and embedding failures. Both the technical corpus and website snapshot pass validation after real browser queries.
 - [x] Edge/Playwright browser checks at 1440×1000 and 390×844 cover real rankings for every mode, website-only/both datasets, source provenance, exact JSON download, synonyms off, keyword empty state, simulated 503/recovery and concurrent semantic requests. No unexpected console errors, framework overlay or mobile horizontal overflow. Detailed receipt/screenshots are outside Git; Browser plugin unavailable.
 
-Primary files: `backend/web_ingest.py`, `backend/search_service.py`, `backend/main.py`, `frontend/src/SearchWorkbench.tsx`, `frontend/src/api.ts`, `tests/test_search_web.py`. Configuration adds `WEB_CORPUS_DIR`. Raw HTML and local vector binaries remain ignored; no existing checkpoint or original supplied file was overwritten. These changes are not committed automatically.
+Primary files: `backend/web_ingest.py`, `backend/services/search/search_service.py`, `backend/main.py`, `frontend/src/SearchWorkbench.tsx`, `frontend/src/api.ts`, `tests/test_search_web.py`. Configuration adds `WEB_CORPUS_DIR`. Raw HTML and local vector binaries remain ignored; no existing checkpoint or original supplied file was overwritten. These changes are not committed automatically.
 
 F03 remains next. F04 still needs context-based query formation, balanced evidence ledgers, bounded additional searches and the evidence-resolution endpoint. The manual comparison tool does not establish those completion gates or validate vendor claims.
 
@@ -516,10 +516,10 @@ At the user's request, documented the implemented capabilities for later pipelin
 
 ### 2026-10-17 — F03 customer enquiry extraction
 
-- Implemented `backend/models.py`, `backend/agent.py`, `POST /api/extract`, explicit LLMTech/Groq development-run overrides and exact D01/D02 enquiry fixtures without worked answers.
+- Implemented `backend/schemas/models.py`, `backend/agent.py`, `POST /api/extract`, explicit LLMTech/Groq development-run overrides and exact D01/D02 enquiry fixtures without worked answers.
 - Provider output pairs values with input quotes; Python creates public provenance paths and context references. Live inspection motivated checks for verbatim structured values, sample-form omissions and duplicated shared-constraint evidence.
 - `python -m pytest -q --basetemp tmp/f03-final-verified`: **122 passed**. OpenAPI exposes `ExtractionRequest` and `CaseFacts`; invalid inputs, schema failures, quotes, context membership, units, shared constraints, repairs, deadlines and sanitized API failures are covered.
-- User-authorized `python -m backend.smoke_extraction --provider llmtech --public-trial` runs with final `extraction-v6` passed D01/D02 and all three synthetic cases. See `outputs/extraction/review.json` for the two exact records, their hashes, checked behaviors and limitations. This is agent source comparison, not independent human validation or spectroscopy performance evidence.
+- User-authorized `python -m backend.cli.smoke_extraction --provider llmtech --public-trial` runs with final `extraction-v6` passed D01/D02 and all three synthetic cases. See `outputs/extraction/review.json` for the two exact records, their hashes, checked behaviors and limitations. This is agent source comparison, not independent human validation or spectroscopy performance evidence.
 - Groq failed with generated-JSON rejection and HTTP 429 request-size/rate limits; earlier records remain intact. API provider selection still follows backend configuration; the runner override does not modify `.env`.
 - F03 completion gate is closed for the reviewed cases. F04 context-based retrieval is next; no extraction frontend or assessment generation was added.
 
@@ -528,7 +528,7 @@ At the user's request, documented the implemented capabilities for later pipelin
 - Implemented deterministic context queries, documented domain synonyms, hybrid candidate scoring, semantic-only admission at cosine 0.65, structured method/geometry lookup, distinct-method balancing, exact deduplication and an eight-record ledger cap.
 - Added one case-wide follow-up query, explicit evidence gaps, version-pinned resolution, exact PDF/figure/workbook metadata and sanitized 404/409/422/503/504 contracts. Existing manual search shares the Qdrant lock.
 - `python -m pytest -q --basetemp tmp/f04-final-verified`: **145 passed**. Initial sandbox runs stalled during Windows asyncio loopback initialization; the verified suite ran with loopback available.
-- `python -m backend.smoke_retrieval` and real-corpus ASGI API checks passed without provider calls. Exact outputs, hashes, source inspection and limitations are recorded in `outputs/retrieval/review.json` and `api_validation.json`. Development diagnostics are kept under ignored `tmp/f04-retrieval-development/`.
+- `python -m backend.cli.smoke_retrieval` and real-corpus ASGI API checks passed without provider calls. Exact outputs, hashes, source inspection and limitations are recorded in `outputs/retrieval/review.json` and `api_validation.json`. Development diagnostics are kept under ignored `tmp/f04-retrieval-development/`.
 - F04 gate is closed for the tested development inputs. F05 synthesis and claim-level scientific support review remain separate work. Existing F03 working-tree changes were preserved; no commit was created.
 
 ### 2026-10-17 — F05 structured technical assessment
@@ -537,7 +537,7 @@ At the user's request, documented the implemented capabilities for later pipelin
 - Added reusable `assess_case` / `synthesize_assessment`, injected providers/retrieval, a shared deadline, worker-thread retrieval, stage callbacks and reproducibility metadata. No assessment API route or frontend was added.
 - Live source review motivated source-excerpt/gap assertions, request-bound IDs and single method families, conservative method-labeled wavelength bands, satisfiable schemas for absent quantities, and backend assembly of aligned references and individual-method comparisons. Extraction-v7 reinforces exact contiguous quotation without weakening validation.
 - `python -m pytest -q --basetemp tmp/f05-release-check`: **191 passed**. Restricted Windows asyncio initialization required socket-enabled execution; a separate transient manifest-replacement permission failure cleared on a fresh-directory rerun.
-- `python -m backend.smoke_assessment --provider llmtech --public-trial` completed fresh D01/D02 runs with final synthesis-v8. Both are provisional; exact artifacts, hashes, source comparison and limitations are in `outputs/assessment/review.json`. Earlier schema/grounding failures remain available.
+- `python -m backend.cli.smoke_assessment --provider llmtech --public-trial` completed fresh D01/D02 runs with final synthesis-v8. Both are provisional; exact artifacts, hashes, source comparison and limitations are in `outputs/assessment/review.json`. Earlier schema/grounding failures remain available.
 - F05 is complete for these inspected development cases. Reasons can be generic and repeated excerpts remain an editorial refinement; source identity and membership do not establish arbitrary scientific entailment. Saved provider configuration and the technical corpus were not changed. F06 is next; no commit was created.
 
 ### 2026-10-18 — F06/F07 completion and implemented scope reconciliation

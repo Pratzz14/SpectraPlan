@@ -7,12 +7,12 @@ from concurrent.futures import ThreadPoolExecutor
 import httpx
 import pytest
 
-from backend.config import Settings
-from backend.evidence import CorpusUnavailable, EvidenceNotFound, EvidenceRevisionMismatch, load_snapshot
-from backend.knowledge_store import digest, read_json, write_json
+from backend.core.config import Settings
+from backend.services.search.evidence import CorpusUnavailable, EvidenceNotFound, EvidenceRevisionMismatch, load_snapshot
+from backend.services.knowledge.knowledge_store import digest, read_json, write_json
 from backend.main import create_app
-from backend.models import CaseFacts, CustomerStatement, MeasurementContext
-from backend.retrieval import (
+from backend.schemas.models import CaseFacts, CustomerStatement, MeasurementContext
+from backend.services.search.retrieval import (
     QUERY_PREFIX, CaseRetrievalService, RetrievalTimeout, _compact_query, _context_fields,
     build_indexes, lexical_candidates, query_tokens, tokens,
 )
@@ -80,7 +80,7 @@ def set_version(directory, version):
 def local(tmp_path, monkeypatch):
     config = Settings(_env_file=None, corpus_dir=tmp_path / "knowledge", embedding_cache_dir=tmp_path / "models")
     make_corpus(config.corpus_dir)
-    monkeypatch.setattr("backend.retrieval.Embedder", lambda *a, **k: OrthogonalEmbedder())
+    monkeypatch.setattr("backend.services.search.retrieval.Embedder", lambda *a, **k: OrthogonalEmbedder())
     return config, CaseRetrievalService(config)
 
 
@@ -146,7 +146,7 @@ def test_combined_ledger_is_repeatable_balanced_and_traceable(local):
 
 
 def test_search_trace_preserves_exact_inputs_branch_rankings_and_filenames(local):
-    from backend.retrieval import RETRIEVAL_EVENTS
+    from backend.services.search.retrieval import RETRIEVAL_EVENTS
     _, service = local
     seen=[]; token=RETRIEVAL_EVENTS.set(seen.append)
     try:
@@ -216,7 +216,7 @@ def test_semantic_only_boundary_and_scope(local, cosine, admitted):
         def query_points(self, *a, **k):
             return SimpleNamespace(points=[SimpleNamespace(id=segment["id"], score=cosine,
                 payload={"evidence_id": records[-1]["evidence_id"]})])
-    from backend.retrieval_models import QueryTrace
+    from backend.schemas.retrieval_models import QueryTrace
     trace = QueryTrace(query_id="test", context_id="stream_1", facet="limitations", round=1,
                        query="unfindablezzzz", source_fields={"target": ["unfindablezzzz"]})
     service.embedder = OrthogonalEmbedder()
@@ -252,7 +252,7 @@ def test_rejects_broken_indexes_and_embeddings_instead_of_empty(local, monkeypat
     service.settings = Settings(_env_file=None, corpus_dir=config.corpus_dir.parent / "other")
     def missing(*a, **k):
         raise ValueError("private local model path")
-    monkeypatch.setattr("backend.retrieval.Embedder", missing)
+    monkeypatch.setattr("backend.services.search.retrieval.Embedder", missing)
     with pytest.raises(CorpusUnavailable) as error:
         service.retrieve_case(powder_case())
     assert "private" not in str(error.value)
@@ -270,7 +270,7 @@ def test_deadline_and_busy_lock_paths(local, monkeypatch):
         def acquire(self, **kwargs):
             return False
     with monkeypatch.context() as m:
-        m.setattr("backend.retrieval.SEARCH_LOCK", Busy())
+        m.setattr("backend.services.search.retrieval.SEARCH_LOCK", Busy())
         with pytest.raises(CorpusUnavailable, match="busy"):
             service.retrieve_case(powder_case())
     calls = []
@@ -295,7 +295,7 @@ def test_slow_embedding_consumes_shared_deadline_without_another_search(local, m
             calls.append(texts)
             clock[0] = 102.0
             return OrthogonalEmbedder.vectors(texts, **kwargs)
-    monkeypatch.setattr("backend.retrieval.time", SimpleNamespace(monotonic=lambda: clock[0]))
+    monkeypatch.setattr("backend.services.search.retrieval.time", SimpleNamespace(monotonic=lambda: clock[0]))
     service.embedder = Slow()
     with pytest.raises(RetrievalTimeout):
         service.retrieve_case(powder_case(), deadline=101.0)

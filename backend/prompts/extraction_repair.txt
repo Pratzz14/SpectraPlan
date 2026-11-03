@@ -1,0 +1,1 @@
+Repair the extraction against the ORIGINAL description. Return the full schema. Do not invent missing facts.

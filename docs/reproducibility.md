@@ -51,9 +51,9 @@ Required stored evaluation inputs and source excerpts retain their original righ
 
 ```powershell
 .\.venv\Scripts\python.exe scripts/restore_corpus.py
-.\.venv\Scripts\python.exe -m backend.ingest validate
-.\.venv\Scripts\python.exe -m backend.ingest search --query "powder blend API concentration"
-.\.venv\Scripts\python.exe -m backend.ingest search --query "opaque dairy fat protein"
+.\.venv\Scripts\python.exe -m backend.cli.ingest validate
+.\.venv\Scripts\python.exe -m backend.cli.ingest search --query "powder blend API concentration"
+.\.venv\Scripts\python.exe -m backend.cli.ingest search --query "opaque dairy fat protein"
 ```
 
 Restoration checks the saved evidence and original file hashes, renders all 64
@@ -74,8 +74,8 @@ cache is already supplied and model-file downloads must be disabled.
 To re-extract sources through configured providers instead of restoring saved evidence:
 
 ```powershell
-.\.venv\Scripts\python.exe -m backend.ingest build --provider auto
-.\.venv\Scripts\python.exe -m backend.ingest validate
+.\.venv\Scripts\python.exe -m backend.cli.ingest build --provider auto
+.\.venv\Scripts\python.exe -m backend.cli.ingest validate
 ```
 
 This sends page text/images to providers and can take many calls. Compatible caches

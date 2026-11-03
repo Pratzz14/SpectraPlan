@@ -8,7 +8,7 @@ import pymupdf
 import pytest
 from filelock import FileLock
 
-from backend.knowledge_store import active_directory, load_records, read_json, file_hash
+from backend.services.knowledge.knowledge_store import active_directory, load_records, read_json, file_hash
 from backend.main import create_app
 from backend.pipelines.pdf_knowledge import extract, import_file
 from backend.pipelines.pdf_knowledge.store import publish_extraction
@@ -122,7 +122,7 @@ def test_prepare_only_and_invalid_formats_do_not_call_model(adding,tmp_path):
 
 
 def test_context_only_first_file_is_inspectable_without_assessment_evidence(adding,tmp_path):
-    from backend.health import inspect_corpus
+    from backend.services.health import inspect_corpus
     settings,_=adding
     settings=settings.model_copy(update={'corpus_dir':tmp_path/'empty-library','knowledge_work_dir':tmp_path/'empty-work'})
     sample=tmp_path/'vendor flyer.pdf';pdf(sample)
@@ -136,7 +136,7 @@ def test_context_only_first_file_is_inspectable_without_assessment_evidence(addi
 
 def test_atomic_json_write_retries_windows_sharing_locks_without_losing_old_data(tmp_path,monkeypatch):
     import os
-    import backend.knowledge_store as store
+    import backend.services.knowledge.knowledge_store as store
     if os.name!='nt': pytest.skip('Windows sharing-lock behavior')
     path=tmp_path/'status.json';store.write_json(path,{'value':'old'})
     original=os.replace
@@ -156,7 +156,7 @@ def test_atomic_json_write_retries_windows_sharing_locks_without_losing_old_data
 
 
 def test_completed_batch_status_refreshes_the_inspector(adding):
-    from backend.knowledge_store import write_json
+    from backend.services.knowledge.knowledge_store import write_json
     settings,_=adding
     write_json(settings.knowledge_work_dir/'latest/manifest.json',{'status':'completed_needs_visual_review',
         'production_corpus_modified':True,'published_version':'corpus-test','units':[{'status':'completed'}]})
@@ -166,7 +166,7 @@ def test_completed_batch_status_refreshes_the_inspector(adding):
 
 def test_selected_cli_build_retains_other_sources(adding,tmp_path,monkeypatch):
     import sys
-    import backend.ingest as cli
+    import backend.cli.ingest as cli
     settings,_=adding
     sample=tmp_path/'retained.pdf';pdf(sample)
     imported=import_file.ingest_file(settings,sample)
@@ -180,8 +180,8 @@ def test_selected_cli_build_retains_other_sources(adding,tmp_path,monkeypatch):
 
 def test_busy_cli_does_not_mark_running_manifest_failed(adding,monkeypatch):
     import sys
-    import backend.ingest as cli
-    from backend.knowledge_store import write_json
+    import backend.cli.ingest as cli
+    from backend.services.knowledge.knowledge_store import write_json
     settings,_=adding
     path=settings.knowledge_work_dir/'latest/manifest.json'
     write_json(path,{'status':'running','units':[]})

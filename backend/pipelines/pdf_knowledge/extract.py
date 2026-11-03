@@ -1,4 +1,6 @@
 """Direct Qwen3.7 Flash extraction from PDF images and Office source text."""
+
+from backend.prompts import load_prompt
 import argparse
 import base64
 import json
@@ -11,8 +13,8 @@ from pathlib import Path
 import httpx
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator
 
-from backend.config import PROJECT_ROOT, Settings
-from backend.knowledge_store import digest, inside, read_json, write_json, active_directory, load_records
+from backend.core.config import PROJECT_ROOT, Settings
+from backend.services.knowledge.knowledge_store import digest, inside, read_json, write_json, active_directory, load_records
 from backend.pipelines.pdf_knowledge.inputs import prepare_inputs
 from backend.pipelines.pdf_knowledge.quality import VERSION, QualityError, validate_answer
 from backend.pipelines.pdf_knowledge.local_text import embedded_text, recover_text, text_passages
@@ -73,8 +75,8 @@ def response_schema():
 
 def pipeline_fingerprint(settings):
     return {'model': settings.qwen_extraction_model, 'endpoint': settings.dashscope_base_url,
-            'prompt_sha256': digest((HERE/'prompt.txt').read_text(encoding='utf-8').encode()),
-            'office_prompt_sha256': digest((HERE/'office_prompt.txt').read_text(encoding='utf-8').encode()),
+            'prompt_sha256': digest(load_prompt('knowledge_prompt.txt').encode()),
+            'office_prompt_sha256': digest(load_prompt('knowledge_office_prompt.txt').encode()),
             'schema_sha256': digest(response_schema()),
             'quality_policy': VERSION, 'max_attempts': settings.knowledge_extraction_attempts,
             'ocr_language': settings.knowledge_ocr_language, 'ocr_tessdata': settings.knowledge_ocr_tessdata,
@@ -108,8 +110,8 @@ def extract_all(settings, run_dir, *, source_ids=None, dpi=180, concurrency=2, r
     sources, units = prepare_inputs(settings, run_dir, source_ids=source_ids, dpi=dpi)
     fingerprint = pipeline_fingerprint(settings)
     cached = {u['unit_id']: u for u in previous.get('units', [])}
-    prompts = {'pdf': (HERE/'prompt.txt').read_text(encoding='utf-8'),
-               'office': (HERE/'office_prompt.txt').read_text(encoding='utf-8')}
+    prompts = {'pdf': load_prompt('knowledge_prompt.txt'),
+               'office': load_prompt('knowledge_office_prompt.txt')}
     write_json(run_dir/'schema.json', response_schema())
     for kind, text in prompts.items():
         (run_dir/f'{kind}_prompt.txt').write_text(text, encoding='utf-8')
@@ -194,7 +196,7 @@ def extract_all(settings, run_dir, *, source_ids=None, dpi=180, concurrency=2, r
                 with lock: save()
                 payload={'model':fingerprint['model'],'stream':False,'enable_thinking':True,'max_tokens':12000,
                          'response_format':{'type':'json_schema','json_schema':{'name':'PageKnowledge','strict':True,'schema':response_schema()}},
-                         'messages':[{'role':'system','content':system+(f"\nPrevious response rejected: {failure}. Return complete meaningful statements, not fragments or placeholders." if attempt>1 else '')},
+                         'messages':[{'role':'system','content':system+(load_prompt("knowledge_repair.txt").format(failure=failure) if attempt>1 else '')},
                                      {'role':'user','content':content}]}
                 retryable=True
                 delay=settings.knowledge_retry_delay_s*attempt

@@ -10,15 +10,15 @@ Set `DASHSCOPE_API_KEY` and optionally `DASHSCOPE_BASE_URL` in the root `.env` o
 
 ```powershell
 # All supported files; reuse matching completed responses:
-.\.venv\Scripts\python.exe -m backend.ingest build --concurrency 4
+.\.venv\Scripts\python.exe -m backend.cli.ingest build --concurrency 4
 # Optionally rebuild selected sources while retaining the rest of the library:
-.\.venv\Scripts\python.exe -m backend.ingest build --source S04
-.\.venv\Scripts\python.exe -m backend.ingest build --refresh
+.\.venv\Scripts\python.exe -m backend.cli.ingest build --source S04
+.\.venv\Scripts\python.exe -m backend.cli.ingest build --refresh
 # Local preparation only, no uploads:
 .\.venv\Scripts\python.exe -m backend.pipelines.pdf_knowledge.extract --prepare-only
 # Publish only a complete latest extraction, without new Qwen calls:
-.\.venv\Scripts\python.exe -m backend.ingest publish
-.\.venv\Scripts\python.exe -m backend.ingest validate
+.\.venv\Scripts\python.exe -m backend.cli.ingest publish
+.\.venv\Scripts\python.exe -m backend.cli.ingest validate
 ```
 
 A complete batch has 64 PDF pages, two worksheets, and six Word sections (72 source units). Word sections group paragraphs and table rows without dropping their original locations. Unknown files, the S06 URL, challenge inputs, and separate final-evaluation inputs are not read by this command.
@@ -61,7 +61,7 @@ From Windows Command Prompt, run:
 
 ```cmd
 cd /d "C:\Users\prati\OneDrive\Desktop\SpectraPlan"
-.venv\Scripts\python.exe -m backend.ingest add --file "C:\path\new-paper.pdf" --role research
+.venv\Scripts\python.exe -m backend.cli.ingest add --file "C:\path\new-paper.pdf" --role research
 ```
 
 The same command accepts `.xlsx` and `.docx`. Source types are `technical` (default), `research`, `business`, and `development`. Use `--prepare-only` to register and render/read the file locally without a model call or publication. Configure `DASHSCOPE_API_KEY` in `.env` for Qwen extraction; without it the same command uses local recovery. The live command sends the selected file's page images or Office text to the configured DashScope endpoint.

@@ -14,7 +14,7 @@ from evaluation.run_evaluation import (
     prepare_final_input,
 )
 import evaluation.run_evaluation as runner
-from backend.knowledge_store import digest, write_json
+from backend.services.knowledge.knowledge_store import digest, write_json
 
 
 def test_development_inputs_match_supplied_source_and_cover_all_cases():
@@ -81,10 +81,19 @@ def test_final_parser_removes_heading_separators(tmp_path):
 
 @pytest.fixture
 def final_batch(tmp_path, monkeypatch):
-    """Real public route and history, synthetic provider and retrieval only."""
+    """Real public route/history; synthetic provider, retrieval and PDF content."""
     from tests.test_assessment import DESCRIPTION, draft
     from tests.test_assessment_api import provider_for, mock_retrieval
     from tests.test_extraction import powder, wire_for
+
+    # PDF pagination/content has dedicated tests; this suite verifies batch artifacts.
+    import pymupdf
+    from backend.services.history import history_pdf as pdf_reports
+    with pymupdf.open() as document:
+        document.new_page().insert_text((40, 60), "Synthetic evaluation report")
+        report_bytes = document.tobytes()
+    monkeypatch.setattr(pdf_reports, "history_pdf", lambda trace: report_bytes)
+    monkeypatch.setattr(pdf_reports, "chemist_pdf", lambda trace: report_bytes)
 
     monkeypatch.setattr(runner, "PROJECT_ROOT", tmp_path)
     monkeypatch.setattr(runner, "RETRIEVAL_VERSION", "test")
@@ -99,7 +108,7 @@ def final_batch(tmp_path, monkeypatch):
     input_path = tmp_path / "final.json"
     prepare_final_input(source, input_path)
     adapter, calls = provider_for([wire_for(powder().model_dump()), draft()] * 6, corpus_dir=corpus)
-    monkeypatch.setattr("backend.agent.Provider", lambda settings: adapter)
+    monkeypatch.setattr("backend.pipelines.assessment.pipeline.Provider", lambda settings: adapter)
     mock_retrieval(monkeypatch)
     monkeypatch.setattr(runner, "audit_final_inputs", lambda *args: {"findings": [], "scope": "synthetic fixture"})
     requests, responses = [], []

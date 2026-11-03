@@ -7,10 +7,10 @@ import httpx
 import pytest
 from pydantic import BaseModel, ConfigDict, ValidationError
 
-from backend.config import Settings
+from backend.core.config import Settings
 from backend.main import create_app
-from backend.provider import Provider, ProviderError
-from backend.provider_setup import with_public_trial
+from backend.providers.provider import Provider, ProviderError
+from backend.cli.provider_setup import with_public_trial
 
 
 class Output(BaseModel):
@@ -211,6 +211,7 @@ def test_lifespan_checks_automatically_and_health_only_reads_cache(tmp_path, mon
         return response({"ok": True})
     real = Provider
     monkeypatch.setattr("backend.main.Provider", lambda config: real(config, transport=httpx.MockTransport(handle)))
+    settings.provider_probe_on_startup = True
     app = create_app(settings)
     async def run():
         async with app.router.lifespan_context(app):
@@ -224,7 +225,7 @@ def test_lifespan_checks_automatically_and_health_only_reads_cache(tmp_path, mon
 
 
 def test_public_trial_never_replaces_an_existing_key(monkeypatch):
-    monkeypatch.setattr("backend.provider_setup.httpx.get", lambda *a, **k: pytest.fail("unexpected lookup"))
+    monkeypatch.setattr("backend.cli.provider_setup.httpx.get", lambda *a, **k: pytest.fail("unexpected lookup"))
     settings = config()
     assert with_public_trial(settings) is settings
 
@@ -237,10 +238,10 @@ def test_pdf_ingestion_identity_is_independent_of_assessment_providers():
 
 
 def test_assessment_records_provider_switch_between_stages(monkeypatch):
-    from backend.agent import assess_case
+    from backend.pipelines.assessment.pipeline import assess_case
     from tests.test_assessment import DESCRIPTION, draft, ledger
     from tests.test_extraction import powder, wire_for
-    monkeypatch.setattr("backend.agent.authenticate_ledger", lambda *args: None)
+    monkeypatch.setattr("backend.pipelines.assessment.pipeline.authenticate_ledger", lambda *args: None)
     class Retrieval:
         def retrieve_case(self, facts, deadline):
             return ledger()

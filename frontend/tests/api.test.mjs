@@ -1,18 +1,6 @@
 import assert from 'node:assert/strict'
-import { readFile } from 'node:fs/promises'
-import test from 'node:test'
-import { transformWithOxc } from 'vite'
-
-async function moduleCode(name) {
-  return (await transformWithOxc(await readFile(new URL(`../src/${name}.ts`, import.meta.url), 'utf8'), `${name}.ts`)).code
-}
-const url = code => `data:text/javascript;base64,${Buffer.from(code).toString('base64')}`
-const assessmentUrl = url(await moduleCode('assessment'))
-const knowledgeUrl = url(await moduleCode('knowledge'))
-const apiCode = (await moduleCode('api'))
-  .replace(/from ['"]\.\/assessment['"]/g, `from ${JSON.stringify(assessmentUrl)}`)
-  .replace(/from ['"]\.\/knowledge['"]/g, `from ${JSON.stringify(knowledgeUrl)}`)
-const { fetchGeminiComparison, fetchExplainability, fetchEnquiries, fetchEnquiry } = await import(url(apiCode))
+import { test } from 'vitest'
+import { fetchGeminiComparison, fetchExplainability, fetchEnquiries, fetchEnquiry } from '../src/shared/api/api'
 
 async function respond(value, status, work) {
   const original = globalThis.fetch

@@ -1,12 +1,7 @@
 import assert from 'node:assert/strict'
-import { readFile } from 'node:fs/promises'
-import test from 'node:test'
-import { transformWithOxc } from 'vite'
+import { test } from 'vitest'
 
-// Use Vite's existing TS transform; no test framework or production dependency needed.
-const source = await readFile(new URL('../src/assessment.ts', import.meta.url), 'utf8')
-const { code } = await transformWithOxc(source, 'assessment.ts')
-const { isAssessmentRun, reportText, contextLabel, compactRequirements, usefulClarificationReason, composeEnquiry, clarificationKey, displayText, chemistWarnings } = await import(`data:text/javascript;base64,${Buffer.from(code).toString('base64')}`)
+import { isAssessmentRun, reportText, contextLabel, compactRequirements, usefulClarificationReason, composeEnquiry, clarificationKey, displayText, chemistWarnings } from '../src/features/assessment/assessment'
 
 function runFixture() {
   return {

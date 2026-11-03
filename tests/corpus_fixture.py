@@ -2,8 +2,8 @@
 
 from pathlib import Path
 
-from backend.knowledge_store import digest, file_hash, write_json
-from backend.retrieval import build_indexes
+from backend.services.knowledge.knowledge_store import digest, file_hash, write_json
+from backend.services.search.retrieval import build_indexes
 
 
 class FakeEmbedder:
@@ -55,7 +55,7 @@ def make_corpus(directory: Path, *, eligible=True, revision="content-v1"):
 
 
 def rehash(directory: Path):
-    from backend.knowledge_store import read_json
+    from backend.services.knowledge.knowledge_store import read_json
     manifest = read_json(directory / "source_manifest.json")
     manifest["artifacts"] = {name: file_hash(directory / name) for name in manifest["artifacts"]}
     write_json(directory / "source_manifest.json", manifest)

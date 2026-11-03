@@ -8,14 +8,14 @@ import httpx
 import pytest
 from pydantic import ValidationError
 
-from backend.agent import (
+from backend.pipelines.assessment.pipeline import (
     EXTRACTION_PROMPT, EXTRACTION_PROMPT_VERSION, ExtractionOutput,
     ExtractionValidationError, extract_case, validate_extraction,
 )
-from backend.config import Settings
+from backend.core.config import Settings
 from backend.main import create_app
-from backend.models import CaseFacts, CustomerStatement, ExtractionRequest, FactProvenance, MeasurementContext
-from backend.provider import Provider, ProviderError
+from backend.schemas.models import CaseFacts, CustomerStatement, ExtractionRequest, FactProvenance, MeasurementContext
+from backend.providers.provider import Provider, ProviderError
 
 DEVELOPMENT = json.loads((Path(__file__).resolve().parents[1] / "evaluation/development.json").read_text(encoding="utf-8"))["cases"]
 MULTI = "Stream A is a powder with API. Stream B is opaque milk; measure fat and protein. Both streams must retain laboratory checks."
@@ -220,7 +220,7 @@ def test_whitespace_wrapped_quotes_are_accepted_but_changed_words_are_rejected()
 
 
 def test_field_recovery_preserves_original_constraints_and_omits_bad_quotes():
-    from backend.agent import ExtractionOutput, recover_extraction_fields
+    from backend.pipelines.assessment.pipeline import ExtractionOutput, recover_extraction_fields
     text = "A powder; measure moisture. Do not exceed 40 C or reuse the cable."
     data = wire_for(powder(text).model_dump())
     quote = "Do not exceed 40 C or reuse the cable."
@@ -367,7 +367,7 @@ def api_request(payload, settings=None):
 def test_api_rejects_invalid_requests(body, monkeypatch):
     async def forbidden(*args, **kwargs):
         pytest.fail("Invalid input must not call the provider")
-    monkeypatch.setattr("backend.main.extract_case", forbidden)
+    monkeypatch.setattr("backend.api.routers.assessment.extract_case", forbidden)
     assert api_request(body).status_code == 422
 
 
@@ -375,7 +375,7 @@ def test_api_validated_output_is_independent_of_corpus(tmp_path, monkeypatch):
     async def fake(description, settings):
         assert description == "A powder; measure moisture."
         return powder()
-    monkeypatch.setattr("backend.main.extract_case", fake)
+    monkeypatch.setattr("backend.api.routers.assessment.extract_case", fake)
     response = api_request({"description": "A powder; measure moisture."}, config(corpus_dir=tmp_path / "absent"))
     assert response.status_code == 200
     assert response.json()["contexts"][0]["sample_phase"] == "powder"
@@ -386,7 +386,7 @@ def test_api_validated_output_is_independent_of_corpus(tmp_path, monkeypatch):
 def test_api_failure_contract(code, status, monkeypatch):
     async def fail(*args, **kwargs):
         raise ProviderError(code, "Sanitized failure", status)
-    monkeypatch.setattr("backend.main.extract_case", fail)
+    monkeypatch.setattr("backend.api.routers.assessment.extract_case", fail)
     response = api_request({"description": "A liquid"})
     assert response.status_code == status
     assert response.json() == {"detail": {"code": code, "message": "Sanitized failure"}}
@@ -399,14 +399,14 @@ def test_api_actual_unconfigured_provider():
 
 
 def test_smoke_record_preserves_failures_and_prompt_metadata(monkeypatch):
-    from backend.smoke_extraction import run_cases
+    from backend.cli.smoke_extraction import run_cases
 
     async def fake(description, settings, **kwargs):
         if description.startswith("We manufacture"):
             raise ProviderError("provider_timeout", "Provider request deadline expired.", 504)
         return CaseFacts(missing_information=["Please describe your sample"])
 
-    monkeypatch.setattr("backend.smoke_extraction.extract_case", fake)
+    monkeypatch.setattr("backend.cli.smoke_extraction.extract_case", fake)
     record, code = asyncio.run(run_cases(config(), {"D01", "D02"}))
     assert code == 1
     assert record["prompt_version"] == EXTRACTION_PROMPT_VERSION
@@ -425,7 +425,7 @@ def test_failed_repair_diagnostics_stay_out_of_api(monkeypatch):
         error.validation_errors = ["internal diagnostic"]
         raise error
 
-    monkeypatch.setattr("backend.main.extract_case", fail)
+    monkeypatch.setattr("backend.api.routers.assessment.extract_case", fail)
     response = api_request({"description": "A liquid"})
     assert response.status_code == 502
     assert "private" not in response.text and "internal diagnostic" not in response.text

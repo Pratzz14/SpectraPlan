@@ -1,0 +1,1 @@
+Copy the explicitly stated sample phase and target verbatim. Preserve the word powder as powder, not solid. Return JSON matching the supplied schema.

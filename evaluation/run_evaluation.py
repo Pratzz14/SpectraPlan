@@ -21,14 +21,14 @@ import xml.etree.ElementTree as ElementTree
 
 import httpx
 
-from backend.agent import EXTRACTION_PROMPT, EXTRACTION_PROMPT_VERSION, PIPELINE_VERSION, SYNTHESIS_PROMPT, SYNTHESIS_PROMPT_VERSION, SynthesisOutput, ExtractionOutput
-from backend.config import PROJECT_ROOT, Settings
-from backend.evidence import CorpusUnavailable
-from backend.knowledge_store import digest, file_hash, write_json
+from backend.pipelines.assessment.pipeline import EXTRACTION_PROMPT, EXTRACTION_PROMPT_VERSION, PIPELINE_VERSION, SYNTHESIS_PROMPT, SYNTHESIS_PROMPT_VERSION, SynthesisOutput, ExtractionOutput
+from backend.core.config import PROJECT_ROOT, Settings
+from backend.services.search.evidence import CorpusUnavailable
+from backend.services.knowledge.knowledge_store import digest, file_hash, write_json
 from backend.main import create_app
-from backend.models import AssessmentRun
-from backend.retrieval import EMBEDDING_MODEL, RETRIEVAL_VERSION
-from backend.validation import _check_synthesis_inputs, validate_extraction, validate_final
+from backend.schemas.models import AssessmentRun
+from backend.services.search.retrieval import EMBEDDING_MODEL, RETRIEVAL_VERSION
+from backend.pipelines.assessment.validation import _check_synthesis_inputs, validate_extraction, validate_final
 
 
 DEVELOPMENT_INPUT = PROJECT_ROOT / "evaluation/development.json"
@@ -208,7 +208,7 @@ def provider_profiles(settings: Settings) -> list[dict]:
 
 def execution_files() -> list[Path]:
     """Allowlist source and lockfiles, never .env, databases or source originals."""
-    paths = [*PROJECT_ROOT.glob("backend/**/*.py"), *PROJECT_ROOT.glob("backend/prompts/*.txt"),
+    paths = [*PROJECT_ROOT.glob("backend/**/*.py"), *PROJECT_ROOT.glob("backend/prompts/**/*.txt"), *PROJECT_ROOT.glob("backend/templates/**/*.html"),
              *PROJECT_ROOT.glob("evaluation/*.py")]
     paths += [PROJECT_ROOT / name for name in ("requirements.txt", "frontend/package-lock.json")]
     return sorted(path for path in paths if path.is_file())
@@ -274,7 +274,7 @@ def audit_final_inputs(cases: list[dict], settings: Settings) -> dict:
         if re.search(r"\bH0[1-6]\b", text) or any(snippet in " ".join(text.split()) for snippet in snippets):
             findings.append(checked[-1])
     if (settings.corpus_dir / "current.json").is_file():
-        from backend.evidence import load_snapshot
+        from backend.services.search.evidence import load_snapshot
         snapshot = load_snapshot(settings.corpus_dir)
         for evidence_id, record in snapshot.records.items():
             text = " ".join(str(record.get("text", "")).split())
@@ -769,7 +769,7 @@ def main() -> int:
                                            "request_deadline_s": args.request_deadline_s,
                                            "provider_call_timeout_s": args.call_timeout_s})
     if args.public_trial:
-        from backend.provider_setup import with_public_trial
+        from backend.cli.provider_setup import with_public_trial
         settings = with_public_trial(settings)
     if args.suite == "final" and args.cases:
         parser.error("Final evaluation always runs all H01-H06 cases")

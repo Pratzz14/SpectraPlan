@@ -3,8 +3,8 @@ import json
 import shutil
 from pathlib import Path
 
-from backend.knowledge_models import Evidence
-from backend.knowledge_store import digest, file_hash, inside, load_records, read_json, write_json
+from backend.schemas.knowledge_models import Evidence
+from backend.services.knowledge.knowledge_store import digest, file_hash, inside, load_records, read_json, write_json
 
 SCHEMA = "qwen-image-v1"
 
@@ -144,7 +144,7 @@ def validate(directory: Path, *, source_dir=None, deep=False):
 
 def workbook_records(source, units, sources):
     """Preserve every source row and all notes independently of model summaries."""
-    from backend.knowledge_store import METHOD_COLUMNS
+    from backend.services.knowledge.knowledge_store import METHOD_COLUMNS
     by_sheet = {u['sheet']:u for u in units if u['source_id']==source['source_id'] and 'sheet' in u}
     notes_unit = by_sheet.get('notes')
     notes = [{'source_id':source['source_id'],'sheet':'notes','row':row['row'],
@@ -176,10 +176,10 @@ def workbook_records(source, units, sources):
 
 
 def publish_extraction(settings, run_dir: Path, *, merge=False):
-    from backend.knowledge_report import render_report
-    from backend.knowledge_store import publish
+    from backend.services.knowledge.knowledge_report import render_report
+    from backend.services.knowledge.knowledge_store import publish
     from backend.pipelines.pdf_knowledge.extract import PageKnowledge
-    from backend.retrieval import Embedder, build_indexes, SEARCH_LOCK
+    from backend.services.search.retrieval import Embedder, build_indexes, SEARCH_LOCK
 
     run = read_json(run_dir/'manifest.json')
     if run['status']!='completed_needs_visual_review' or any(u['status']!='completed' for u in run['units']):
@@ -254,7 +254,7 @@ def publish_extraction(settings, run_dir: Path, *, merge=False):
     if 'T01' in by_source:
         methods,notes = workbook_records(by_source['T01'],run['units'],sources)
     if merge and (root/'current.json').is_file():
-        from backend.knowledge_store import active_directory, validate_corpus
+        from backend.services.knowledge.knowledge_store import active_directory, validate_corpus
         old_directory=active_directory(root)
         validate_corpus(old_directory)
         validate_corpus_old=read_json(old_directory/'source_manifest.json')
@@ -292,7 +292,7 @@ def publish_extraction(settings, run_dir: Path, *, merge=False):
             notes.extend(read_json(old_directory/'method_notes.json'))
     embedder = Embedder(settings.embedding_cache_dir,local_only=True)
     version = 'corpus-'+digest([SCHEMA_V2,run['prompt_sha256'],run['office_prompt_sha256'],run['schema_sha256'],
-        records,methods,notes,pages,embedder.fingerprint,file_hash(Path(__file__).resolve().parents[2]/'report_template.html')])[:20]
+        records,methods,notes,pages,embedder.fingerprint,file_hash(Path(__file__).resolve().parents[2]/'templates'/'knowledge_report.html')])[:20]
     manifest = {'schema_version':SCHEMA_V2,'corpus_version':version,'sources':sources,'coverage':coverage,
                 'pipeline':{k:run[k] for k in ('model','input_mode','validation_basis','prompt_sha256','office_prompt_sha256','schema_sha256')},'artifacts':{}}
     manifest['pipeline']['quality_policy']=run.get('quality_policy','readable-source-v1')

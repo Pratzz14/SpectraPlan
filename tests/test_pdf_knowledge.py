@@ -8,8 +8,8 @@ import pymupdf
 import pytest
 from pydantic import ValidationError
 
-from backend.config import Settings
-from backend.knowledge_store import active_directory, read_json, validate_corpus, write_json
+from backend.core.config import Settings
+from backend.services.knowledge.knowledge_store import active_directory, read_json, validate_corpus, write_json
 from backend.pipelines.pdf_knowledge import extract
 from backend.pipelines.pdf_knowledge.store import publish_extraction
 from backend.main import create_app
@@ -64,8 +64,8 @@ def prepared(tmp_path, monkeypatch):
     assert len(calls) == 2
     latest = tmp_path/'outputs/pdf_knowledge/latest'
     assert all('DO NOT SAVE REASONING' not in p.read_text() for p in latest.glob('*.json'))
-    import backend.retrieval
-    monkeypatch.setattr(backend.retrieval, 'Embedder', lambda *a, **k: FakeEmbedder())
+    import backend.services.search.retrieval
+    monkeypatch.setattr(backend.services.search.retrieval, 'Embedder', lambda *a, **k: FakeEmbedder())
     return settings, latest
 
 
@@ -75,13 +75,13 @@ def test_publish_s04_only_search_evidence_and_assets(prepared):
     assert report['pages'] == 2 and report['eligible_passages'] == 1 and report['eligible_methods'] == 0
     directory = active_directory(settings.corpus_dir)
     assert validate_corpus(directory, source_dir=settings.source_dir, deep=True)['status'] == 'passed'
-    from backend.evidence import load_snapshot
+    from backend.services.search.evidence import load_snapshot
     snapshot = load_snapshot(settings.corpus_dir)
     record = next(iter(snapshot.records.values()))
     assert record['content_kind'] == 'llm_knowledge' and not record['source_spans']
     assert record['knowledge']['category'] == 'new_model_category'
     assert snapshot.resolve(record['evidence_id']).human_review_status == 'not_reviewed'
-    from backend.search_service import SearchService
+    from backend.services.search.search_service import SearchService
     service = SearchService(settings)
     service.embedder = FakeEmbedder()
     response = service.compare('complementary signals', mode='qdrant')
@@ -123,10 +123,10 @@ def test_rebuild_replaces_latest_qwen_generation_and_preserves_legacy(prepared):
 def test_all_formats_keep_source_locations_and_context_out_of_assessment(tmp_path, monkeypatch):
     import zipfile
     import openpyxl
-    import backend.retrieval
-    from backend.knowledge_store import METHOD_COLUMNS, SOURCES
+    import backend.services.search.retrieval
+    from backend.services.knowledge.knowledge_store import METHOD_COLUMNS, SOURCES
     from backend.pipelines.pdf_knowledge.inputs import prepare_inputs
-    from backend.search_service import SearchService
+    from backend.services.search.search_service import SearchService
     source_dir=tmp_path/'sources';source_dir.mkdir()
     for sid in ('S01','S02','S03','S04','S05'):
         with pymupdf.open() as doc:
@@ -169,11 +169,11 @@ def test_all_formats_keep_source_locations_and_context_out_of_assessment(tmp_pat
         patch.setattr(extract.httpx,'Client',lambda **kwargs:original(transport=httpx.MockTransport(lambda _:pytest.fail('Matched inputs must reuse cached answers')),**kwargs))
         assert extract.extract_all(settings,latest,concurrency=2)==0
     assert len(requests)==total_calls
-    monkeypatch.setattr(backend.retrieval,'Embedder',lambda *a,**k:FakeEmbedder())
+    monkeypatch.setattr(backend.services.search.retrieval,'Embedder',lambda *a,**k:FakeEmbedder())
     report=publish_extraction(settings,latest)
     assert report['sources']==7 and report['pages']==10 and report['eligible_methods']==19
     directory=active_directory(settings.corpus_dir)
-    from backend.evidence import load_snapshot
+    from backend.services.search.evidence import load_snapshot
     snapshot=load_snapshot(settings.corpus_dir)
     assert {r['source_id'] for r in snapshot.records.values()}=={'S01','S02','S03','S04','T01'}
     methods=read_json(directory/'methods.json')

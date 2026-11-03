@@ -8,8 +8,8 @@ from pathlib import Path
 
 import pymupdf
 
-from backend.config import PROJECT_ROOT
-from backend.knowledge_store import inside
+from backend.core.config import PROJECT_ROOT
+from backend.services.knowledge.knowledge_store import inside
 
 PDF_LOCK = threading.RLock()
 from backend.pipelines.pdf_knowledge.quality import readable

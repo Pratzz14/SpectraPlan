@@ -6,7 +6,7 @@ from xml.etree import ElementTree as ET
 import openpyxl
 import pymupdf
 
-from backend.knowledge_store import SOURCES, digest, file_hash, inside
+from backend.services.knowledge.knowledge_store import SOURCES, digest, file_hash, inside
 
 SUPPORTED = {sid: spec for sid, spec in SOURCES.items() if Path(spec[0]).suffix in {".pdf", ".xlsx", ".docx"}}
 

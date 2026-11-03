@@ -1,8 +1,8 @@
 import pymupdf
 from fastapi.testclient import TestClient
 
-from backend.config import Settings
-from backend.explainability import ExplainabilityStore
+from backend.core.config import Settings
+from backend.services.history.explainability import ExplainabilityStore
 from backend.main import create_app
 
 

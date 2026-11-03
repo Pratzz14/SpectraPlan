@@ -6,7 +6,7 @@ import json
 import httpx
 
 from backend.main import create_app
-from backend.explainability import ExplainabilityStore
+from backend.services.history.explainability import ExplainabilityStore
 from tests.test_assessment import draft, ledger
 from tests.test_assessment_api import mock_retrieval, provider_for
 from tests.test_extraction import powder, wire_for
@@ -17,7 +17,7 @@ def test_analysis_and_clarification_share_history_and_server_composes_input(monk
     data=draft(empty=True)
     adapter,calls=provider_for([wire_for(powder(text).model_dump()),data])
     mock_retrieval(monkeypatch,ledger(empty=True))
-    monkeypatch.setattr("backend.agent.Provider",lambda _:adapter)
+    monkeypatch.setattr("backend.pipelines.assessment.pipeline.Provider",lambda _:adapter)
     app=create_app(adapter.settings)
     async def run():
         async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app),base_url="http://test") as client:
@@ -38,7 +38,7 @@ def test_analysis_and_clarification_share_history_and_server_composes_input(monk
             assert (await client.get('/api/enquiries/'+'f'*32)).status_code == 404
             # A failing next extraction still persists its input and parent link.
             failing,_=provider_for(["invalid","invalid"])
-            monkeypatch.setattr("backend.agent.Provider",lambda _:failing)
+            monkeypatch.setattr("backend.pipelines.assessment.pipeline.Provider",lambda _:failing)
             q=trace["questions"][0]
             body={"description":text,"enquiry_id":identity["enquiry_id"],"parent_run_id":identity["run_id"],
                   "clarification_answers":[{"question":q["question"],"question_id":q["question_id"],
@@ -54,7 +54,7 @@ def test_analysis_and_clarification_share_history_and_server_composes_input(monk
 
 def test_storage_failure_prevents_unlogged_provider_work(monkeypatch):
     adapter,calls=provider_for([])
-    monkeypatch.setattr("backend.agent.Provider",lambda _:adapter)
+    monkeypatch.setattr("backend.pipelines.assessment.pipeline.Provider",lambda _:adapter)
     def unavailable(*args,**kwargs):
         raise OSError("disk unavailable")
     monkeypatch.setattr(ExplainabilityStore,"begin",unavailable)

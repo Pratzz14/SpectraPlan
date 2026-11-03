@@ -81,9 +81,9 @@
       "name": "website_refresh",
       "binding": {
         "kind": "cli",
-        "module": "backend.web_ingest",
+        "module": "backend.pipelines.website.ingest",
         "command": "crawl",
-        "python": "backend.web_ingest.crawl"
+        "python": "backend.pipelines.website.ingest.crawl"
       },
       "effect": "external_network_and_snapshot_publication",
       "generative_model_calls": 0,
@@ -110,7 +110,7 @@
       "name": "website_validate",
       "binding": {
         "kind": "cli",
-        "module": "backend.web_ingest",
+        "module": "backend.pipelines.website.ingest",
         "command": "validate"
       },
       "effect": "read_only",
@@ -125,7 +125,7 @@
       "name": "technical_corpus_validate",
       "binding": {
         "kind": "cli",
-        "module": "backend.ingest",
+        "module": "backend.cli.ingest",
         "command": "validate"
       },
       "effect": "read_only",
@@ -142,7 +142,7 @@
         "kind": "http",
         "method": "POST",
         "path": "/api/retrieve",
-        "python": "backend.retrieval.CaseRetrievalService.retrieve_case"
+        "python": "backend.services.search.retrieval.CaseRetrievalService.retrieve_case"
       },
       "effect": "read_only",
       "generative_model_calls": 0,

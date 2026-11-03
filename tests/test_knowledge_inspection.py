@@ -5,8 +5,8 @@ import json
 import httpx
 import pytest
 
-from backend.config import Settings
-from backend.knowledge_store import write_json
+from backend.core.config import Settings
+from backend.services.knowledge.knowledge_store import write_json
 from backend.main import create_app
 
 

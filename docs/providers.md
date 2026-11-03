@@ -25,7 +25,7 @@ Provide one or more keys. Blank and placeholder keys are skipped. `PROVIDER_ORDE
 To fill a missing LLMTech key from its documented public trial, enable automatic mode and check connectivity:
 
 ```powershell
-.\.venv\Scripts\python.exe -m backend.provider_setup --public-trial --check
+.\.venv\Scripts\python.exe -m backend.cli.provider_setup --public-trial --check
 ```
 
 This preserves an existing usable LLMTech key and the Groq key. It writes `PROVIDER_NAME=auto` and the trial credential to local `.env`, never to source control or diagnostic output. A public trial is not a personal long-term credential and can expire or run out of quota. Replace `LLMTECH_API_KEY` with your own key when available. Public-trial discovery happens only during explicit setup/diagnostic commands; normal application requests never download or replace credentials. Restart the backend after changing `.env`.
@@ -46,17 +46,17 @@ Assessment metadata records `provider_mode`, actual `stage_providers`, sanitized
 
 ```powershell
 # Automatic live assessment of D01/D02, using stored keys
-.\.venv\Scripts\python.exe -m backend.smoke_assessment --api --request-deadline-s 90 --call-timeout-s 30
+.\.venv\Scripts\python.exe -m backend.cli.smoke_assessment --api --request-deadline-s 90 --call-timeout-s 30
 
 # Check each configured provider with synthetic content
-.\.venv\Scripts\python.exe -m backend.smoke_provider --all
+.\.venv\Scripts\python.exe -m backend.cli.smoke_provider --all
 
 # Pin a diagnostic run without changing saved settings
-.\.venv\Scripts\python.exe -m backend.smoke_assessment --provider groq --api
+.\.venv\Scripts\python.exe -m backend.cli.smoke_assessment --provider groq --api
 
 # Extraction and corpus tools use the same profiles and selection policy
-.\.venv\Scripts\python.exe -m backend.smoke_extraction --provider auto
-.\.venv\Scripts\python.exe -m backend.ingest pilot --provider auto
+.\.venv\Scripts\python.exe -m backend.cli.smoke_extraction --provider auto
+.\.venv\Scripts\python.exe -m backend.cli.ingest pilot --provider auto
 ```
 
 Full ingestion sends source-page text/images to the selected provider and can make many calls. It remains an explicit build/pilot action. Provider-specific vision/schema limitations still need inspection; a small successful probe does not establish every model capability or scientific correctness.
@@ -78,19 +78,19 @@ corpus builds retain their canonical page/evidence schemas and atomic publicatio
 Run it explicitly:
 
 ```powershell
-.\.venv\Scripts\python.exe -m backend.smoke_gemini_extraction
+.\.venv\Scripts\python.exe -m backend.cli.smoke_gemini_extraction
 ```
 
 For a low-cost first check, process one source:
 
 ```powershell
-.\.venv\Scripts\python.exe -m backend.smoke_gemini_extraction --limit 1 --output outputs/provider_smoke/gemini_one_file.json
+.\.venv\Scripts\python.exe -m backend.cli.smoke_gemini_extraction --limit 1 --output outputs/provider_smoke/gemini_one_file.json
 ```
 
 Rerun only selected failed sources with `--source-id`, for example:
 
 ```powershell
-.\.venv\Scripts\python.exe -m backend.smoke_gemini_extraction --source-id T01 --source-id S05
+.\.venv\Scripts\python.exe -m backend.cli.smoke_gemini_extraction --source-id T01 --source-id S05
 ```
 
 The result contains baseline and Gemini outputs per source, source IDs and

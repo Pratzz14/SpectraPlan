@@ -7,8 +7,8 @@ import httpx
 import pymupdf
 import pytest
 
-from backend.config import Settings
-from backend.knowledge_store import active_directory, read_json, load_records
+from backend.core.config import Settings
+from backend.services.knowledge.knowledge_store import active_directory, read_json, load_records
 from backend.pipelines.pdf_knowledge import extract
 from backend.pipelines.pdf_knowledge.local_text import tessdata_directory, text_passages
 from backend.pipelines.pdf_knowledge.store import publish_extraction
@@ -28,8 +28,8 @@ def settings(tmp_path,monkeypatch):
     with pymupdf.open() as pdf:
         page=pdf.new_page();page.insert_textbox(pymupdf.Rect(40,40,500,300),TEXT,fontsize=13)
         pdf.save(source/'S04_Combi_MIR_Fluorescence_2021.pdf')
-    import backend.retrieval
-    monkeypatch.setattr(backend.retrieval,'Embedder',lambda *a,**k:FakeEmbedder())
+    import backend.services.search.retrieval
+    monkeypatch.setattr(backend.services.search.retrieval,'Embedder',lambda *a,**k:FakeEmbedder())
     return Settings(_env_file=None,source_dir=source,corpus_dir=tmp_path/'knowledge',knowledge_work_dir=tmp_path/'work',embedding_cache_dir=tmp_path/'models',dashscope_api_key='synthetic-key',knowledge_retry_delay_s=0)
 
 

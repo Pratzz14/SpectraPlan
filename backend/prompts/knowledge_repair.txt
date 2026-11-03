@@ -1,0 +1,2 @@
+
+Previous response rejected: {failure}. Return complete meaningful statements, not fragments or placeholders.

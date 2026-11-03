@@ -10,14 +10,14 @@ import httpx
 from pydantic import ValidationError
 import pytest
 
-from backend.agent import (
+from backend.pipelines.assessment.pipeline import (
     AssessmentValidationError, SYNTHESIS_PROMPT, SynthesisOutput, assess_case, synthesize_assessment, synthesis_output_model,
 )
-from backend.config import Settings
-from backend.evidence import CorpusUnavailable, ResolvedEvidence
-from backend.models import Assessment, CaseFacts, MeasurementContext, Recommendation
-from backend.provider import Provider, ProviderError
-from backend.retrieval_models import LedgerEntry, RetrievalResult
+from backend.core.config import Settings
+from backend.services.search.evidence import CorpusUnavailable, ResolvedEvidence
+from backend.schemas.models import Assessment, CaseFacts, MeasurementContext, Recommendation
+from backend.providers.provider import Provider, ProviderError
+from backend.schemas.retrieval_models import LedgerEntry, RetrievalResult
 from tests.test_extraction import powder, wire_for
 
 
@@ -359,7 +359,7 @@ def test_synthesis_one_attempt_and_completion_ceiling():
 
 
 def test_full_pipeline_uses_fresh_extraction_pinned_retrieval_shared_deadline_and_stage_metadata(monkeypatch):
-    monkeypatch.setattr("backend.agent.authenticate_ledger", lambda *args: None)
+    monkeypatch.setattr("backend.pipelines.assessment.pipeline.authenticate_ledger", lambda *args: None)
     calls, deadlines, stages = [], [], []
     responses = [wire_for(powder().model_dump()), draft()]
     settings = config()
@@ -400,7 +400,7 @@ def test_full_pipeline_uses_fresh_extraction_pinned_retrieval_shared_deadline_an
 
 
 def test_pipeline_stops_on_retrieval_failure_without_synthesis(monkeypatch):
-    import backend.agent as agent
+    import backend.pipelines.assessment.pipeline as agent
     stages = []
 
     async def extract(*args, **kwargs):
@@ -433,7 +433,7 @@ def test_invalid_fact_pointer_rejected_before_synthesis():
 
 
 def test_requirements_accept_wrapped_source_quotes():
-    from backend.agent import _requirements
+    from backend.pipelines.assessment.pipeline import _requirements
     facts = powder()
     for record in facts.fact_provenance:
         record.input_quote = record.input_quote.replace(" ", "\n")
@@ -453,7 +453,7 @@ def test_public_contract_round_trip_and_question_priority_order():
 
 
 def test_diagnostic_runner_retains_failed_stage_outputs_and_redacts_provider_diagnostics(monkeypatch):
-    from backend import smoke_assessment
+    from backend.cli import smoke_assessment
 
     async def fail_after_retrieval(description, settings, **kwargs):
         kwargs["on_stage"]("extraction", powder())
@@ -474,6 +474,6 @@ def test_diagnostic_runner_retains_failed_stage_outputs_and_redacts_provider_dia
 
 
 def test_invalid_diagnostic_case_is_rejected_before_calls():
-    from backend.smoke_assessment import run_cases
+    from backend.cli.smoke_assessment import run_cases
     with pytest.raises(ValueError, match="existing development cases"):
         asyncio.run(run_cases(config(), {"unknown"}))

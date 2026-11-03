@@ -15,11 +15,11 @@ from uuid import uuid4
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from backend.config import Settings
-from backend.knowledge_report import render_report
-from backend.knowledge_store import (active_directory, extract_pages, file_hash, load_records,
+from backend.core.config import Settings
+from backend.services.knowledge.knowledge_report import render_report
+from backend.services.knowledge.knowledge_store import (active_directory, extract_pages, file_hash, load_records,
                                      publish, validate_corpus, write_json)
-from backend.retrieval import Embedder, build_indexes
+from backend.services.search.retrieval import Embedder, build_indexes
 
 
 def restore(settings, canonical, *, local_model_only=False):

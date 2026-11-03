@@ -7,9 +7,9 @@ import zipfile
 import openpyxl
 import pymupdf
 
-from backend.config import Settings
-from backend.gemini_extraction import GeminiExtractionError, compare_original_extraction, extract_with_gemini
-from backend.knowledge_store import extract_original_documents
+from backend.core.config import Settings
+from backend.pipelines.document_comparison.pipeline import GeminiExtractionError, compare_original_extraction, extract_with_gemini
+from backend.services.knowledge.knowledge_store import extract_original_documents
 
 
 def make_docx(path):
@@ -87,8 +87,8 @@ def test_gemini_structured_output_is_validated(tmp_path):
 def test_comparison_keeps_baseline_and_gemini_results(monkeypatch, tmp_path):
     document = {"source_id": "S01", "file_name": "source.pdf", "format": "pdf",
                 "blocks": [{"location": "page:1", "text": "Water"}]}
-    monkeypatch.setattr("backend.gemini_extraction.inventory", lambda _: [])
-    monkeypatch.setattr("backend.gemini_extraction.extract_original_documents", lambda *_: [document])
+    monkeypatch.setattr("backend.pipelines.document_comparison.pipeline.inventory", lambda _: [])
+    monkeypatch.setattr("backend.pipelines.document_comparison.pipeline.extract_original_documents", lambda *_: [document])
     settings = Settings(_env_file=None, gemini_api_key="test")
     result = asyncio.run(compare_original_extraction(settings, client=FakeClient()))
     assert result["source_count"] == 1
@@ -113,9 +113,9 @@ def test_unknown_source_or_location_is_not_a_success(source,location):
 def test_comparison_endpoint_rejects_stale_or_malformed_artifacts(monkeypatch,tmp_path):
     import httpx
     from backend.main import create_app
-    from backend.knowledge_store import write_json
+    from backend.services.knowledge.knowledge_store import write_json
     settings=Settings(_env_file=None,smoke_output_dir=tmp_path)
-    monkeypatch.setattr("backend.main.inventory",lambda _:[{"source_id":"S01","sha256":"a"*64}])
+    monkeypatch.setattr("backend.api.routers.knowledge.inventory",lambda _:[{"source_id":"S01","sha256":"a"*64}])
     app=create_app(settings)
     async def request():
         async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app),base_url="http://test") as client:
@@ -131,7 +131,7 @@ def test_comparison_endpoint_rejects_stale_or_malformed_artifacts(monkeypatch,tm
 
 @pytest.mark.parametrize("errors",[0,1])
 def test_comparison_command_publishes_canonical_artifact_and_signals_failure(monkeypatch,tmp_path,errors):
-    from backend import smoke_gemini_extraction as command
+    from backend.cli import smoke_gemini_extraction as command
     async def compare(*args,**kwargs):
         return {"errors":errors,"succeeded":1-errors,"results":[]}
     monkeypatch.setattr(command,"Settings",lambda:Settings(_env_file=None,smoke_output_dir=tmp_path))

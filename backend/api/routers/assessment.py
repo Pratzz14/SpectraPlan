@@ -1,0 +1,69 @@
+"""Run from the repository root: python -m uvicorn backend.main:app --reload."""
+
+from backend.api.dependencies import get_settings, get_retrieval, get_history
+
+import sqlite3
+
+from fastapi import Depends, APIRouter, HTTPException
+from fastapi.responses import JSONResponse
+
+from backend.core.config import Settings
+from backend.pipelines.assessment.pipeline import extract_case, assess_case
+from backend.schemas.models import CaseFacts, ExtractionRequest, AssessmentRequest, AssessmentRun
+from backend.providers.provider import ProviderError
+from backend.services.search.retrieval import CaseRetrievalService
+from backend.services.history.explainability import ExplainabilityStore, HistoryConflict, compose_description, question_id
+
+
+def create_router():
+    router = APIRouter(tags=["Assessment"])
+    @router.post("/api/assess", response_model=AssessmentRun,
+                      responses={422: {"description": "Invalid enquiry"},
+                                 502: {"model": AssessmentRun}, 503: {"model": AssessmentRun},
+                                 504: {"model": AssessmentRun}})
+    async def assess(request: AssessmentRequest, config: Settings = Depends(get_settings), retrieval_service: CaseRetrievalService = Depends(get_retrieval), explainability_store: ExplainabilityStore = Depends(get_history)):
+        answers = [answer.model_dump(mode="json") for answer in request.clarification_answers]
+        effective = compose_description(request.description, answers)
+        if len(effective) > config.assessment_max_description_chars:
+            raise HTTPException(422, {"code":"description_too_long",
+                "message":f"Enquiry including clarifications exceeds {config.assessment_max_description_chars} characters."})
+        identity = None
+        try:
+            identity = explainability_store.begin(request.description, answers,
+                enquiry_id=request.enquiry_id, parent_run_id=request.parent_run_id)
+            run_id = identity["run_id"]
+            def record_event(event):
+                explainability_store.append(run_id, event)
+            def record_stage(stage, value):
+                record_event({"stage":stage,"event_type":"validated_stage","payload":value.model_dump(mode="json")})
+            result = await assess_case(identity["effective_description"], config, retrieval_service=retrieval_service,
+                on_stage=record_stage, on_event=record_event, run_id=run_id)
+            result.metadata.enquiry_id = identity["enquiry_id"]
+            result.metadata.parent_run_id = identity["parent_run_id"]
+            result.metadata.round_no = identity["round_no"]
+            result.metadata.question_ids = [question_id(run_id, q.model_dump())
+                for q in result.assessment.clarification_questions] if result.assessment else []
+            explainability_store.finish(run_id, result.model_dump(mode="json"))
+        except HistoryConflict as error:
+            raise HTTPException(409, {"code":"history_conflict","message":str(error)}) from None
+        except (OSError, sqlite3.Error):
+            raise HTTPException(503, {"code":"explainability_unavailable",
+                "message":"Assessment history could not be stored. Retry when local storage is available."}) from None
+        except BaseException:
+            if identity:
+                explainability_store.interrupt(identity["run_id"])
+            raise
+        status = result.errors[0].http_status if result.facts is None and result.errors else 200
+        response_payload = result.model_dump(mode="json")
+        response_payload["metadata"]["provider_trace"] = []
+        return JSONResponse(response_payload, status_code=status)
+
+
+    @router.post("/api/extract", response_model=CaseFacts)
+    async def extract(request: ExtractionRequest, config: Settings = Depends(get_settings)):
+        try:
+            return await extract_case(request.description, config)
+        except ProviderError as error:
+            raise HTTPException(error.http_status, {"code": error.code, "message": str(error)}) from None
+
+    return router

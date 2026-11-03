@@ -17,8 +17,8 @@ The response is `CaseFacts`: `contexts`, `customer_claims_and_requests`, `shared
 The same stage is callable from Python:
 
 ```python
-from backend.agent import extract_case
-from backend.config import Settings
+from backend.pipelines.assessment.pipeline import extract_case
+from backend.core.config import Settings
 
 facts = await extract_case(description, Settings())
 ```
@@ -55,13 +55,13 @@ These checks establish structural validity and quotation traceability. They do n
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest tests/test_extraction.py -q --basetemp tmp/f03-tests
-.\.venv\Scripts\python.exe -m backend.smoke_extraction
+.\.venv\Scripts\python.exe -m backend.cli.smoke_extraction
 ```
 
 An explicit run-only LLMTech override is available:
 
 ```powershell
-.\.venv\Scripts\python.exe -m backend.smoke_extraction --provider llmtech --public-trial
+.\.venv\Scripts\python.exe -m backend.cli.smoke_extraction --provider llmtech --public-trial
 ```
 
 This uses an existing backend-only LLMTech key when supplied, otherwise retrieves the documented public trial key at runtime. It never writes the key to results or changes `.env`. To select one input, append `--case D02`; the three additional synthetic IDs are `multi_stream`, `capability_claim` and `ambiguous_units`.
@@ -70,7 +70,7 @@ The runner saves timestamped outputs under `outputs/extraction/`, including prom
 
 On 2026-10-17, all 122 backend tests passed. Final `extraction-v6` outputs for D01, D02 and the three synthetic enquiries passed mechanical checks and agent comparison against their original text using LLMTech `nvidia/Qwen3.8-27B-NVFP4`. The [review record](../outputs/extraction/review.json) identifies the exact outputs and their limitations. Earlier Groq request-size/rate-limit failures and earlier extraction defects remain available as historical diagnostics. This does not establish independent human validation or spectroscopy performance.
 
-The API defaults to `PROVIDER_NAME=auto`, preferring configured Gemini, then LLMTech/Groq keys. Use `PROVIDER_NAME=llmtech` to pin LLMTech. The explicit `backend.provider_setup --public-trial --check` command can fill a missing key in local `.env`; diagnostic `--public-trial` remains a run-only option. Restart the backend after configuration changes.
+The API defaults to `PROVIDER_NAME=auto`, preferring configured Gemini, then LLMTech/Groq keys. Use `PROVIDER_NAME=llmtech` to pin LLMTech. The explicit `backend.cli.provider_setup --public-trial --check` command can fill a missing key in local `.env`; diagnostic `--public-trial` remains a run-only option. Restart the backend after configuration changes.
 
 F05 composition uses `extraction-v7`, which reinforces contiguous quotes, original capitalization, preservation of phrases without ellipses, and the distinction between concentration/appearance and sample phase. The validation rules and one-repair limit remain in place. Its current D01/D02 full-pipeline checks are recorded in the [assessment inspection receipt](../outputs/assessment/review.json); the extraction-v6 results above remain historical evidence for the earlier five-case extraction check.
 

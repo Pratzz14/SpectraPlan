@@ -7,14 +7,14 @@ import openpyxl
 import pymupdf
 import pytest
 
-from backend.config import Settings
-from backend.knowledge_models import Candidate, PageExtraction, PageVerification
-from backend.knowledge_report import render_report
-from backend.knowledge_store import (SOURCES, active_directory, canonical_candidate, digest, extract_pages, import_methods,
+from backend.core.config import Settings
+from backend.schemas.knowledge_models import Candidate, PageExtraction, PageVerification
+from backend.services.knowledge.knowledge_report import render_report
+from backend.services.knowledge.knowledge_store import (SOURCES, active_directory, canonical_candidate, digest, extract_pages, import_methods,
                                      inventory, publish, read_json, validate_corpus, write_json)
 from backend.main import create_app
-from backend.retrieval import fuse, make_segments
-from backend.provider import ProviderError
+from backend.services.search.retrieval import fuse, make_segments
+from backend.providers.provider import ProviderError
 from tests.corpus_fixture import FakeEmbedder, make_corpus, rehash
 
 
@@ -32,7 +32,7 @@ def supplied(tmp_path):
             doc.save(path)
             doc.close()
         elif path.suffix == ".xlsx":
-            from backend.knowledge_store import METHOD_COLUMNS
+            from backend.services.knowledge.knowledge_store import METHOD_COLUMNS
             book = openpyxl.Workbook()
             sheet = book.active
             sheet.title = "method_comparison"
@@ -157,7 +157,7 @@ def test_segments_do_not_truncate_or_break_sentences_and_fusion_deduplicates():
 
 
 def test_whitespace_matching_never_changes_values_or_units():
-    from backend.knowledge_store import anchored_quote
+    from backend.services.knowledge.knowledge_store import anchored_quote
     assert anchored_quote("Depth 1-6\n um", "Depth 1-6 um") == "Depth 1-6\n um"
     assert anchored_quote("Depth 1-6 um", "Depth 1-6 mm") is None
     assert anchored_quote("Depth 1-6 um", "Depth 10-60 um") is None

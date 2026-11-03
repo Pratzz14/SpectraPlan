@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pymupdf
 
-from backend.knowledge_store import SOURCES, digest, file_hash, inside, read_json, write_json
+from backend.services.knowledge.knowledge_store import SOURCES, digest, file_hash, inside, read_json, write_json
 
 ROLES = {"technical", "research", "business", "development"}
 EXTENSIONS = {".pdf", ".xlsx", ".docx"}

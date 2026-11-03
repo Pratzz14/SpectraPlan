@@ -7,11 +7,11 @@ import httpx
 import pytest
 from pydantic import BaseModel, ConfigDict, ValidationError
 
-from backend.config import PROJECT_ROOT, Settings
-from backend.health import inspect_corpus
+from backend.core.config import PROJECT_ROOT, Settings
+from backend.services.health import inspect_corpus
 from backend.main import create_app
-from backend.provider import Provider, ProviderError, _retry_delay
-from backend.smoke_provider import run_smoke
+from backend.providers.provider import Provider, ProviderError, _retry_delay
+from backend.cli.smoke_provider import run_smoke
 from tests.corpus_fixture import make_corpus
 
 
@@ -214,7 +214,7 @@ def test_provider_rejections_are_sanitized_and_not_retried(status, code):
 
 @pytest.mark.parametrize("failure", [429, 500, "connection", "timeout"])
 def test_transient_retries_are_bounded(failure, monkeypatch):
-    monkeypatch.setattr("backend.provider._retry_delay", lambda *_: 0)
+    monkeypatch.setattr("backend.providers.provider._retry_delay", lambda *_: 0)
     calls = []
 
     def handle(request):
@@ -233,7 +233,7 @@ def test_transient_retries_are_bounded(failure, monkeypatch):
 
 
 def test_retry_can_recover(monkeypatch):
-    monkeypatch.setattr("backend.provider._retry_delay", lambda *_: 0)
+    monkeypatch.setattr("backend.providers.provider._retry_delay", lambda *_: 0)
     calls = []
 
     def handle(request):

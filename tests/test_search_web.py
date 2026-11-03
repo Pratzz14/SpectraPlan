@@ -4,11 +4,11 @@ from concurrent.futures import ThreadPoolExecutor
 import httpx
 import pytest
 
-from backend.config import Settings
-from backend.knowledge_store import file_hash, read_json
+from backend.core.config import Settings
+from backend.services.knowledge.knowledge_store import file_hash, read_json
 from backend.main import create_app
-from backend.search_service import SearchService, SearchUnavailable
-from backend.web_ingest import canonical_url, crawl, extract_html, validate_web, web_directory
+from backend.services.search.search_service import SearchService, SearchUnavailable
+from backend.pipelines.website.ingest import canonical_url, crawl, extract_html, validate_web, web_directory
 from tests.corpus_fixture import FakeEmbedder, make_corpus
 
 
@@ -50,8 +50,8 @@ def web_fixture(tmp_path, monkeypatch):
             html = HTML
         return httpx.Response(200, text=html, headers={"content-type": "text/html"})
 
-    monkeypatch.setattr("backend.web_ingest.time.sleep", lambda delay: None)
-    monkeypatch.setattr("backend.web_ingest.Embedder", lambda *a, **kw: FakeEmbedder())
+    monkeypatch.setattr("backend.pipelines.website.ingest.time.sleep", lambda delay: None)
+    monkeypatch.setattr("backend.pipelines.website.ingest.Embedder", lambda *a, **kw: FakeEmbedder())
     transport = httpx.MockTransport(handler)
     result = crawl(config, max_pages=4, max_depth=2, transport=transport)
     return config, calls, result, transport
@@ -77,13 +77,13 @@ def test_crawl_robots_stable_ids_scope_and_tamper(web_fixture):
 def test_search_modes_and_business_opt_in(web_fixture, monkeypatch):
     config, _, _, _ = web_fixture
     make_corpus(config.corpus_dir)
-    monkeypatch.setattr("backend.search_service.Embedder", lambda *a, **kw: pytest.fail("BM25 must not load embeddings"))
+    monkeypatch.setattr("backend.services.search.search_service.Embedder", lambda *a, **kw: pytest.fail("BM25 must not load embeddings"))
     service = SearchService(config)
     keyword = service.compare("Raman powder", mode="bm25")
     assert set(keyword["rankings"]) == {"bm25"} and keyword["rankings"]["bm25"]
     assert all(hit["evidence"]["source_id"] != "S06" for hit in keyword["rankings"]["bm25"])
     assert service.compare("unfindablezzzz", mode="bm25")["rankings"]["bm25"] == []
-    monkeypatch.setattr("backend.search_service.Embedder", lambda *a, **kw: FakeEmbedder())
+    monkeypatch.setattr("backend.services.search.search_service.Embedder", lambda *a, **kw: FakeEmbedder())
     combined = service.compare("Raman powder", dataset="all")
     assert set(combined["rankings"]) == {"bm25", "qdrant", "hybrid"}
     assert combined["model_calls"] == 0 and combined["warnings"]
@@ -111,11 +111,11 @@ def test_missing_embedding_is_unavailable_but_long_query_is_input_error(web_fixt
     make_corpus(config.corpus_dir)
     def missing(*args, **kwargs):
         raise ValueError("private local embedding path")
-    monkeypatch.setattr("backend.search_service.Embedder", missing)
+    monkeypatch.setattr("backend.services.search.search_service.Embedder", missing)
     with pytest.raises(SearchUnavailable) as error:
         SearchService(config).compare("Raman", mode="qdrant")
     assert "private" not in str(error.value)
-    monkeypatch.setattr("backend.search_service.Embedder", lambda *args, **kwargs: FakeEmbedder())
+    monkeypatch.setattr("backend.services.search.search_service.Embedder", lambda *args, **kwargs: FakeEmbedder())
     with pytest.raises(ValueError, match="512 tokens"):
         SearchService(config).compare("x " * 600, mode="qdrant")
 
@@ -124,7 +124,7 @@ def test_missing_embedding_is_unavailable_but_long_query_is_input_error(web_fixt
 def test_empty_source_filter_returns_no_results_without_embeddings(tmp_path,monkeypatch,mode):
     config=Settings(_env_file=None,corpus_dir=tmp_path/'technical',embedding_cache_dir=tmp_path/'embeddings')
     make_corpus(config.corpus_dir)
-    monkeypatch.setattr('backend.search_service.Embedder',lambda *a,**kw:pytest.fail('Empty selection must not load embeddings'))
+    monkeypatch.setattr('backend.services.search.search_service.Embedder',lambda *a,**kw:pytest.fail('Empty selection must not load embeddings'))
     result=SearchService(config).compare('Raman',mode=mode,source_id='missing-source')
     assert not any(result['rankings'].values())
     assert result['warnings']==['No searchable records match the selected dataset and source.']

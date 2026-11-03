@@ -7,9 +7,9 @@ F04 turns F03 `CaseFacts` into a bounded technical evidence ledger using the pub
 `POST /api/retrieve` accepts the exact `CaseFacts` object returned by `/api/extract`, without a surrounding `facts` property. Retrieval needs no provider key. Duplicate context IDs and references to unknown contexts return 422. Empty or underspecified contexts return successful empty results with explicit gaps, provided the corpus is healthy.
 
 ```python
-from backend.config import Settings
-from backend.models import CaseFacts
-from backend.retrieval import CaseRetrievalService
+from backend.core.config import Settings
+from backend.schemas.models import CaseFacts
+from backend.services.search.retrieval import CaseRetrievalService
 
 service = CaseRetrievalService(Settings())
 facts = CaseFacts.model_validate(saved_extraction["facts"])
@@ -35,7 +35,7 @@ Keep the service instance to reuse its local embedding model. A caller can pass 
 6. Reserve application evidence across contexts, then a relevant method row per context where available. Fill uncovered applicable facets before additional relevant records, favoring matrix/target matches and method diversity. Break ties by evidence ID. Deduplicate parent IDs and exact duplicate passages on the same source/page, preserving distinct method rows. Target four to eight meaningful records; eight is the total cap, never a minimum.
 7. If coverage remains weak, run **one additional query across the entire request**, targeting the first uncovered context/facet in input/facet order. Retain target/matrix/phase and facet terms while dropping incidental process wording. Reselect within the same budget and expose remaining gaps.
 
-The small domain-only synonym map in `backend/retrieval.py` covers MIR/FTIR/mid-infrared, NIR/near-infrared, ATR/attenuated-total-reflection, API/active-pharmaceutical-ingredient, fluorescence/fluorimetry, moisture/water, fiber/fibre, and reflectance/reflection. These aid discovery; they do not establish instrument or operating-condition equivalence. No scenario IDs or scenario-answer rules appear in the map.
+The small domain-only synonym map in `backend/services/search/retrieval.py` covers MIR/FTIR/mid-infrared, NIR/near-infrared, ATR/attenuated-total-reflection, API/active-pharmaceutical-ingredient, fluorescence/fluorimetry, moisture/water, fiber/fibre, and reflectance/reflection. These aid discovery; they do not establish instrument or operating-condition equivalence. No scenario IDs or scenario-answer rules appear in the map.
 
 ## Evidence resolution and failures
 
@@ -62,7 +62,7 @@ The API shares a lock with manual search for embedded Qdrant access. Lock waitin
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q --basetemp tmp/f04-tests
-.\.venv\Scripts\python.exe -m backend.smoke_retrieval
+.\.venv\Scripts\python.exe -m backend.cli.smoke_retrieval
 ```
 
 The offline smoke runner reads hash-pinned accepted F03 outputs and the existing real corpus. It saves complete diagnostics under `outputs/retrieval/`, makes no provider calls, and includes an unsupported target. Development labels and outputs never enter the runtime retrieval service. The inspection receipt identifies the exact output, relevance checks and limitations. These checks do not establish physical spectroscopy performance or independent human validation.

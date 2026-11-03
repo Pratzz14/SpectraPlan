@@ -1,0 +1,1 @@
+Return complete JSON satisfying every required schema property.

@@ -3,7 +3,7 @@ import sqlite3
 
 import pytest
 
-from backend.explainability import ExplainabilityStore, HistoryConflict, question_id
+from backend.services.history.explainability import ExplainabilityStore, HistoryConflict, question_id
 
 
 def test_explainability_store_round_trips_full_trace(tmp_path):

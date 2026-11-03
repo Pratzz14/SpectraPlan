@@ -1,4 +1,4 @@
-"""Bounded S06 same-site HTML crawl. python -m backend.web_ingest crawl|validate"""
+"""Bounded S06 same-site HTML crawl. python -m backend.pipelines.website.ingest crawl|validate"""
 import argparse
 import json
 import os
@@ -15,9 +15,9 @@ from uuid import uuid4
 
 import httpx
 
-from backend.config import Settings
-from backend.knowledge_store import digest, file_hash, inside, read_json, write_json
-from backend.retrieval import Embedder, build_indexes
+from backend.core.config import Settings
+from backend.services.knowledge.knowledge_store import digest, file_hash, inside, read_json, write_json
+from backend.services.search.retrieval import Embedder, build_indexes
 
 AGENT = "SpectraPlanKnowledgeBot/1.0"
 EXTRACTOR = "html-blocks-v2"

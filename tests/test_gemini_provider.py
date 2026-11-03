@@ -8,10 +8,10 @@ import httpx
 import pytest
 from pydantic import BaseModel, ConfigDict
 
-from backend.agent import extract_case
-from backend.config import Settings
-from backend.gemini_provider import interaction_payload
-from backend.provider import Provider, ProviderError
+from backend.pipelines.assessment.pipeline import extract_case
+from backend.core.config import Settings
+from backend.providers.gemini_provider import interaction_payload
+from backend.providers.provider import Provider, ProviderError
 from tests.test_extraction import powder, wire_for
 
 

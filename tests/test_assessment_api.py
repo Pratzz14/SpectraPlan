@@ -10,12 +10,12 @@ import httpx
 import pytest
 from pydantic import ValidationError
 
-from backend.agent import assess_case, synthesize_assessment
-from backend.evidence import CorpusUnavailable, load_snapshot
+from backend.pipelines.assessment.pipeline import assess_case, synthesize_assessment
+from backend.services.search.evidence import CorpusUnavailable, load_snapshot
 from backend.main import create_app
-from backend.models import AssessmentRun, ProposedSetting, MeasurementContext
-from backend.provider import Provider, ProviderError
-from backend.validation import (
+from backend.schemas.models import AssessmentRun, ProposedSetting, MeasurementContext
+from backend.providers.provider import Provider, ProviderError
+from backend.pipelines.assessment.validation import (
     AssessmentValidationError, authenticate_ledger,
     validate_final, validate_synthesis, validation_groups,
 )
@@ -43,18 +43,18 @@ def provider_for(responses, **settings):
 
 def mock_retrieval(monkeypatch, result=None, error=None):
     """Unit seam; canonical corpus authentication is covered separately below."""
-    monkeypatch.setattr("backend.agent.authenticate_ledger", lambda *args: None)
+    monkeypatch.setattr("backend.pipelines.assessment.pipeline.authenticate_ledger", lambda *args: None)
 
     def retrieve(self, facts, deadline):
         if error:
             raise error
         return result if result is not None else ledger()
 
-    monkeypatch.setattr("backend.retrieval.CaseRetrievalService.retrieve_case", retrieve)
+    monkeypatch.setattr("backend.services.search.retrieval.CaseRetrievalService.retrieve_case", retrieve)
 
 
 def post(monkeypatch, adapter, body):
-    monkeypatch.setattr("backend.agent.Provider", lambda settings: adapter)
+    monkeypatch.setattr("backend.pipelines.assessment.pipeline.Provider", lambda settings: adapter)
 
     async def request():
         async with httpx.AsyncClient(transport=httpx.ASGITransport(app=create_app(adapter.settings)),
@@ -99,7 +99,7 @@ def test_development_cases_through_public_api(monkeypatch, case_id):
                 "appearance": "opaque", "target_analytes": ["fat", "protein"],
                 "process_constraints": ["Product temperature and texture vary during production."]})
     facts = facts_for(text, context)
-    from backend.validation import _validation_options
+    from backend.pipelines.assessment.validation import _validation_options
     data = draft()
     data["experiment"]["validation"] = _validation_options(facts)[0]
     data["case_summary"] = ("The customer requests API concentration monitoring in a powder blend."
@@ -224,7 +224,7 @@ def test_deadline_expiry_prevents_synthesis_repair():
 
     adapter.structured = invalid
     from unittest.mock import patch
-    with patch("backend.agent.time.monotonic", lambda: clock[0]):
+    with patch("backend.pipelines.assessment.pipeline.time.monotonic", lambda: clock[0]):
         with pytest.raises(ProviderError) as error:
             asyncio.run(synthesize_assessment(powder(), ledger(), provider=adapter, deadline=11.0))
     assert error.value.http_status == 504 and len(calls) == 1
@@ -235,7 +235,7 @@ def test_slow_retrieval_is_bounded_and_late_result_is_discarded(monkeypatch):
     adapter, calls = provider_for([wire_for(powder().model_dump())])
     released, entered = threading.Event(), threading.Event()
     authenticated = []
-    monkeypatch.setattr("backend.agent.authenticate_ledger", lambda *args: authenticated.append(True))
+    monkeypatch.setattr("backend.pipelines.assessment.pipeline.authenticate_ledger", lambda *args: authenticated.append(True))
 
     class SlowRetrieval:
         def retrieve_case(self, facts, deadline):
@@ -247,7 +247,7 @@ def test_slow_retrieval_is_bounded_and_late_result_is_discarded(monkeypatch):
         # Warm extraction once, then set a generous enough budget for scheduling.
         async def extract(*args, **kwargs):
             return powder()
-        monkeypatch.setattr("backend.agent.extract_case", extract)
+        monkeypatch.setattr("backend.pipelines.assessment.pipeline.extract_case", extract)
         start = time.monotonic()
         try:
             result = await assess_case(DESCRIPTION, provider=adapter, retrieval_service=SlowRetrieval(),
@@ -269,7 +269,7 @@ def test_unexpected_programming_failure_stays_500(monkeypatch):
     async def broken(*args, **kwargs):
         raise RuntimeError("programming defect")
 
-    monkeypatch.setattr("backend.agent.extract_case", broken)
+    monkeypatch.setattr("backend.pipelines.assessment.pipeline.extract_case", broken)
     with pytest.raises(RuntimeError, match="programming defect"):
         post(monkeypatch, adapter, {"description": DESCRIPTION})
 
@@ -403,9 +403,9 @@ def test_ambiguous_patient_relationship_requires_unit_clarification():
 
 
 def test_diagnostic_api_mode_records_incomplete_run(monkeypatch):
-    from backend.smoke_assessment import run_cases
+    from backend.cli.smoke_assessment import run_cases
     adapter, _ = provider_for([httpx.Response(503)])
-    monkeypatch.setattr("backend.agent.Provider", lambda settings: adapter)
+    monkeypatch.setattr("backend.pipelines.assessment.pipeline.Provider", lambda settings: adapter)
     record, code = asyncio.run(run_cases(config(), {"D01"}, use_api=True))
     assert code == 1 and record["transport"] == "asgi_api"
     saved = record["cases"][0]

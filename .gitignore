@@ -109,3 +109,6 @@ Desktop.ini
 
 # Local registrations of user-added originals.
 /knowledge/added_sources.json
+
+/outputs/search_smoke/
+/outputs/refactor-tests/

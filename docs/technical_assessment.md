@@ -27,9 +27,9 @@ The response is `AssessmentRun` with `run_status`, `facts`, `retrieval`, `assess
 Each run error identifies `code`, `stage`, sanitized `message` and the underlying `http_status`. Error stages are extraction, retrieval and synthesis. Raw invalid output and provider bodies are excluded. Unexpected programming exceptions remain server failures (500), rather than becoming technical recommendations.
 
 ```python
-from backend.agent import assess_case
-from backend.config import Settings
-from backend.retrieval import CaseRetrievalService
+from backend.pipelines.assessment.pipeline import assess_case
+from backend.core.config import Settings
+from backend.services.search.retrieval import CaseRetrievalService
 
 settings = Settings()
 result = await assess_case(description, settings,
@@ -89,7 +89,7 @@ Local contract tests cover successful D01/D02 fixtures, empty shortlists, undefi
 The diagnostic runner can invoke the actual public route in-process while using live provider calls and local retrieval:
 
 ```powershell
-.\.venv\Scripts\python.exe -m backend.smoke_assessment --api --request-deadline-s 90 --call-timeout-s 30
+.\.venv\Scripts\python.exe -m backend.cli.smoke_assessment --api --request-deadline-s 90 --call-timeout-s 30
 ```
 
 It defaults to D01/D02 and saves timestamped records under `outputs/assessment/`. IDs remain runner bookkeeping and never enter model inputs. `--case` selects cases; `--provider` is a run-only override. Without explicit timeout arguments the diagnostic runner uses its existing 180-second total / 60-second call limits. Routine runs are ignored by Git; reviewed records can be retained explicitly.
