@@ -43,7 +43,7 @@ Validation rejects malformed structures, unknown fields, duplicate or dangling c
 
 If a material description explicitly contains a single supported form word (`powder`, `slurry`, `liquid`, `gas` or `solid`), leaving its sample form unknown is rejected. This narrow completeness check copies no facts automatically and does not infer a phase from a product name.
 
-One repair is allowed for malformed generated JSON or failed local validation. It receives the original enquiry and validation errors, within the original deadline. LLMTech also receives its previous response to support targeted correction; Groq regenerates without replaying the large response to limit request size. Automatic mode can switch providers on availability failures within the same deadline; invalid generated content stays on this bounded repair path. Pinned mode retains configured transport retries. See [provider selection](providers.md). The extraction output ceiling defaults to `EXTRACTION_MAX_COMPLETION_TOKENS=3072`, capped by `PROVIDER_MAX_COMPLETION_TOKENS`.
+One repair is allowed for malformed generated JSON or failed local validation, using the original enquiry and validation errors within the same deadline. DashScope qwen3.8-flash is the only provider/model; there is no automatic fallback. Transport retries remain bounded. See [provider selection](providers.md). The extraction output ceiling defaults to `EXTRACTION_MAX_COMPLETION_TOKENS=3072`, capped by `PROVIDER_MAX_COMPLETION_TOKENS`.
 
 Exhausted validation returns HTTP 502 with `extraction_invalid_response`. Provider timeouts return HTTP 504; configuration, authentication, quota and availability failures use the existing sanitized provider status mapping. Invalid output and detailed diagnostics are never returned as successful facts. The manual diagnostic runner may retain invalid output locally for inspection.
 
@@ -58,49 +58,10 @@ These checks establish structural validity and quotation traceability. They do n
 .\.venv\Scripts\python.exe -m backend.cli.smoke_extraction
 ```
 
-An explicit run-only LLMTech override is available:
-
-```powershell
-.\.venv\Scripts\python.exe -m backend.cli.smoke_extraction --provider llmtech --public-trial
-```
-
-This uses an existing backend-only LLMTech key when supplied, otherwise retrieves the documented public trial key at runtime. It never writes the key to results or changes `.env`. To select one input, append `--case D02`; the three additional synthetic IDs are `multi_stream`, `capability_claim` and `ambiguous_units`.
-
-The runner saves timestamped outputs under `outputs/extraction/`, including prompt/model identity, settings, available token usage and sanitized failures. A mechanical pass is labeled separately from manual semantic review. These development outputs are not scientific feasibility assessments.
+Use `--case D02` to select one input. No provider override or public-trial flag is supported.
 
 On 2026-10-17, all 122 backend tests passed. Final `extraction-v6` outputs for D01, D02 and the three synthetic enquiries passed mechanical checks and agent comparison against their original text using LLMTech `nvidia/Qwen3.8-27B-NVFP4`. The [review record](../outputs/extraction/review.json) identifies the exact outputs and their limitations. Earlier Groq request-size/rate-limit failures and earlier extraction defects remain available as historical diagnostics. This does not establish independent human validation or spectroscopy performance.
 
-The API defaults to `PROVIDER_NAME=auto`, preferring configured Gemini, then LLMTech/Groq keys. Use `PROVIDER_NAME=llmtech` to pin LLMTech. The explicit `backend.cli.provider_setup --public-trial --check` command can fill a missing key in local `.env`; diagnostic `--public-trial` remains a run-only option. Restart the backend after configuration changes.
+The API uses `PROVIDER_NAME=dashscope`, `PROVIDER_MODEL=qwen3.8-flash`, and `DASHSCOPE_API_KEY`. Restart the backend after changing configuration. See [provider setup](providers.md).
 
-F05 composition uses `extraction-v7`, which reinforces contiguous quotes, original capitalization, preservation of phrases without ellipses, and the distinction between concentration/appearance and sample phase. The validation rules and one-repair limit remain in place. Its current D01/D02 full-pipeline checks are recorded in the [assessment inspection receipt](../outputs/assessment/review.json); the extraction-v6 results above remain historical evidence for the earlier five-case extraction check.
-
-## Original source formats
-
-The deterministic source layer reads PDF text blocks, DOCX paragraphs/table rows,
-and XLSX worksheet rows while preserving file hashes and source locations. PDF
-page/image extraction and the curated T01 method-table import remain unchanged.
-DOCX development material remains outside technical retrieval unless explicitly
-reviewed and admitted.
-
-The opt-in Gemini comparison command is documented in [provider selection](providers.md).
-It compares the existing deterministic baseline payload with Gemini extraction on
-the same original files; it does not silently replace the published corpus.
-
-## Gemini and enquiry history
-
-Automatic mode now prefers Gemini 3.8 Flash for extraction and synthesis, with
-LLMTech/Groq Qwen fallback. Every provider must satisfy the same quote-provenance
-and evidence checks. Clarification answers are assembled on the backend and linked
-to their originating questions in saved enquiry history. See
-[provider configuration](providers.md) and [explainability](explainability.md).
-
-## Recovering usable extractions
-
-The assessment route recovers optional fields individually before validation. When a
-model paraphrases a value but supplies a verified customer quote, the app stores
-the original quote as the value. This preserves the customer's numbers, units,
-qualifiers and negation without relying on automated paraphrase interpretation.
-Optional fields and attributed statements with unverifiable quotes are omitted
-and reported as open items. Recovery warnings also appear in the run envelope and
-trace. Invalid context identities, malformed output and unsupported evidence
-references still fail validation. Recovery does not establish scientific correctness.
+Saved enquiry history retains original requests, validated facts, evidence and provider trace data. Historical provider identities remain readable without enabling those providers for new requests.

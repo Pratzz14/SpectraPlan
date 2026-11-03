@@ -1,18 +1,12 @@
 import assert from 'node:assert/strict'
 import { test } from 'vitest'
-import { fetchGeminiComparison, fetchExplainability, fetchEnquiries, fetchEnquiry } from '../src/shared/api/api'
+import { fetchExplainability, fetchEnquiries, fetchEnquiry } from '../src/shared/api/api'
 
 async function respond(value, status, work) {
   const original = globalThis.fetch
   globalThis.fetch = async () => new Response(JSON.stringify(value), { status })
   try { return await work(new AbortController().signal) } finally { globalThis.fetch = original }
 }
-
-test('optional missing comparison is distinct from malformed or failed comparison', async () => {
-  assert.equal(await respond(null, 404, fetchGeminiComparison), null)
-  await assert.rejects(respond({}, 503, fetchGeminiComparison), /could not be loaded/)
-  await assert.rejects(respond({ model:'gemini', source_count:1, succeeded:1, results:[{ source_id:'T01',file_name:'test.xlsx',gemini:{facts:null} }] }, 200, fetchGeminiComparison), /Unexpected/)
-})
 
 test('legacy history preserves its original result without rendering an incompatible schema', async () => {
   const runId = 'a'.repeat(32)

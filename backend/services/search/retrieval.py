@@ -566,7 +566,7 @@ class CaseRetrievalService:
         documents = read_json(snapshot.directory / "bm25.json")["documents"]
         if (len({d["evidence_id"] for d in documents}) != len(documents) or
             any(d["tokens"] != tokens(snapshot.records[d["evidence_id"]]["section"] + " " +
-                                      snapshot.records[d["evidence_id"]]["text"]) for d in documents)):
+                                      index_text(snapshot.records[d["evidence_id"]])) for d in documents)):
             raise CorpusUnavailable("Lexical index documents differ from pinned source records")
         by_segment = {s["id"]: s for s in read_json(snapshot.directory / "segments.json")}
         queries, required, fields_by_id, statements_by_id, input_gaps = [], {}, {}, {}, []

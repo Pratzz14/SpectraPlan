@@ -4,11 +4,11 @@
 
 `backend.main` assembles the app. `api/routers` owns HTTP contracts; `api/dependencies` exposes application-scoped settings and services through FastAPI dependency injection. Override these dependencies in focused tests. Domain code does not import HTTP routers.
 
-`core` owns environment settings and root-relative paths. `schemas` owns Pydantic contracts. `providers` owns structured model transport, retries and provider selection. `services/search` owns BM25, embeddings, embedded Qdrant and evidence resolution; `services/knowledge` owns corpus storage and reports; `services/history` owns SQLite rounds and PDF exports. `pipelines` orchestrates assessment, document comparison, source extraction and website ingestion. `cli` contains explicit operational entrypoints.
+`core` owns environment settings and root-relative paths. `schemas` owns Pydantic contracts. `providers` owns structured model transport, retries and the single DashScope model. `services/search` owns BM25, embeddings, embedded Qdrant and evidence resolution; `services/knowledge` owns corpus storage and reports; `services/history` owns SQLite rounds and PDF exports. `pipelines` orchestrates assessment, document comparison, source extraction and website ingestion. `cli` contains explicit operational entrypoints.
 
 `prompts` contains model instructions loaded with `importlib.resources`; original extraction/synthesis prompt hashes are protected by tests. `templates` contains the static knowledge report. New evaluation snapshots include nested prompts and templates. Archived snapshots are immutable.
 
-Synchronous search and report routes run in FastAPI's worker thread pool. Model transport remains async. Search locks preserve embedded-Qdrant access; one application worker is supported. Readiness does not prove source relevance. Startup provider probing is opt-in.
+Synchronous search and report routes run in FastAPI's worker thread pool. Model transport remains async. Search locks preserve embedded-Qdrant access; one application worker is supported. Readiness does not prove source relevance. No startup provider probes or model fallback are performed.
 
 ## Frontend
 

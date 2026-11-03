@@ -1,0 +1,120 @@
+{
+  "description": "We manufacture a powdered pharmaceutical blend containing an active ingredient and several excipients. We want to investigate whether near-infrared spectroscopy can monitor moisture and blend uniformity in-line during mixing. Moisture is typically 1–5% by mass, and the active ingredient concentration is approximately 10% by mass. Particle size and temperature vary between batches. We currently use Karl Fischer titration for moisture and HPLC for active ingredient concentration. Ideally, measurements should update every 10 seconds without removing samples. Which measurement approaches are worth investigating, what information is missing, and how should we design an initial feasibility experiment?",
+  "response": {
+    "contexts": [
+      {
+        "context_id": "stream_1",
+        "label": {
+          "value": "powdered pharmaceutical blend containing an active ingredient and several excipients",
+          "input_quote": "We manufacture a powdered pharmaceutical blend containing an active ingredient and several excipients."
+        },
+        "target_analytes": [
+          {
+            "value": "moisture",
+            "input_quote": "monitor moisture"
+          },
+          {
+            "value": "blend uniformity",
+            "input_quote": "blend uniformity in-line during mixing"
+          }
+        ],
+        "measurement_goals": [
+          {
+            "value": "investigate whether near-infrared spectroscopy can monitor",
+            "input_quote": "We want to investigate whether near-infrared spectroscopy can monitor moisture and blend uniformity in-line during mixing."
+          },
+          {
+            "value": "measurements should update every 10 seconds without removing samples",
+            "input_quote": "Ideally, measurements should update every 10 seconds without removing samples."
+          }
+        ],
+        "sample_matrix": {
+          "value": "powdered pharmaceutical blend containing an active ingredient and several excipients",
+          "input_quote": "We manufacture a powdered pharmaceutical blend containing an active ingredient and several excipients."
+        },
+        "sample_phase": null,
+        "appearance": null,
+        "temperature": null,
+        "pressure": null,
+        "response_time_raw": {
+          "value": "every 10 seconds",
+          "input_quote": "Ideally, measurements should update every 10 seconds without removing samples."
+        },
+        "response_time_s": {
+          "value": 10,
+          "input_quote": "Ideally, measurements should update every 10 seconds without removing samples."
+        },
+        "concentration_range": {
+          "value": "Moisture is typically 1–5% by mass, and the active ingredient concentration is approximately 10% by mass.",
+          "input_quote": "Moisture is typically 1–5% by mass, and the active ingredient concentration is approximately 10% by mass."
+        },
+        "required_error": null,
+        "reference_assays": [
+          {
+            "value": "Karl Fischer titration for moisture",
+            "input_quote": "We currently use Karl Fischer titration for moisture and HPLC for active ingredient concentration."
+          },
+          {
+            "value": "HPLC for active ingredient concentration",
+            "input_quote": "We currently use Karl Fischer titration for moisture and HPLC for active ingredient concentration."
+          }
+        ],
+        "process_constraints": [
+          {
+            "value": "Particle size and temperature vary between batches.",
+            "input_quote": "Particle size and temperature vary between batches."
+          },
+          {
+            "value": "in-line during mixing",
+            "input_quote": "monitor moisture and blend uniformity in-line during mixing."
+          }
+        ],
+        "missing_information": [
+          "What is the specific particle size distribution range?",
+          "What is the temperature range observed during mixing?",
+          "What is the acceptable tolerance for blend uniformity measurement error?",
+          "Are there any constraints on the probe installation or mounting?"
+        ]
+      }
+    ],
+    "customer_claims_and_requests": [
+      {
+        "text": "The customer requests investigation of near-infrared spectroscopy for monitoring moisture and blend uniformity.",
+        "kind": "requested_outcome",
+        "context_ids": [
+          "stream_1"
+        ],
+        "input_quote": "We want to investigate whether near-infrared spectroscopy can monitor moisture and blend uniformity in-line during mixing."
+      },
+      {
+        "text": "The customer states that particle size and temperature vary between batches.",
+        "kind": "reported_fact",
+        "context_ids": [
+          "stream_1"
+        ],
+        "input_quote": "Particle size and temperature vary between batches."
+      },
+      {
+        "text": "The customer states they currently use Karl Fischer titration and HPLC.",
+        "kind": "reported_fact",
+        "context_ids": [
+          "stream_1"
+        ],
+        "input_quote": "We currently use Karl Fischer titration for moisture and HPLC for active ingredient concentration."
+      },
+      {
+        "text": "The customer asks which measurement approaches are worth investigating and how to design an initial feasibility experiment.",
+        "kind": "requested_outcome",
+        "context_ids": [],
+        "input_quote": "Which measurement approaches are worth investigating, what information is missing, and how should we design an initial feasibility experiment?"
+      }
+    ],
+    "shared_constraints": [],
+    "missing_information": [
+      "What is the specific particle size distribution range?",
+      "What is the temperature range observed during mixing?",
+      "What is the acceptable tolerance for blend uniformity measurement error?",
+      "Are there any constraints on the probe installation or mounting?"
+    ]
+  }
+}

@@ -294,7 +294,7 @@ class AssessmentMetadata(FactModel):
     synthesis_max_completion_tokens: int
     synthesis_temperature: float
     repair_counts: dict[str, int] = Field(default_factory=dict)
-    provider_mode: Literal["auto", "gemini", "groq", "llmtech"] = "groq"
+    provider_mode: Literal["dashscope", "auto", "gemini", "groq", "llmtech"] = "dashscope"
     enquiry_id: str | None = None
     parent_run_id: str | None = None
     round_no: int = 1

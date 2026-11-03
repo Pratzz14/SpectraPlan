@@ -86,7 +86,7 @@ export interface AssessmentMetadata {
   stage_elapsed_s: Record<string, number>; last_successful_call_usage: Record<string, Record<string, number>>;
   call_timeout_s: number; request_deadline_s: number; provider_max_retries: number; provider_max_completion_tokens: number;
   extraction_max_completion_tokens: number; synthesis_max_completion_tokens: number; synthesis_temperature: number;
-  repair_counts: Record<string, number>; provider_mode: 'auto' | 'gemini' | 'groq' | 'llmtech';
+  repair_counts: Record<string, number>; provider_mode: 'dashscope' | 'auto' | 'gemini' | 'groq' | 'llmtech';
   enquiry_id?: string | null; parent_run_id?: string | null; round_no?: number; question_ids?: string[];
   stage_providers: Record<string, Record<string, unknown>>; provider_attempts: Record<string, unknown>[];
 }
@@ -136,7 +136,7 @@ const retrieval = shape({ status: enumeration('ok'), corpus_version: text, retri
 const experiment = shape({ context_ids: strings, objective: text, samples: strings, measurements: strings, comparisons: strings, validation: text, decision_criteria: text, open_items: strings, variation: strings, proposed_settings: list(shape({ context_ids: strings, name: text, value: number, unit: nullText, origin: enumeration('proposed') })), validation_groups: list(shape({ context_ids: strings, independent_unit: enumeration('batch', 'run', 'specimen', 'patient', 'unresolved'), study_type: enumeration('targeted_feasibility', 'characterization') })), acceptance_criteria: list(shape({ context_id: text, metric: enumeration('required_error', 'response_time_raw', 'bias', 'robustness'), threshold: nullText, requirement_path: nullText, origin: enumeration('customer', 'unknown') })) });
 const spectralRange: Check = v => shape({ text, evidence_ids: strings, kind: enumeration('nominal_method_range', 'source_configuration_range', 'undetermined'), interval: nullText, raman_excitation: nullable(assertion), raman_shift: nullable(assertion) })(v) && object(v) && (v.kind === 'undetermined' ? v.interval === null : typeof v.interval === 'string');
 const assessment = shape({ decision_status: enumeration('provisional', 'insufficient_information', 'outside_supported_scope'), decision_reason: text, case_summary: text, requirements: shape({ stated: list(shape({ context_id: nullText, field: text, field_path: text, value: text, origin: enumeration('customer'), input_quote: text })), unknowns: strings }), clarification_questions: list(shape({ priority: number, context_ids: strings, question: text, reason: assertion, affects: strings })), recommendations: list(shape({ context_ids: strings, method: text, geometry: nullText, measurement_location: nullText, spectral_range: spectralRange, rationale: assertion, assumptions: strings, limitations: list(assertion), status: enumeration('worth_testing', 'conditional_on_clarification') })), risks: list(v => assertion(v) && shape({ context_ids: strings })(v)), experiment, source_index: list(source) });
-const metadata = shape({ run_id: text, generated_at: text, pipeline_version: text, provider: text, model: text, returned_models: dictionary(nullText), endpoint: text, corpus_version: nullText, retrieval_version: nullText, prompt_versions: dictionary(text), prompt_sha256: dictionary(text), schema_sha256: dictionary(text), stage_elapsed_s: dictionary(number), last_successful_call_usage: dictionary(dictionary(number)), call_timeout_s: number, request_deadline_s: number, provider_max_retries: number, provider_max_completion_tokens: number, extraction_max_completion_tokens: number, synthesis_max_completion_tokens: number, synthesis_temperature: number, repair_counts: dictionary(number), provider_mode: enumeration('auto', 'gemini', 'groq', 'llmtech'), stage_providers: dictionary(object), provider_attempts: list(object) });
+const metadata = shape({ run_id: text, generated_at: text, pipeline_version: text, provider: text, model: text, returned_models: dictionary(nullText), endpoint: text, corpus_version: nullText, retrieval_version: nullText, prompt_versions: dictionary(text), prompt_sha256: dictionary(text), schema_sha256: dictionary(text), stage_elapsed_s: dictionary(number), last_successful_call_usage: dictionary(dictionary(number)), call_timeout_s: number, request_deadline_s: number, provider_max_retries: number, provider_max_completion_tokens: number, extraction_max_completion_tokens: number, synthesis_max_completion_tokens: number, synthesis_temperature: number, repair_counts: dictionary(number), provider_mode: enumeration('dashscope', 'auto', 'gemini', 'groq', 'llmtech'), stage_providers: dictionary(object), provider_attempts: list(object) });
 const envelope = shape({ run_status: enumeration('complete', 'incomplete'), facts: nullable(facts), retrieval: nullable(retrieval), assessment: nullable(assessment), errors: list(shape({ code: text, stage: enumeration('extraction', 'retrieval', 'synthesis'), message: text, http_status: enumeration(502, 503, 504) })), metadata, warnings: strings });
 
 export function isAssessmentRun(value: unknown): value is AssessmentRun {
@@ -173,6 +173,9 @@ const technicalDiagnosticPatterns = [
 
 export function displayText(value: string): string {
   return value
+    .replace(/\s*\(customer requirement \/(?:contexts|shared_constraints)[^)]*\)/g, '')
+    .replace(/\bresponse_time_raw\b/g, 'response time')
+    .replace(/\brequired_error\b/g, 'required accuracy')
     .replace(/\bProposed\s*\([^)]*\)\s*:\s*/gi, 'Proposed: ')
     .replace(/\bstream_\d+\b/gi, 'this stream')
     .replace(/\bmethod_no\b/gi, 'method')

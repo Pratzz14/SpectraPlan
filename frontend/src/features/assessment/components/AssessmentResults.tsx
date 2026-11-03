@@ -14,7 +14,13 @@ export function CitationButtons({ ids, claim, run, inspect }: CitationProps & { 
 }
 
 export function Claim({ claim, run, inspect }: CitationProps & { claim: Assertion }) {
-  return <div className="claim"><p>{displayText(claim.text.replace(/^Source excerpt \([^)]+\):\s*/, ''))}</p><CitationButtons ids={claim.evidence_ids} claim={claim.text} run={run} inspect={inspect} /></div>
+  const quote = claim.text.replace(/^Source excerpt \([^)]+\):\s*/, '')
+  const source = run.retrieval?.evidence.find(entry => claim.evidence_ids.includes(entry.evidence.evidence_id)
+    && entry.evidence.content_kind === 'method_row' && entry.evidence.text.replace(/\s+/g, ' ').trim() === quote.replace(/\s+/g, ' ').trim())?.evidence
+  const fields = [['method', 'Method'], ['measurement_technique', 'Technique'], ['sample_type', 'Sample type'], ['physical_phenomenon', 'Physical principle'], ['optical_path_or_depth', 'Optical path / depth'], ['sensitivity', 'Sensitivity'], ['selectivity', 'Selectivity'], ['cost', 'Relative cost']] as const
+  const values = source?.raw_values && typeof source.raw_values === 'object' && !Array.isArray(source.raw_values) ? source.raw_values as Record<string, unknown> : source
+  const rows = values ? fields.flatMap(([key, label]) => typeof values[key] === 'string' ? [{label, value: values[key] as string}] : []) : []
+  return <div className="claim">{rows.length ? <><p className="section-note">Source method comparison</p><dl className="source-method-facts">{rows.map(row => <div key={row.label}><dt>{row.label}</dt><dd>{row.value}</dd></div>)}</dl></> : <p>{displayText(quote)}</p>}<CitationButtons ids={claim.evidence_ids} claim={claim.text} run={run} inspect={inspect} /></div>
 }
 
 function TextList({ title, items }: { title: string; items: string[] }) {
@@ -133,7 +139,7 @@ function MethodCard({ recommendation: r, run, inspect }: CitationProps & { recom
   return <article className="method-card">
     <div className="card-heading"><h4>{displayText(r.method)}</h4><span className="badge">{readable(r.status)}</span></div>
     <Claim claim={r.rationale} run={run} inspect={inspect} />
-    <dl className="concept-grid"><div><dt>Geometry</dt><dd>{displayText(r.geometry ?? 'Unknown — requires clarification')}</dd><dt className="location-label">Measurement location</dt><dd>{displayText(r.measurement_location ?? 'Unknown — requires clarification')}</dd></div><div><dt>Spectral coverage · {readable(r.spectral_range.kind)}</dt><dd>{displayText(r.spectral_range.interval ?? 'Not yet established')}</dd><CitationButtons ids={r.spectral_range.evidence_ids} claim={r.spectral_range.text} run={run} inspect={inspect} /></div></dl>
+    <dl className="concept-grid"><div><dt>Geometry</dt><dd>{r.geometry ? readable(r.geometry) : 'Requires clarification'}</dd><dt className="location-label">Measurement location</dt><dd>{displayText(r.measurement_location ?? 'Unknown — requires clarification')}</dd></div><div><dt>Spectral coverage · {readable(r.spectral_range.kind)}</dt><dd>{displayText(r.spectral_range.interval ?? 'Not yet established')}</dd><CitationButtons ids={r.spectral_range.evidence_ids} claim={r.spectral_range.text} run={run} inspect={inspect} /></div></dl>
     {r.spectral_range.raman_excitation ? <div className="result-block"><h5>Raman excitation wavelength</h5><Claim claim={r.spectral_range.raman_excitation} run={run} inspect={inspect} /></div> : null}
     {r.spectral_range.raman_shift ? <div className="result-block"><h5>Raman shift coverage</h5><Claim claim={r.spectral_range.raman_shift} run={run} inspect={inspect} /></div> : null}
     <details className="method-details"><summary>Range qualification, assumptions and limitations</summary><Claim claim={r.spectral_range} run={run} inspect={inspect} />{r.spectral_range.kind === 'nominal_method_range' ? <p className="section-note">Nominal method coverage is not a verified instrument, fiber or probe specification.</p> : null}<TextList title="Assumptions — not stated facts" items={r.assumptions} />{r.limitations.length ? <div className="result-block"><h5>Limitations</h5>{r.limitations.map((claim, i) => <Claim key={i} claim={claim} run={run} inspect={inspect} />)}</div> : null}</details>
@@ -142,18 +148,19 @@ function MethodCard({ recommendation: r, run, inspect }: CitationProps & { recom
 
 export function RecommendationCards({ assessment, run, inspect }: CitationProps & { assessment: Assessment }) {
   return <Panel title="Method shortlist">
-    {assessment.recommendations.length ? grouped(assessment.recommendations, run.facts).map(group => <section className="context-section" key={group.label}><h3>{group.label}</h3>{group.items.map((r, i) => <MethodCard key={i} recommendation={r} run={run} inspect={inspect} />)}</section>) : <div className="empty-shortlist"><h3>No supported method shortlist</h3><p>{assessment.decision_reason}</p><p>Resolve the clarification questions and follow the proposed investigation before selecting a method or configuration.</p></div>}
+    {assessment.recommendations.length ? grouped(assessment.recommendations, run.facts).map(group => <section className="context-section" key={group.label}>{(run.facts?.contexts.length ?? 0) > 1 ? <h3>{group.label}</h3> : null}{group.items.map((r, i) => <MethodCard key={i} recommendation={r} run={run} inspect={inspect} />)}</section>) : <div className="empty-shortlist"><h3>No supported method shortlist</h3><p>{assessment.decision_reason}</p><p>Resolve the clarification questions and follow the proposed investigation before selecting a method or configuration.</p></div>}
   </Panel>
 }
 
 export function ExperimentPlan({ experiment: e, facts }: { experiment: Experiment; facts: CaseFacts | null }) {
+  const studyLabel = (ids: string[]) => facts?.contexts.length === 1 && ids.length === 1 ? 'This process' : contextLabel(facts, ids)
   return <Panel title="First feasibility experiment">
-    <p className="eyebrow">Proposed study · {contextLabel(facts, e.context_ids)}</p><p>{e.objective}</p>
+    <p className="section-note">Proposed study · {studyLabel(e.context_ids)}</p><p>{e.objective}</p>
     <TextList title="Samples" items={e.samples} /><TextList title="Measurements and reference assays" items={e.measurements} /><TextList title="Methods to compare" items={e.comparisons} /><TextList title="Variation to cover" items={e.variation} />
-    <div className="result-block"><h3>Independent validation</h3><p>{e.validation}</p>{e.validation_groups.map((g, i) => <p key={i} className="validation-group"><strong>{contextLabel(facts, g.context_ids)}</strong> · {readable(g.study_type)} · Independent unit: {g.independent_unit}</p>)}</div>
-    <TextList title="Proposed settings — not requirements or measured results" items={e.proposed_settings.map(s => `${contextLabel(facts, s.context_ids)} · ${displayText(s.name)}: ${s.value}${s.unit ? ` ${s.unit}` : ''}`)} />
-    {e.acceptance_criteria.length ? <div className="result-block"><h3>Acceptance criteria</h3><ul className="result-list">{e.acceptance_criteria.map((c, i) => <li key={i}><strong>{contextLabel(facts, [c.context_id])} · {readable(c.metric)}:</strong> {c.threshold ?? 'Unknown — agree with customer'} <span className="section-note">({c.origin === 'customer' ? 'Customer requirement' : 'Unspecified'})</span></li>)}</ul></div> : null}
-    <div className="result-block"><h3>Go / no-go decision</h3><p>{e.decision_criteria}</p></div><TextList title="Open items" items={e.open_items} />
+    <div className="result-block"><h3>Independent validation</h3><p>{displayText(e.validation)}</p>{e.validation_groups.map((g, i) => <p key={i} className="validation-group"><strong>{studyLabel(g.context_ids)}</strong> · {readable(g.study_type)} · Independent unit: {g.independent_unit}</p>)}</div>
+    <TextList title="Proposed settings — not requirements or measured results" items={e.proposed_settings.map(s => `${studyLabel(s.context_ids)} · ${displayText(s.name)}: ${s.value}${s.unit ? ` ${s.unit}` : ''}`)} />
+    {e.acceptance_criteria.length ? <div className="result-block"><h3>Acceptance criteria</h3><ul className="result-list">{e.acceptance_criteria.map((c, i) => <li key={i}><strong>{studyLabel([c.context_id])} · {readable(c.metric)}:</strong> {c.threshold ?? 'Unknown — agree with customer'} <span className="section-note">({c.origin === 'customer' ? 'Customer requirement' : 'Unspecified'})</span></li>)}</ul></div> : null}
+    <div className="result-block"><h3>Go / no-go decision</h3><p>{displayText(e.decision_criteria)}</p></div><TextList title="Open items" items={e.open_items} />
   </Panel>
 }
 

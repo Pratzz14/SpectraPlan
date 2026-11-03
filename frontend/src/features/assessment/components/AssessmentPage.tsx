@@ -93,6 +93,12 @@ export default function AssessmentPage({ initialRun = '' }: { initialRun?: strin
   const status = assessment ? assessment.decision_status === 'provisional'
     ? assessment.recommendations.some(r => r.status === 'conditional_on_clarification') ? 'Conditional' : 'Provisional'
     : readable(assessment.decision_status) : undefined
+  function goToSection(id: string) {
+    const section = document.getElementById(id)
+    if (section instanceof HTMLDetailsElement) section.open = true
+    section?.scrollIntoView({ block: 'start' })
+  }
+  const sourceCount = new Set(run?.retrieval?.evidence.map(entry => entry.evidence.source_id) ?? []).size
   const requirementSummary = run?.facts?.contexts.map(c => [...c.target_analytes, c.sample_matrix ?? c.label].join(' · ')).join(' / ')
   return <div className="assessment-page"><div className="split-workspace assessment-workspace">
     <form className="workspace-rail enquiry-rail" onSubmit={event => { event.preventDefault(); void submit() }}>
@@ -108,19 +114,22 @@ export default function AssessmentPage({ initialRun = '' }: { initialRun?: strin
         <div role="status" aria-live="polite">{loading ? <p className="compact-notice"><span className="loading-dot" />Analyzing enquiry and supporting evidence…</p> : null}</div>
         {error ? <div role="alert" className="error-panel"><h2 ref={resultHeading} tabIndex={-1}>Assessment could not be completed</h2><p>{error}</p></div> : null}
         {run?.run_status === 'incomplete' ? <div className="error-panel" role="alert"><h2 ref={resultHeading} tabIndex={-1}>No technical assessment produced</h2>{run.errors.map(failure => <p key={failure.code}><strong>{failure.stage} · {failure.code}</strong><br />{failure.message}</p>)}<p>Validated partial results remain available below.</p></div> : null}
-        <div key={run?.metadata.run_id ?? 'pending'} className="assessment-sections">
-          <Accordion title="Process requirements" description={requirementSummary || 'Requirements and constraints'}>{run ? <RequirementsPanel run={run} /> : <p className="section-note">Analyze an enquiry to extract its requirements.</p>}</Accordion>
-          <Accordion title="Method shortlist" description={assessment && assessment.recommendations.length > 1 ? `${assessment.recommendations.length} methods` : undefined} status={status} open headingRef={assessment || !run ? resultHeading : undefined}>
-            {assessment ? <><RecommendationCards assessment={assessment} run={run} inspect={inspect} />{assessment.recommendations.length ? <details className="method-details"><summary>Decision reason</summary><p>{assessment.decision_reason}</p></details> : null}</> : <p className="section-note">{run ? 'No validated recommendations are available.' : loading ? 'Preparing assessment…' : 'Enter an enquiry to compare supported methods.'}</p>}
+        {!run && !loading && !error ? <div className="assessment-empty"><h2 ref={resultHeading} tabIndex={-1}>Your technical assessment starts here.</h2><p>Describe what you want to measure, how your process works, and the constraints that matter.</p><ol><li><strong>Understand the enquiry</strong><span>Review the requirements and answer any clarification questions.</span></li><li><strong>Explore supported methods</strong><span>Read the assessment alongside its source evidence.</span></li><li><strong>Plan a first experiment</strong><span>Identify samples, reference measurements, and the decisions to test.</span></li></ol></div> : null}
+        {assessment ? <header id="assessment-overview" className="assessment-report-header"><div className="assessment-report-title"><h2>Technical assessment</h2><span className="report-status">{status}</span></div><p className="report-source-note">{sourceCount} source {sourceCount === 1 ? 'document' : 'documents'} consulted · Preliminary assessment</p><p className="report-lead">{assessment.decision_reason}</p></header> : null}
+        {run ? <nav className="report-navigation" aria-label="Assessment sections"><a href="#assessment-overview" onClick={event => { event.preventDefault(); goToSection('assessment-overview') }}>Overview</a><a href="#assessment-methods" onClick={event => { event.preventDefault(); goToSection('assessment-methods') }}>Methods</a><a href="#assessment-requirements" onClick={event => { event.preventDefault(); goToSection('assessment-requirements') }}>Requirements</a><a href="#assessment-experiment" onClick={event => { event.preventDefault(); goToSection('assessment-experiment') }}>Experiment</a><a href="#assessment-risks" onClick={event => { event.preventDefault(); goToSection('assessment-risks') }}>Risks</a></nav> : null}
+        {run ? <div key={run.metadata.run_id} className="assessment-sections">
+          <Accordion id="assessment-methods" title="Method shortlist" description={assessment && assessment.recommendations.length > 1 ? `${assessment.recommendations.length} methods` : undefined} status={status} open headingRef={assessment || !run ? resultHeading : undefined}>
+            {assessment ? <><RecommendationCards assessment={assessment} run={run} inspect={inspect} /></> : <p className="section-note">{run ? 'No validated recommendations are available.' : loading ? 'Preparing assessment…' : 'Enter an enquiry to compare supported methods.'}</p>}
           </Accordion>
-          <Accordion title="First feasibility experiment" description="Samples, reference measurements and validation">{assessment ? <ExperimentPlan experiment={assessment.experiment} facts={run.facts} /> : <p className="section-note">No experiment has been produced yet.</p>}</Accordion>
-          <Accordion title="Risks and limitations" description={assessment?.risks.length ? `${assessment.risks.length} assessment risks and method-specific limitations` : assessment ? 'No additional risks returned' : 'Suitability and validation limits'}>{run ? <RunNotes run={run} inspect={inspect} section="risks" /> : null}</Accordion>
+          <Accordion id="assessment-requirements" title="Process requirements" description={requirementSummary || 'Requirements and constraints'} open>{run ? <RequirementsPanel run={run} /> : <p className="section-note">Analyze an enquiry to extract its requirements.</p>}</Accordion>
+          <Accordion id="assessment-experiment" title="First feasibility experiment" description="Samples, reference measurements and validation" open>{assessment ? <ExperimentPlan experiment={assessment.experiment} facts={run.facts} /> : <p className="section-note">No experiment has been produced yet.</p>}</Accordion>
+          <Accordion id="assessment-risks" open title="Risks and limitations" description={assessment?.risks.length ? `${assessment.risks.length} assessment risks and method-specific limitations` : assessment ? 'No additional risks returned' : 'Suitability and validation limits'}>{run ? <RunNotes run={run} inspect={inspect} section="risks" /> : null}</Accordion>
           <Accordion title="Warnings and evidence gaps" description={warnings[0] ?? gaps[0]?.message ?? (run ? 'No processing warnings or retrieval gaps' : 'Coverage and evidence status')} warning={!!(warnings.length || gaps.length)}>{run ? <RunNotes run={run} inspect={inspect} section="warnings" /> : null}</Accordion>
           {run?.run_status === 'incomplete' && run.retrieval?.evidence.length ? <Accordion title="Retrieved evidence" description="Candidates available before failure">{run.retrieval.evidence.map(entry => <button className="citation" type="button" key={entry.evidence.evidence_id} onClick={() => inspect(entry.evidence.evidence_id, 'Retrieved candidate — no final assessment was produced.')}>{evidenceLocation(entry.evidence)}</button>)}</Accordion> : null}
-        </div>
+        </div> : null}
         {run ? <details className="run-metadata"><summary>Submitted enquiry</summary><p className="submitted-text">{submitted}</p></details> : null}
       </div>
-      <ActionBar run={run} description={submitted} loading={loading} compact />
+      {run ? <ActionBar run={run} description={submitted} loading={loading} compact /> : null}
     </section>
     {selected && evidence ? <EvidenceDrawer key={`${selected.source.metadata.run_id}:${selected.id}`} evidence={evidence} claim={selected.claim} close={() => setSelected(null)} /> : null}
   </div></div>

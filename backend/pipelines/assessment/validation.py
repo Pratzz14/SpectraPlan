@@ -53,6 +53,12 @@ def canonical_source_quote(description: str, quote: str) -> str | None:
     return description[spans[start][0]:spans[end - 1][1]]
 
 
+def exact_seconds(raw: str | None) -> float | None:
+    """Only an unqualified, explicit seconds duration; no bounds or conversion."""
+    match = re.fullmatch(r"\s*([0-9]+(?:\.[0-9]+)?)\s*(?:s|sec|secs|second|seconds)\s*", raw or "", re.IGNORECASE)
+    return float(match[1]) if match else None
+
+
 def validate_extraction(facts: CaseFacts, description: str) -> None:
     """Mechanical traceability checks; these cannot prove arbitrary prose entailment."""
     errors = []
@@ -76,9 +82,7 @@ def validate_extraction(facts: CaseFacts, description: str) -> None:
             else:
                 expected[f"/contexts/{i}/{name}"] = (value, [context.context_id], name)
         if context.response_time_s is not None:
-            match = re.fullmatch(r"\s*([0-9]+(?:\.[0-9]+)?)\s*(?:s|sec|secs|second|seconds)\s*",
-                                 context.response_time_raw or "", re.IGNORECASE)
-            if not match or float(match[1]) != context.response_time_s:
+            if exact_seconds(context.response_time_raw) != context.response_time_s:
                 errors.append(f"/contexts/{i}/response_time_s requires matching exact raw seconds; no conversions or bounds")
     for i, text in enumerate(facts.shared_constraints):
         expected[f"/shared_constraints/{i}"] = (text, [], "shared_constraints")

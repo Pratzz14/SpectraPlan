@@ -85,7 +85,7 @@ def ingest_file(settings, file: Path, *, role="technical", name=None, prepare_on
         with FileLock(str(root / "build.lock"), timeout=5 if job_file else 0):
             update(status="running")
             source = register_file(settings, file, role=role, name=name)
-            update(source_id=source["source_id"], message="Extracting with Qwen3.7 Flash" if settings.usable_key(settings.dashscope_api_key) else "Extracting locally with text/OCR recovery")
+            update(source_id=source["source_id"], message="Extracting with Qwen3.8 Flash" if settings.usable_key(settings.dashscope_api_key) else "Extracting locally with text/OCR recovery")
             latest = root / "import" / "latest"
             if (latest / "manifest.json").is_file():
                 prior = read_json(latest / "manifest.json")

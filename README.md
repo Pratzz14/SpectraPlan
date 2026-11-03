@@ -30,7 +30,7 @@ Push-Location frontend
 npm run dev
 ```
 
-Open http://127.0.0.1:5173. API schema: http://127.0.0.1:8000/docs. Stop with Ctrl+C. Startup probes are disabled by default; search smoke does not start the API.
+Open http://127.0.0.1:5173. API schema: http://127.0.0.1:8000/docs. Stop with Ctrl+C. Startup makes no model calls; search smoke does not start the API.
 
 ## Checks
 
@@ -65,6 +65,6 @@ The app currently targets a trusted local workstation. Keep it on loopback: it h
 
 Project code: [MIT](LICENSE). Third-party source materials retain their own rights.
 
-Set `PROVIDER_PROBE_ON_STARTUP=false` for API startup without live provider probes. Assessment and ingestion actions still make their documented model calls.
 
-Provider routing occurs on demand during model-powered actions. Set `PROVIDER_PROBE_ON_STARTUP=true` only to enable a live startup check.
+
+Current provider: **Alibaba DashScope `qwen3.8-flash` only**, for Assessment and ingestion. Set `DASHSCOPE_API_KEY`; see [provider setup](docs/providers.md). No automatic provider fallback or startup probe is used.

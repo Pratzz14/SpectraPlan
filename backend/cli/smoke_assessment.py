@@ -1,4 +1,4 @@
-"""Live development pipeline: python -m backend.cli.smoke_assessment --provider llmtech --public-trial."""
+"""Live development pipeline: python -m backend.cli.smoke_assessment."""
 
 import argparse
 import asyncio
@@ -31,8 +31,8 @@ async def run_cases(settings: Settings, selected: set[str] | None = None, *, use
     record = {
         "run_id": uuid4().hex, "generated_at": datetime.now(timezone.utc).isoformat(),
         "development_only": True, "pipeline_version": PIPELINE_VERSION, "transport": "asgi_api" if use_api else "python",
-        "provider": settings.provider_name, "model": settings.provider_model if settings.provider_name != "auto" else None,
-        "endpoint": settings.provider_base_url if settings.provider_name != "auto" else None, "input_file_sha256": file_hash(inputs),
+        "provider": settings.provider_name, "model": settings.provider_model,
+        "endpoint": settings.provider_base_url, "input_file_sha256": file_hash(inputs),
         "prompt_versions": {"extraction": EXTRACTION_PROMPT_VERSION, "synthesis": SYNTHESIS_PROMPT_VERSION},
         "prompt_sha256": {"extraction": digest(EXTRACTION_PROMPT.encode()), "synthesis": digest(SYNTHESIS_PROMPT.encode())},
         "schema_sha256": {"extraction": digest(ExtractionOutput.model_json_schema()),
@@ -114,8 +114,6 @@ async def run_cases(settings: Settings, selected: set[str] | None = None, *, use
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--case", action="append", dest="cases", help="Development case ID; repeatable; defaults to D01 and D02")
-    parser.add_argument("--provider", choices=["auto", "gemini", "groq", "llmtech"], help="Run-only override")
-    parser.add_argument("--public-trial", action="store_true", help="Explicit LLMTech public trial if no backend key is configured")
     parser.add_argument("--api", action="store_true", help="Exercise POST /api/assess through ASGI with live provider/retrieval")
     parser.add_argument("--request-deadline-s", type=float, default=180)
     parser.add_argument("--call-timeout-s", type=float, default=60)
@@ -124,16 +122,9 @@ def main() -> int:
     try:
         settings = Settings()
         overrides = {"request_deadline_s": args.request_deadline_s, "provider_call_timeout_s": args.call_timeout_s}
-        if args.provider:
-            settings = settings.for_provider(args.provider)
         # Validate overrides instead of bypassing Settings constraints with model_copy.
         settings = Settings(_env_file=None, **{**settings.model_dump(), **overrides})
-        if args.public_trial:
-            from backend.cli.provider_setup import with_public_trial
-            settings = with_public_trial(settings)
         record, code = asyncio.run(run_cases(settings, set(args.cases) if args.cases else None, use_api=args.api))
-    except httpx.HTTPError:
-        parser.error("Cannot retrieve LLMTech public trial configuration")
     except ValueError as error:
         # Settings validation can contain input values; never print settings/secrets.
         parser.error("Invalid diagnostic configuration or development case selection: " + type(error).__name__)

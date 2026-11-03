@@ -27,7 +27,6 @@ async def run_smoke(settings: Settings) -> tuple[dict, int]:
         "provider": settings.provider_name,
         "model": settings.provider_model,
         "settings": {
-            "reasoning_effort": settings.provider_reasoning_effort,
             "strict_json_schema": True,
             "call_timeout_s": settings.provider_call_timeout_s,
             "deadline_s": settings.request_deadline_s,
@@ -63,24 +62,9 @@ async def run_smoke(settings: Settings) -> tuple[dict, int]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--provider", choices=["auto", "gemini", "groq", "llmtech"])
-    parser.add_argument("--all", action="store_true", help="Test each configured provider independently with synthetic data")
-    args = parser.parse_args()
+    parser.parse_args()
     settings = Settings()
-    if args.provider:
-        settings = settings.for_provider(args.provider)
-    if args.all:
-        async def check_all():
-            records = []
-            for name in settings.provider_order.split(","):
-                candidate = settings.for_provider(name)
-                if candidate.provider_configured:
-                    value, _ = await run_smoke(candidate)
-                    records.append(value)
-            return {"run_id": uuid4().hex, "providers": records}, int(not any(r["outcome"] == "passed" for r in records))
-        record, code = asyncio.run(check_all())
-    else:
-        record, code = asyncio.run(run_smoke(settings))
+    record, code = asyncio.run(run_smoke(settings))
     settings.smoke_output_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     path = settings.smoke_output_dir / f"{stamp}_{record['run_id']}.json"

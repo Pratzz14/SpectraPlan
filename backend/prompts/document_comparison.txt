@@ -1,2 +1,0 @@
-Extract only information explicitly present in this source document. Return one JSON object with source_id as a string and exactly these arrays: claims, facts, unknowns, source_locations. Return at most 8 claims, 8 facts, 8 unknowns, and 20 source_locations. Keep claims and facts concise and quote or paraphrase only the supplied blocks. Do not invent technical conclusions. source_locations must use the supplied location values.
-

@@ -21,34 +21,6 @@ export async function fetchKnowledgeInspection(signal: AbortSignal): Promise<Kno
   return data
 }
 
-export interface GeminiComparison {
-  model: string
-  source_count: number
-  succeeded: number
-  errors: number
-  comparison_note?: string
-  results: {
-    source_id: string
-    file_name: string
-    gemini: { claims: string[]; facts: string[]; unknowns: string[]; source_locations: string[] } | null
-    error: { code: string; message: string } | null
-  }[]
-}
-
-export async function fetchGeminiComparison(signal: AbortSignal): Promise<GeminiComparison | null> {
-  const response = await fetch('/api/knowledge/gemini-comparison', { signal, cache: 'no-store' })
-  if (response.status === 404) return null
-  if (!response.ok) throw new Error('Gemini comparison could not be loaded.')
-  const data = await response.json() as GeminiComparison
-  if (!data || typeof data.model !== 'string' || !Number.isInteger(data.succeeded) || !Number.isInteger(data.source_count)
-    || !Array.isArray(data.results) || !data.results.every(r => r && typeof r.source_id === 'string' && typeof r.file_name === 'string'
-      && (r.gemini === null || (r.gemini && ['facts', 'claims', 'unknowns', 'source_locations'].every(k =>
-        Array.isArray(r.gemini![k as keyof typeof r.gemini]) && (r.gemini![k as keyof typeof r.gemini] as string[]).every(v => typeof v === 'string')))))) {
-    throw new Error('Unexpected Gemini comparison response.')
-  }
-  return data
-}
-
 export async function assessEnquiry(input: AssessmentRequest, signal: AbortSignal): Promise<AssessmentRun> {
   let response: Response
   try {
@@ -99,8 +71,8 @@ export interface HealthResponse {
     human_verified_records: number
   }
   provider: {
-    name: 'auto' | 'gemini' | 'groq' | 'llmtech'; model: string; configured: boolean
-    mode: 'auto' | 'gemini' | 'groq' | 'llmtech'; selected: string | null
+    name: 'dashscope'; model: string; configured: boolean
+    mode: 'dashscope'; selected: string | null
     candidates: { name: string; configured: boolean; status: 'unchecked' | 'working' | 'unavailable' | 'not_configured'; error_code: string | null }[]
   }
 }
@@ -124,9 +96,9 @@ function isHealthResponse(value: unknown): value is HealthResponse {
     && Number.isInteger(data.corpus.eligible_methods) && data.corpus.eligible_methods >= 0
     && Number.isInteger(data.corpus.flagged_records) && data.corpus.flagged_records >= 0
     && Number.isInteger(data.corpus.human_verified_records) && data.corpus.human_verified_records >= 0
-    && !!data.provider && ['auto', 'gemini', 'groq', 'llmtech'].includes(data.provider.name)
+    && !!data.provider && ['dashscope'].includes(data.provider.name)
     && typeof data.provider.model === 'string' && typeof data.provider.configured === 'boolean'
-    && ['auto', 'gemini', 'groq', 'llmtech'].includes(data.provider.mode)
+    && ['dashscope'].includes(data.provider.mode)
     && (data.provider.selected === null || typeof data.provider.selected === 'string')
     && Array.isArray(data.provider.candidates)
     && data.provider.candidates.every(p => !!p && typeof p.name === 'string' && typeof p.configured === 'boolean'

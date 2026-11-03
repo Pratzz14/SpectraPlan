@@ -23,7 +23,7 @@ CLAIM = "We own a fluorescence instrument. We believe it measures protein accura
 
 
 def config(**kwargs):
-    return Settings(_env_file=None, **{"provider_name": "groq", "groq_api_key": "test-secret", "provider_max_retries": 0, **kwargs})
+    return Settings(_env_file=None, **{"provider_name": "dashscope", "dashscope_api_key": "test-secret", "provider_max_retries": 0, **kwargs})
 
 
 def facts_for(description, *contexts, shared=(), statements=()):
@@ -149,7 +149,7 @@ def test_d01_d02_pipeline_contract(case):
         assert result.contexts[0].sample_phase is None  # Liquid is not explicitly stated.
     assert json.loads(calls[0]["messages"][1]["content"])["description"] == description
     assert calls[0]["messages"][0]["content"] == EXTRACTION_PROMPT
-    assert calls[0]["max_completion_tokens"] == 3072
+    assert calls[0]["max_tokens"] == 3072
     assert EXTRACTION_PROMPT_VERSION in EXTRACTION_PROMPT
 
 
@@ -393,7 +393,7 @@ def test_api_failure_contract(code, status, monkeypatch):
 
 
 def test_api_actual_unconfigured_provider():
-    response = api_request({"description": "A liquid"}, Settings(_env_file=None, groq_api_key=""))
+    response = api_request({"description": "A liquid"}, Settings(_env_file=None, dashscope_api_key=""))
     assert response.status_code == 503
     assert response.json()["detail"]["code"] == "provider_not_configured"
 

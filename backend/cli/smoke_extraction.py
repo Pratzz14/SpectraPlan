@@ -34,8 +34,8 @@ async def run_cases(settings: Settings, selected: set[str] | None = None) -> tup
     record = {
         "run_id": uuid4().hex,
         "generated_at": datetime.now(timezone.utc).isoformat(),
-        "provider": settings.provider_name, "model": settings.provider_model if settings.provider_name != "auto" else None,
-        "endpoint": settings.provider_base_url if settings.provider_name != "auto" else None,
+        "provider": settings.provider_name, "model": settings.provider_model,
+        "endpoint": settings.provider_base_url,
         "prompt_version": EXTRACTION_PROMPT_VERSION,
         "prompt_sha256": hashlib.sha256(EXTRACTION_PROMPT.encode("utf-8")).hexdigest(),
         "schema_sha256": hashlib.sha256(json.dumps(ExtractionOutput.model_json_schema(), sort_keys=True).encode("utf-8")).hexdigest(),
@@ -68,19 +68,10 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--case", action="append", dest="cases", help="D01, D02, multi_stream, capability_claim, ambiguous_units; repeatable")
     parser.add_argument("--output-dir", type=Path, default=PROJECT_ROOT / "outputs/extraction")
-    parser.add_argument("--provider", choices=["auto", "gemini", "groq", "llmtech"], help="Explicit run-only override; saved configuration is unchanged")
-    parser.add_argument("--public-trial", action="store_true", help="Use LLMTech's documented public trial only if no LLMTech key is configured")
     args = parser.parse_args()
     try:
         settings = Settings()
-        if args.provider:
-            settings = settings.for_provider(args.provider)
-        if args.public_trial:
-            from backend.cli.provider_setup import with_public_trial
-            settings = with_public_trial(settings)
         record, code = asyncio.run(run_cases(settings, set(args.cases) if args.cases else None))
-    except httpx.HTTPError:
-        parser.error("Cannot retrieve LLMTech public trial configuration")
     except ValueError as error:
         parser.error(str(error))
     args.output_dir.mkdir(parents=True, exist_ok=True)

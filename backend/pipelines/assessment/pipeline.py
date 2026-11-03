@@ -22,7 +22,7 @@ from backend.schemas.models import (
 from backend.providers.provider import Provider, ProviderError
 from backend.schemas.retrieval_models import RetrievalResult
 from backend.pipelines.assessment.validation import (
-    ExtractionValidationError, AssessmentValidationError, validate_extraction,
+    ExtractionValidationError, AssessmentValidationError, validate_extraction, exact_seconds,
     _assertion_choices, _method_choices, _validation_options, _spectral_intervals,
     _check_synthesis_inputs, _cited_ids, validate_synthesis, validate_final, authenticate_ledger,
     validation_groups, acceptance_criteria, customer_summary, canonical_source_quote,
@@ -174,6 +174,14 @@ def recover_extraction_fields(output: ExtractionOutput, description: str):
             elif isinstance(value, list) and name != "missing_information":
                 context[name] = [kept for j, item in enumerate(value)
                                  if (kept := recover(item, f"{path}/{j}")) is not None]
+        # Numeric seconds are optional derived data. Preserve the original timing
+        # wording when cadence, bounds, conversions or a mismatched number cannot
+        # satisfy the strict duration contract; do not reject otherwise valid facts.
+        numeric_time = context.get("response_time_s")
+        raw_time = context.get("response_time_raw")
+        if numeric_time is not None and (raw_time is None or exact_seconds(raw_time["value"]) != numeric_time["value"]):
+            context["response_time_s"] = None
+            warnings.append(f"Extraction warning: omitted /contexts/{i}/response_time_s; retained the original timing wording without numeric conversion.")
     data["shared_constraints"] = [kept for i, item in enumerate(data["shared_constraints"])
                                   if (kept := recover(item, f"/shared_constraints/{i}")) is not None]
     statements = []
@@ -238,9 +246,7 @@ async def extract_case(description: str, settings: Settings | None = None, *,
             if not isinstance(previous, str):
                 previous = ""
         if hasattr(adapter, "reject_stage"):
-            fallback = adapter.reject_stage(feedback, exhausted=bool(attempt))
-            if attempt and fallback:
-                return await extract_case(description, config, provider=adapter, deadline=stop_at)
+            adapter.reject_stage(feedback, exhausted=bool(attempt))
         if attempt:
             failure = ProviderError("extraction_invalid_response", "Extraction failed schema or input-provenance validation after one repair.", 502)
             # Available only to an explicit local diagnostic runner, never the HTTP response.
@@ -250,8 +256,6 @@ async def extract_case(description: str, settings: Settings | None = None, *,
         adapter.repair_counts["extraction"] = 1
         repair_errors = feedback
         last_content = previous
-        if getattr(adapter, "current_settings", config).provider_name == "llmtech" and previous:
-            messages.append({"role": "assistant", "content": previous})
         # Regenerate against the original input plus exact errors. Replaying the full
         # invalid response can exceed the provider's input-token limit on repair.
         messages.append({"role": "user", "content": json.dumps({
@@ -331,6 +335,11 @@ def synthesis_output_model(facts: CaseFacts, retrieval: RetrievalResult) -> type
             if "recommendations" in properties and not methods:
                 # Do not leave an impossible required child schema under an empty array:
                 # some constrained-decoding compilers reject even unreachable children.
+                # The local contract forbids provisional decisions without a
+                # supported recommendation. Advertise that same constraint to
+                # the model instead of requesting an impossible combination.
+                properties["decision_status"]["enum"] = ["insufficient_information", "outside_supported_scope"]
+                properties["clarification_questions"]["minItems"] = 1
                 properties["recommendations"]["maxItems"] = 0
                 properties["recommendations"]["items"] = {"type": "string"}
             elif "recommendations" in properties:
@@ -540,9 +549,7 @@ async def synthesize_assessment(facts: CaseFacts, retrieval: RetrievalResult, se
             feedback.extend(getattr(error, "validation_errors", []))
             previous = getattr(error, "invalid_content", "")
         if hasattr(adapter, "reject_stage"):
-            fallback = adapter.reject_stage(feedback, exhausted=bool(attempt))
-            if attempt and fallback:
-                return await synthesize_assessment(facts, retrieval, config, provider=adapter, deadline=stop_at)
+            adapter.reject_stage(feedback, exhausted=bool(attempt))
         if attempt:
             failure = ProviderError("synthesis_invalid_response", "Synthesis failed validation after one repair.", 502)
             failure.validation_errors = feedback

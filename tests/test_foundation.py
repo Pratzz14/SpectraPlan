@@ -16,7 +16,7 @@ from tests.corpus_fixture import make_corpus
 
 
 def settings(**overrides):
-    return Settings(_env_file=None, **{"provider_name": "groq", "groq_api_key": "test-secret", **overrides})
+    return Settings(_env_file=None, **{"provider_name": "dashscope", "dashscope_api_key": "test-secret", **overrides})
 
 
 def health_response(config):
@@ -53,19 +53,19 @@ def write_corpus(directory: Path, *, approved=True, revision="corpus-v1"):
 
 def test_configuration_env_precedence_and_paths(tmp_path, monkeypatch):
     env_file = tmp_path / ".env"
-    env_file.write_text("GROQ_API_KEY=file-secret\nPROVIDER_MODEL=file-model\n", encoding="utf-8")
-    monkeypatch.setenv("GROQ_API_KEY", "env-secret")
+    env_file.write_text("DASHSCOPE_API_KEY=file-secret\nPROVIDER_MODEL=file-model\n", encoding="utf-8")
+    monkeypatch.setenv("DASHSCOPE_API_KEY", "env-secret")
     monkeypatch.chdir(tmp_path)
-    config = Settings(_env_file=env_file, corpus_dir="knowledge", provider_name="groq")
-    assert config.groq_api_key.get_secret_value() == "env-secret"
+    config = Settings(_env_file=env_file, corpus_dir="knowledge", provider_name="dashscope")
+    assert config.dashscope_api_key.get_secret_value() == "env-secret"
     assert config.provider_model == "file-model"
     assert config.corpus_dir == PROJECT_ROOT / "knowledge"
     assert "env-secret" not in repr(config)
 
 
-@pytest.mark.parametrize("key", ["", "  ", "your_groq_api_key_here", "replace_me"])
+@pytest.mark.parametrize("key", ["", "  ", "your_dashscope_api_key_here", "replace_me"])
 def test_missing_and_placeholder_keys(key):
-    assert not settings(groq_api_key=key).provider_configured
+    assert not settings(dashscope_api_key=key).provider_configured
 
 
 @pytest.mark.parametrize("values", [
@@ -96,7 +96,7 @@ def test_health_is_free_and_secret_free(tmp_path, monkeypatch):
 def test_health_requires_provider_and_corpus(tmp_path):
     write_corpus(tmp_path)
     for key, ready in [("", False), ("test-secret", True)]:
-        data = health_response(settings(corpus_dir=tmp_path, groq_api_key=key)).json()
+        data = health_response(settings(corpus_dir=tmp_path, dashscope_api_key=key)).json()
         assert data["ready"] is ready
         assert data["corpus"]["version"] == "corpus-v1"
         assert data["corpus"]["eligible_passages"] == 1
@@ -138,12 +138,14 @@ def test_corpus_malformed_record_and_duplicate_id(tmp_path):
 
 def test_provider_request_and_local_validation():
     def handle(request):
-        assert request.url == "https://api.groq.com/openai/v1/chat/completions"
+        assert request.url == "https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions"
         assert request.headers["authorization"] == "Bearer test-secret"
         payload = json.loads(request.content)
-        assert payload["model"] == "qwen/qwen3.8-27b"
-        assert payload["reasoning_effort"] == "medium"
-        assert payload["reasoning_format"] == "hidden"
+        assert payload["model"] == "qwen3.8-flash"
+        assert payload["enable_thinking"] is False
+        assert payload["max_tokens"] == 4096
+        assert "max_completion_tokens" not in payload
+        assert "reasoning_format" not in payload
         schema = payload["response_format"]["json_schema"]
         assert schema["strict"] is True
         assert schema["schema"]["additionalProperties"] is False
@@ -153,25 +155,26 @@ def test_provider_request_and_local_validation():
     assert result == Extraction(sample_phase="powder", target="moisture")
 
 
-def test_llmtech_uses_its_own_key_and_request_fields():
+def test_dashscope_uses_its_own_key_and_request_fields():
     def handle(request):
-        assert request.headers["authorization"] == "Bearer llmtech-test-secret"
+        assert request.headers["authorization"] == "Bearer dashscope-test-secret"
         payload = json.loads(request.content)
-        assert payload["chat_template_kwargs"] == {"enable_thinking": False}
+        assert payload["enable_thinking"] is False
+        assert "chat_template_kwargs" not in payload
         assert "reasoning_format" not in payload and "reasoning_effort" not in payload
         return httpx.Response(200, json=completion())
-    assert not settings(provider_name="llmtech").provider_configured
-    result = invoke(handle, provider_name="llmtech", llmtech_api_key="llmtech-test-secret")
+    assert not settings(dashscope_api_key="").provider_configured
+    result = invoke(handle, provider_name="dashscope", dashscope_api_key="dashscope-test-secret")
     assert result.sample_phase == "powder"
 
 
-def test_llmtech_exhausted_credit_fails_without_retry():
+def test_dashscope_exhausted_credit_fails_without_retry():
     calls = []
     def handle(request):
         calls.append(request)
         return httpx.Response(402, json={"error": {"message": "private quota details"}})
     with pytest.raises(ProviderError) as caught:
-        invoke(handle, provider_name="llmtech", llmtech_api_key="llmtech-test-secret")
+        invoke(handle, provider_name="dashscope", dashscope_api_key="dashscope-test-secret")
     assert caught.value.daily_limit and caught.value.upstream_status == 402
     assert len(calls) == 1 and "private" not in str(caught.value)
 
@@ -297,7 +300,13 @@ def test_missing_key_smoke_is_explicit_and_does_not_call(monkeypatch):
         pytest.fail("Missing key must not open HTTP client")
 
     monkeypatch.setattr(httpx, "AsyncClient", forbidden)
-    record, code = asyncio.run(run_smoke(settings(groq_api_key="")))
+    record, code = asyncio.run(run_smoke(settings(dashscope_api_key="")))
     assert code == 1 and record["outcome"] == "unresolved"
     assert record["error"]["code"] == "provider_not_configured"
     assert record["validated_response"] is None
+
+
+def test_only_dashscope_is_supported():
+    for legacy in ("auto", "gemini", "groq", "llmtech", "regolo"):
+        with pytest.raises(ValidationError):
+            Settings(_env_file=None, provider_name=legacy)

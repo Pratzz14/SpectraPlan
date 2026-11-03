@@ -1,4 +1,4 @@
-"""Direct Qwen3.7 Flash extraction from PDF images and Office source text."""
+"""Direct Qwen3.8 Flash extraction from PDF images and Office source text."""
 
 from backend.prompts import load_prompt
 import argparse
@@ -194,7 +194,7 @@ def extract_all(settings, run_dir, *, source_ids=None, dpi=180, concurrency=2, r
                 entry={'attempt':attempt,'status':'running'}
                 unit['attempt_history'].append(entry)
                 with lock: save()
-                payload={'model':fingerprint['model'],'stream':False,'enable_thinking':True,'max_tokens':12000,
+                payload={'model':fingerprint['model'],'stream':False,'enable_thinking':False,'max_tokens':12000,
                          'response_format':{'type':'json_schema','json_schema':{'name':'PageKnowledge','strict':True,'schema':response_schema()}},
                          'messages':[{'role':'system','content':system+(load_prompt("knowledge_repair.txt").format(failure=failure) if attempt>1 else '')},
                                      {'role':'user','content':content}]}

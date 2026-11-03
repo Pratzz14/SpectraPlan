@@ -1,12 +1,12 @@
 # PDF and Office knowledge pipeline
 
-The pipeline supports the five supplied PDFs (S01–S05), `AFS_method_comparison_table.xlsx` (T01), and `AFS_Examples_and_Reference.docx` (D01_DOC). It uses Qwen3.7 Flash with lightweight readability checks, bounded retries, and local text/OCR recovery. Qwen receives PDF page images; Office inputs retain cell and paragraph/table-row references.
+The pipeline supports the five supplied PDFs (S01–S05), `AFS_method_comparison_table.xlsx` (T01), and `AFS_Examples_and_Reference.docx` (D01_DOC). It uses Qwen3.8 Flash with lightweight readability checks, bounded retries, and local text/OCR recovery. Qwen receives PDF page images; Office inputs retain cell and paragraph/table-row references.
 
 The supplied batch covers seven sources, 64 PDF pages and eight Office sections/worksheets (72 source locations). The repaired 2026-11-03 batch contains 308 readable Qwen records, 44 locally recovered passages, and 19 exact workbook rows (371 total). Twenty-seven locations used local recovery and none remained unreadable. DashScope returned HTTP 403 near the end of extraction; the remaining Office content was recovered locally. The active manifest and validation report contain the current record counts and recovery status. Development examples and business context remain available in inspection search. Readability checks do not establish scientific correctness or human review.
 
 ## Commands and inputs
 
-Set `DASHSCOPE_API_KEY` and optionally `DASHSCOPE_BASE_URL` in the root `.env` or environment. The default endpoint is the existing Alibaba Singapore workspace. These settings are separate from assessment provider routing.
+Set `DASHSCOPE_API_KEY` and optionally `DASHSCOPE_BASE_URL` in the root `.env` or environment. The default endpoint is the existing Alibaba Singapore workspace. Assessment uses the same credential and endpoint, without provider fallback.
 
 ```powershell
 # All supported files; reuse matching completed responses:
@@ -25,7 +25,7 @@ A complete batch has 64 PDF pages, two worksheets, and six Word sections (72 sou
 
 Each PDF page is rendered at 180 DPI and sent to Qwen as a PNG. Embedded PDF text stays local for completeness checks and recovery; it is not added to the model image prompt. Excel sheets are read with formulas and cell coordinates intact; Word body paragraphs and tables are read in document order. Office text is sent to Qwen directly. The workbook importer also preserves all 19 exact method rows, all nine columns, and all seven notes independently of Qwen's summaries. Original Office files are never edited or resaved.
 
-Requests use thinking enabled, a 12,000-token completion budget, a 240-second timeout, and structured JSON output. One to four requests can run concurrently (default two). Each unit has at most three attempts (configurable from one to five). Invalid JSON, incomplete responses, unreadable claims/quotes and transient transport/HTTP failures retry with a short delay; numeric Retry-After is capped at ten seconds. Authentication and permanent HTTP failures skip retries. Exhausted attempts recover local embedded text using PyMuPDF, then try local Tesseract OCR when embedded text is unreadable. Office recovery uses the original section text. Recovery stores source passages, not fabricated claims. Pages still unreadable retain their preview and an explicit warning with no invented record. Actual input/storage failures block publication. There is no automatic provider switch. Rerunning rechecks cached Qwen answers, reuses valid completed units, and retries unreadable units. `--refresh` explicitly replaces completed answers too.
+Requests use thinking disabled, a 12,000-token completion budget, a 240-second timeout, and structured JSON output. One to four requests can run concurrently (default two). Each unit has at most three attempts (configurable from one to five). Invalid JSON, incomplete responses, unreadable claims/quotes and transient transport/HTTP failures retry with a short delay; numeric Retry-After is capped at ten seconds. Authentication and permanent HTTP failures skip retries. Exhausted attempts recover local embedded text using PyMuPDF, then try local Tesseract OCR when embedded text is unreadable. Office recovery uses the original section text. Recovery stores source passages, not fabricated claims. Pages still unreadable retain their preview and an explicit warning with no invented record. Actual input/storage failures block publication. There is no automatic provider switch. Rerunning rechecks cached Qwen answers, reuses valid completed units, and retries unreadable units. `--refresh` explicitly replaces completed answers too.
 
 ## Knowledge and source previews
 

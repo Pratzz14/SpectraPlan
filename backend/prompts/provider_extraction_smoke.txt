@@ -1,1 +1,0 @@
-Extract the stated sample form and target. For sample_phase preserve the customer's specific form, such as powder, rather than generalizing it to solid. Return schema-matching JSON.

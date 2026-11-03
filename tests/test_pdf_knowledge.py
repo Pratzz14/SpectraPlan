@@ -53,7 +53,7 @@ def prepared(tmp_path, monkeypatch):
     def respond(request):
         payload = json.loads(request.content)
         calls.append(payload)
-        assert payload['model'] == 'qwen3.7-flash' and payload['enable_thinking'] is True
+        assert payload['model'] == 'qwen3.8-flash' and payload['enable_thinking'] is False
         assert 'TEXT LAYER MUST NOT ENTER REQUEST' not in request.content.decode()
         assert payload['messages'][1]['content'][1]['image_url']['url'].startswith('data:image/png;base64,')
         return httpx.Response(200, json={'choices':[{'finish_reason':'stop', 'message':{'content':json.dumps(answer(empty='physical PDF page 2.' in payload['messages'][1]['content'][0]['text'])), 'reasoning_content':'DO NOT SAVE REASONING'}}]})
@@ -87,6 +87,14 @@ def test_publish_s04_only_search_evidence_and_assets(prepared):
     response = service.compare('complementary signals', mode='qdrant')
     assert response['rankings']['qdrant'][0]['evidence']['evidence_id'] == record['evidence_id']
     assert 'Complementary spectroscopy signals.' in response['rankings']['qdrant'][0]['matching_segment']
+    # Assessment must validate the same structured BM25 text used by publication.
+    from backend.services.search.retrieval import CaseRetrievalService
+    from backend.schemas.models import CaseFacts, MeasurementContext
+    assessed = CaseRetrievalService(settings).retrieve_case(CaseFacts(contexts=[
+        MeasurementContext(context_id="stream_1", label="complementary spectroscopy",
+            measurement_goals=["complementary signals"])]))
+    assert assessed.corpus_version == report["corpus_version"]
+
     async def requests():
         async with httpx.AsyncClient(transport=httpx.ASGITransport(app=create_app(settings)), base_url='http://test') as client:
             data = (await client.get('/api/knowledge/inspection')).json()

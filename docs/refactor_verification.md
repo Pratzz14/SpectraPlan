@@ -1,3 +1,5 @@
+> Historical refactor receipt, before the single-provider DashScope migration. Current provider behavior is documented in [providers](providers.md).
+
 # Refactor verification — 2026-11-03
 
 | Check | Result |

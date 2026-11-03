@@ -14,19 +14,9 @@ def create_router():
     @router.get("/api/health", response_model=HealthResponse)
     def health(config: Settings = Depends(get_settings)) -> HealthResponse:
         corpus = inspect_corpus(config.corpus_dir)
-        router = config._provider_router
-        route = router.snapshot() if router is not None else {"selected": None, "candidates": [
-            {"name": name, "configured": config.usable_key(getattr(config, f"{name}_api_key")),
-             "status": "unchecked" if config.usable_key(getattr(config, f"{name}_api_key")) else "not_configured",
-             "error_code": None} for name in config.provider_names]}
-        selected = route["selected"]
-        identity = config.for_provider(selected) if selected else config
-        return HealthResponse(
-            ready=config.provider_configured and corpus.status == "ready" and (config.provider_name != "auto" or selected is not None),
-            corpus=corpus,
-            provider=ProviderStatus(name=selected or config.provider_name, model=identity.provider_model,
-                configured=config.provider_configured, mode=config.provider_name,
-                selected=selected, candidates=route["candidates"]),
-        )
-
+        return HealthResponse(ready=config.provider_configured and corpus.status == "ready", corpus=corpus,
+            provider=ProviderStatus(name="dashscope", mode="dashscope", model=config.provider_model,
+                configured=config.provider_configured, selected="dashscope" if config.provider_configured else None,
+                candidates=[{"name":"dashscope", "configured":config.provider_configured,
+                    "status":"unchecked" if config.provider_configured else "not_configured", "error_code":None}]))
     return router

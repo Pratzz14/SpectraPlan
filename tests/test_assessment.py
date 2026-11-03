@@ -26,7 +26,7 @@ DESCRIPTION = "A powder; measure moisture."
 
 
 def config(**kwargs):
-    return Settings(_env_file=None, **{"provider_name": "groq", "groq_api_key": "test-secret", "provider_max_retries": 0, **kwargs})
+    return Settings(_env_file=None, **{"provider_name": "dashscope", "dashscope_api_key": "test-secret", "provider_max_retries": 0, **kwargs})
 
 
 def ledger(*, empty=False, **evidence_overrides):
@@ -354,7 +354,7 @@ def test_synthesis_one_attempt_and_completion_ceiling():
     with pytest.raises(ProviderError, match="after one repair"):
         invoke(response)
     _, calls = invoke(draft(), synthesis_max_completion_tokens=8000, provider_max_completion_tokens=4096)
-    assert len(calls) == 1 and calls[0]["max_completion_tokens"] == 4096
+    assert len(calls) == 1 and calls[0]["max_tokens"] == 4096
     assert calls[0]["temperature"] == 0
 
 
@@ -477,3 +477,13 @@ def test_invalid_diagnostic_case_is_rejected_before_calls():
     from backend.cli.smoke_assessment import run_cases
     with pytest.raises(ValueError, match="existing development cases"):
         asyncio.run(run_cases(config(), {"unknown"}))
+
+
+@pytest.mark.parametrize("retrieved", [ledger(empty=True), ledger(evidence_scope="general_method")])
+def test_empty_shortlist_schema_excludes_provisional_decision(retrieved):
+    schema = synthesis_output_model(CaseFacts(), retrieved).model_json_schema()
+    assert schema["properties"]["recommendations"]["maxItems"] == 0
+    assert schema["properties"]["clarification_questions"]["minItems"] == 1
+    assert set(schema["properties"]["decision_status"]["enum"]) == {"insufficient_information", "outside_supported_scope"}
+    supported = synthesis_output_model(powder(), ledger()).model_json_schema()
+    assert "provisional" in supported["properties"]["decision_status"]["enum"]

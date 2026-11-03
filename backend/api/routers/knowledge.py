@@ -82,25 +82,6 @@ def create_router():
             raise HTTPException(503, "Published extracted knowledge is unavailable. Check workspace status.") from None
 
 
-    @router.get("/api/knowledge/gemini-comparison")
-    def gemini_comparison(config: Settings = Depends(get_settings)):
-        path = config.smoke_output_dir / "gemini_complete_comparison.json"
-        try:
-            data = read_json(path)
-            if not isinstance(data, dict) or data.get("model") != config.gemini_model or not isinstance(data.get("results"), list):
-                raise ValueError("Invalid Gemini comparison artifact")
-            if not all(isinstance(result, dict) for result in data["results"]):
-                raise ValueError("Invalid comparison source result")
-            sources = {source["source_id"]: source["sha256"] for source in inventory(config.source_dir)}
-            if (not isinstance(data.get("succeeded"), int) or
-                any(result.get("source_sha256") != sources.get(result.get("source_id")) or
-                    result.get("source_sha256") is None for result in data["results"])):
-                raise ValueError("Comparison is outdated; regenerate from current sources")
-            return data
-        except (OSError, ValueError, TypeError, json.JSONDecodeError):
-            raise HTTPException(404, "Gemini comparison is unavailable. Run the comparison command first.") from None
-
-
     @router.get("/api/knowledge/report", include_in_schema=False)
     def knowledge_report(config: Settings = Depends(get_settings)):
         try:

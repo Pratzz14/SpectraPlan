@@ -5,7 +5,7 @@ import { recordTitle, sourcePageFor, sourcePageUrl, sourceUnitKey } from './know
 import { readable } from '../assessment/assessment'
 import KnowledgeImport from './KnowledgeImport'
 
-const extractionLabel = (method?: string) => ({ qwen: 'Qwen3.7 Flash', pymupdf_embedded: 'Embedded PDF text · PyMuPDF', pymupdf_ocr: 'Local OCR · PyMuPDF/Tesseract', office_text: 'Original Office text', unreadable: 'No readable text recovered' }[method ?? 'qwen'] ?? method)
+const extractionLabel = (method?: string) => ({ qwen: 'Qwen extraction', pymupdf_embedded: 'Embedded PDF text · PyMuPDF', pymupdf_ocr: 'Local OCR · PyMuPDF/Tesseract', office_text: 'Original Office text', unreadable: 'No readable text recovered' }[method ?? 'qwen'] ?? method)
 
 function SourcePreview({ data, page }: { data: KnowledgeInspection; page: SourcePage }) {
   const [failed, setFailed] = useState(false)

@@ -177,10 +177,8 @@ def git_identity() -> dict[str, str | bool | None]:
 def effective_settings(settings: Settings) -> dict:
     return {
         "provider_policy": settings.provider_name,
-        "provider_order": settings.provider_order,
         "request_deadline_s": settings.request_deadline_s,
         "provider_call_timeout_s": settings.provider_call_timeout_s,
-        "provider_probe_timeout_s": settings.provider_probe_timeout_s,
         "provider_max_retries": settings.provider_max_retries,
         "provider_max_completion_tokens": settings.provider_max_completion_tokens,
         "extraction_max_completion_tokens": settings.extraction_max_completion_tokens,
@@ -188,22 +186,12 @@ def effective_settings(settings: Settings) -> dict:
         "retrieval_semantic_min_score": settings.retrieval_semantic_min_score,
         "ingest_concurrency": settings.ingest_concurrency,
         "assessment_max_description_chars": settings.assessment_max_description_chars,
-        "provider_health_ttl_s": settings.provider_health_ttl_s,
-        "provider_failure_ttl_s": settings.provider_failure_ttl_s,
-        "provider_reasoning_effort": settings.provider_reasoning_effort,
-        "gemini_max_output_tokens": settings.gemini_max_output_tokens,
-        "gemini_thinking_level": settings.gemini_thinking_level,
     }
 
 
 def provider_profiles(settings: Settings) -> list[dict]:
-    profiles = []
-    for name in ("gemini", "llmtech", "groq"):
-        profile = settings.for_provider(name)
-        profiles.append({"name": name, "enabled": name in settings.provider_names,
-                         "configured": profile.provider_configured,
-                         "model": profile.provider_model, "base_url": profile.provider_base_url})
-    return profiles
+    return [{"name":"dashscope", "enabled":True, "configured":settings.provider_configured,
+             "model":settings.provider_model, "base_url":settings.provider_base_url}]
 
 
 def execution_files() -> list[Path]:
@@ -245,7 +233,7 @@ def configuration_record(settings: Settings) -> dict:
         "index_manifest_sha256": file_hash(index_manifest) if index_manifest and index_manifest.is_file() else None,
         "policy": {"synthesis_temperature": 0.0, "content_repair_per_provider_per_stage": 1,
                    "max_evidence_records": 8, "max_followup_searches": 1,
-                   "provider_cache": "reset before each case", "external_retrieval": False},
+                   "provider_cache": "none; single provider", "external_retrieval": False},
     }
 
 
@@ -384,7 +372,6 @@ async def run_cases(settings: Settings, *, selected: set[str] | None = None,
     batch_dir = output_dir / f"{stamp}_{batch_id}"
     history_path = batch_dir / "explainability.sqlite"
     run_settings = settings.model_copy(update={"explainability_db_path": history_path})
-    run_settings._provider_router = None
     audit = audit_final_inputs(cases, run_settings) if evaluation_kind == "final" else None
     frozen_configuration = configuration_record(run_settings)
     batch_dir.mkdir(parents=True, exist_ok=False)
@@ -434,7 +421,6 @@ async def run_cases(settings: Settings, *, selected: set[str] | None = None,
             # Keep each case's provider health/cache independent. A malformed
             # response must not suppress otherwise valid later cases, while all
             # cases still share the isolated history database and settings.
-            run_settings._provider_router = None
             request_path = batch_dir / f"{case['case_id']}.request.json"
             write_json(request_path, {"description": case["description"]})
             response = None
@@ -729,8 +715,6 @@ def main() -> int:
     actions.add_argument("--verify", type=Path, help="Verify a saved batch manifest without model calls")
     actions.add_argument("--publish", type=Path, help="Verify and publish a complete final batch")
     parser.add_argument("--source", type=Path, help="Original final scenario source for --prepare-final")
-    parser.add_argument("--provider", choices=["auto", "gemini", "groq", "llmtech"], help="Run-only provider policy")
-    parser.add_argument("--public-trial", action="store_true", help="Use the explicit LLMTech public trial when no key is configured")
     parser.add_argument("--request-deadline-s", type=float, default=90)
     parser.add_argument("--call-timeout-s", type=float, default=30)
     parser.add_argument("--input", type=Path)
@@ -759,18 +743,9 @@ def main() -> int:
         print(json.dumps({"batch_id": manifest.get("batch_id"), "published": code == 0, "errors": manifest.get("errors", [])}, indent=2))
         return code
     settings = Settings()
-    if args.suite == "final" and args.provider not in {None, "auto"}:
-        parser.error("The final evaluation uses the frozen automatic provider policy")
-    if args.provider:
-        settings = settings.for_provider(args.provider)
-    elif args.suite == "final":
-        settings = settings.for_provider("auto")
     settings = Settings(_env_file=None, **{**settings.model_dump(),
                                            "request_deadline_s": args.request_deadline_s,
                                            "provider_call_timeout_s": args.call_timeout_s})
-    if args.public_trial:
-        from backend.cli.provider_setup import with_public_trial
-        settings = with_public_trial(settings)
     if args.suite == "final" and args.cases:
         parser.error("Final evaluation always runs all H01-H06 cases")
     input_path = args.input or (FINAL_INPUT if args.suite == "final" else DEVELOPMENT_INPUT)
