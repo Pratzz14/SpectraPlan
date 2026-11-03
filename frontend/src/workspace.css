@@ -80,7 +80,7 @@
 .search-controls { padding:22px; gap:0; overflow:auto; }
 .search-controls h1 { margin-bottom:22px; }
 .search-controls label { margin:0 0 18px; }
-.search-controls > label[for="knowledge-query"] { margin-bottom:0; }
+.search-controls > label[for="source-search-query"] { margin-bottom:0; }
 .search-controls textarea { margin-bottom:22px; min-height:96px; }
 .search-controls .checkbox-label { display:flex; align-items:center; gap:10px; font-size:14px; font-weight:400; margin:8px 0 24px; }
 .checkbox-label input { width:19px; height:19px; accent-color:var(--green); }
@@ -280,3 +280,5 @@
 .extraction-notice { border-left:3px solid #b48834; padding:10px 14px; background:#fffaf0; font-size:13px; line-height:1.7; }
 
 .record-navigation { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:18px; font-size:13px; color:var(--muted); }
+
+.search-result-actions { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }

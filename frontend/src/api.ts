@@ -136,6 +136,7 @@ function isHealthResponse(value: unknown): value is HealthResponse {
 export type SearchMode = 'compare' | 'bm25' | 'qdrant' | 'hybrid'
 export type SearchDataset = 'technical' | 'website' | 'all' | 'inspection'
 export interface SearchEvidence {
+  source_location?: string; knowledge?: { claim: string };
   evidence_id: string; section: string; text: string; source_id: string; content_kind: string;
   evidence_scope: string; dataset: 'technical' | 'website' | 'inspection'; page?: number; sheet?: string; row?: number;
   url?: string; location_url?: string; page_title?: string; fetched_at?: string; revision: string;

@@ -118,3 +118,14 @@ def test_missing_embedding_is_unavailable_but_long_query_is_input_error(web_fixt
     monkeypatch.setattr("backend.search_service.Embedder", lambda *args, **kwargs: FakeEmbedder())
     with pytest.raises(ValueError, match="512 tokens"):
         SearchService(config).compare("x " * 600, mode="qdrant")
+
+
+@pytest.mark.parametrize('mode',['compare','bm25','qdrant','hybrid'])
+def test_empty_source_filter_returns_no_results_without_embeddings(tmp_path,monkeypatch,mode):
+    config=Settings(_env_file=None,corpus_dir=tmp_path/'technical',embedding_cache_dir=tmp_path/'embeddings')
+    make_corpus(config.corpus_dir)
+    monkeypatch.setattr('backend.search_service.Embedder',lambda *a,**kw:pytest.fail('Empty selection must not load embeddings'))
+    result=SearchService(config).compare('Raman',mode=mode,source_id='missing-source')
+    assert not any(result['rankings'].values())
+    assert result['warnings']==['No searchable records match the selected dataset and source.']
+    assert result['model_calls']==0

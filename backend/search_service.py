@@ -83,7 +83,7 @@ class SearchService:
                         lexical.append(eid)
                     if len(lexical) == 20:
                         break
-        if mode in {"compare", "qdrant", "hybrid"}:
+        if records and mode in {"compare", "qdrant", "hybrid"}:
             from qdrant_client import QdrantClient
             try:
                 if self.embedder is None:
@@ -137,7 +137,7 @@ class SearchService:
         if dataset == "inspection":
             warnings.append("Inspection includes development examples and business context. These are excluded from assessment retrieval.")
         if not any(rankings.values()):
-            warnings.append("No positive keyword matches were found. Try different words or semantic search.")
+            warnings.append("No searchable records match the selected dataset and source." if not records else "No positive keyword matches were found. Try different words or semantic search.")
         return {"query": query, "mode": mode, "dataset": dataset, "versions": versions, "limit": limit,
             "elapsed_ms": round((time.monotonic() - started) * 1000, 1), "query_terms": list(dict.fromkeys(original_terms)),
             "expanded_terms": list(dict.fromkeys(t for t in terms if t not in original_terms)),

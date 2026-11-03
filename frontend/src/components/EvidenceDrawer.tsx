@@ -3,8 +3,8 @@ import type { ResolvedEvidence } from '../assessment'
 import { evidenceLocation } from './AssessmentResults'
 import Drawer from './Drawer'
 
-export default function EvidenceDrawer({ evidence, claim, close }: { evidence: ResolvedEvidence; claim: string; close: () => void }) {
-  return <Drawer title={evidenceLocation(evidence)} label="Evidence from this run" close={close}>
+export default function EvidenceDrawer({ evidence, claim, close, label = 'Evidence from this run' }: { evidence: ResolvedEvidence; claim: string; close: () => void; label?: string }) {
+  return <Drawer title={evidenceLocation(evidence)} label={label} close={close}>
     <div className="drawer-content">
       <section><h3>Claim being inspected</h3><p>{displayText(claim)}</p></section>
       <div className="badge-group"><span className="badge">{readable(evidence.evidence_scope)}</span><span className="badge neutral">{readable(evidence.content_kind)}</span></div>
