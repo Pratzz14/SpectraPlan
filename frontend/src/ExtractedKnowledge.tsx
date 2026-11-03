@@ -8,26 +8,18 @@ import KnowledgeImport from './components/KnowledgeImport'
 const extractionLabel = (method?: string) => ({ qwen: 'Qwen3.7 Flash', pymupdf_embedded: 'Embedded PDF text · PyMuPDF', pymupdf_ocr: 'Local OCR · PyMuPDF/Tesseract', office_text: 'Original Office text', unreadable: 'No readable text recovered' }[method ?? 'qwen'] ?? method)
 
 function SourcePreview({ data, page }: { data: KnowledgeInspection; page: SourcePage }) {
-  const [zoom, setZoom] = useState(100)
   const [failed, setFailed] = useState(false)
   const image = sourcePageUrl(data, page)
-  useEffect(() => { setFailed(false); setZoom(100) }, [image])
+  useEffect(() => { setFailed(false) }, [image])
   const pdf = `${data.artifact_base}source/${encodeURIComponent(page.source_id)}/original${!page.format || page.format === 'pdf' ? `#page=${page.page}` : ''}`
   const isPdf = !page.format || page.format === 'pdf'
   return <>
     <div className="source-toolbar"><span>{page.source_id} · {page.label ?? `page ${page.page}`}</span><a href={pdf} target="_blank" rel="noreferrer">{isPdf ? 'Open original PDF ↗' : 'Download original file ↗'}</a></div>
-    {isPdf ? <><label className="zoom-control">Zoom <input aria-label="Source zoom" type="range" min="75" max="200" step="25" value={zoom} onChange={e => setZoom(Number(e.target.value))} /><span>{zoom}%</span></label>
-    <div className="pdf-page-scroll">{image && !failed ? <img className="pdf-page-image" src={image} alt={`${page.source_id} original PDF page ${page.page}`} style={{ width: `${zoom}%` }} onError={() => setFailed(true)} /> : <p role="status">Source page image is unavailable. Try the original PDF link.</p>}</div>
-    </> : <div className="office-source-preview">
+    {isPdf ? <div className="pdf-page-scroll">{image && !failed ? <img className="pdf-page-image" src={image} alt={`${page.source_id} original PDF page ${page.page}`} onError={() => setFailed(true)} /> : <p role="status">Source page image is unavailable. Try the original PDF link.</p>}</div> : <div className="office-source-preview">
       <p className="section-note">Source {page.format === 'workbook' ? 'cells and formulas' : 'paragraphs and table rows'}. This text preview preserves content and locations; download the original for its full formatting.</p>
       {page.rows ? <div className="source-table-scroll"><table className="source-cells"><tbody>{page.rows.map(row => <tr key={row.row}><th scope="row">{row.row}</th>{row.cells.map(cell => <td key={cell.cell}><small>{cell.cell}</small><span>{String(cell.value ?? '')}</span></td>)}</tr>)}</tbody></table></div>
         : page.blocks.map((block, i) => <div className="source-paragraph" key={i}><small>{block.location}</small><p>{block.text}</p></div>)}
     </div>}
-    {page.extraction_method === 'unreadable' ? <p role="status" className="extraction-notice">No readable text was recovered. The original source remains available for inspection.</p> : null}
-    {page.extraction_warnings?.length ? <ul className="section-note">{page.extraction_warnings.map((warning,i) => <li key={i}>{warning}</li>)}</ul> : null}
-    {page.page_title ? <p className="section-note">{page.page_title}</p> : null}
-    {page.page_limitations?.length ? <div><h3>Page limitations</h3><ul>{page.page_limitations.map((v, i) => <li key={i}>{v}</li>)}</ul></div> : null}
-    {page.unreadable_regions?.length ? <div><h3>Unreadable regions</h3><ul>{page.unreadable_regions.map((v, i) => <li key={i}>{v}</li>)}</ul></div> : null}
   </>
 }
 
@@ -65,7 +57,6 @@ export default function ExtractedKnowledge({ initialEvidence = '' }: { initialEv
   const [source, setSource] = useState('')
   const [pageFilter, setPageFilter] = useState('')
   const [selected, setSelected] = useState(initialEvidence)
-  const [previewPage, setPreviewPage] = useState('auto')
   const [submittedQuery, setSubmittedQuery] = useState('')
   const [searchAttempt, setSearchAttempt] = useState(0)
   const [hits, setHits] = useState<string[] | null>(null)
@@ -80,7 +71,7 @@ export default function ExtractedKnowledge({ initialEvidence = '' }: { initialEv
     return () => controller.abort()
   }, [attempt])
   useEffect(() => {
-    if (initialEvidence) { setSelected(initialEvidence); setSource(''); setQuery(''); setMode('keyword'); setPageFilter(''); setCategory(''); setPreviewPage('auto') }
+    if (initialEvidence) { setSelected(initialEvidence); setSource(''); setQuery(''); setMode('keyword'); setPageFilter(''); setCategory('') }
   }, [initialEvidence])
   useEffect(() => {
     const controller = new AbortController()
@@ -104,13 +95,13 @@ export default function ExtractedKnowledge({ initialEvidence = '' }: { initialEv
     return rows
   }, [data, source, category, pageFilter, mode, query, submittedQuery, hits])
   const record = records.find(r => r.evidence_id === selected) ?? records[0]
+  const recordIndex = record ? records.findIndex(r => r.evidence_id === record.evidence_id) : -1
   const sourcePages = data?.pages.filter(p => !source || p.source_id === source) ?? []
-  const page = previewPage !== 'auto' ? data?.pages.find(p => sourceUnitKey(p) === previewPage)
-    : (data && record ? sourcePageFor(data, record) : sourcePages.find(p => !pageFilter || sourceUnitKey(p) === pageFilter))
+  const page = data && record ? sourcePageFor(data, record) : sourcePages.find(p => !pageFilter || sourceUnitKey(p) === pageFilter)
   const categories = [...new Set(data?.records.filter(r => !source || r.source_id === source).flatMap(r => r.knowledge ? [r.knowledge.category] : []) ?? [])]
   return <div className="knowledge-page qwen-knowledge-page">
     <div className="knowledge-heading"><div><h1>Extracted knowledge</h1><p>{data?.manifest.sources.length ?? 0} sources · Qwen3.7 Flash with local text/OCR fallback</p></div><div className="knowledge-actions"><button type="button" className="secondary-button" aria-expanded={importExpanded} aria-controls="knowledge-import" onClick={() => setImportExpanded(value => !value)}>Add a file</button><button className="secondary-button" disabled={loading} onClick={() => setAttempt(v => v + 1)}>Refresh records</button></div></div>
-    <KnowledgeImport expanded={importExpanded} onClose={() => setImportExpanded(false)} onComplete={sourceId => { setAttempt(value => value + 1); if (sourceId) { setSource(sourceId); setSelected(''); setQuery(''); setMode('keyword'); setPageFilter(''); setCategory(''); setPreviewPage('auto') } }} />
+    <KnowledgeImport expanded={importExpanded} onClose={() => setImportExpanded(false)} onComplete={sourceId => { setAttempt(value => value + 1); if (sourceId) { setSource(sourceId); setSelected(''); setQuery(''); setMode('keyword'); setPageFilter(''); setCategory('') } }} />
     {error ? <div role="alert" className="error-panel">{error}</div> : null}
     <div className="qwen-knowledge-grid">
       <aside className="workspace-rail records-rail" aria-label="Knowledge records">
@@ -120,16 +111,16 @@ export default function ExtractedKnowledge({ initialEvidence = '' }: { initialEv
             <label>Search mode<select aria-label="Search mode" value={mode} onChange={e => { setMode(e.target.value as typeof mode); setSubmittedQuery('') }}><option value="keyword">Keyword</option><option value="semantic">Semantic · BGE</option></select></label>
             {mode === 'semantic' ? <><button type="submit" className="secondary-button" disabled={searching || !query.trim()}>Search meaning</button><p className="section-note">Local similarity search over extracted knowledge and recovered source text. Top 8 matches.</p></> : null}
           </form>
-          <label>Source<select aria-label="Source" value={source} onChange={e => { setSource(e.target.value); setPageFilter(''); setPreviewPage('auto'); setCategory(''); setSelected('') }}><option value="">All sources</option>{data?.manifest.sources.map(s => <option key={s.source_id} value={s.source_id}>{s.source_id} · {s.file_name}</option>)}</select></label>
-          <div className="filter-pair"><label>Location<select aria-label="Record page" value={pageFilter} onChange={e => { setPageFilter(e.target.value); setPreviewPage('auto') }}><option value="">All locations</option>{sourcePages.map(p => <option key={sourceUnitKey(p)} value={sourceUnitKey(p)}>{p.source_id} · {p.label ?? `page ${p.page}`}</option>)}</select></label><label>Category<select aria-label="Category" value={category} onChange={e => setCategory(e.target.value)}><option value="">All categories</option>{categories.map(c => <option key={c} value={c}>{readable(c)}</option>)}</select></label></div>
+          <label>Source<select aria-label="Source" value={source} onChange={e => { setSource(e.target.value); setPageFilter(''); setCategory(''); setSelected('') }}><option value="">All sources</option>{data?.manifest.sources.map(s => <option key={s.source_id} value={s.source_id}>{s.source_id} · {s.file_name}</option>)}</select></label>
+          <div className="filter-pair"><label>Location<select aria-label="Record page" value={pageFilter} onChange={e => { setPageFilter(e.target.value) }}><option value="">All locations</option>{sourcePages.map(p => <option key={sourceUnitKey(p)} value={sourceUnitKey(p)}>{p.source_id} · {p.label ?? `page ${p.page}`}</option>)}</select></label><label>Category<select aria-label="Category" value={category} onChange={e => setCategory(e.target.value)}><option value="">All categories</option>{categories.map(c => <option key={c} value={c}>{readable(c)}</option>)}</select></label></div>
           {mode === 'semantic' && submittedQuery && !searching && !searchError ? <p className="section-note">Results for “{submittedQuery}”</p> : null}
           {searchError ? <p role="alert">{searchError}</p> : null}
         </div>
-        <div className="records-list" aria-label="Evidence records">{loading || searching ? <p role="status">{searching ? 'Searching knowledge…' : 'Loading records…'}</p> : records.length ? records.map(r => <button key={r.evidence_id} type="button" aria-pressed={record?.evidence_id === r.evidence_id} onClick={() => { setSelected(r.evidence_id); setPreviewPage('auto') }}><span><strong>{recordTitle(r)}</strong><small>{r.source_id} · {r.source_location ?? `page ${r.page}`} · {readable(r.knowledge?.category ?? r.content_kind)}</small></span></button>) : <p role="status" className="section-note">No matching records. You can still inspect the source pages.</p>}</div>
+        <div className="records-list" aria-label="Evidence records">{loading || searching ? <p role="status">{searching ? 'Searching knowledge…' : 'Loading records…'}</p> : records.length ? records.map(r => <button key={r.evidence_id} type="button" aria-pressed={record?.evidence_id === r.evidence_id} onClick={() => { setSelected(r.evidence_id) }}><span><strong>{recordTitle(r)}</strong><small>{r.source_id} · {r.source_location ?? `page ${r.page}`} · {readable(r.knowledge?.category ?? r.content_kind)}</small></span></button>) : <p role="status" className="section-note">No matching records. You can still inspect the source pages.</p>}</div>
         <details className="corpus-details"><summary>Extraction details</summary>{data ? <><p>{data.records.length} records · {data.pages.length} source locations</p><p>{data.manifest.corpus_version}</p><p>Readability checks and bounded retries. No second-model scientific verification.</p><p>{data.pages.filter(p => p.extraction_method && !['qwen','unreadable'].includes(p.extraction_method)).length} locations recovered locally · {data.pages.filter(p => p.extraction_method === 'unreadable').length} unreadable</p></> : null}</details>
       </aside>
-      <section className="knowledge-detail" aria-label="Selected knowledge">{record ? <RecordDetail record={record} /> : <p role="status">Select a record to inspect its extracted knowledge.</p>}</section>
-      <section className="knowledge-source" aria-label="Original source page"><h2>Original source</h2><label>Source location<select aria-label="Source page" value={previewPage} onChange={e => setPreviewPage(e.target.value)}><option value="auto">Selected record location</option>{sourcePages.map(p => <option key={sourceUnitKey(p)} value={sourceUnitKey(p)}>{p.source_id} · {p.label ?? `page ${p.page}`}</option>)}</select></label>{data && page ? <SourcePreview data={data} page={page} /> : <p>No source page is available.</p>}</section>
+      <section className="knowledge-detail" aria-label="Selected knowledge">{record ? <><div className="record-navigation"><span>Record {recordIndex + 1} of {records.length}</span><button type="button" className="secondary-button" disabled={recordIndex >= records.length - 1} onClick={() => setSelected(records[recordIndex + 1].evidence_id)}>Next record →</button></div><RecordDetail record={record} /></> : <p role="status">Select a record to inspect its extracted knowledge.</p>}</section>
+      <section className="knowledge-source" aria-label="Original source page">{data && page ? <SourcePreview data={data} page={page} /> : <p>No source page is available.</p>}</section>
     </div>
   </div>
 }

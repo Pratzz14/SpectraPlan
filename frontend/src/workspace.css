@@ -247,11 +247,11 @@
 .knowledge-detail dd { overflow-wrap:anywhere; }
 .knowledge-source h2 { font-size:20px; margin:0 0 18px; }
 .knowledge-source > label { display:grid; gap:6px; }
-.source-toolbar { display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; margin:18px 0; font-size:13px; }
+.source-toolbar { display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; margin:0 0 12px; font-size:13px; }
 .zoom-control { display:flex; gap:12px; align-items:center; margin-bottom:14px; font-size:13px; }
 .zoom-control input { width:100px; }
 .pdf-page-scroll { overflow:auto; max-height:68vh; background:#f0f2f3; border:1px solid var(--line); }
-.pdf-page-image { display:block; max-width:none; height:auto; }
+.pdf-page-image { display:block; width:100%; height:auto; }
 @media (max-width:1100px) { .qwen-knowledge-grid { grid-template-columns:minmax(220px,.7fr) minmax(0,1fr); height:auto; } .knowledge-source { grid-column:2; } .qwen-knowledge-grid .records-rail { grid-row:span 2; max-height:1000px; } }
 @media (max-width:750px) { .qwen-knowledge-grid { grid-template-columns:minmax(0,1fr); min-height:0; } .knowledge-source { grid-column:auto; } .qwen-knowledge-grid .records-rail { grid-row:auto; } .knowledge-heading { align-items:flex-start; flex-wrap:wrap; } .knowledge-detail,.knowledge-source { overflow:visible; } .pdf-page-scroll { max-height:65vh; } }
 .qwen-knowledge-grid .rail-controls label { margin:4px 0; font-size:13px; }
@@ -278,3 +278,5 @@
 .knowledge-upload-form button { justify-self:start; padding:12px 18px; }
 @media (max-width:750px) { .knowledge-upload-form { grid-template-columns:minmax(0,1fr); } }
 .extraction-notice { border-left:3px solid #b48834; padding:10px 14px; background:#fffaf0; font-size:13px; line-height:1.7; }
+
+.record-navigation { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:18px; font-size:13px; color:var(--muted); }
