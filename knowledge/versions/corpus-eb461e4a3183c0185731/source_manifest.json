@@ -1,0 +1,749 @@
+{
+  "schema_version": "qwen-sources-v2",
+  "corpus_version": "corpus-eb461e4a3183c0185731",
+  "sources": [
+    {
+      "source_id": "S01",
+      "file_name": "S01_Multispectral_Laboratory.pdf",
+      "sha256": "7026efe7266877b50238d9a9c91e93202242670ae9c776856efe93bb550a8935",
+      "role": "technical",
+      "technical_eligible": true,
+      "format": "pdf",
+      "page_count": 19,
+      "unit_count": 19
+    },
+    {
+      "source_id": "S02",
+      "file_name": "S02_AFS_Process_Control_Slides.pdf",
+      "sha256": "f273a85e771c8907d6560a31ea6f7c9915d8ba8bae95cac06d751cc0ca843cee",
+      "role": "technical",
+      "technical_eligible": true,
+      "format": "pdf",
+      "page_count": 20,
+      "unit_count": 20
+    },
+    {
+      "source_id": "S03",
+      "file_name": "S03_LED_Kidney_Study_2017.pdf",
+      "sha256": "3cfb4771f150902a729f88ec4a40c90031c7a8d07e8641e653e4543157917fd4",
+      "role": "research",
+      "technical_eligible": true,
+      "format": "pdf",
+      "page_count": 17,
+      "unit_count": 17
+    },
+    {
+      "source_id": "S04",
+      "file_name": "S04_Combi_MIR_Fluorescence_2021.pdf",
+      "sha256": "7286bc915e322363395ae10b0519a5705487e013dd69d4930e24f6542bee6b4b",
+      "role": "research",
+      "technical_eligible": true,
+      "format": "pdf",
+      "page_count": 6,
+      "unit_count": 6
+    },
+    {
+      "source_id": "S05",
+      "file_name": "S05_AFS_Flyer.pdf",
+      "sha256": "729b155806dfdbb31076d0a9ec62b1e42e03a7728f58e4ca38bd02dd24670378",
+      "role": "business",
+      "technical_eligible": false,
+      "format": "pdf",
+      "page_count": 2,
+      "unit_count": 2
+    },
+    {
+      "source_id": "T01",
+      "file_name": "AFS_method_comparison_table.xlsx",
+      "sha256": "a6a83e976b12ebfc784eb69494fe2b1e71da878ae2b1b7c5ee54e701a6e387b6",
+      "role": "method_table",
+      "technical_eligible": true,
+      "format": "workbook",
+      "page_count": null,
+      "unit_count": 2
+    },
+    {
+      "source_id": "D01_DOC",
+      "file_name": "AFS_Examples_and_Reference.docx",
+      "sha256": "5511a7aaf972613b6c9dcb0b8425c68a4399cc0444eae542e516d6a5be9b978e",
+      "role": "development",
+      "technical_eligible": false,
+      "format": "document",
+      "page_count": null,
+      "unit_count": 6
+    }
+  ],
+  "coverage": [
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p1",
+      "page": 1,
+      "location": "Page 1",
+      "status": "completed",
+      "records": 7,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p2",
+      "page": 2,
+      "location": "Page 2",
+      "status": "completed",
+      "records": 7,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p3",
+      "page": 3,
+      "location": "Page 3",
+      "status": "completed",
+      "records": 10,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p4",
+      "page": 4,
+      "location": "Page 4",
+      "status": "completed",
+      "records": 7,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p5",
+      "page": 5,
+      "location": "Page 5",
+      "status": "completed",
+      "records": 11,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p6",
+      "page": 6,
+      "location": "Page 6",
+      "status": "completed",
+      "records": 6,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p7",
+      "page": 7,
+      "location": "Page 7",
+      "status": "completed",
+      "records": 2,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p8",
+      "page": 8,
+      "location": "Page 8",
+      "status": "completed",
+      "records": 10,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p9",
+      "page": 9,
+      "location": "Page 9",
+      "status": "completed",
+      "records": 7,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p10",
+      "page": 10,
+      "location": "Page 10",
+      "status": "completed",
+      "records": 8,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p11",
+      "page": 11,
+      "location": "Page 11",
+      "status": "completed",
+      "records": 6,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p12",
+      "page": 12,
+      "location": "Page 12",
+      "status": "completed",
+      "records": 7,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p13",
+      "page": 13,
+      "location": "Page 13",
+      "status": "completed",
+      "records": 9,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p14",
+      "page": 14,
+      "location": "Page 14",
+      "status": "completed",
+      "records": 2,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p15",
+      "page": 15,
+      "location": "Page 15",
+      "status": "completed",
+      "records": 9,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p16",
+      "page": 16,
+      "location": "Page 16",
+      "status": "completed",
+      "records": 8,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p17",
+      "page": 17,
+      "location": "Page 17",
+      "status": "completed",
+      "records": 2,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p18",
+      "page": 18,
+      "location": "Page 18",
+      "status": "completed",
+      "records": 8,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S01",
+      "unit_id": "S01:p19",
+      "page": 19,
+      "location": "Page 19",
+      "status": "completed",
+      "records": 1,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p1",
+      "page": 1,
+      "location": "Page 1",
+      "status": "completed",
+      "records": 1,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p2",
+      "page": 2,
+      "location": "Page 2",
+      "status": "completed",
+      "records": 1,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p3",
+      "page": 3,
+      "location": "Page 3",
+      "status": "completed",
+      "records": 1,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p4",
+      "page": 4,
+      "location": "Page 4",
+      "status": "completed",
+      "records": 5,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p5",
+      "page": 5,
+      "location": "Page 5",
+      "status": "completed",
+      "records": 8,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p6",
+      "page": 6,
+      "location": "Page 6",
+      "status": "completed",
+      "records": 1,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p7",
+      "page": 7,
+      "location": "Page 7",
+      "status": "completed",
+      "records": 1,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p8",
+      "page": 8,
+      "location": "Page 8",
+      "status": "completed",
+      "records": 1,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p9",
+      "page": 9,
+      "location": "Page 9",
+      "status": "completed",
+      "records": 1,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p10",
+      "page": 10,
+      "location": "Page 10",
+      "status": "completed",
+      "records": 1,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p11",
+      "page": 11,
+      "location": "Page 11",
+      "status": "completed",
+      "records": 5,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p12",
+      "page": 12,
+      "location": "Page 12",
+      "status": "completed",
+      "records": 1,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p13",
+      "page": 13,
+      "location": "Page 13",
+      "status": "completed",
+      "records": 1,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p14",
+      "page": 14,
+      "location": "Page 14",
+      "status": "completed",
+      "records": 1,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p15",
+      "page": 15,
+      "location": "Page 15",
+      "status": "completed",
+      "records": 10,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p16",
+      "page": 16,
+      "location": "Page 16",
+      "status": "completed",
+      "records": 1,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p17",
+      "page": 17,
+      "location": "Page 17",
+      "status": "completed",
+      "records": 1,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p18",
+      "page": 18,
+      "location": "Page 18",
+      "status": "completed",
+      "records": 2,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p19",
+      "page": 19,
+      "location": "Page 19",
+      "status": "completed",
+      "records": 1,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S02",
+      "unit_id": "S02:p20",
+      "page": 20,
+      "location": "Page 20",
+      "status": "completed",
+      "records": 6,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S03",
+      "unit_id": "S03:p1",
+      "page": 1,
+      "location": "Page 1",
+      "status": "completed",
+      "records": 6,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S03",
+      "unit_id": "S03:p2",
+      "page": 2,
+      "location": "Page 2",
+      "status": "completed",
+      "records": 8,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S03",
+      "unit_id": "S03:p3",
+      "page": 3,
+      "location": "Page 3",
+      "status": "completed",
+      "records": 5,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S03",
+      "unit_id": "S03:p4",
+      "page": 4,
+      "location": "Page 4",
+      "status": "completed",
+      "records": 6,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S03",
+      "unit_id": "S03:p5",
+      "page": 5,
+      "location": "Page 5",
+      "status": "completed",
+      "records": 5,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S03",
+      "unit_id": "S03:p6",
+      "page": 6,
+      "location": "Page 6",
+      "status": "completed",
+      "records": 10,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S03",
+      "unit_id": "S03:p7",
+      "page": 7,
+      "location": "Page 7",
+      "status": "completed",
+      "records": 6,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S03",
+      "unit_id": "S03:p8",
+      "page": 8,
+      "location": "Page 8",
+      "status": "completed",
+      "records": 3,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S03",
+      "unit_id": "S03:p9",
+      "page": 9,
+      "location": "Page 9",
+      "status": "completed",
+      "records": 6,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S03",
+      "unit_id": "S03:p10",
+      "page": 10,
+      "location": "Page 10",
+      "status": "completed",
+      "records": 7,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S03",
+      "unit_id": "S03:p11",
+      "page": 11,
+      "location": "Page 11",
+      "status": "completed",
+      "records": 8,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S03",
+      "unit_id": "S03:p12",
+      "page": 12,
+      "location": "Page 12",
+      "status": "completed",
+      "records": 6,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S03",
+      "unit_id": "S03:p13",
+      "page": 13,
+      "location": "Page 13",
+      "status": "completed",
+      "records": 4,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S03",
+      "unit_id": "S03:p14",
+      "page": 14,
+      "location": "Page 14",
+      "status": "completed",
+      "records": 8,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S03",
+      "unit_id": "S03:p15",
+      "page": 15,
+      "location": "Page 15",
+      "status": "completed",
+      "records": 4,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S03",
+      "unit_id": "S03:p16",
+      "page": 16,
+      "location": "Page 16",
+      "status": "completed",
+      "records": 8,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S03",
+      "unit_id": "S03:p17",
+      "page": 17,
+      "location": "Page 17",
+      "status": "completed",
+      "records": 8,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S04",
+      "unit_id": "S04:p1",
+      "page": 1,
+      "location": "Page 1",
+      "status": "completed",
+      "records": 9,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S04",
+      "unit_id": "S04:p2",
+      "page": 2,
+      "location": "Page 2",
+      "status": "completed",
+      "records": 7,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S04",
+      "unit_id": "S04:p3",
+      "page": 3,
+      "location": "Page 3",
+      "status": "completed",
+      "records": 9,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S04",
+      "unit_id": "S04:p4",
+      "page": 4,
+      "location": "Page 4",
+      "status": "completed",
+      "records": 7,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S04",
+      "unit_id": "S04:p5",
+      "page": 5,
+      "location": "Page 5",
+      "status": "completed",
+      "records": 11,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S04",
+      "unit_id": "S04:p6",
+      "page": 6,
+      "location": "Page 6",
+      "status": "completed",
+      "records": 0,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "S05",
+      "unit_id": "S05:p1",
+      "page": 1,
+      "location": "Page 1",
+      "status": "completed",
+      "records": 1,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "S05",
+      "unit_id": "S05:p2",
+      "page": 2,
+      "location": "Page 2",
+      "status": "completed",
+      "records": 1,
+      "extraction_method": "pymupdf_embedded"
+    },
+    {
+      "source_id": "T01",
+      "unit_id": "T01:sheet:method_comparison",
+      "page": null,
+      "location": "method_comparison",
+      "status": "completed",
+      "records": 2,
+      "extraction_method": "office_text"
+    },
+    {
+      "source_id": "T01",
+      "unit_id": "T01:sheet:notes",
+      "page": null,
+      "location": "notes",
+      "status": "completed",
+      "records": 2,
+      "extraction_method": "qwen"
+    },
+    {
+      "source_id": "D01_DOC",
+      "unit_id": "D01_DOC:section:1",
+      "page": null,
+      "location": "paragraph 1 – paragraph 21",
+      "status": "completed",
+      "records": 3,
+      "extraction_method": "office_text"
+    },
+    {
+      "source_id": "D01_DOC",
+      "unit_id": "D01_DOC:section:2",
+      "page": null,
+      "location": "paragraph 22 – paragraph 44",
+      "status": "completed",
+      "records": 3,
+      "extraction_method": "office_text"
+    },
+    {
+      "source_id": "D01_DOC",
+      "unit_id": "D01_DOC:section:3",
+      "page": null,
+      "location": "paragraph 45 – paragraph 74",
+      "status": "completed",
+      "records": 3,
+      "extraction_method": "office_text"
+    },
+    {
+      "source_id": "D01_DOC",
+      "unit_id": "D01_DOC:section:4",
+      "page": null,
+      "location": "paragraph 75 – table 3, row 7",
+      "status": "completed",
+      "records": 3,
+      "extraction_method": "office_text"
+    },
+    {
+      "source_id": "D01_DOC",
+      "unit_id": "D01_DOC:section:5",
+      "page": null,
+      "location": "table 3, row 8 – paragraph 123",
+      "status": "completed",
+      "records": 3,
+      "extraction_method": "office_text"
+    },
+    {
+      "source_id": "D01_DOC",
+      "unit_id": "D01_DOC:section:6",
+      "page": null,
+      "location": "paragraph 124 – paragraph 138",
+      "status": "completed",
+      "records": 3,
+      "extraction_method": "office_text"
+    }
+  ],
+  "pipeline": {
+    "model": "qwen3.7-flash",
+    "input_mode": "pdf_images_and_office_text",
+    "validation_basis": "readability_checks",
+    "prompt_sha256": "59ee6089ef29eeb83253c18df0b15467c497862edf5d63716b983a31b47ed3e3",
+    "office_prompt_sha256": "18d28a445eb909cae426f68212ad1fb3ae8b6c9be74ac4b94f29ee11dbee0c04",
+    "schema_sha256": "a10a09473dfe0cec384eff6fe127dcdc2363517b134d3f28cbf3965011c80412",
+    "quality_policy": "readable-source-v1"
+  },
+  "artifacts": {
+    "passages.jsonl": "972a98690c035ee7b5f658753fc26bb617f211e2cf1574bc08b9c5bb8535ce7d",
+    "methods.json": "cbebb1b08c16c8be67ed45c1574f63cd20c1b80b0ac75ee6e65c4e45c69567e8",
+    "method_notes.json": "b047a00b210b6f7e6ff1506a557f916416ae862a9f1adb5e51c9c99c88c802bb",
+    "raw_pages.json": "6034ce69c90e2a3aa4040eb97c5b136038af7cf1e4d6eb715e3758ead4d6c7d9",
+    "segments.json": "7921568432f1211a7c66db66dd75c2b89e014fc38ec276408b0ca0d253f15696",
+    "bm25.json": "41917bdb6035a4ca8ad449a968e8af6eea5b1320fd0d85e37721b88b70e98bc9",
+    "index_manifest.json": "86166f4d38a95dec66f253a8b9fb548e418eca8c013b5b64a5bf4434f83e2279",
+    "review.html": "890a7f8aaa32c8b3ca7a06ca53f99d197e261e4e24293c9590f4bfeee10de315",
+    "inspection/segments.json": "38266dd327ef9f5429448f0832a6c459814331ae6c8eb7abcaba3a180ff33597",
+    "inspection/bm25.json": "9fc1d662b11f1ffa211696b8052dfd6cd48fce2df02652b4ea7bc6c2d98f3ed5",
+    "inspection/index_manifest.json": "465e3ee05117addc224a54bccdc0bfd5cbaaa12c753ff965cd0bf82a40997e72",
+    "validation_report.json": "a977086a3d475605521453a6a7da510e6cecaaac07b22732d01cd9a8d0eb31da"
+  }
+}

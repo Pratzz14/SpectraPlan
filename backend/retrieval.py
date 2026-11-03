@@ -71,6 +71,13 @@ class Embedder:
         return vectors
 
 
+def index_text(record: dict) -> str:
+    knowledge = record.get("knowledge")
+    if not knowledge:
+        return record["text"]
+    return "\n\n".join(str(knowledge.get(k) or "") for k in ("claim", "support_quote", "relevance", "caveat"))
+
+
 def make_segments(records: list[dict], count) -> list[dict]:
     segments = []
     for record in records:
@@ -79,7 +86,22 @@ def make_segments(records: list[dict], count) -> list[dict]:
         heading = record["section"].strip()
         prefix = heading + "\n" if heading else ""
         # Sentence/paragraph boundaries preserve quantities and qualifiers together.
-        sentences = re.split(r"(?<=[.!?])\s+(?=[A-Z])|\n\s*\n", record["text"])
+        sentences = re.split(r"(?<=[.!?])\s+(?=[A-Z])|\n\s*\n", index_text(record))
+        if record.get("content_kind") == "extracted_text":
+            expanded=[]
+            for sentence in sentences:
+                while count(prefix+sentence)>448:
+                    low,high=1,len(sentence)
+                    while low<high:
+                        middle=(low+high+1)//2
+                        if count(prefix+sentence[:middle])<=448: low=middle
+                        else: high=middle-1
+                    cut=sentence.rfind(" ",0,low+1)
+                    if cut<=0: cut=low
+                    expanded.append(sentence[:cut])
+                    sentence=sentence[cut:].lstrip()
+                expanded.append(sentence)
+            sentences=expanded
         parts, current = [], ""
         for sentence in sentences:
             sentence = sentence.strip()
@@ -103,13 +125,13 @@ def make_segments(records: list[dict], count) -> list[dict]:
     return segments
 
 
-def build_indexes(directory: Path, records: list[dict], version: str, embedder: Embedder):
+def build_indexes(directory: Path, records: list[dict], version: str, embedder: Embedder, *, allow_empty=False):
     from qdrant_client import QdrantClient, models
 
     segments = make_segments(records, embedder.count)
-    if not segments:
+    if not segments and not allow_empty:
         raise ValueError("No eligible evidence to index")
-    vectors = embedder.vectors([s["text"] for s in segments])
+    vectors = embedder.vectors([s["text"] for s in segments]) if segments else []
     database = directory / "qdrant"
     client = QdrantClient(path=str(database))
     try:
@@ -124,7 +146,7 @@ def build_indexes(directory: Path, records: list[dict], version: str, embedder: 
     eligible = [r for r in records if r["retrieval_eligible"]]
     write_json(directory / "segments.json", segments)
     write_json(directory / "bm25.json", {"corpus_version": version, "documents": [
-        {"evidence_id": r["evidence_id"], "tokens": tokens(r["section"] + " " + r["text"])} for r in eligible]})
+        {"evidence_id": r["evidence_id"], "tokens": tokens(r["section"] + " " + index_text(r))} for r in eligible]})
     write_json(directory / "index_manifest.json", {"corpus_version": version, "embedding_model": EMBEDDING_MODEL,
                "embedding_fingerprint": embedder.fingerprint, "embedding_artifacts": embedder.artifacts,
                "dimensions": 384, "distance": "cosine", "segment_count": len(segments), "rrf_k": 60,

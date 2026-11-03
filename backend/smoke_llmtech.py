@@ -94,7 +94,7 @@ async def run(*, public_trial=False) -> tuple[dict, int]:
                       "blocks": [{"block_id": "b001", "text": "Synthetic sample: powder. Target: moisture."}],
                       "note": "The attached diagram is invented test data, not real equipment specifications."}
             content = [{"type": "text", "text": json.dumps(source)}, {"type": "image_url", "image_url": {"url": image}}]
-            prompts = Path(__file__).with_name("prompts")
+            prompts = Path(__file__).with_name("pipelines") / "document_comparison" / "legacy_smoke"
             extraction = await request("actual_ingestion_schema_with_synthetic_image", [
                 {"role": "system", "content": (prompts / "knowledge_extract.txt").read_text(encoding="utf-8")},
                 {"role": "user", "content": content}], PageExtraction, 4096)

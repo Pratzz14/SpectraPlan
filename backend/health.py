@@ -29,7 +29,7 @@ class HealthResponse(BaseModel):
 def inspect_corpus(directory: Path) -> CorpusStatus:
     try:
         report = validate_corpus(active_directory(directory))
-        return CorpusStatus(status="ready", version=report["corpus_version"],
+        return CorpusStatus(status="ready" if report["eligible_passages"] + report["eligible_methods"] else "empty", version=report["corpus_version"],
                             eligible_passages=report["eligible_passages"], eligible_methods=report["eligible_methods"],
                             flagged_records=report["flagged"], human_verified_records=report["human_verified"])
     except FileNotFoundError:

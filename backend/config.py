@@ -14,6 +14,9 @@ class Settings(BaseSettings):
         env_file=PROJECT_ROOT / ".env", env_file_encoding="utf-8", extra="ignore"
     )
 
+    dashscope_api_key: SecretStr = SecretStr("")
+    dashscope_base_url: str = "https://ws-xprw8y59epuehnse.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1"
+    qwen_extraction_model: str = "qwen3.7-flash"
     groq_api_key: SecretStr = SecretStr("")
     regolo_api_key: SecretStr = SecretStr("")
     llmtech_api_key: SecretStr = SecretStr("")
@@ -53,15 +56,22 @@ class Settings(BaseSettings):
     ingest_cache_dir: Path = Path("outputs/ingest/cache")
     embedding_cache_dir: Path = Path("outputs/embedding_models")
     web_corpus_dir: Path = Path("knowledge/web")
+    knowledge_extraction_attempts: int = Field(default=3, ge=1, le=5)
+    knowledge_retry_delay_s: float = Field(default=1, ge=0, le=10)
+    knowledge_ocr_tessdata: str | None = None
+    knowledge_ocr_language: str = "eng"
+    knowledge_ocr_timeout_s: float = Field(default=60, gt=0, le=180)
+    knowledge_work_dir: Path = Path("outputs/pdf_knowledge")
+    knowledge_upload_max_bytes: int = Field(default=52428800, ge=1024, le=209715200)
     ingest_concurrency: int = Field(default=1, ge=1, le=4)
     ingest_max_output_tokens: int = Field(default=1000, ge=256, le=16384)
 
-    @field_validator("source_dir", "corpus_dir", "smoke_output_dir", "explainability_db_path", "ingest_cache_dir", "embedding_cache_dir", "web_corpus_dir")
+    @field_validator("source_dir", "corpus_dir", "smoke_output_dir", "explainability_db_path", "ingest_cache_dir", "embedding_cache_dir", "web_corpus_dir", "knowledge_work_dir")
     @classmethod
     def resolve_path(cls, value: Path) -> Path:
         return value.resolve() if value.is_absolute() else (PROJECT_ROOT / value).resolve()
 
-    @field_validator("provider_base_url", "groq_base_url", "llmtech_base_url", "gemini_base_url", "regolo_base_url")
+    @field_validator("provider_base_url", "groq_base_url", "llmtech_base_url", "gemini_base_url", "regolo_base_url", "dashscope_base_url")
     @classmethod
     def validate_base_url(cls, value: str | None) -> str | None:
         from urllib.parse import urlsplit

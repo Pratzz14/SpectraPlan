@@ -47,7 +47,19 @@ def write_json(path: Path, value):
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(path.name + f".{uuid4().hex}.tmp")
     temporary.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    os.replace(temporary, path)
+    # Windows readers and sync clients can briefly hold a sharing lock on JSON.
+    import time
+    try:
+        for attempt in range(5):
+            try:
+                os.replace(temporary, path)
+                break
+            except PermissionError as error:
+                if os.name != "nt" or getattr(error, "winerror", None) not in {5, 32, 33} or attempt == 4:
+                    raise
+                time.sleep(.025 * (attempt + 1))
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def read_json(path: Path):
@@ -326,6 +338,9 @@ def load_records(directory: Path) -> tuple[dict, list[dict], list[dict]]:
 
 def validate_corpus(directory: Path, *, source_dir: Path | None = None, deep: bool = False) -> dict:
     manifest, passages, methods = load_records(directory)
+    if manifest.get("schema_version") in {"qwen-image-v1", "qwen-sources-v2"}:
+        from backend.pipelines.pdf_knowledge.store import validate
+        return validate(directory, source_dir=source_dir, deep=deep)
     sources = {s["source_id"]: s for s in manifest["sources"]}
     if len(sources) != len(manifest["sources"]):
         raise ValueError("Duplicate source IDs")

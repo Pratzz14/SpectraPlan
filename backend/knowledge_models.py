@@ -6,7 +6,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 SCHEMA_VERSION = "f02-v1"
 EXTRACTOR_VERSION = "pymupdf-blocks-v1"
-Scope = Literal["general_method", "application_example", "research_demonstration", "business_context"]
+Scope = Literal["general_method", "application_example", "research_demonstration", "business_context", "development_example"]
 
 
 class StrictModel(BaseModel):
@@ -111,7 +111,7 @@ class Evidence(BaseModel):
     page: int | None
     section: str
     text: str = Field(min_length=1)
-    content_kind: Literal["verbatim_text", "figure_transcription", "method_row"]
+    content_kind: Literal["verbatim_text", "figure_transcription", "method_row", "llm_knowledge", "extracted_text"]
     evidence_scope: Scope
     revision: str = Field(min_length=1)
     validation_status: Literal["passed", "flagged"]

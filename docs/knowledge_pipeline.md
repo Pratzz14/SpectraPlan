@@ -1,106 +1,79 @@
-# F02 knowledge pipeline
+# PDF and Office knowledge pipeline
 
-F02 builds source-grounded spectroscopy evidence from the supplied local files. Qwen extraction and verification support Groq and LLMTech with provider-specific credentials, request fields and pacing. Text embeddings and Qdrant run locally. There is no mandatory approval step and no claim of AFS approval.
+The pipeline supports the five supplied PDFs (S01–S05), `AFS_method_comparison_table.xlsx` (T01), and `AFS_Examples_and_Reference.docx` (D01_DOC). It uses Qwen3.7 Flash with lightweight readability checks, bounded retries, and local text/OCR recovery. Qwen receives PDF page images; Office inputs retain cell and paragraph/table-row references.
 
-## Inputs and boundaries
+The supplied batch covers seven sources, 64 PDF pages and eight Office sections/worksheets (72 source locations). The repaired 2026-11-03 batch contains 308 readable Qwen records, 44 locally recovered passages, and 19 exact workbook rows (371 total). Twenty-seven locations used local recovery and none remained unreadable. DashScope returned HTTP 403 near the end of extraction; the remaining Office content was recovered locally. The active manifest and validation report contain the current record counts and recovery status. Development examples and business context remain available in inspection search. Readability checks do not establish scientific correctness or human review.
 
-`SOURCE_DIR` defaults to `knowledge/original_sources` and resolves relative to the repository root. The inventory maps the five named PDFs to S01–S05 (19, 20, 17, 6 and 2 pages respectively), the supplied link file to S06, the workbook to T01 and the examples document to a development-only identifier. Actual hashes and counts are calculated from bytes rather than assumed. Unknown files, challenge instructions, examples and evaluation inputs are excluded from technical retrieval. S05/S06 remain business context. The PDF ingestion command does not crawl S06; the separately authorized website crawl below maintains its own snapshot and indexes.
+## Commands and inputs
 
-All 19 method/geometry rows are imported from `method_comparison!A2:I20`, with all nine cell values and `notes!A1:A7`. Workbook rows retain both T01 sheet/row provenance and the underlying S01 Table 1, physical PDF page 6 citation. Ratings remain qualitative. `optical_path_or_depth` is not a remote fiber-link length. The original asterisk and workbook notes are preserved.
-
-## Stages and prompts
-
-1. **Inventory.** Calculate SHA-256, sizes, source roles, actual PDF page counts and workbook dimensions. Require the supplied technical PDFs, flyer and workbook; report missing optional brief/evaluation files without ingesting them.
-2. **Page extraction.** PyMuPDF extracts ordered text blocks, raw text, bounding boxes and physical 1-based pages. Render every page to a JPEG for inspection. Send images to Qwen for all slides/flyer pages and pages with significant images or many vector drawings; other pages use extracted text. Text verification does not resend images. Visual verification includes the source page image.
-3. **Qwen extraction.** `backend/prompts/knowledge_extract.txt` and strict `PageExtraction` JSON Schema request source block IDs and optional figure transcriptions. Code copies exact block text. Up to four coherent text groups and four separate figure regions are returned per page. Structured facts are selective annotations, not a replacement for the retained source passage. At most one fact per group and three explicitly anchored numerical quantities are allowed. A substantive page cannot silently become an unexplained empty extraction.
-4. **Source verification.** `backend/prompts/knowledge_verify.txt` and strict `PageVerification` request one short verdict per candidate. Check every selected text span, fact quote, quantity value/unit and visual region. Permit PDF whitespace differences in fact quotations, retaining the actual source substring; never normalize scientific values or units. Ambiguous, unsupported, unreadable and malformed candidates are held out of retrieval.
-5. **Canonical records.** Save exact text, facts, source spans, region, content kind, evidence scope, revision, issues and automated verdict. Default human status to `not_reviewed`. Business evidence remains excluded even if faithfully extracted.
-6. **Inspection report.** Produce searchable `review.html` with record filters, all workbook notes, source inventory, page coverage, raw record details and source page previews. Text blocks and visual regions are highlighted. All source content is escaped or inserted as text, including material that resembles HTML or scripts.
-7. **Indexes.** Embed eligible evidence locally using `BAAI/bge-small-en-v1.5` via FastEmbed. Use 384-dimensional vectors and cosine similarity in persistent local Qdrant. Build BM25 over the same evidence IDs, including method rows. Split embedding children at sentence/paragraph boundaries, preserving parent evidence IDs. Count actual tokenizer inputs, including headings, and fail instead of truncating an overlength indivisible sentence.
-8. **Publication.** Validate source locations, source/artifact hashes, quotations, method cells, notes, membership and index versions. Atomically publish a version pointer only after all required page jobs, report and index stages succeed. Keep earlier generations after any failure.
-
-Qwen source content is processed as evidence, never executed as instructions. General-method evidence, application examples, research demonstrations and business context retain distinct scopes. Research never becomes clinical readiness; qualitative comparisons never become equipment guarantees. Figure text remains machine-transcribed until independently checked by a person. A second model check does not establish scientific accuracy.
-
-## Rate limits and reproducibility
-
-The earlier Groq account reported Qwen limits of 30 requests/minute, 1,000 requests/day, 8,000 tokens/minute and 200,000 tokens/day; rejection messages distinguished 7,000 input TPM and 1,000 output TPM. Groq ingestion defaults to compact block references, `reasoning_effort="none"`, `INGEST_MAX_OUTPUT_TOKENS=1000`, sequential page processing and usage-based pacing. These are Groq defaults, not the settings of the published LLMTech build. The LLMTech override uses the larger budgets and two concurrent page jobs described below. The F01 interactive configuration remains unchanged.
-
-Transient provider retries retain their shared per-request deadline. Ingestion may additionally wait 60 seconds for token refill, with bounded attempts. An explicit single retry is allowed for provider `json_validate_failed`; it repeats the request without repairing content. Daily-budget and authentication failures stop further live requests in the build. Failed pages remain incomplete and cannot cause publication. Increase the output ceiling only when the account supports it. Larger limits are not required to run local validators or inspect existing artifacts.
-
-Extraction and completed verification are cached separately. Fingerprints include source bytes, page blocks, image bytes, prompt/schema versions, extractor version, model, endpoint and request settings. A change to verification can reuse a source-matched extraction response that validates against the current extraction contract, with its original provenance retained. Prompt changes during a build are rejected. `--refresh` bypasses model-stage caches; unchanged cached inputs preserve IDs and revisions. Record content revisions are independent of the corpus aggregate version.
-
-Evidence IDs derive from source, page, source spans, content kind and content identity. Method IDs derive from T01 sheet/row. Qdrant child IDs are deterministic UUIDs. Model artifact checksums and relevant package versions are saved in `index_manifest.json`.
-
-## Artifacts and interfaces
-
-| Artifact | Contract |
-|---|---|
-| `knowledge/source_manifest.json` | Convenience export of source inventory, pipeline fingerprint, coverage, version and artifact hashes |
-| `knowledge/passages.jsonl` | Convenience export of passages and figure transcriptions, including flagged/excluded candidates |
-| `knowledge/methods.json` | All 19 method records and original cells |
-| `knowledge/method_notes.json` | All seven notes with row numbers |
-| `knowledge/validation_report.json` | Published version's validation summary |
-| `knowledge/current.json` | Atomic pointer to the active immutable generation |
-| `knowledge/versions/<version>/` | Authoritative generation, report, page images, raw extraction, segments, lexical index, vector index and metadata |
-| `knowledge/.staging/<run>/` | Unpublished work, status and sanitized failures; failed builds get an inspection report when page processing finishes |
-| `outputs/ingest/cache/` | Resumable extraction/verification responses |
-| `outputs/embedding_models/` | Local model/tokenizer binaries |
-
-Every record has `validation_status`, `human_review_status` and `retrieval_eligible`. Active records must pass automated source checks, have a supported automated verdict when model-extracted, resolve to an eligible technical source and have no blocking issues. Method rows use exact workbook-cell validation. The service does not automatically set human review to verified.
-
-`GET /api/health` now returns `eligible_passages`, `eligible_methods`, `flagged_records` and `human_verified_records`, replacing approved-record counts. It checks local data/index prerequisites without contacting Groq. Old F01-only corpus fixtures are intentionally not compatible with the stronger F02 publication contract.
-
-`GET /api/knowledge/report` redirects to the current version's inspection report. Versioned artifact URLs expose only that report and allowlisted page images. They do not expose arbitrary files, the source folder, credentials or internal model caches. The UI includes the report link only after corpus readiness succeeds.
-
-`backend.retrieval.search(root, embedding_cache, query, limit=8)` returns the corpus version, query and ranked evidence with branch provenance and RRF scores. It combines up to 20 lexical and 20 dense matches, deduplicating to at most eight parent records. RRF is `1/(60+rank)` per branch. Domain synonyms are generic spectroscopy vocabulary, independent of D/H scenario IDs. Scores are rankings, not scientific confidence.
-
-## Commands and manual verification
-
-### Optional LLMTech compatibility trial
-
-`python -m backend.smoke_llmtech --public-trial` tests synthetic text, a generated diagram, the actual ingestion schema and separate verification schema. It retrieves the public trial credential from the provider's documentation at runtime, keeps it in memory and writes no key to artifacts. No AFS documents are read or sent; production configuration is unchanged. A backend `LLMTECH_API_KEY` environment variable can be used instead of the public trial.
-
-On 2026-10-17 the LLMTech endpoint returned successful strict-schema text and image responses for `nvidia/Qwen3.8-27B-NVFP4`, accepting a 4096-token completion budget. Both synthetic diagram ranges were transcribed. The output also misclassified nonnumerical text as quantities and the model verifier missed it; these issues are explicitly retained in the smoke record. Compatibility success is not full ingestion acceptance. The initial synthetic text test generalized powder to solid; clarified form-preservation wording corrected that in a separate recorded run.
-
-LLMTech documents an API shutdown on 31 October 2026 and invalidation of keys on 1 November, so it is only a temporary provider option. Its shared public trial has an IP-shared prompt cache. See [LLMTech documentation](https://llmtech.eu/docs/). The user explicitly authorized running supplied AFS content through this provider. The ingestion override uses `nvidia/Qwen3.8-27B-NVFP4`, an 8192-token extraction ceiling, up to 2048 verification tokens, two concurrent page jobs and `chat_template_kwargs.enable_thinking=false`. Groq-specific reasoning fields and TPM delays are omitted. HTTP 402 stops the build immediately; transient 429 failures receive bounded retries. The trial credential is fetched from the official documentation into memory and never saved. Existing Groq credentials and the interactive app configuration are preserved.
-
-Run from the project root:
+Set `DASHSCOPE_API_KEY` and optionally `DASHSCOPE_BASE_URL` in the root `.env` or environment. The default endpoint is the existing Alibaba Singapore workspace. These settings are separate from assessment provider routing.
 
 ```powershell
-.\.venv\Scripts\python.exe -m backend.ingest pilot
-.\.venv\Scripts\python.exe -m backend.ingest build
-.\.venv\Scripts\python.exe -m backend.ingest pilot --provider llmtech --public-trial
-.\.venv\Scripts\python.exe -m backend.ingest build --provider llmtech --public-trial
+# All supported files; reuse matching completed responses:
+.\.venv\Scripts\python.exe -m backend.ingest build --concurrency 4
+# Optionally rebuild selected sources while retaining the rest of the library:
+.\.venv\Scripts\python.exe -m backend.ingest build --source S04
+.\.venv\Scripts\python.exe -m backend.ingest build --refresh
+# Local preparation only, no uploads:
+.\.venv\Scripts\python.exe -m backend.pipelines.pdf_knowledge.extract --prepare-only
+# Publish only a complete latest extraction, without new Qwen calls:
+.\.venv\Scripts\python.exe -m backend.ingest publish
 .\.venv\Scripts\python.exe -m backend.ingest validate
-.\.venv\Scripts\python.exe -m backend.ingest report
-.\.venv\Scripts\python.exe -m backend.ingest search --query "powder blend API concentration"
-.\.venv\Scripts\python.exe -m backend.ingest search --query "opaque dairy fat protein"
 ```
 
-The pilot processes S01 p.10 and S02 p.6 and prints an unpublished report path. Full `build` resumes valid cached stages; `build --refresh` reruns model stages. For a private LLMTech key set `LLMTECH_API_KEY` and omit `--public-trial`. `--provider llmtech` sets provider/model/endpoint/budgets for that ingestion command only. `validate` additionally compares supplied file hashes and workbook cells with the active snapshot. `report` prints the existing report path without changing the immutable generation.
+A complete batch has 64 PDF pages, two worksheets, and six Word sections (72 source units). Word sections group paragraphs and table rows without dropping their original locations. Unknown files, the S06 URL, challenge inputs, and separate final-evaluation inputs are not read by this command.
 
-Open the application's **Inspect extracted knowledge** link or the printed local report. Filter by source/page or search a method, quantity or evidence ID. Compare each passage/figure with the adjacent image and highlighted location, inspect flags and complete record JSON, and inspect original table notes. No approval action is required.
+Each PDF page is rendered at 180 DPI and sent to Qwen as a PNG. Embedded PDF text stays local for completeness checks and recovery; it is not added to the model image prompt. Excel sheets are read with formulas and cell coordinates intact; Word body paragraphs and tables are read in document order. Office text is sent to Qwen directly. The workbook importer also preserves all 19 exact method rows, all nine columns, and all seven notes independently of Qwen's summaries. Original Office files are never edited or resaved.
 
-## Validation evidence
+Requests use thinking enabled, a 12,000-token completion budget, a 240-second timeout, and structured JSON output. One to four requests can run concurrently (default two). Each unit has at most three attempts (configurable from one to five). Invalid JSON, incomplete responses, unreadable claims/quotes and transient transport/HTTP failures retry with a short delay; numeric Retry-After is capped at ten seconds. Authentication and permanent HTTP failures skip retries. Exhausted attempts recover local embedded text using PyMuPDF, then try local Tesseract OCR when embedded text is unreadable. Office recovery uses the original section text. Recovery stores source passages, not fabricated claims. Pages still unreadable retain their preview and an explicit warning with no invented record. Actual input/storage failures block publication. There is no automatic provider switch. Rerunning rechecks cached Qwen answers, reuses valid completed units, and retries unreadable units. `--refresh` explicitly replaces completed answers too.
 
-Automated tests use synthetic fixtures and mocked providers: source boundaries, page numbering, all method rows and notes, exact/whitespace-preserving anchors, quantities, review independence, cache reuse, verdict completeness, checksum failures, index membership, token limits, publication and safe report/API handling. They do not prove real-source extraction quality.
+## Knowledge and source previews
 
-`outputs/ingest/local_retrieval_validation.json` records the earlier local BGE/Qdrant/BM25 component run on synthetic evidence. `outputs/ingest/frontend_qa.json` records earlier browser readiness checks. Those receipts do not by themselves prove real-source extraction quality; the complete live-source result is recorded below. The earlier pilot and interrupted checkpoint files remain unchanged as historical evidence.
+Qwen returns claims, supporting text, categories, scope, evidence kind, quantities, relevance, caveats, titles and source limitations. Checks cover complete responses, JSON field types, and readable claims/quotes (at least 20 characters, meaningful alphabetic content and distinct words). Single-letter records such as “A” / “a” are rejected. Empty non-reference answers on substantive source content retry. Office supporting excerpts receive a broad source-token overlap check; PDF image text can include information absent from the embedded text, so it is not rejected on that basis. Unknown categories and quantities that do not match a quote verbatim are retained. No verification-model call, coordinate localization, or scientific acceptance gate is added.
 
-### Published F02 result (2026-10-17)
+Canonical records use `content_kind=llm_knowledge`, `validation_basis=readability_checks`, and `human_review_status=not_reviewed`. Exact workbook rows use `content_kind=method_row` and `validation_basis=source_cells`. Recovered passages use `content_kind=extracted_text`, `validation_basis=source_text_checks`, and their actual `extraction_method` (`pymupdf_embedded`, `pymupdf_ocr`, or `office_text`). Attempt counts and recovery reasons appear in provenance. Original Qwen output is retained under `knowledge`; code attaches source hashes and `source_unit_id` rather than trusting model-generated references.
 
-The live-source gate has now passed for `corpus-4aac882441587796afe5`. All 64 source pages are processed, with 152 passages, 81 eligible passages, all 19 method rows and seven notes, 111 embedding segments, 63 flagged records and zero human-verified records. Deep validation and representative real hybrid searches pass. An audit replay of all 64 cached extraction/verification responses reproduces the published records exactly without model calls. See `outputs/ingest/published_validation.json` and the current section of the implementation plan.
+In [Extracted knowledge](http://127.0.0.1:5173/#knowledge), choose a source, location, or category, then inspect the record beside its source. PDF previews retain zoom and page-specific original links. Excel previews show cell coordinates/values; Word previews show paragraphs and table rows with locations. Office previews preserve text/data, not native application formatting; use the original-file download for that. Sources with matching physical page numbers have distinct location IDs. Empty source units remain inspectable.
 
-The saved 64-page checkpoint and earlier Groq pilot receipts remain historical records. Their incomplete counts do not describe the active generation. Publication validates the defined source and index contracts; it does not establish arbitrary scientific claims or AFS approval. Context-aware evidence balancing and the revision-pinned evidence API are implemented in F04; see [evidence retrieval](evidence_retrieval.md).
+## Search and assessment boundaries
 
-Published evidence, manifests, lexical data and embedding segments are committed. Originals, model binaries, Qdrant binaries, source images, raw pages and HTML reports remain local and ignored. A fresh checkout must rebuild from the supplied originals before validation, readiness or search can succeed. Do not run concurrent queries against the same embedded Qdrant directory.
+All seven sources appear in inspection and can be searched there. The PDF flyer is business context; the Word document contains development scenarios and worked example answers. Their Qwen records remain explicitly labeled and are excluded from default technical assessment retrieval. Research sources remain research demonstrations. Workbook methods retain their underlying S01 Table 1, physical page 6 citation alongside their actual spreadsheet row.
 
-## S06 website context and manual search extension
+Technical BM25/Qdrant indexes contain only retrieval-eligible records. A separate `inspection/` index includes the flyer and Word examples. Both use existing local BGE embeddings; query selection does not call Qwen. Index text includes claim, supporting quote, relevance, and caveat. The inspector's semantic search can be restricted to a selected source before ranking.
 
-Reusable integration contracts are maintained in [tool_contracts.md](tool_contracts.md), with inputs/bindings in [tool_catalog.json](tool_catalog.json). Later agent tools should delegate to these existing implementations and preserve dataset scope and provenance; registration/adapters remain future work.
+`POST /api/search` adds `dataset=inspection` and an optional `source_id`. Default `technical`, `website`, and `all` search behavior remains intact; `all` still means technical plus website. Inspection results include context labels and do not become assessment evidence. `GET /api/knowledge/inspection` adds source-unit metadata and Office source content within the existing envelope. Evidence resolution for assessment still excludes contextual records.
 
-After explicit user authorization, `backend.web_ingest` crawls the S06 website within its HTTPS origin and robots policy, bounded to 20 HTML pages and depth two by default. The current snapshot `web-a7d9d24faab7300545eb` stores 10 pages and 159 source-anchored text records. Deterministic HTML parsing removes navigation/scripts/forms/footer content; no Qwen call is made. Raw HTML hashes, source URLs, headings, CSS locations, fetch timestamps and record revisions preserve provenance. The snapshot is published independently under `knowledge/web/` after source and local index validation. This does not alter the immutable technical corpus or reinterpret its original S06 `url_fetched=false` field; the web manifest describes the later crawl.
+`GET /api/knowledge/versions/{version}/source/{source_id}/original` serves only inventoried, hash-matching PDF, XLSX, or DOCX originals. PDF responses are inline; Office files download with their proper type and filename. The older `.pdf` route remains supported. Versioned image/report routes remain allowlisted.
 
-Website records remain `business_context` with technical `retrieval_eligible=false`. A separate context index supports explicit website-only or combined manual search. The default search dataset is technical. Both datasets use the existing local BGE model; no additional generative model is introduced.
+## Organization and publication
 
-`POST /api/search` supports independent BM25, independent Qdrant, hybrid or a three-way comparison. BM25 alone never initializes embeddings/Qdrant. Compare mode computes each branch once, deduplicates semantic segments to evidence records and exposes raw BM25/cosine scores plus RRF results, matched terms and best semantic segments. Combined keyword search ranks one combined document set rather than mixing incompatible BM25 scores from independently scored corpora. A process-wide lock serializes API vector-store access, and the API retains one lazy local-only embedding instance. `GET /api/search/status` reports each dataset separately. See the README for request fields and rebuild commands.
+The workflow lives in `backend/pipelines/pdf_knowledge/`: input preparation, Qwen extraction, and publication. Assessment, website ingestion, and optional document comparison retain their own packages. Root module aliases preserve existing imports.
+
+`qwen-sources-v2` tracks expected units per source and both index memberships, without requiring verifier approval. The previous `qwen-image-v1` and historical F02 corpus readers remain supported. Publication switches `knowledge/current.json` atomically only after all requested units and both indexes complete. A failed or prepared-only batch leaves the current corpus intact.
+
+`outputs/pdf_knowledge/latest/` contains a single replaceable working set, with fixed per-source input/result files and one manifest. Completed answers are reused only when input/source hashes, prompts, schema, model, endpoint and settings match. The already published S04 answers can be migrated locally when their source, image, prompt and output contents still match. Credentials, model reasoning and raw HTTP error bodies are never saved.
+
+The reusable staging directory is `knowledge/.staging/pdf-knowledge-latest/`. CLI builds use a file lock. Publication retains only the latest Qwen generation, preserving historical pre-Qwen evaluation corpora. Pruned versions return unavailable rather than silently resolving to different records.
+
+## Add a new file from CMD or the UI
+
+From Windows Command Prompt, run:
+
+```cmd
+cd /d "C:\Users\prati\OneDrive\Desktop\SpectraPlan"
+.venv\Scripts\python.exe -m backend.ingest add --file "C:\path\new-paper.pdf" --role research
+```
+
+The same command accepts `.xlsx` and `.docx`. Source types are `technical` (default), `research`, `business`, and `development`. Use `--prepare-only` to register and render/read the file locally without a model call or publication. Configure `DASHSCOPE_API_KEY` in `.env` for Qwen extraction; without it the same command uses local recovery. The live command sends the selected file's page images or Office text to the configured DashScope endpoint.
+
+The command adds the selected file to the active library and rebuilds both search indexes. It sends only that new/updated file to Qwen; existing source records are retained without model calls. Reusing a filename updates that source rather than duplicating its records. Updates to supplied source filenames keep their established source IDs and evidence roles. Registered additions are also included in subsequent default builds.
+
+In **Extracted knowledge**, select **Add a file**, choose a PDF, Excel or Word file, select its source type, and select **Add and extract with Qwen** (or **Add and extract locally** when no key is configured). The UI identifies the destination service before upload, displays progress, then refreshes and selects the new source when publication completes. The default upload cap is 50 MB (`KNOWLEDGE_UPLOAD_MAX_BYTES`). Empty, unsupported, malformed or encrypted files produce an error; the current published corpus is retained on extraction failure.
+
+`POST /api/knowledge/ingest?filename=...&role=...` accepts a streaming `application/octet-stream` body and returns HTTP 202 with the queued job. Oversized files return 413, unsupported request types 415, invalid names/roles 422, and another running ingestion 409. `GET /api/knowledge/ingest/status` reports queued/running/succeeded/failed state and completed/total locations. The API starts a hidden worker process so backend reloads do not terminate extraction. CMD, UI uploads, and full builds share the same file lock. A rejected concurrent command leaves the running manifest intact. Upload workers keep reporting a heartbeat during model waits and local indexing, and completed CLI batches trigger the inspector refresh.
+
+Uploaded originals are copied to immutable locations under the configured source directory; a failed replacement cannot break the original links for the currently published version. `knowledge/added_sources.json` keeps local source registrations. `outputs/pdf_knowledge/import/` retains only the latest import's diagnostics and job state; staged browser uploads are removed when the worker finishes. No browser-side API key or additional provider is required.
+
+## Recovery settings
+
+`KNOWLEDGE_EXTRACTION_ATTEMPTS=3` and `KNOWLEDGE_RETRY_DELAY_S=1` bound model retries. `KNOWLEDGE_OCR_TIMEOUT_S=60` bounds each local OCR subprocess. Install Tesseract language data for scanned PDFs; discovery checks `KNOWLEDGE_OCR_TESSDATA`, `TESSDATA_PREFIX`, the Tesseract executable directory and standard installation locations. `KNOWLEDGE_OCR_LANGUAGE=eng` selects traineddata (multiple languages use `eng+deu`). OCR uses PyMuPDF at 200 DPI and runs locally. Missing language data or an OCR failure is visible on the source page. The UI, CMD ingestion and full builds share these checks and recovery behavior.

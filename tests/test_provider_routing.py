@@ -229,12 +229,11 @@ def test_public_trial_never_replaces_an_existing_key(monkeypatch):
     assert with_public_trial(settings) is settings
 
 
-def test_ingestion_fingerprint_tracks_both_provider_profiles():
-    from backend.ingest import pipeline_fingerprint
+def test_pdf_ingestion_identity_is_independent_of_assessment_providers():
+    from backend.pipelines.pdf_knowledge.extract import pipeline_fingerprint
     first = pipeline_fingerprint(config())
     second = pipeline_fingerprint(config(groq_model="different-model"))
-    assert first != second and first["provider"] == "auto"
-    assert {p["name"] for p in first["provider_profiles"]} == {"gemini", "groq", "llmtech"}
+    assert first == second and first["model"] == "qwen3.7-flash"
 
 
 def test_assessment_records_provider_switch_between_stages(monkeypatch):

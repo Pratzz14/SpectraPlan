@@ -8,3 +8,5 @@
 /outputs/setup_checks/** -text -whitespace
 /outputs/setup_verification.json -text -whitespace
 /outputs/submission_verification.json -text -whitespace
+# Published knowledge manifests hash their JSON/index artifacts as raw bytes.
+/knowledge/versions/** -text -whitespace

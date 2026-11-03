@@ -7,7 +7,7 @@ import time
 from contextlib import asynccontextmanager
 from typing import Literal
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import FileResponse, RedirectResponse, JSONResponse, Response
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -29,9 +29,10 @@ class SearchRequest(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
     query: str = Field(min_length=1, max_length=2000)
     mode: Literal["compare", "bm25", "qdrant", "hybrid"] = "compare"
-    dataset: Literal["technical", "website", "all"] = "technical"
+    dataset: Literal["technical", "website", "all", "inspection"] = "technical"
     limit: int = Field(default=6, ge=1, le=8)
     expand_synonyms: bool = True
+    source_id: str | None = Field(default=None, min_length=1, max_length=60)
 
     @field_validator("query")
     @classmethod
@@ -199,6 +200,57 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 selected=selected, candidates=route["candidates"]),
         )
 
+    @application.get("/api/knowledge/ingest/status")
+    def knowledge_ingestion_status():
+        from backend.pipelines.pdf_knowledge.import_file import ingestion_status
+        try:
+            return ingestion_status(config)
+        except (OSError, ValueError, KeyError):
+            raise HTTPException(503, "Ingestion status is unavailable") from None
+
+    @application.post("/api/knowledge/ingest", status_code=202)
+    async def knowledge_ingest(request: Request, filename: str = Query(min_length=1, max_length=180),
+                               role: Literal['technical','research','business','development'] = 'technical'):
+        from pathlib import Path
+        from uuid import uuid4
+        from filelock import FileLock, Timeout
+        from backend.pipelines.pdf_knowledge.import_file import ingestion_status, start_worker
+        from backend.pipelines.pdf_knowledge.registry import EXTENSIONS
+        if request.headers.get('content-type', '').split(';')[0] != 'application/octet-stream':
+            raise HTTPException(415, "Upload the file as application/octet-stream")
+        if (Path(filename).name != filename or re.search(r'[<>:"/\\|?*\x00-\x1f]', filename)
+                or filename.endswith(('.', ' ')) or Path(filename).suffix.lower() not in EXTENSIONS):
+            raise HTTPException(422, "Choose a PDF, XLSX or DOCX filename without directory separators")
+        root = config.knowledge_work_dir
+        root.mkdir(parents=True, exist_ok=True)
+        upload = None
+        started = False
+        try:
+            with FileLock(str(root/'build.lock'), timeout=0):
+                if ingestion_status(config)['status'] in {'queued','running'}:
+                    raise HTTPException(409, "Another ingestion is running. Try again when it finishes.")
+                incoming = root/'import'/'incoming'; incoming.mkdir(parents=True, exist_ok=True)
+                upload = incoming/(uuid4().hex+Path(filename).suffix.lower())
+                size = 0
+                with upload.open('wb') as output:
+                    async for chunk in request.stream():
+                        size += len(chunk)
+                        if size > config.knowledge_upload_max_bytes:
+                            raise HTTPException(413, "File exceeds the configured upload limit")
+                        output.write(chunk)
+                if size == 0:
+                    raise HTTPException(422, "The selected file is empty")
+                state = start_worker(config,upload,filename,role)
+                started = True
+                return state
+        except Timeout:
+            raise HTTPException(409, "Another ingestion is running. Try again when it finishes.") from None
+        except OSError:
+            raise HTTPException(503, "The uploaded file could not be stored or its worker could not start") from None
+        finally:
+            if upload and not started:
+                upload.unlink(missing_ok=True)
+
     @application.get("/api/knowledge/inspection")
     def knowledge_inspection():
         try:
@@ -239,6 +291,39 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             return RedirectResponse(f"/api/knowledge/versions/{version}/review.html", status_code=307)
         except (OSError, ValueError, KeyError):
             raise HTTPException(404, "No published knowledge report. Build the corpus first.") from None
+
+    @application.get("/api/knowledge/versions/{version}/source/{source_id}/original", include_in_schema=False)
+    def knowledge_original(version: str, source_id: str):
+        if not re.fullmatch(r"corpus-[a-f0-9]{20}", version):
+            raise HTTPException(404, "Unknown corpus")
+        try:
+            from backend.knowledge_store import file_hash
+            manifest = read_json(config.corpus_dir / "versions" / version / "source_manifest.json")
+            source = next(s for s in manifest["sources"] if s["source_id"] == source_id)
+            path = inside(config.source_dir, source.get("file_path", source["file_name"]))
+            media = {".pdf": "application/pdf", ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                     ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}
+            if path.suffix.lower() not in media or file_hash(path) != source["sha256"]:
+                raise ValueError("Source changed or unsupported")
+            return FileResponse(path, media_type=media[path.suffix.lower()], filename=path.name,
+                                content_disposition_type="inline" if path.suffix.lower() == ".pdf" else "attachment")
+        except (OSError, ValueError, KeyError, StopIteration):
+            raise HTTPException(404, "Original source is unavailable") from None
+
+    @application.get("/api/knowledge/versions/{version}/source/{source_id}.pdf", include_in_schema=False)
+    def knowledge_pdf(version: str, source_id: str):
+        if not re.fullmatch(r"corpus-[a-f0-9]{20}", version):
+            raise HTTPException(404, "Unknown corpus")
+        try:
+            from backend.knowledge_store import file_hash
+            manifest = read_json(config.corpus_dir / "versions" / version / "source_manifest.json")
+            source = next(s for s in manifest["sources"] if s["source_id"] == source_id and s["file_name"].lower().endswith(".pdf"))
+            path = inside(config.source_dir, source.get("file_path", source["file_name"]))
+            if file_hash(path) != source["sha256"]:
+                raise ValueError("Source changed")
+            return FileResponse(path, media_type="application/pdf", headers={"Content-Disposition": "inline"})
+        except (OSError, ValueError, KeyError, StopIteration):
+            raise HTTPException(404, "Original source PDF is unavailable") from None
 
     @application.get("/api/knowledge/versions/{version}/{artifact:path}", include_in_schema=False)
     def knowledge_artifact(version: str, artifact: str):

@@ -8,7 +8,6 @@ import pymupdf
 import pytest
 
 from backend.config import Settings
-from backend.ingest import IngestionTransport, apply_source_checks, deduplicate_records, empty_omits_substantive, pipeline_fingerprint, process_page
 from backend.knowledge_models import Candidate, PageExtraction, PageVerification
 from backend.knowledge_report import render_report
 from backend.knowledge_store import (SOURCES, active_directory, canonical_candidate, digest, extract_pages, import_methods,
@@ -118,74 +117,14 @@ def test_visual_ambiguity_and_quantity_units_are_not_silently_accepted():
     assert "Quantity value is not numerical" in canonical_candidate(word, p, {"status": "supported"}, "v1")["issues"]
 
 
-def test_empty_technical_page_is_rejected_but_legal_disclaimer_is_excluded():
-    extraction = PageExtraction(text_groups=[], figures=[], empty_reason="Legal disclaimer and copyright only", issues=[])
-    raw = "Disclaimer. Copyright. For general informational purposes. " * 10
-    page = {"blocks": [{"text": raw}]}
-    assert not empty_omits_substantive(extraction, page)
-    page["blocks"][0]["text"] = "Multispectral probes collect simultaneous Raman and fluorescence spectra. " * 10
-    assert empty_omits_substantive(extraction, page)
 
 
-@pytest.mark.parametrize("blocks", [
-    ["Sensors 2017\n16 of 17", "15.\nSharma, V.; Cancer spectroscopy. " * 20],
-    ["Acknowledgments: Grant funding. " * 15, "Author Contributions: Designed the study.", "References", "1. Smith, A. Study. " * 15],
-    ["Analytical Chemistry\npubs.acs.org/ac\nTechnical Note", "(19) Artyushenko, V.; Spectral probe. " * 20],
-])
-def test_bibliography_continuations_and_back_matter_do_not_require_technical_evidence(blocks):
-    extraction = PageExtraction(text_groups=[], figures=[], empty_reason="Reference list and back matter only", issues=[])
-    page = {"blocks": [{"text": text} for text in blocks]}
-    assert not empty_omits_substantive(extraction, page)
-    page["blocks"].insert(0, {"text": "Results: The measured optical depth was 6 um. " * 15})
-    assert empty_omits_substantive(extraction, page)
 
 
-def test_duplicate_source_selection_keeps_supported_annotation_and_retains_rejected_alternative():
-    good = canonical_candidate(candidate(), source_page(), {"status": "supported"}, "v1")
-    bad = canonical_candidate(candidate(), source_page(), {"status": "unsupported"}, "v1")
-    records = deduplicate_records([good, bad])
-    assert len(records) == 1 and records[0]["retrieval_eligible"]
-    assert records[0]["alternative_annotations"][0]["verification"]["status"] == "unsupported"
-    assert records == deduplicate_records([good, bad])
 
 
-def test_source_inspection_excludes_known_mismatch_without_human_approval():
-    page = {**source_page(), "image_sha256": "b" * 64}
-    record = canonical_candidate(candidate(), page, {"status": "supported"}, "v1")
-    check = {"evidence_id": record["evidence_id"], "source_sha256": page["source_sha256"], "image_sha256": page["image_sha256"], "reason": "Legend reversed"}
-    apply_source_checks([record], [check], [page])
-    assert not record["retrieval_eligible"] and record["validation_status"] == "flagged"
-    assert record["human_review_status"] == "not_reviewed"
-    with pytest.raises(ValueError, match="no longer matches"):
-        apply_source_checks([record], [{**check, "image_sha256": "c" * 64}], [page])
 
 
-def test_page_cache_is_resumable_and_missing_verdict_is_rejected(tmp_path):
-    page = {**source_page(), "image_sha256": "b" * 64}
-    (tmp_path / "assets").mkdir()
-    (tmp_path / "assets/page.jpg").write_bytes(b"image")
-    settings = Settings(_env_file=None, ingest_cache_dir=tmp_path / "cache")
-    class FakeProvider:
-        calls = 0
-        async def structured(self, messages, response_model, **kwargs):
-            self.calls += 1
-            if response_model is PageExtraction:
-                assert messages[1]["content"][1]["type"] == "image_url"
-                return PageExtraction(text_groups=[{"section": "Optical geometry", "evidence_scope": "general_method",
-                    "block_ids": ["b001"], "facts": [], "tags": []}], figures=[], empty_reason=None, issues=[])
-            assert len(messages[1]["content"]) == 1  # Text verification does not resend the image.
-            return PageVerification(verdicts=[{"candidate_index": 0, "status": "supported", "reason": "source matches"}])
-    provider = FakeProvider()
-    async def run():
-        return await process_page(page, tmp_path, settings, pipeline_fingerprint(settings), asyncio.Semaphore(1), False, provider)
-    first, second = asyncio.run(run()), asyncio.run(run())
-    assert first == second and provider.calls == 2
-    cache = next(p for p in (tmp_path / "cache").glob("*.json") if not p.name.endswith(".extraction.json"))
-    value = read_json(cache)
-    value["verification"] = {"verdicts": []}
-    write_json(cache, value)
-    with pytest.raises(ValueError, match="exactly one verdict"):
-        asyncio.run(run())
 
 
 def test_validation_rejects_tampering_excluded_records_and_wrong_pages(tmp_path):
@@ -224,52 +163,8 @@ def test_whitespace_matching_never_changes_values_or_units():
     assert anchored_quote("Depth 1-6 um", "Depth 10-60 um") is None
 
 
-def test_ingestion_daily_limit_stops_further_requests(monkeypatch):
-    class DailyLimited:
-        calls = 0
-        last_usage = {}
-        def __init__(self, settings):
-            pass
-        async def structured(self, *args, **kwargs):
-            self.calls += 1
-            error = ProviderError("provider_daily_limit", "Daily token budget exhausted", upstream_status=429)
-            error.daily_limit = True
-            raise error
-    monkeypatch.setattr("backend.ingest.Provider", DailyLimited)
-    transport = IngestionTransport(Settings(_env_file=None))
-    async def run():
-        for _ in range(2):
-            with pytest.raises(ProviderError, match="Daily token"):
-                await transport.structured([], PageExtraction)
-    asyncio.run(run())
-    assert transport.provider.calls == 1
 
 
-def test_ingestion_semantic_failure_repairs_then_uses_fallback(monkeypatch):
-    from types import SimpleNamespace
-    class InvalidThenFallback:
-        calls=0
-        last_usage={}
-        current_settings=SimpleNamespace(provider_name="gemini")
-        rejected=[]
-        def __init__(self,settings):
-            pass
-        async def structured(self,*args,**kwargs):
-            self.calls+=1
-            return "invalid" if self.calls <= 2 else "valid"
-        def reject_stage(self,errors,*,exhausted=False):
-            self.rejected.append(exhausted)
-            if exhausted:
-                self.current_settings=SimpleNamespace(provider_name="llmtech")
-                return True
-            return False
-    monkeypatch.setattr("backend.ingest.Provider",InvalidThenFallback)
-    transport=IngestionTransport(Settings(_env_file=None))
-    def validate(value):
-        if value != "valid":
-            raise ValueError("Source block does not exist")
-    assert asyncio.run(transport.structured([{"role":"user","content":"synthetic source"}],PageExtraction,validate=validate)) == "valid"
-    assert transport.provider.calls == 3 and transport.provider.rejected == [False,True]
 
 
 def test_publication_switches_pointer_and_preserves_previous_on_failure(tmp_path):

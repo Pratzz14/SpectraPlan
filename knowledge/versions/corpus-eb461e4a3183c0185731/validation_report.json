@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "validation_basis": "basic_format",
+  "corpus_version": "corpus-eb461e4a3183c0185731",
+  "sources": 7,
+  "pages": 64,
+  "source_units": 72,
+  "passages": 352,
+  "eligible_passages": 332,
+  "eligible_methods": 19,
+  "flagged": 0,
+  "human_verified": 0,
+  "fallback_units": 27,
+  "unreadable_units": 0
+}

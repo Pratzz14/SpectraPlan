@@ -134,10 +134,10 @@ function isHealthResponse(value: unknown): value is HealthResponse {
 }
 
 export type SearchMode = 'compare' | 'bm25' | 'qdrant' | 'hybrid'
-export type SearchDataset = 'technical' | 'website' | 'all'
+export type SearchDataset = 'technical' | 'website' | 'all' | 'inspection'
 export interface SearchEvidence {
   evidence_id: string; section: string; text: string; source_id: string; content_kind: string;
-  evidence_scope: string; dataset: 'technical' | 'website'; page?: number; sheet?: string; row?: number;
+  evidence_scope: string; dataset: 'technical' | 'website' | 'inspection'; page?: number; sheet?: string; row?: number;
   url?: string; location_url?: string; page_title?: string; fetched_at?: string; revision: string;
   source_sha256: string; selector?: string; human_review_status: string; validation_basis?: string;
 }
@@ -159,7 +159,7 @@ export async function fetchSearchStatus(signal: AbortSignal): Promise<SearchStat
   return response.json() as Promise<SearchStatus>
 }
 
-export async function queryKnowledge(input: {query: string; mode: SearchMode; dataset: SearchDataset; limit: number; expand_synonyms: boolean}, signal: AbortSignal): Promise<SearchResponse> {
+export async function queryKnowledge(input: {query: string; mode: SearchMode; dataset: SearchDataset; limit: number; expand_synonyms: boolean; source_id?: string}, signal: AbortSignal): Promise<SearchResponse> {
   const response = await fetch('/api/search', {method: 'POST', signal, headers: {'Content-Type': 'application/json'}, body: JSON.stringify(input)})
   const data = await response.json()
   if (!response.ok) throw new Error(typeof data.detail === 'string' ? data.detail : 'Search failed. Check your query and dataset readiness.')
@@ -183,4 +183,38 @@ export async function fetchEnquiry(enquiryId: string, signal: AbortSignal): Prom
   if (!data || data.enquiry_id !== enquiryId || !Array.isArray(data.runs) || !data.runs.every(r => r && typeof r.run_id === 'string'
     && typeof r.status === 'string' && Number.isInteger(r.round_no))) throw new Error('Unexpected enquiry response.')
   return data
+}
+
+export interface KnowledgeIngestion {
+  job_id: string
+  status: 'idle' | 'queued' | 'running' | 'succeeded' | 'failed' | 'prepared'
+  filename?: string
+  source_id?: string
+  message?: string
+  qwen_configured?: boolean
+  endpoint_host?: string
+  max_bytes?: number
+  progress?: { completed?: number; total?: number; failed?: number; records?: number; fallback?: number; unreadable?: number }
+}
+
+function ingestionResponse(value: unknown): KnowledgeIngestion {
+  if (!value || typeof value !== 'object' || !('status' in value) || !('job_id' in value)
+    || typeof value.job_id !== 'string' || !['idle','queued','running','succeeded','failed','prepared'].includes(String(value.status))) throw new Error('Unexpected ingestion status.')
+  return value as KnowledgeIngestion
+}
+
+export async function fetchKnowledgeIngestion(signal: AbortSignal): Promise<KnowledgeIngestion> {
+  const response = await fetch('/api/knowledge/ingest/status', { signal, cache: 'no-store' })
+  if (!response.ok) throw new Error('Could not load ingestion progress.')
+  return ingestionResponse(await response.json())
+}
+
+export async function uploadKnowledgeFile(file: File, role: string): Promise<KnowledgeIngestion> {
+  const query = new URLSearchParams({ filename: file.name, role })
+  const response = await fetch(`/api/knowledge/ingest?${query}`, {
+    method: 'POST', headers: { 'Content-Type': 'application/octet-stream' }, body: file,
+  })
+  const data = await response.json()
+  if (!response.ok) throw new Error(typeof data.detail === 'string' ? data.detail : `Upload failed (HTTP ${response.status}).`)
+  return ingestionResponse(data)
 }

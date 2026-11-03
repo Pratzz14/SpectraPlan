@@ -8,11 +8,11 @@ Six unedited final answers are saved in [outputs](outputs/run_manifest.json), wi
 
 **F01–F07 are implemented for their tested development gates:** the application supports enquiry entry, source-grounded initial assessments, claim-level evidence inspection and same-run JSON/report export, alongside readiness and search tools. Both local services and their development API connection have been verified. On 2026-10-17, Groq `qwen/qwen3.8-27b` returned the initial live provider smoke response, the complete 64-page F02 corpus was published and validated, and F03 extraction was checked with LLMTech.
 
-F02 adds source inventory, page-aware Qwen extraction and verification, workbook import, a manual inspection report, and Qdrant + BM25 search. The active corpus is `corpus-4aac882441587796afe5`, with 152 passages, 81 retrieval-eligible passages, 19 method rows and 63 flagged records. F03 adds typed enquiry extraction and `POST /api/extract`, with exact input provenance, separate streams, explicit unknowns and attributed customer claims. See [customer extraction](docs/customer_extraction.md) for its API, provider options and checks.
+The former F02 pipeline produced a historical full corpus with 152 passages and 19 workbook rows. The active pipeline now uses Qwen3.7 Flash on PDF page images and Office source text, across seven sources, with readability checks, bounded retries and local text/OCR recovery. See [knowledge pipeline](docs/knowledge_pipeline.md). F03 adds typed enquiry extraction and `POST /api/extract`, with exact input provenance, separate streams, explicit unknowns and attributed customer claims. See [customer extraction](docs/customer_extraction.md) for its API, provider options and checks.
 
 F04 adds `POST /api/retrieve` and revision-pinned `GET /api/evidence/{evidence_id}`. It combines BM25, local BGE/Qdrant semantic search and structured method lookup into at most eight evidence records, exposing selection reasons, scores, context coverage and remaining gaps. See [evidence retrieval](docs/evidence_retrieval.md) for the API, semantic threshold, single follow-up budget and verification records.
 
-F05 provides a reusable Python assessment pipeline with conditional method choices, clarification questions, source excerpts, explicit unknowns and an initial comparison experiment. Saved development results include the complete evidence ledger and run metadata. See [technical assessment](docs/technical_assessment.md) for the Python interface and live diagnostic command. F06 adds `POST /api/assess` with complete/incomplete run envelopes, stream-specific feasibility planning, mechanical validation and bounded synthesis repair. Historical live D01/D02 checks with LLMTech returned complete provisional results at normal request limits; an undefined-target check returned complete insufficient information with an empty shortlist. F07 adds the responsive assessment interface, clarification rounds, history, evidence inspection and same-run exports. Current setup verification passes **316 backend tests**, **17 frontend tests**, a production build and a fresh live D01 → clarification → history/export browser flow. The full development scientific-quality gate remains open.
+F05 provides a reusable Python assessment pipeline with conditional method choices, clarification questions, source excerpts, explicit unknowns and an initial comparison experiment. Saved development results include the complete evidence ledger and run metadata. See [technical assessment](docs/technical_assessment.md) for the Python interface and live diagnostic command. F06 adds `POST /api/assess` with complete/incomplete run envelopes, stream-specific feasibility planning, mechanical validation and bounded synthesis repair. Historical live D01/D02 checks with LLMTech returned complete provisional results at normal request limits; an undefined-target check returned complete insufficient information with an empty shortlist. F07 adds the responsive assessment interface, clarification rounds, history, evidence inspection and same-run exports. Automated checks cover backend and frontend behavior and the production build; earlier browser verification covered D01 → clarification → history/export. The full development scientific-quality gate remains open.
 
 ## Local setup
 
@@ -245,59 +245,19 @@ Original SpectraPlan project content is available under the [MIT License](LICENS
 
 Third-party AFS materials, research papers and any excerpts or figures derived from them retain their respective rights and are not relicensed by this repository's MIT License.
 
-## F02 — Knowledge extraction and inspection
+## Knowledge extraction and inspection
 
-Run from the repository root with the configured backend-only provider key. The verified published build used the documented LLMTech public-trial ingestion override; interactive provider configuration remains unchanged:
+The Qwen3.7 Flash pipeline supports all five supplied PDFs, the Excel method workbook, and the Word examples/reference document. It uses image-only PDF input, source cells/paragraphs for Office files, and lightweight readability checks with up to three attempts, then local embedded-text/PyMuPDF OCR recovery. **Extracted knowledge** shows source filters, extracted text and structured knowledge alongside PDF pages or Office content previews. Semantic inspection search includes contextual sources while assessment retrieval excludes the flyer and development examples. The corpus covers all seven sources and 72 source locations, retaining exact workbook rows alongside Qwen knowledge and clearly labelled recovered source passages.
 
 ```powershell
-.\.venv\Scripts\python.exe -m backend.ingest pilot --provider llmtech --public-trial
-.\.venv\Scripts\python.exe -m backend.ingest build --provider llmtech --public-trial
+.\.venv\Scripts\python.exe -m backend.ingest build
+.\.venv\Scripts\python.exe -m backend.ingest publish
 .\.venv\Scripts\python.exe -m backend.ingest validate
-.\.venv\Scripts\python.exe -m backend.ingest report
-.\.venv\Scripts\python.exe -m backend.ingest search --query "powder blend API concentration"
-.\.venv\Scripts\python.exe -m backend.ingest search --query "opaque dairy fat protein"
 ```
 
-The pilot processes S01 p.10 and S02 p.6 and prints an **unpublished** HTML report location. A full build processes all 64 pages from S01–S05, imports 19 workbook rows and seven notes, and publishes only after validation and indexing succeed. Text and rendered page images are sent to the selected ingestion provider for extraction and separate verification. The PDF build preserves S06 as a link; the separately authorized website crawl below stores its own business-context snapshot. Development examples, final evaluation inputs, the challenge brief, unknown files and business context never enter default technical retrieval.
+Configure `DASHSCOPE_API_KEY` and optionally `DASHSCOPE_BASE_URL`. `build` uploads all selected PDF page images and Office source text to the configured endpoint; by default it selects all supported files. Matching completed responses are reused; `--refresh` replaces them. `publish` reuses completed latest responses without calling Qwen. Latest extraction artifacts overwrite previous attempts; publication retains only the latest Qwen generation while preserving historical evaluation corpora. See [knowledge pipeline](docs/knowledge_pipeline.md) for commands, interfaces, validation boundaries, and package organization.
 
-The extractor uses strict JSON schemas and versioned prompts in `backend/prompts/`. The selected extraction model chooses source block IDs; code copies original text and records quote offsets and page bounds. Visual transcriptions carry a labeled region and remain distinct from verbatim text. Structured facts and quantities retain exact supporting quotes. Ambiguous or unsupported candidates are inspectable but excluded from search.
-
-No approval workflow is required. After a successful build, open **Inspect extracted knowledge** in the application or [the report endpoint](http://127.0.0.1:5173/api/knowledge/report). `report` prints the standalone HTML location, which also works locally with the adjacent page assets. Filter by source, physical PDF page, content kind, validation status or retrieval eligibility. Inspect the passage, facts, source image with highlighted regions, workbook cells, original notes and complete provenance. Records default to `human_review_status="not_reviewed"`; automated validation does not establish scientific accuracy.
-
-The current standalone report is [the published corpus report](knowledge/versions/corpus-4aac882441587796afe5/review.html). The earlier `knowledge/saved_extraction_64/review.html` is a historical, unpublished checkpoint and does not show the final counts. The report and adjacent images are generated local files; rebuild them after a fresh checkout.
-
-Demo preparation, rehearsal and PPTX updates are deferred by request. Existing presentation artifacts are historical and are not evidence of a completed demonstration.
-
-### Local history and trace exports
-
-Assessment history is stored in the configured local SQLite file (`EXPLAINABILITY_DB_PATH`). Each enquiry can be reopened and continued as a linked round; clarification answers belong to their parent enquiry and are included in the selected run. JSON export is the machine envelope. The chemist PDF is a concise assessment export, while the trace PDF and explainability JSON include enquiry text, source excerpts, retrieval decisions, provider/model events and validation content. Treat trace exports as sensitive working records because they contain enquiry, source and model content. Evaluation batches use a dedicated history database and export the traces needed for review, so the SQLite file is not required to inspect a batch.
-
-### Models, limits and storage
-
-- Extraction and verification: Gemini first, with Qwen fallback in automatic mode. The published F02 build used LLMTech `nvidia/Qwen3.8-27B-NVFP4`, an 8192-token extraction ceiling, up to 2048 verification tokens and two concurrent page jobs. Pinned Groq runs retain conservative pacing. Automatic builds use the configured extraction/verification limits and retain actual provider identities in record provenance. Incomplete structured responses remain inspectable and require bounded repair or fallback plus the same validation before publication.
-- Embeddings: local `BAAI/bge-small-en-v1.5` through FastEmbed, 384 dimensions, cosine similarity. The first use downloads public model files to `outputs/embedding_models/`; their checksums are captured in each index manifest. Source content is embedded locally. Each segment is explicitly checked below the model's 512-token limit, including its heading. Long indivisible sentences fail clearly rather than truncate.
-- Retrieval: up to 20 BM25 candidates and 20 Qdrant candidates, fused with reciprocal rank fusion (`k=60`) into at most eight unique evidence records. A domain-only synonym map covers terms such as MIR/FTIR and moisture/water. Results are candidates for a later assessment stage, not scientific endorsements. No cross-encoder reranker is used.
-- Qdrant: persistent local Python-client mode, no Docker/cloud account. The CLI opens and closes the active database per search. Do not access one local database from multiple processes simultaneously; concurrent searches contend for the local lock. Each build creates a separate generation; API report routes use versioned assets, so a rebuild cannot mix source images between reports.
-
-### Rebuild and failure behavior
-
-`build` reuses content-addressed extraction and verification caches. Source hashes, schema and prompt hashes, extraction version, rendered-image hash, provider settings and output contents determine provenance and revisions. `build --refresh` explicitly reruns model stages and creates a new revision when outputs differ. Identical cached builds retain evidence IDs, record revisions and corpus version. Evidence IDs use source/page/content identity; workbook IDs use sheet/row and retain S01 Table 1 p.6 as the underlying citation. Qualitative ratings and optical path/depth remain source values, not equipment guarantees or remote fiber lengths.
-
-Canonical data lives in `knowledge/versions/<corpus-version>/`. `knowledge/current.json` is replaced atomically only when extraction, validation, report creation and both indexes finish successfully. Root-level `source_manifest.json`, `passages.jsonl`, `methods.json`, `method_notes.json` and `validation_report.json` are convenience exports; readers use the version pointer. Prior generations survive failed builds. Working stages remain under `knowledge/.staging/`, with sanitized failure diagnostics; completed model stages remain cached under `outputs/ingest/cache/`. Rerun the same build to resume. Rate limits receive bounded waits; exhausted waits or schema failures leave the published corpus untouched.
-
-Originals, model binaries, page images, raw extraction caches and Qdrant binaries are local rebuildable artifacts. Keep the original-source folder available when validating or rebuilding. Generated evidence and manifests remain trackable. Their third-party source rights remain unchanged.
-
-A fresh checkout includes saved canonical evidence, manifests, segments and BM25 data. Use `python scripts/restore_corpus.py` with the separately supplied originals to render pages and rebuild the local indexes/report from that saved evidence without extraction-model calls. Restoration publishes a new corpus/index identity while preserving evidence IDs and revisions; it never changes the archived evaluation. The first embedding-model use downloads its public files unless the matching local cache is supplied. For new source extraction, use `python -m backend.ingest build --provider auto`; valid content-addressed caches can resume compatible stages, while `--refresh` explicitly requests new model extraction.
-
-See [the pipeline contract](docs/knowledge_pipeline.md) for exact outputs, interfaces, validation and current live-run status.
-
-### F02 live validation status (2026-10-17)
-
-The active corpus is **`corpus-4aac882441587796afe5`**: all 64 PDF pages processed, 152 passages, 81 eligible passages, 19 eligible method rows, seven notes, 111 embedding segments and 63 flagged records excluded from retrieval. Human-verified records remain zero; no AFS approval is implied.
-
-Deep validation passes against the original sources, workbook cells, page-image hashes and Qdrant/BM25 membership. Replaying all 64 cached responses exactly reproduces the 152 published records. Representative powder/API and opaque-dairy searches exercise both retrieval branches; backend regression tests pass (69 tests). Context-aware evidence selection remains F04 work: generic search can still return biomedical material for a dairy query.
-
-`outputs/ingest/published_validation.json` records current completion checks. `outputs/ingest/live_validation.json` retains the earlier failed Groq pilot as historical evidence; it is not the active corpus status. Readiness includes cached automatic provider availability and local index readiness; refreshing status makes no provider calls and is not a scientific endorsement. F03 customer-enquiry extraction is documented [separately](docs/customer_extraction.md).
+The current manifest records the latest counts from all five PDFs, the method workbook, and the Word examples/reference document. Model-transcribed supporting text is not independently verified. The historical 64-page F02 results below and in archived evaluation records describe the former pipeline.
 
 ## Manual search and S06 website crawl
 
@@ -319,3 +279,15 @@ HTML is parsed locally without another LLM or new parser dependency. Navigation,
 `WEB_CORPUS_DIR` defaults to `knowledge/web`. Its `current.json` points to an immutable `versions/web-<hash>/` snapshot with a manifest, extracted pages, records, BM25/embedding segments and a local Qdrant index. Raw HTML and vector binaries are ignored by Git; extracted provenance remains trackable. A failed crawl/index build keeps the previous pointer. Existing BGE files must be present locally before indexing the website; the crawler uses local-only embeddings.
 
 `GET /api/search/status` reports technical and website dataset readiness. `POST /api/search` accepts `query` (1–2000 characters), `mode` (`compare`, `bm25`, `qdrant`, `hybrid`), `dataset` (`technical`, `website`, `all`), `limit` (1–8) and `expand_synonyms`. Semantic queries must fit 512 tokenizer tokens. Missing/corrupt datasets or a busy vector store return a sanitized 503; invalid inputs return 422. The manual search API remains separate from `POST /api/extract`; context-based retrieval, assessment generation and pinned evidence resolution are available through `/api/retrieve`, `/api/assess` and `/api/evidence/{evidence_id}`.
+
+### Add a new knowledge file
+
+In Extracted knowledge, use **Add a file** to upload a PDF, XLSX, or DOCX, choose its source type, and extract it with Qwen. Progress is displayed and the new source opens after publication. The existing library is retained; the same filename updates its source.
+
+Windows CMD equivalent, from the repository root:
+
+```cmd
+.venv\Scripts\python.exe -m backend.ingest add --file "C:\path\new-paper.pdf" --role research
+```
+
+This command sends the selected file to the configured DashScope endpoint. Add `--prepare-only` to prepare locally without uploading. See [knowledge pipeline](docs/knowledge_pipeline.md) for roles, storage and API details.

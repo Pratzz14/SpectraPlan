@@ -30,11 +30,13 @@ class SearchService:
         return result
 
     def _dataset(self, kind):
-        if kind == "technical":
+        if kind in {"technical", "inspection"}:
             directory = active_directory(self.settings.corpus_dir)
             validate_corpus(directory)
             manifest, passages, methods = load_records(directory)
-            records = [r for r in passages + methods if r["retrieval_eligible"]]
+            records = [r for r in passages + methods if r.get("search_eligible", True)] if kind == "inspection" else [r for r in passages + methods if r["retrieval_eligible"]]
+            if kind == "inspection" and (directory / "inspection").is_dir():
+                directory = directory / "inspection"
         else:
             directory = web_directory(self.settings.web_corpus_dir)
             validate_web(directory)
@@ -42,19 +44,19 @@ class SearchService:
             records = [r for r in read_json(directory / "records.json") if r["context_search_eligible"]]
         return directory, records, manifest
 
-    def compare(self, query, *, mode="compare", dataset="technical", limit=6, expand_synonyms=True):
-        if mode not in {"compare", "bm25", "qdrant", "hybrid"} or dataset not in {"technical", "website", "all"}:
+    def compare(self, query, *, mode="compare", dataset="technical", limit=6, expand_synonyms=True, source_id=None):
+        if mode not in {"compare", "bm25", "qdrant", "hybrid"} or dataset not in {"technical", "website", "all", "inspection"}:
             raise ValueError("Unknown search mode or dataset")
         if not query.strip() or len(query) > 2000 or not 1 <= limit <= 8:
             raise ValueError("Supply a query of 1–2000 characters and a result limit of 1–8")
         if not SEARCH_LOCK.acquire(timeout=30):
             raise SearchUnavailable("Search is busy. Try again shortly.")
         try:
-            return self._compare(query.strip(), mode, dataset, limit, expand_synonyms)
+            return self._compare(query.strip(), mode, dataset, limit, expand_synonyms, source_id)
         finally:
             SEARCH_LOCK.release()
 
-    def _compare(self, query, mode, dataset, limit, expand_synonyms):
+    def _compare(self, query, mode, dataset, limit, expand_synonyms, source_id=None):
         from rank_bm25 import BM25Okapi
         started = time.monotonic()
         selected = ["technical", "website"] if dataset == "all" else [dataset]
@@ -64,7 +66,7 @@ class SearchService:
                 directory, rows, manifest = self._dataset(kind)
                 loaded.append((kind, directory))
                 versions[kind] = manifest["corpus_version"]
-                records.update({r["evidence_id"]: {**r, "dataset": kind} for r in rows})
+                records.update({r["evidence_id"]: {**r, "dataset": kind} for r in rows if not source_id or r["source_id"] == source_id})
         except (OSError, ValueError, KeyError):
             raise SearchUnavailable("The selected dataset is unavailable or failed validation. Check corpus readiness.") from None
         terms = query_tokens(query) if expand_synonyms else tokens(query)
@@ -75,7 +77,7 @@ class SearchService:
             if documents:
                 scores = BM25Okapi([d["tokens"] for d in documents]).get_scores(terms)
                 for i in sorted(range(len(documents)), key=lambda i: (-scores[i], documents[i]["evidence_id"])):
-                    if scores[i] > 0:
+                    if scores[i] > 0 and (not source_id or documents[i]["evidence_id"] in records):
                         eid = documents[i]["evidence_id"]
                         lexical_scores[eid] = float(scores[i])
                         lexical.append(eid)
@@ -97,7 +99,9 @@ class SearchService:
                     by_segment = {s["id"]: s for s in read_json(directory / "segments.json")}
                     client = QdrantClient(path=str(directory / "qdrant"))
                     try:
-                        for point in client.query_points(COLLECTION, query=vector, limit=20).points:
+                        for point in client.query_points(COLLECTION, query=vector, limit=max(20,len(by_segment)) if source_id else 20).points:
+                            if source_id and point.payload["evidence_id"] not in records:
+                                continue
                             points.append((point.payload["evidence_id"], float(point.score), by_segment[str(point.id)]["text"]))
                     finally:
                         client.close()
@@ -129,7 +133,9 @@ class SearchService:
             rankings["qdrant"] = [result(eid, dense_scores[eid], i) for i, eid in enumerate(dense[:limit], 1)]
         if mode in {"compare", "hybrid"}:
             rankings["hybrid"] = [result(eid, score, i) for i, (eid, score) in enumerate(fuse(lexical, dense, limit), 1)]
-        warnings = ["Website results are vendor/business context, not independently validated technical evidence."] if dataset != "technical" else []
+        warnings = ["Website results are vendor/business context, not independently validated technical evidence."] if dataset in {"website", "all"} else []
+        if dataset == "inspection":
+            warnings.append("Inspection includes development examples and business context. These are excluded from assessment retrieval.")
         if not any(rankings.values()):
             warnings.append("No positive keyword matches were found. Try different words or semantic search.")
         return {"query": query, "mode": mode, "dataset": dataset, "versions": versions, "limit": limit,
