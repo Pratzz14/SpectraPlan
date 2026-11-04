@@ -7,7 +7,7 @@ from backend.services.knowledge.knowledge_store import write_json,inside,file_ha
 def export_cloud(settings,database,storage,destination):
     destination.mkdir(parents=True,exist_ok=False)
     tables=('enquiries','explainability_runs','explainability_events','corpus_versions','active_corpora',
-        'corpus_documents','evidence','source_revisions','source_locations','embedding_segments','corpus_files','app_state','ingestion_jobs')
+        'corpus_documents','evidence','source_revisions','source_locations','embedding_segments','corpus_files','app_state','ingestion_jobs','assessment_jobs','uploads')
     exported={}
     from psycopg import sql
     with database.connection() as c:
@@ -27,7 +27,10 @@ def export_cloud(settings,database,storage,destination):
     for (bucket,key),reference in references.items():
         path=inside(destination/'objects',bucket+'/'+key)
         path.parent.mkdir(parents=True,exist_ok=True)
-        path.write_bytes(storage.get(reference))
+        if reference.get('staged'):
+            from urllib.parse import quote
+            path.write_bytes(storage._request('GET','object/authenticated/'+quote(bucket,safe='')+'/'+quote(key,safe='/')).content)
+        else:path.write_bytes(storage.get(reference))
     # Vector values serialize to their Postgres text representation; datetime fields use ISO 8601.
     payload=json.loads(json.dumps(exported,default=lambda v:v.isoformat() if hasattr(v,'isoformat') else str(v)))
     write_json(destination/'database.json',payload)

@@ -27,7 +27,21 @@ def process(settings,database,storage,jobs,job):
         batch=job['input'].get('batch',False)
         path=root/job['filename']
         if not batch:
-            path.write_bytes(storage.get(job['input']))
+            if job['input'].get('staged'):
+                from urllib.parse import quote
+                data=storage._request('GET','object/authenticated/'+quote(job['input']['bucket'],safe='')+'/'+quote(job['input']['key'],safe='/')).content
+                if len(data)!=job['input']['expected_bytes'] or not 0<len(data)<=settings.knowledge_upload_max_bytes:
+                    raise ValueError('Uploaded size does not match the registered file.')
+                path.write_bytes(data)
+                reference=storage.put(data,source=True,filename=job['filename']);del data
+                from backend.services.cloud.database import json_value
+                with database.connection() as c:
+                    previous=c.execute("SELECT checkpoint FROM spectraplan.ingestion_jobs WHERE filename=%s AND role=%s AND input->>'sha256'=%s AND status='failed' ORDER BY created_at DESC LIMIT 1",(job['filename'],job['role'],reference['sha256'])).fetchone()
+                    if previous:job['checkpoint']=previous[0]
+                    if not c.execute("UPDATE spectraplan.ingestion_jobs SET input=%s WHERE job_id=%s AND claim_token=%s AND status='running' RETURNING job_id",(json_value(reference),job['job_id'],job['token'])).fetchone():
+                        raise ValueError('Upload worker lease expired.')
+                job['input']=reference
+            else:path.write_bytes(storage.get(job['input']))
         latest=local.knowledge_work_dir/'import/latest'
         latest.mkdir(parents=True,exist_ok=True)
         if job['checkpoint']:
@@ -116,10 +130,40 @@ def main():
     database=Database(settings)
     storage=ArtifactStorage(settings)
     jobs=IngestionJobs(settings,database)
+    import signal,os
+    current={}
+    def shutdown(signum,frame):
+        # Completed extraction units are already checkpointed remotely. Never wait
+        # for an uncertain paid request or let an old thread publish after shutdown.
+        deadline=threading.Timer(25,lambda:os._exit(0));deadline.daemon=True;deadline.start()
+        try:
+            if current.get('kind')=='assessment':
+                job=current['job']
+                with database.connection() as c:
+                    c.execute("SET LOCAL lock_timeout='5s'")
+                    changed=c.execute("UPDATE spectraplan.assessment_jobs SET status='interrupted',stage='interrupted' WHERE run_id=%s AND claim_token=%s AND status='running' RETURNING run_id",(job['run_id'],job['token'])).fetchone()
+                    if changed:c.execute("UPDATE spectraplan.explainability_runs SET status='interrupted' WHERE run_id=%s AND status='running'",(job['run_id'],))
+            elif current.get('kind')=='ingestion':
+                jobs.update(current['job'],status='failed',message='Worker restarted. Completed source locations are saved; explicitly retry this file.')
+            print('Worker stopped; queued jobs and completed checkpoints remain in Supabase.',flush=True)
+        finally:os._exit(0)
+    signal.signal(signal.SIGTERM,shutdown)
     try:
         while True:
+            if settings.background_assessments:
+                from backend.services.cloud.assessments import AssessmentJobs
+                assessments=AssessmentJobs(database)
+                assessment=assessments.claim()
+                if assessment:
+                    current.update(kind='assessment',job=assessment)
+                    try:assessments.execute(assessment,settings,CloudKnowledge(settings,database,storage))
+                    except Exception:print('Assessment interrupted; result retained for explicit retry.',flush=True)
+                    finally:current.clear()
+                    if args.once:break
+                    continue
             job=jobs.claim()
             if job:
+                current.update(kind='ingestion',job=job)
                 try:
                     process(settings,database,storage,jobs,job)
                 except Exception:
@@ -127,6 +171,7 @@ def main():
                         jobs.update(job,status='failed',message='Ingestion failed. Existing knowledge was preserved; retry this file.')
                     except Exception:
                         pass  # Expired/failed lease remains fenced; a restarted worker can continue.
+                finally:current.clear()
             if args.once:
                 break
             threading.Event().wait(2)

@@ -10,6 +10,9 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
 class Settings(BaseSettings):
+    background_assessments: bool = False
+    static_frontend_dir: Path | None = None
+    allowed_user_ids: str = ''
     storage_backend: Literal["local", "supabase"] = "local"
     database_url: SecretStr = SecretStr("")
     supabase_migration_database_url: SecretStr = SecretStr("")

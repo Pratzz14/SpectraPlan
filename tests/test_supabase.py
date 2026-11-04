@@ -91,6 +91,39 @@ def test_storage_failure_does_not_echo_secret():
     assert 'sb_secret_private' not in str(error.value)
 
 
+def test_background_assessment_atomic_submission_and_execution(cloud_db,monkeypatch):
+    from backend.services.cloud.assessments import AssessmentJobs
+    from backend.services.cloud.history import PostgresHistory
+    from backend.schemas.models import AssessmentRequest
+    from tests.test_auth import OWNER
+    from tests.test_assessment_api import provider_for,mock_retrieval
+    from tests.test_assessment import draft,ledger
+    from tests.test_extraction import powder,wire_for
+    from backend.services.history.explainability import HistoryConflict
+    text='A powder; measure moisture.'
+    adapter,calls=provider_for([wire_for(powder(text).model_dump()),draft(empty=True)])
+    config=adapter.settings.model_copy(update={'background_assessments':True})
+    from backend.services.cloud.database import json_value
+    with cloud_db.connection() as c:
+        c.execute("INSERT INTO spectraplan.corpus_versions(version,dataset,manifest,digest,ready) VALUES ('test-version','technical',%s,'test',true)",(json_value({}),))
+        c.execute("INSERT INTO spectraplan.active_corpora VALUES ('technical','test-version')")
+    jobs=AssessmentJobs(cloud_db);request=AssessmentRequest(description=text)
+    accepted=jobs.submit(request,OWNER,'submission',config)
+    assert jobs.submit(request,OWNER,'submission',config)==accepted
+    with pytest.raises(HistoryConflict):jobs.submit(request,OWNER,'duplicate',config)
+    with pytest.raises(HistoryConflict):jobs.submit(AssessmentRequest(description='different'),OWNER,'submission',config)
+    job=jobs.claim()
+    assert job and jobs.claim() is None
+    mock_retrieval(monkeypatch,ledger(empty=True))
+    monkeypatch.setattr('backend.pipelines.assessment.pipeline.Provider',lambda _:adapter)
+    jobs.execute(job,config,object())
+    saved=PostgresHistory(cloud_db).read(accepted['run_id'])
+    assert saved['run'] and saved['status'] not in ('queued','running')
+    assert len(calls)==2
+    with pytest.raises(HistoryConflict):
+        with jobs.owned(job):pass
+
+
 def test_history_rounds_events_ownership_and_literal_filter(cloud_db):
     from backend.services.cloud.history import PostgresHistory
     from backend.services.history.explainability import HistoryConflict

@@ -5,7 +5,7 @@ from backend.api.auth import Identity, get_current_user, require_admin, require_
 
 import sqlite3
 
-from fastapi import Depends, APIRouter, HTTPException
+from fastapi import Depends, APIRouter, HTTPException, Header
 from fastapi.responses import JSONResponse
 
 from backend.core.config import Settings
@@ -22,7 +22,17 @@ def create_router():
                       responses={422: {"description": "Invalid enquiry"},
                                  502: {"model": AssessmentRun}, 503: {"model": AssessmentRun},
                                  504: {"model": AssessmentRun}})
-    async def assess(request: AssessmentRequest, config: Settings = Depends(get_settings), retrieval_service: CaseRetrievalService = Depends(get_retrieval), explainability_store: ExplainabilityStore = Depends(get_history), user: Identity = Depends(get_current_user)):
+    async def assess(request: AssessmentRequest, config: Settings = Depends(get_settings), retrieval_service: CaseRetrievalService = Depends(get_retrieval), explainability_store: ExplainabilityStore = Depends(get_history), user: Identity = Depends(get_current_user), idempotency_key: str | None = Header(default=None)):
+        if config.background_assessments:
+            if not idempotency_key or len(idempotency_key)>100:
+                raise HTTPException(422,'A valid Idempotency-Key is required.')
+            import asyncio
+            from backend.services.cloud.assessments import AssessmentJobs
+            try:
+                value=await asyncio.to_thread(AssessmentJobs(explainability_store.database).submit,request,user,idempotency_key,config)
+                return JSONResponse(value,status_code=202)
+            except HistoryConflict as error:raise HTTPException(409,str(error)) from None
+            except DescriptionTooLong as error:raise HTTPException(422,str(error)) from None
         if config.storage_backend == 'supabase':
             import asyncio
             return await asyncio.to_thread(lambda: asyncio.run(run_assessment(request,config,retrieval_service,explainability_store,user)))
@@ -70,6 +80,14 @@ def create_router():
         return JSONResponse(customer_run(result.model_dump(mode="json")), status_code=status,
                             headers={"Cache-Control": "no-store"})
 
+
+    @router.get('/api/assess/{run_id}/status')
+    def assessment_status(run_id: str, user: Identity=Depends(get_current_user), store=Depends(get_history)):
+        if not __import__('re').fullmatch(r'[0-9a-f]{32}',run_id):raise HTTPException(422,'Invalid run ID')
+        saved=store.read(run_id)
+        if not saved:raise HTTPException(404,'Assessment not found')
+        require_owner(store.enquiry(saved['enquiry_id']),user)
+        return {'run_id':run_id,'enquiry_id':saved['enquiry_id'],'status':saved['status']}
 
     @router.post("/api/extract", response_model=CaseFacts, dependencies=[Depends(require_admin)])
     async def extract(request: ExtractionRequest, config: Settings = Depends(get_settings)):

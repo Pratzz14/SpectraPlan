@@ -1,6 +1,6 @@
 import { evidenceLocation } from '../evidenceLocation'
 import { useEffect, useRef, useState } from 'react'
-import { assessEnquiry, fetchSavedAssessment, fetchEnquiry } from '../../../shared/api/api'
+import { assessEnquiry, fetchSavedAssessment, fetchEnquiry, waitForAssessment } from '../../../shared/api/api'
 import { chemistWarnings, clarificationKey, composeEnquiry, contextLabel, readable } from '../assessment'
 import type { AssessmentRun, ClarificationAnswer, ClarificationQuestion } from '../assessment'
 import CustomerInput from './CustomerInput'
@@ -56,7 +56,11 @@ export default function AssessmentPage({ initialRun = '', newEnquiry }: { initia
     setDraft(''); setSubmitted(''); setRun(null); setQuestionRun(null); setAnswers({})
     setEnquiryId(undefined); setCurrentRunId(undefined)
     try {
-      const saved = await fetchSavedAssessment(runId, controller.signal)
+      let saved = await fetchSavedAssessment(runId, controller.signal)
+      if (['queued', 'running'].includes(saved.status)) {
+        await waitForAssessment(runId, controller.signal)
+        saved = await fetchSavedAssessment(runId, controller.signal)
+      }
       let questions = saved.run
       if (!questions?.assessment) {
         const detail = await fetchEnquiry(saved.enquiry_id, controller.signal)

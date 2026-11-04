@@ -9,6 +9,8 @@ from backend.services.history.explainability import ExplainabilityStore
 
 def create_app(settings: Settings | None = None) -> FastAPI:
     config = settings if settings is not None else Settings()
+    if config.static_frontend_dir and not config.allowed_user_ids.strip():
+        raise ValueError('Hosted deployments require an explicit application user allowlist.')
     database = None
     knowledge = None
     if config.storage_backend == 'supabase':
@@ -73,6 +75,18 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     from backend.api.routes import create_router
     application.include_router(create_router())
+
+    if config.static_frontend_dir:
+        import json
+        from fastapi.responses import HTMLResponse
+        from fastapi.staticfiles import StaticFiles
+        directory=config.static_frontend_dir
+        application.mount('/assets',StaticFiles(directory=directory/'assets'),name='assets')
+        @application.get('/',include_in_schema=False,response_class=HTMLResponse)
+        def frontend():
+            public=json.dumps({'url':config.supabase_url,'key':config.supabase_publishable_key}).replace('<','\\u003c')
+            html=(directory/'index.html').read_text(encoding='utf-8')
+            return HTMLResponse(html.replace('<head>','<head><script>window.__SPECTRAPLAN_CONFIG__='+public+'</script>'),headers={'Cache-Control':'no-store'})
 
     return application
 

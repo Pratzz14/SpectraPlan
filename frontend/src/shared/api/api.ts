@@ -26,7 +26,7 @@ export async function assessEnquiry(input: AssessmentRequest, signal: AbortSigna
   let response: Response
   try {
     response = await apiFetch('/api/assess', {
-      method: 'POST', signal, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(input),
+      method: 'POST', signal, headers: { 'Content-Type': 'application/json', 'Idempotency-Key': crypto.randomUUID() }, body: JSON.stringify(input),
     })
   } catch (error) {
     if (signal.aborted) throw error
@@ -37,6 +37,11 @@ export async function assessEnquiry(input: AssessmentRequest, signal: AbortSigna
   try { data = await response.json() } catch {
     throw new Error(`The assessment service returned an unreadable response (HTTP ${response.status}). Please try again.`)
   }
+  if (response.status === 202) {
+    const pending = data as {run_id: string; status_url: string}
+    window.history.replaceState(null, '', `#assess?run=${encodeURIComponent(pending.run_id)}`)
+    return waitForAssessment(pending.run_id, signal)
+  }
   // F06 can return a valid incomplete envelope on non-2xx responses.
   if (isAssessmentRun(data) && (response.ok || ([502, 503, 504].includes(response.status) && data.run_status === 'incomplete'))) return data
   if (response.status === 422) {
@@ -46,6 +51,25 @@ export async function assessEnquiry(input: AssessmentRequest, signal: AbortSigna
   }
   if (!response.ok) throw new Error(`The assessment service failed (HTTP ${response.status}). Please try again or check workspace status.`)
   throw new Error('Unexpected assessment response. No result was displayed. Please try again or check the backend version.')
+}
+
+export async function waitForAssessment(runId: string, signal: AbortSignal): Promise<AssessmentRun> {
+  while (!signal.aborted) {
+    const response = await apiFetch(`/api/assess/${encodeURIComponent(runId)}/status`, {signal})
+    if (!response.ok) throw new Error('Assessment progress is unavailable. Reopen this enquiry to retry.')
+    const state = await response.json() as {status: string}
+    if (!['queued', 'running'].includes(state.status)) {
+      const saved = await fetchSavedAssessment(runId, signal)
+      if (saved.run) return saved.run
+      throw new Error('Assessment was interrupted. Your enquiry is saved; submit it again to retry.')
+    }
+    await new Promise<void>((resolve, reject) => {
+      const abort = () => { clearTimeout(timer); reject(new DOMException('Cancelled', 'AbortError')) }
+      const timer = setTimeout(() => { signal.removeEventListener('abort', abort); resolve() }, 2000)
+      signal.addEventListener('abort', abort, {once: true})
+    })
+  }
+  throw new DOMException('Cancelled', 'AbortError')
 }
 
 export async function fetchExplainability(runId: string, signal: AbortSignal): Promise<ExplainabilityTrace> {
@@ -184,6 +208,17 @@ export async function fetchKnowledgeIngestion(signal: AbortSignal): Promise<Know
 }
 
 export async function uploadKnowledgeFile(file: File, role: string): Promise<KnowledgeIngestion> {
+  if ((window as unknown as {__SPECTRAPLAN_CONFIG__?: unknown}).__SPECTRAPLAN_CONFIG__) {
+    const start = await apiFetch('/api/knowledge/uploads', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({filename:file.name,size:file.size,role})})
+    const signed = await start.json() as {upload_id:string;signed_url:string;detail?:string}
+    if (!start.ok) throw new Error(signed.detail ?? 'Could not prepare upload.')
+    const upload = await fetch(signed.signed_url,{method:'PUT',headers:{'Content-Type':file.type || 'application/octet-stream'},body:file})
+    if (!upload.ok) throw new Error('The file upload failed. Please retry.')
+    const finish = await apiFetch(`/api/knowledge/uploads/${encodeURIComponent(signed.upload_id)}/complete`,{method:'POST'})
+    const value = await finish.json()
+    if (!finish.ok) throw new Error(typeof value.detail === 'string' ? value.detail : 'Could not queue the uploaded file.')
+    return ingestionResponse(value)
+  }
   const query = new URLSearchParams({ filename: file.name, role })
   const response = await apiFetch(`/api/knowledge/ingest?${query}`, {
     method: 'POST', headers: { 'Content-Type': 'application/octet-stream' }, body: file,
@@ -200,7 +235,7 @@ export async function fetchSavedAssessment(runId: string, signal: AbortSignal): 
   if (!saved || saved.run_id !== runId || typeof saved.enquiry_id !== 'string' || typeof saved.draft_description !== 'string'
     || typeof saved.description !== 'string' || !Number.isInteger(saved.round_no)
     || !(saved.parent_run_id === null || typeof saved.parent_run_id === 'string')
-    || !['running', 'complete', 'incomplete', 'interrupted'].includes(saved.status)
+    || !['queued', 'running', 'complete', 'incomplete', 'interrupted'].includes(saved.status)
     || !Array.isArray(saved.clarification_answers) || !Array.isArray(saved.questions)) throw new Error('Unexpected saved assessment response.')
   return { ...saved, run: isAssessmentRun(saved.run) ? saved.run : null }
 }

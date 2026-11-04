@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import type { Session } from '@supabase/supabase-js'
-import { supabase } from './client'
+import { supabase, signupEnabled } from './client'
 import { apiFetch, resetRequests } from '../../shared/api/transport'
 
 export interface CurrentUser { id: string; email: string; role: 'admin' | 'customer' }
@@ -77,7 +77,7 @@ export default function AuthGate({ children }: { children: (user: CurrentUser) =
           <label htmlFor="login-password">Password</label><input id="login-password" type="password" autoComplete={signup ? 'new-password' : 'current-password'} required minLength={signup ? 8 : 1} value={password} onChange={event => setPassword(event.target.value)} />
           {signup ? <p className="section-note">Use at least 8 characters.</p> : null}
           <button className="primary-button" disabled={busy}>{busy ? 'Please wait…' : signup ? 'Create account' : 'Sign in'}</button>
-        </form><button className="text-button" disabled={busy} onClick={() => { setSignup(value => !value); setError(''); setNotice('') }}>{signup ? 'Already have an account? Sign in' : 'Create an account'}</button></>}
+        </form>{signupEnabled ? <button className="text-button" disabled={busy} onClick={() => { setSignup(value => !value); setError(''); setNotice('') }}>{signup ? 'Already have an account? Sign in' : 'Create an account'}</button> : null}</>}
     {error ? <p role="alert" className="error-panel">{error}</p> : null}
     {notice ? <p role="status">{notice}</p> : null}
   </section></main>

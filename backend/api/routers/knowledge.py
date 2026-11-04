@@ -1,6 +1,6 @@
 """Run from the repository root: python -m uvicorn backend.main:app --reload."""
 
-from backend.api.auth import require_admin
+from backend.api.auth import require_admin, Identity
 
 from backend.api.dependencies import get_settings, get_knowledge
 
@@ -20,6 +20,21 @@ from backend.services.cloud.database import StorageUnavailable
 
 def create_router():
     router = APIRouter(tags=["Knowledge"], dependencies=[Depends(require_admin)])
+    @router.post('/api/knowledge/uploads',status_code=201)
+    def start_direct_upload(payload: dict,config: Settings=Depends(get_settings),knowledge=Depends(get_knowledge),user: Identity=Depends(require_admin)):
+        if not knowledge:raise HTTPException(404,'Direct uploads require cloud storage')
+        from backend.services.cloud.uploads import create
+        try:return create(config,knowledge.database,knowledge.storage,user,payload)
+        except ValueError as error:raise HTTPException(422,str(error)) from None
+
+    @router.post('/api/knowledge/uploads/{upload_id}/complete',status_code=202)
+    def finish_direct_upload(upload_id: str,config: Settings=Depends(get_settings),knowledge=Depends(get_knowledge),user: Identity=Depends(require_admin)):
+        if not knowledge:raise HTTPException(404,'Direct uploads require cloud storage')
+        from backend.services.cloud.uploads import complete
+        from backend.services.history.explainability import HistoryConflict
+        try:return complete(config,knowledge.database,user,upload_id)
+        except HistoryConflict as error:raise HTTPException(409,str(error)) from None
+        except ValueError as error:raise HTTPException(422,str(error)) from None
     @router.get("/api/knowledge/ingest/status")
     def knowledge_ingestion_status(config: Settings = Depends(get_settings)):
         from backend.pipelines.pdf_knowledge.import_file import ingestion_status

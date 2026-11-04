@@ -9,7 +9,7 @@ const mock = vi.hoisted(() => ({
   listener: null as null | ((event: string, session: unknown) => void),
   signIn: vi.fn(), signup: vi.fn(), signOut: vi.fn(),
 }))
-vi.mock('../src/features/auth/client', () => ({ supabase: { auth: {
+vi.mock('../src/features/auth/client', () => ({ signupEnabled: true, supabase: { auth: {
   onAuthStateChange: (callback: typeof mock.listener) => {
     mock.listener = callback
     queueMicrotask(() => callback?.('INITIAL_SESSION', null))

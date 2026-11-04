@@ -38,6 +38,7 @@ class Database:
                     user=connection.execute('SELECT current_user').fetchone()[0]
                     if user in {'postgres','supabase_admin'}:
                         raise StorageUnavailable('Use a restricted SpectraPlan runtime database login.')
+                    connection.commit()
                 yield connection
         except (psycopg.Error, PoolTimeout) as error:
             raise StorageUnavailable("Supabase database is unavailable. Check configuration and connectivity.") from None

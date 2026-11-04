@@ -106,7 +106,7 @@ class ExplainabilityStore:
                                              (parent_run_id, enquiry_id)).fetchone()
                 if parent is None:
                     raise HistoryConflict("Select a saved parent run from this enquiry.")
-                if parent["status"] == "running":
+                if parent["status"] in {"queued", "running"}:
                     raise HistoryConflict("The selected parent analysis is still running.")
             else:
                 if parent_run_id:

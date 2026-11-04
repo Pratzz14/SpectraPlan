@@ -52,6 +52,9 @@ async def get_current_user(
         raise HTTPException(401, "Invalid sign-in session.") from None
     # Email confirmation is deliberately optional for the initial password flow.
     admins = {value.strip() for value in config.admin_user_ids.split(",") if value.strip()}
+    allowed={value.strip() for value in config.allowed_user_ids.split(',') if value.strip()}
+    if allowed and user_id not in allowed | admins:
+        raise HTTPException(403,'This account has not been granted application access.')
     return Identity(user_id, email, "admin" if user_id in admins else "customer")
 
 
