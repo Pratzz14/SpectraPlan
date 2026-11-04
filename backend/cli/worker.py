@@ -87,12 +87,12 @@ def process(settings,database,storage,jobs,job):
                 from backend.pipelines.pdf_knowledge.store import publish_extraction
                 if not job['input'].get('publish_only'):
                     code=extract_all(local,latest,source_ids=job['input'].get('source_ids'),
-                        refresh=job['input'].get('refresh',False),concurrency=job['input'].get('concurrency',2),on_progress=report)
+                        refresh=job['input'].get('refresh',False),concurrency=min(job['input'].get('concurrency',settings.ingest_concurrency),settings.ingest_concurrency),on_progress=report)
                     if code:
                         raise ValueError('Batch extraction failed; the previous corpus remains active')
                 result=publish_extraction(local,latest,merge=bool(job['input'].get('source_ids')))
             else:
-                result=ingest_file(local,path,role=job['role'],name=job['filename'],on_progress=report,
+                result=ingest_file(local,path,role=job['role'],name=job['filename'],on_progress=report,concurrency=settings.ingest_concurrency,
                     prepare_only=job['input'].get('prepare_only',False))
                 if result.get('status')=='prepared':
                     jobs.update(job,status='prepared',message='Prepared locally without model calls',source_id=result['source_id'])

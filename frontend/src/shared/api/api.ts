@@ -22,11 +22,16 @@ export async function fetchKnowledgeInspection(signal: AbortSignal): Promise<Kno
   return data
 }
 
+let pendingSubmission: {payload: string; key: string} | null = null
+
 export async function assessEnquiry(input: AssessmentRequest, signal: AbortSignal, onProgress?: (stage: string) => void): Promise<AssessmentRun> {
+  const payload = JSON.stringify(input)
+  if (pendingSubmission?.payload !== payload) pendingSubmission = {payload, key: crypto.randomUUID()}
+  const submission = pendingSubmission
   let response: Response
   try {
     response = await apiFetch('/api/assess', {
-      method: 'POST', signal, headers: { 'Content-Type': 'application/json', 'Idempotency-Key': crypto.randomUUID() }, body: JSON.stringify(input),
+      method: 'POST', signal, headers: { 'Content-Type': 'application/json', 'Idempotency-Key': submission.key }, body: payload,
     })
   } catch (error) {
     if (signal.aborted) throw error
@@ -40,8 +45,16 @@ export async function assessEnquiry(input: AssessmentRequest, signal: AbortSigna
   if (response.status === 202) {
     const pending = data as {run_id: string; status_url: string}
     window.history.replaceState(null, '', `#assess?run=${encodeURIComponent(pending.run_id)}`)
-    return waitForAssessment(pending.run_id, signal, onProgress)
+    try {
+      const result = await waitForAssessment(pending.run_id, signal, onProgress)
+      if (pendingSubmission === submission) pendingSubmission = null
+      return result
+    } catch (error) {
+      if (error instanceof Error && error.message.startsWith('Assessment was interrupted') && pendingSubmission === submission) pendingSubmission = null
+      throw error
+    }
   }
+  if (pendingSubmission === submission && response.status < 500) pendingSubmission = null
   // F06 can return a valid incomplete envelope on non-2xx responses.
   if (isAssessmentRun(data) && (response.ok || ([502, 503, 504].includes(response.status) && data.run_status === 'incomplete'))) return data
   if (response.status === 422) {

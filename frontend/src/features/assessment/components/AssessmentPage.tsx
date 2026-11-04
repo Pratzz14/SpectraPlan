@@ -60,6 +60,11 @@ export default function AssessmentPage({ initialRun = '', newEnquiry }: { initia
     setEnquiryId(undefined); setCurrentRunId(undefined)
     try {
       let saved = await fetchSavedAssessment(runId, controller.signal)
+      setDraft(saved.draft_description); setSubmitted(saved.description)
+      setEnquiryId(saved.enquiry_id); setCurrentRunId(saved.run_id)
+      const restoredAnswers: Record<string, ClarificationAnswer> = {}
+      for (const a of saved.clarification_answers) restoredAnswers[JSON.stringify([a.origin_run_id, a.question_id, a.context, a.question])] = a
+      setAnswers(restoredAnswers)
       if (['queued', 'running'].includes(saved.status)) {
         await waitForAssessment(runId, controller.signal, setProgress)
         saved = await fetchSavedAssessment(runId, controller.signal)
