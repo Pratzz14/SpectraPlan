@@ -67,7 +67,6 @@ export default function LeadsPage({ active, newEnquiry }: { active: boolean; new
   }
   return <div className="history-page">
     <header className="history-heading">
-      <div><h1>Leads</h1><p className="section-note">Your customer enquiry inbox · review saved assessments and follow-up answers</p></div>
       <form className="lead-filter" onSubmit={event => { event.preventDefault(); applyFilter(email) }}>
         <label htmlFor="lead-email">Filter by email
           <input id="lead-email" type="search" placeholder="Customer email" maxLength={320} value={email} onChange={event => setEmail(event.target.value)} />
@@ -75,6 +74,13 @@ export default function LeadsPage({ active, newEnquiry }: { active: boolean; new
         <button className="secondary-button" type="submit">Filter</button>
         <button className="secondary-button" type="button" onClick={() => { setEmail(''); applyFilter('') }}>Clear</button>
       </form>
+    <section className="leads-overview" aria-label="Enquiry activity">
+      <div className="leads-metrics">
+        <div><span>Enquiries shown</span><strong>{listLoading && !items.length ? '—' : items.length}</strong></div>
+        <div><span>Updated in last 7 days</span><strong>{listLoading && !items.length ? '—' : items.filter(item => { const time = Date.parse(item.updated_at); return time <= Date.now() && time >= Date.now() - 7 * 86400000 }).length}</strong></div>
+      </div>
+      <p className="section-note">Based on loaded enquiries{filter ? ' matching the email filter' : ''}{more ? ' · Load older enquiries to include more activity' : ''}</p>
+    </section>
       <div className="history-actions">
         <button type="button" className="secondary-button" onClick={() => setRevision(value => value + 1)}>Refresh leads</button>
         <button type="button" className="primary-button" onClick={newEnquiry}>New enquiry</button>
@@ -89,7 +95,7 @@ export default function LeadsPage({ active, newEnquiry }: { active: boolean; new
       </>}
     </section> : <div className="split-workspace history-workspace">
       <aside className="workspace-rail history-rail" aria-label="Previous enquiries">
-        <div className="history-list">{items.map(item => <button type="button" className="history-entry" key={item.enquiry_id} aria-pressed={enquiryId === item.enquiry_id} onClick={() => setEnquiryId(item.enquiry_id)}><strong>{item.customer_email || 'Legacy — email unavailable'}</strong><span>{item.original_description}</span><span>{new Date(item.updated_at).toLocaleString()} · {item.rounds} {item.rounds === 1 ? 'round' : 'rounds'}</span></button>)}
+        <div className="leads-list-heading"><h2>Customer enquiries</h2><p className="section-note">Newest activity first</p></div><div className="history-list">{items.map(item => <button type="button" className="history-entry" key={item.enquiry_id} aria-pressed={enquiryId === item.enquiry_id} onClick={() => setEnquiryId(item.enquiry_id)}><strong>{item.customer_email || 'Legacy — email unavailable'}</strong><span>{item.original_description}</span><span>{new Date(item.updated_at).toLocaleString()} · {item.rounds} {item.rounds === 1 ? 'round' : 'rounds'}</span></button>)}
           {listLoading ? <p role="status" className="section-note">Loading enquiries…</p> : null}
           {!listLoading && !items.length && !listError ? <p className="section-note">{filter ? 'No leads match this email.' : 'No enquiries have been analysed yet.'}</p> : null}
           {listError ? <p role="alert">{listError}</p> : null}
