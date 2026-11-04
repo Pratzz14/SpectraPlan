@@ -47,5 +47,5 @@ test('a failed saved-run load cannot submit under the previously opened enquiry'
   await waitFor(() => expect(api.assess).toHaveBeenCalledWith({
     description: 'A fresh enquiry', enquiry_id: undefined, parent_run_id: undefined,
     clarification_answers: [],
-  }, expect.any(AbortSignal)))
+  }, expect.any(AbortSignal), expect.any(Function)))
 })

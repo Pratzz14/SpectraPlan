@@ -19,7 +19,7 @@ from backend.services.history.explainability import ExplainabilityStore, History
 def create_router():
     router = APIRouter(tags=["Assessment"], dependencies=[Depends(get_current_user)])
     @router.post("/api/assess", response_model=AssessmentRun,
-                      responses={422: {"description": "Invalid enquiry"},
+                      responses={202: {"description": "Assessment queued; poll the returned status URL"}, 422: {"description": "Invalid enquiry"},
                                  502: {"model": AssessmentRun}, 503: {"model": AssessmentRun},
                                  504: {"model": AssessmentRun}})
     async def assess(request: AssessmentRequest, config: Settings = Depends(get_settings), retrieval_service: CaseRetrievalService = Depends(get_retrieval), explainability_store: ExplainabilityStore = Depends(get_history), user: Identity = Depends(get_current_user), idempotency_key: str | None = Header(default=None)):
@@ -87,7 +87,12 @@ def create_router():
         saved=store.read(run_id)
         if not saved:raise HTTPException(404,'Assessment not found')
         require_owner(store.enquiry(saved['enquiry_id']),user)
-        return {'run_id':run_id,'enquiry_id':saved['enquiry_id'],'status':saved['status']}
+        stage=saved['status']
+        if hasattr(store,'database'):
+            with store.database.connection() as c:
+                row=c.execute('SELECT stage FROM spectraplan.assessment_jobs WHERE run_id=%s',(run_id,)).fetchone()
+                if row:stage=row[0]
+        return {'run_id':run_id,'enquiry_id':saved['enquiry_id'],'status':saved['status'],'stage':stage}
 
     @router.post("/api/extract", response_model=CaseFacts, dependencies=[Depends(require_admin)])
     async def extract(request: ExtractionRequest, config: Settings = Depends(get_settings)):

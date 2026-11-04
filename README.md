@@ -13,6 +13,7 @@ Customers describe a measurement problem, answer clarification questions and exp
 | [Operations](docs/operations.md) | Checks, knowledge restoration, live commands, evaluation and backups. |
 | [Quality](docs/quality.md) | Known limitations, historical results and evidence boundaries. |
 | [Supabase migration](docs/supabase.md) | Cloud data/files with React, FastAPI and ingestion processing on your PC. |
+| [Heroku deployment](docs/heroku.md) | Fully hosted web/worker, Eco billing activation, cloud backups and recovery. |
 
 ## Run locally
 

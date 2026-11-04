@@ -9,6 +9,8 @@ import EvidenceDrawer from './EvidenceDrawer'
 import Accordion from '../../../shared/ui/Accordion'
 import { ClarificationList, ExperimentPlan, RecommendationCards, RequirementsPanel, RunNotes } from './AssessmentResults'
 
+const progressLabels: Record<string,string> = {queued:'Queued — waiting for processing…',extraction:'Reading your requirements…',retrieval:'Searching the published evidence…',synthesis:'Preparing your assessment…'}
+
 export default function AssessmentPage({ initialRun = '', newEnquiry }: { initialRun?: string; newEnquiry: () => void }) {
   const [draft, setDraft] = useState('')
   const [submitted, setSubmitted] = useState('')
@@ -16,6 +18,7 @@ export default function AssessmentPage({ initialRun = '', newEnquiry }: { initia
   const [questionRun, setQuestionRun] = useState<AssessmentRun | null>(null)
   const [answers, setAnswers] = useState<Record<string, ClarificationAnswer>>({})
   const [loading, setLoading] = useState(false)
+  const [progress, setProgress] = useState('Preparing assessment…')
   const [restoring, setRestoring] = useState(!!initialRun)
   const [error, setError] = useState<string | null>(null)
   const [selected, setSelected] = useState<{ id: string; claim: string; source: AssessmentRun } | null>(null)
@@ -35,7 +38,7 @@ export default function AssessmentPage({ initialRun = '', newEnquiry }: { initia
     active.current = controller
     setSubmitted(description); setRun(null); setSelected(null); setError(null); setLoading(true)
     try {
-      const result = await assessEnquiry({ description: draft, enquiry_id: enquiryId, parent_run_id: currentRunId, clarification_answers: Object.values(answers).filter(item => item.answer.trim()) }, controller.signal)
+      const result = await assessEnquiry({ description: draft, enquiry_id: enquiryId, parent_run_id: currentRunId, clarification_answers: Object.values(answers).filter(item => item.answer.trim()) }, controller.signal, setProgress)
       if (active.current === controller && !controller.signal.aborted) {
         if (['', '#assess'].includes(window.location.hash.split('?')[0])) {
           window.history.replaceState(null, '', `#assess?run=${encodeURIComponent(result.metadata.run_id)}`)
@@ -58,7 +61,7 @@ export default function AssessmentPage({ initialRun = '', newEnquiry }: { initia
     try {
       let saved = await fetchSavedAssessment(runId, controller.signal)
       if (['queued', 'running'].includes(saved.status)) {
-        await waitForAssessment(runId, controller.signal)
+        await waitForAssessment(runId, controller.signal, setProgress)
         saved = await fetchSavedAssessment(runId, controller.signal)
       }
       let questions = saved.run
@@ -133,7 +136,7 @@ export default function AssessmentPage({ initialRun = '', newEnquiry }: { initia
         {run ? <nav className="report-navigation" aria-label="Assessment sections"><a href="#assessment-overview" onClick={event => { event.preventDefault(); goToSection('assessment-overview') }}>Overview</a><a href="#assessment-methods" onClick={event => { event.preventDefault(); goToSection('assessment-methods') }}>Methods</a><a href="#assessment-requirements" onClick={event => { event.preventDefault(); goToSection('assessment-requirements') }}>Requirements</a><a href="#assessment-experiment" onClick={event => { event.preventDefault(); goToSection('assessment-experiment') }}>Experiment</a><a href="#assessment-risks" onClick={event => { event.preventDefault(); goToSection('assessment-risks') }}>Risks</a></nav> : null}
         {run ? <div key={run.metadata.run_id} className="assessment-sections">
           <Accordion id="assessment-methods" title="Method shortlist" description={assessment && assessment.recommendations.length > 1 ? `${assessment.recommendations.length} methods` : undefined} status={status} open headingRef={assessment || !run ? resultHeading : undefined}>
-            {assessment ? <><RecommendationCards assessment={assessment} run={run} inspect={inspect} /></> : <p className="section-note">{run ? 'No validated recommendations are available.' : loading ? 'Preparing assessment…' : 'Enter an enquiry to compare supported methods.'}</p>}
+            {assessment ? <><RecommendationCards assessment={assessment} run={run} inspect={inspect} /></> : <p className="section-note" aria-live="polite">{run ? 'No validated recommendations are available.' : loading ? progressLabels[progress] ?? 'Preparing assessment…' : 'Enter an enquiry to compare supported methods.'}</p>}
           </Accordion>
           <Accordion id="assessment-requirements" title="Process requirements" description={requirementSummary || 'Requirements and constraints'} open>{run ? <RequirementsPanel run={run} /> : <p className="section-note">Analyze an enquiry to extract its requirements.</p>}</Accordion>
           <Accordion id="assessment-experiment" title="First feasibility experiment" description="Samples, reference measurements and validation" open>{assessment ? <ExperimentPlan experiment={assessment.experiment} facts={run.facts} /> : <p className="section-note">No experiment has been produced yet.</p>}</Accordion>

@@ -15,7 +15,7 @@ def create(settings,database,storage,user,payload):
     if role not in {'technical','research','business','development'} or type(size)!=int or not 0<size<=settings.knowledge_upload_max_bytes:
         raise ValueError('Invalid source role or file size.')
     upload_id=uuid4().hex;key='incoming/'+upload_id+Path(filename).suffix.lower()
-    signed=storage._request('POST','object/upload/sign/'+quote(settings.supabase_source_bucket,safe='')+'/'+key,json={}).json()
+    signed=storage._request('POST','object/upload/sign/'+quote(settings.supabase_source_bucket,safe='')+'/'+key,json={},timeout=10).json()
     path=signed.get('url') or signed.get('signedURL')
     if not path:raise ValueError('Storage did not return a signed upload URL.')
     with database.connection() as c:

@@ -22,7 +22,7 @@ export async function fetchKnowledgeInspection(signal: AbortSignal): Promise<Kno
   return data
 }
 
-export async function assessEnquiry(input: AssessmentRequest, signal: AbortSignal): Promise<AssessmentRun> {
+export async function assessEnquiry(input: AssessmentRequest, signal: AbortSignal, onProgress?: (stage: string) => void): Promise<AssessmentRun> {
   let response: Response
   try {
     response = await apiFetch('/api/assess', {
@@ -40,7 +40,7 @@ export async function assessEnquiry(input: AssessmentRequest, signal: AbortSigna
   if (response.status === 202) {
     const pending = data as {run_id: string; status_url: string}
     window.history.replaceState(null, '', `#assess?run=${encodeURIComponent(pending.run_id)}`)
-    return waitForAssessment(pending.run_id, signal)
+    return waitForAssessment(pending.run_id, signal, onProgress)
   }
   // F06 can return a valid incomplete envelope on non-2xx responses.
   if (isAssessmentRun(data) && (response.ok || ([502, 503, 504].includes(response.status) && data.run_status === 'incomplete'))) return data
@@ -53,11 +53,12 @@ export async function assessEnquiry(input: AssessmentRequest, signal: AbortSigna
   throw new Error('Unexpected assessment response. No result was displayed. Please try again or check the backend version.')
 }
 
-export async function waitForAssessment(runId: string, signal: AbortSignal): Promise<AssessmentRun> {
+export async function waitForAssessment(runId: string, signal: AbortSignal, onProgress?: (stage: string) => void): Promise<AssessmentRun> {
   while (!signal.aborted) {
     const response = await apiFetch(`/api/assess/${encodeURIComponent(runId)}/status`, {signal})
     if (!response.ok) throw new Error('Assessment progress is unavailable. Reopen this enquiry to retry.')
-    const state = await response.json() as {status: string}
+    const state = await response.json() as {status: string; stage?: string}
+    onProgress?.(state.stage ?? state.status)
     if (!['queued', 'running'].includes(state.status)) {
       const saved = await fetchSavedAssessment(runId, signal)
       if (saved.run) return saved.run
