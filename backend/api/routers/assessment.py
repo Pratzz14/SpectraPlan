@@ -1,6 +1,7 @@
 """Run from the repository root: python -m uvicorn backend.main:app --reload."""
 
 from backend.api.dependencies import get_settings, get_retrieval, get_history
+from backend.api.auth import Identity, get_current_user, require_admin, require_owner, customer_run
 
 import sqlite3
 
@@ -12,16 +13,22 @@ from backend.pipelines.assessment.pipeline import extract_case, assess_case
 from backend.schemas.models import CaseFacts, ExtractionRequest, AssessmentRequest, AssessmentRun
 from backend.providers.provider import ProviderError
 from backend.services.search.retrieval import CaseRetrievalService
-from backend.services.history.explainability import ExplainabilityStore, HistoryConflict, compose_description, question_id
+from backend.services.history.explainability import ExplainabilityStore, HistoryConflict, DescriptionTooLong, compose_description, question_id
 
 
 def create_router():
-    router = APIRouter(tags=["Assessment"])
+    router = APIRouter(tags=["Assessment"], dependencies=[Depends(get_current_user)])
     @router.post("/api/assess", response_model=AssessmentRun,
                       responses={422: {"description": "Invalid enquiry"},
                                  502: {"model": AssessmentRun}, 503: {"model": AssessmentRun},
                                  504: {"model": AssessmentRun}})
-    async def assess(request: AssessmentRequest, config: Settings = Depends(get_settings), retrieval_service: CaseRetrievalService = Depends(get_retrieval), explainability_store: ExplainabilityStore = Depends(get_history)):
+    async def assess(request: AssessmentRequest, config: Settings = Depends(get_settings), retrieval_service: CaseRetrievalService = Depends(get_retrieval), explainability_store: ExplainabilityStore = Depends(get_history), user: Identity = Depends(get_current_user)):
+        if config.storage_backend == 'supabase':
+            import asyncio
+            return await asyncio.to_thread(lambda: asyncio.run(run_assessment(request,config,retrieval_service,explainability_store,user)))
+        return await run_assessment(request,config,retrieval_service,explainability_store,user)
+
+    async def run_assessment(request, config, retrieval_service, explainability_store, user):
         answers = [answer.model_dump(mode="json") for answer in request.clarification_answers]
         effective = compose_description(request.description, answers)
         if len(effective) > config.assessment_max_description_chars:
@@ -29,8 +36,12 @@ def create_router():
                 "message":f"Enquiry including clarifications exceeds {config.assessment_max_description_chars} characters."})
         identity = None
         try:
+            if request.enquiry_id:
+                require_owner(explainability_store.enquiry(request.enquiry_id), user)
             identity = explainability_store.begin(request.description, answers,
-                enquiry_id=request.enquiry_id, parent_run_id=request.parent_run_id)
+                enquiry_id=request.enquiry_id, parent_run_id=request.parent_run_id,
+                owner_user_id=user.user_id, customer_email=user.email,
+                max_description_chars=config.assessment_max_description_chars)
             run_id = identity["run_id"]
             def record_event(event):
                 explainability_store.append(run_id, event)
@@ -44,22 +55,23 @@ def create_router():
             result.metadata.question_ids = [question_id(run_id, q.model_dump())
                 for q in result.assessment.clarification_questions] if result.assessment else []
             explainability_store.finish(run_id, result.model_dump(mode="json"))
+        except DescriptionTooLong as error:
+            raise HTTPException(422, {"code":"description_too_long","message":str(error)}) from None
         except HistoryConflict as error:
             raise HTTPException(409, {"code":"history_conflict","message":str(error)}) from None
         except (OSError, sqlite3.Error):
             raise HTTPException(503, {"code":"explainability_unavailable",
-                "message":"Assessment history could not be stored. Retry when local storage is available."}) from None
+                "message":"Assessment history could not be stored. Retry when storage is available."}) from None
         except BaseException:
             if identity:
                 explainability_store.interrupt(identity["run_id"])
             raise
         status = result.errors[0].http_status if result.facts is None and result.errors else 200
-        response_payload = result.model_dump(mode="json")
-        response_payload["metadata"]["provider_trace"] = []
-        return JSONResponse(response_payload, status_code=status)
+        return JSONResponse(customer_run(result.model_dump(mode="json")), status_code=status,
+                            headers={"Cache-Control": "no-store"})
 
 
-    @router.post("/api/extract", response_model=CaseFacts)
+    @router.post("/api/extract", response_model=CaseFacts, dependencies=[Depends(require_admin)])
     async def extract(request: ExtractionRequest, config: Settings = Depends(get_settings)):
         try:
             return await extract_case(request.description, config)

@@ -81,6 +81,9 @@ def test_final_parser_removes_heading_separators(tmp_path):
 
 @pytest.fixture
 def final_batch(tmp_path, monkeypatch):
+    from tests.auth_helpers import create_app
+    monkeypatch.setattr(runner, "create_app", create_app)
+    monkeypatch.setenv("SUPABASE_ACCESS_TOKEN", "test-operator-token")
     """Real public route/history; synthetic provider, retrieval and PDF content."""
     from tests.test_assessment import DESCRIPTION, draft
     from tests.test_assessment_api import provider_for, mock_retrieval

@@ -1,3 +1,4 @@
+import { ProtectedFile, ProtectedImage } from '../../shared/ui/ProtectedMedia'
 import { useEffect, useMemo, useState } from 'react'
 import { fetchKnowledgeInspection, queryKnowledge } from '../../shared/api/api'
 import type { KnowledgeInspection, KnowledgeRecord, SourcePage } from './knowledge'
@@ -14,8 +15,8 @@ function SourcePreview({ data, page }: { data: KnowledgeInspection; page: Source
   const pdf = `${data.artifact_base}source/${encodeURIComponent(page.source_id)}/original${!page.format || page.format === 'pdf' ? `#page=${page.page}` : ''}`
   const isPdf = !page.format || page.format === 'pdf'
   return <>
-    <div className="source-toolbar"><span>{page.source_id} · {page.label ?? `page ${page.page}`}</span><a href={pdf} target="_blank" rel="noreferrer">{isPdf ? 'Open original PDF ↗' : 'Download original file ↗'}</a></div>
-    {isPdf ? <div className="pdf-page-scroll">{image && !failed ? <img className="pdf-page-image" src={image} alt={`${page.source_id} original PDF page ${page.page}`} onError={() => setFailed(true)} /> : <p role="status">Source page image is unavailable. Try the original PDF link.</p>}</div> : <div className="office-source-preview">
+    <div className="source-toolbar"><span>{page.source_id} · {page.label ?? `page ${page.page}`}</span><ProtectedFile href={pdf} download={isPdf ? undefined : data.manifest.sources.find(source => source.source_id === page.source_id)?.file_name}>{isPdf ? 'Open original PDF ↗' : 'Download original file ↗'}</ProtectedFile></div>
+    {isPdf ? <div className="pdf-page-scroll">{image && !failed ? <ProtectedImage className="pdf-page-image" src={image} alt={`${page.source_id} original PDF page ${page.page}`} onError={() => setFailed(true)} /> : <p role="status">Source page image is unavailable. Try the original PDF link.</p>}</div> : <div className="office-source-preview">
       <p className="section-note">Source {page.format === 'workbook' ? 'cells and formulas' : 'paragraphs and table rows'}. This text preview preserves content and locations; download the original for its full formatting.</p>
       {page.rows ? <div className="source-table-scroll"><table className="source-cells"><tbody>{page.rows.map(row => <tr key={row.row}><th scope="row">{row.row}</th>{row.cells.map(cell => <td key={cell.cell}><small>{cell.cell}</small><span>{String(cell.value ?? '')}</span></td>)}</tr>)}</tbody></table></div>
         : page.blocks.map((block, i) => <div className="source-paragraph" key={i}><small>{block.location}</small><p>{block.text}</p></div>)}

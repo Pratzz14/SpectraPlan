@@ -96,9 +96,11 @@ export interface AssessmentRun {
   assessment: Assessment | null; errors: RunError[]; metadata: AssessmentMetadata; warnings: string[];
 }
 export interface EnquirySummary {
+  owner_user_id: string | null; customer_email: string | null;
   enquiry_id: string; original_description: string; created_at: string; updated_at: string; rounds: number; latest_run_id: string;
 }
 export interface EnquiryDetail {
+  owner_user_id: string | null; customer_email: string | null;
   enquiry_id: string; original_description: string;
   runs: { run_id: string; created_at: string; status: string; round_no: number; parent_run_id: string | null }[];
 }
@@ -111,6 +113,8 @@ export interface ExplainabilityTrace {
   legacy_run?: unknown;
   events: { sequence: number; stage: string; event_type: string; created_at: string; payload: Record<string, unknown> }[];
 }
+
+export type SavedAssessment = Pick<ExplainabilityTrace, 'run_id' | 'enquiry_id' | 'parent_run_id' | 'round_no' | 'status' | 'draft_description' | 'description' | 'clarification_answers' | 'questions' | 'run'>
 
 // Small boundary validators: validate before rendering, without normalizing or stripping export data.
 type Check = (value: unknown) => boolean;

@@ -618,10 +618,20 @@ async def assess_case(description: str, settings: Settings | None = None, *,
         if on_stage is not None:
             on_stage(stage, value)
 
+    import threading
+    retrieval_cancelled = threading.Event()
+
     def retrieve_and_authenticate():
         result = service.retrieve_case(facts, deadline=stop_at)
+        # Windows event-loop timers may fire slightly before monotonic deadlines.
+        # An explicitly cancelled await must fence the late thread regardless of time.
+        if retrieval_cancelled.is_set():
+            raise ProviderError('request_timeout', 'Assessment retrieval was cancelled.', 504)
         check_deadline()
-        authenticate_ledger(facts, result, config.corpus_dir)
+        if getattr(service, 'repository', None):
+            authenticate_ledger(facts, result, config.corpus_dir, repository=service.repository)
+        else:
+            authenticate_ledger(facts, result, config.corpus_dir)
         check_deadline()
         return result
 
@@ -645,6 +655,9 @@ async def assess_case(description: str, settings: Settings | None = None, *,
                 token = RETRIEVAL_EVENTS.set(on_event)
                 try:
                     retrieved = await asyncio.to_thread(retrieve_and_authenticate)
+                except asyncio.CancelledError:
+                    retrieval_cancelled.set()
+                    raise
                 finally:
                     RETRIEVAL_EVENTS.reset(token)
                 completed(retrieved)

@@ -12,7 +12,7 @@ from backend.schemas.knowledge_models import Candidate, PageExtraction, PageVeri
 from backend.services.knowledge.knowledge_report import render_report
 from backend.services.knowledge.knowledge_store import (SOURCES, active_directory, canonical_candidate, digest, extract_pages, import_methods,
                                      inventory, publish, read_json, validate_corpus, write_json)
-from backend.main import create_app
+from tests.auth_helpers import create_app
 from backend.services.search.retrieval import fuse, make_segments
 from backend.providers.provider import ProviderError
 from tests.corpus_fixture import FakeEmbedder, make_corpus, rehash

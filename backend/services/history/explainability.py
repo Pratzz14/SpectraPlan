@@ -37,6 +37,10 @@ class HistoryConflict(ValueError):
     pass
 
 
+class DescriptionTooLong(ValueError):
+    pass
+
+
 class ExplainabilityStore:
     def __init__(self, path: Path):
         self.path = path
@@ -80,15 +84,20 @@ class ExplainabilityStore:
             "draft_description": "TEXT NOT NULL DEFAULT ''"}.items():
             if name not in existing:
                 connection.execute(f"ALTER TABLE explainability_runs ADD COLUMN {name} {declaration}")
+        enquiry_columns = {row[1] for row in connection.execute("PRAGMA table_info(enquiries)")}
+        for name in ("owner_user_id", "customer_email"):
+            if name not in enquiry_columns:
+                connection.execute(f"ALTER TABLE enquiries ADD COLUMN {name} TEXT")
+        connection.execute("CREATE INDEX IF NOT EXISTS enquiries_by_owner ON enquiries(owner_user_id)")
         # Old runs have no reliable parent link: preserve each as a standalone enquiry.
-        connection.execute("""INSERT OR IGNORE INTO enquiries
+        connection.execute("""INSERT OR IGNORE INTO enquiries (enquiry_id, original_description, created_at, updated_at)
             SELECT run_id, description, created_at, created_at FROM explainability_runs WHERE enquiry_id IS NULL""")
         connection.execute("""UPDATE explainability_runs SET enquiry_id=run_id, draft_description=description,
             status=COALESCE(json_extract(run_json, '$.run_status'), 'complete') WHERE enquiry_id IS NULL""")
         connection.execute("CREATE INDEX IF NOT EXISTS runs_by_enquiry ON explainability_runs(enquiry_id, round_no)")
         connection.commit()
 
-    def begin(self, description, answers, *, enquiry_id=None, parent_run_id=None, run_id=None):
+    def begin(self, description, answers, *, enquiry_id=None, parent_run_id=None, run_id=None, owner_user_id=None, customer_email=None, max_description_chars=None):
         run_id, timestamp = run_id or uuid4().hex, now()
         with self._connect() as connection:
             connection.execute("BEGIN IMMEDIATE")
@@ -103,8 +112,10 @@ class ExplainabilityStore:
                 if parent_run_id:
                     raise HistoryConflict("A parent run requires an enquiry ID.")
                 enquiry_id = uuid4().hex
-                connection.execute("INSERT INTO enquiries VALUES (?, ?, ?, ?)",
-                                   (enquiry_id, description, timestamp, timestamp))
+                connection.execute("""INSERT INTO enquiries
+                    (enquiry_id, original_description, created_at, updated_at, owner_user_id, customer_email)
+                    VALUES (?, ?, ?, ?, ?, ?)""",
+                    (enquiry_id, description, timestamp, timestamp, owner_user_id, customer_email))
             for answer in answers:
                 origin = answer.get("origin_run_id")
                 qid = answer.get("question_id")
@@ -132,6 +143,10 @@ class ExplainabilityStore:
             round_no = connection.execute("SELECT COALESCE(MAX(round_no),0)+1 FROM explainability_runs WHERE enquiry_id=?",
                                           (enquiry_id,)).fetchone()[0]
             effective = compose_description(description, answers)
+            # Linked answers receive authoritative context labels above. Validate
+            # the final text inside the transaction so rejection leaves no run.
+            if max_description_chars is not None and len(effective) > max_description_chars:
+                raise DescriptionTooLong(f"Enquiry including clarifications exceeds {max_description_chars} characters.")
             connection.execute("""INSERT INTO explainability_runs
                 (run_id,created_at,description,clarification_answers,run_json,enquiry_id,parent_run_id,status,round_no,draft_description)
                 VALUES (?,?,?,?,?,?,?,'running',?,?)""",
@@ -200,12 +215,15 @@ class ExplainabilityStore:
             result["questions"] = []
         return result
 
-    def list_enquiries(self, limit=50, offset=0):
+    def list_enquiries(self, limit=50, offset=0, email=""):
+        email = email.strip()
         with self._connect() as connection:
             return [dict(row) for row in connection.execute("""SELECT e.*, COUNT(r.run_id) AS rounds,
                 (SELECT run_id FROM explainability_runs WHERE enquiry_id=e.enquiry_id ORDER BY round_no DESC LIMIT 1) AS latest_run_id
-                FROM enquiries e JOIN explainability_runs r USING(enquiry_id) GROUP BY e.enquiry_id
-                ORDER BY e.updated_at DESC, e.enquiry_id LIMIT ? OFFSET ?""",(limit,offset))]
+                FROM enquiries e JOIN explainability_runs r USING(enquiry_id)
+                WHERE (? = '' OR instr(lower(COALESCE(e.customer_email, '')), lower(?)) > 0)
+                GROUP BY e.enquiry_id
+                ORDER BY e.updated_at DESC, e.enquiry_id LIMIT ? OFFSET ?""",(email,email,limit,offset))]
 
     def enquiry(self, enquiry_id):
         with self._connect() as connection:

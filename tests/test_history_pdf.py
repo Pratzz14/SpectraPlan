@@ -3,7 +3,7 @@ from fastapi.testclient import TestClient
 
 from backend.core.config import Settings
 from backend.services.history.explainability import ExplainabilityStore
-from backend.main import create_app
+from tests.auth_helpers import create_app
 
 
 def test_saved_pdf_download_is_paginated_and_preserves_trace(tmp_path):

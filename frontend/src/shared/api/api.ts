@@ -1,11 +1,12 @@
+import { apiFetch } from './transport'
 import { isAssessmentRun } from '../../features/assessment/assessment'
-import type { AssessmentRequest, AssessmentRun, ExplainabilityTrace, EnquirySummary, EnquiryDetail, ResolvedEvidence } from '../../features/assessment/assessment'
+import type { AssessmentRequest, AssessmentRun, ExplainabilityTrace, EnquirySummary, EnquiryDetail, ResolvedEvidence, SavedAssessment } from '../../features/assessment/assessment'
 import type { KnowledgeInspection } from '../../features/knowledge/knowledge'
 import { isKnowledgeInspection } from '../../features/knowledge/knowledge'
 export type { AssessmentRequest, AssessmentRun } from '../../features/assessment/assessment'
 
 export async function resolveSearchEvidence(id: string, version: string, revision: string, signal: AbortSignal): Promise<ResolvedEvidence> {
-  const response = await fetch(`/api/evidence/${encodeURIComponent(id)}?${new URLSearchParams({ corpus_version: version, revision })}`, { signal })
+  const response = await apiFetch(`/api/evidence/${encodeURIComponent(id)}?${new URLSearchParams({ corpus_version: version, revision })}`, { signal })
   if (!response.ok) throw new Error(`Evidence could not be opened (HTTP ${response.status}). Retry the search if the corpus has changed.`)
   const data = await response.json() as ResolvedEvidence
   if (data.evidence_id !== id || data.revision !== revision || data.corpus_version !== version || typeof data.text !== 'string'
@@ -14,7 +15,7 @@ export async function resolveSearchEvidence(id: string, version: string, revisio
 }
 
 export async function fetchKnowledgeInspection(signal: AbortSignal): Promise<KnowledgeInspection> {
-  const response = await fetch('/api/knowledge/inspection', { signal, cache: 'no-store' })
+  const response = await apiFetch('/api/knowledge/inspection', { signal, cache: 'no-store' })
   if (!response.ok) throw new Error('Extracted knowledge is unavailable. Check workspace status, then retry.')
   const data: unknown = await response.json()
   if (!isKnowledgeInspection(data)) throw new Error('Unexpected knowledge inspection response.')
@@ -24,7 +25,7 @@ export async function fetchKnowledgeInspection(signal: AbortSignal): Promise<Kno
 export async function assessEnquiry(input: AssessmentRequest, signal: AbortSignal): Promise<AssessmentRun> {
   let response: Response
   try {
-    response = await fetch('/api/assess', {
+    response = await apiFetch('/api/assess', {
       method: 'POST', signal, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(input),
     })
   } catch (error) {
@@ -48,7 +49,7 @@ export async function assessEnquiry(input: AssessmentRequest, signal: AbortSigna
 }
 
 export async function fetchExplainability(runId: string, signal: AbortSignal): Promise<ExplainabilityTrace> {
-  const response = await fetch(`/api/assess/${encodeURIComponent(runId)}/explainability`, { signal, cache: 'no-store' })
+  const response = await apiFetch(`/api/assess/${encodeURIComponent(runId)}/explainability`, { signal, cache: 'no-store' })
   if (!response.ok) throw new Error(`Explainability trace could not be loaded (HTTP ${response.status}).`)
   const data = await response.json() as ExplainabilityTrace
   if (!data || data.run_id !== runId || !Array.isArray(data.events) || !data.events.every(e => e && typeof e.stage === 'string'
@@ -78,7 +79,7 @@ export interface HealthResponse {
 }
 
 export async function fetchHealth(signal: AbortSignal): Promise<HealthResponse> {
-  const response = await fetch('/api/health', { signal, cache: 'no-store' })
+  const response = await apiFetch('/api/health', { signal, cache: 'no-store' })
   if (!response.ok) throw new Error('Backend readiness is unavailable.')
   const data: unknown = await response.json()
   // Guard the boundary so a wrong service/proxy response becomes a visible error.
@@ -127,21 +128,21 @@ export interface DatasetStatus { status: 'ready' | 'unavailable'; records: numbe
 export interface SearchStatus { technical: DatasetStatus; website: DatasetStatus }
 
 export async function fetchSearchStatus(signal: AbortSignal): Promise<SearchStatus> {
-  const response = await fetch('/api/search/status', {signal, cache: 'no-store'})
+  const response = await apiFetch('/api/search/status', {signal, cache: 'no-store'})
   if (!response.ok) throw new Error('Search status is unavailable.')
   return response.json() as Promise<SearchStatus>
 }
 
 export async function queryKnowledge(input: {query: string; mode: SearchMode; dataset: SearchDataset; limit: number; expand_synonyms: boolean; source_id?: string}, signal: AbortSignal): Promise<SearchResponse> {
-  const response = await fetch('/api/search', {method: 'POST', signal, headers: {'Content-Type': 'application/json'}, body: JSON.stringify(input)})
+  const response = await apiFetch('/api/search', {method: 'POST', signal, headers: {'Content-Type': 'application/json'}, body: JSON.stringify(input)})
   const data = await response.json()
   if (!response.ok) throw new Error(typeof data.detail === 'string' ? data.detail : 'Search failed. Check your query and dataset readiness.')
   if (typeof data.query !== 'string' || !data.rankings || !Array.isArray(data.warnings)) throw new Error('Unexpected search response.')
   return data as SearchResponse
 }
 
-export async function fetchEnquiries(signal: AbortSignal, offset = 0): Promise<EnquirySummary[]> {
-  const response = await fetch(`/api/enquiries?limit=50&offset=${offset}`, { signal, cache: 'no-store' })
+export async function fetchEnquiries(signal: AbortSignal, offset = 0, email = ''): Promise<EnquirySummary[]> {
+  const response = await apiFetch(`/api/enquiries?limit=50&offset=${offset}&email=${encodeURIComponent(email.trim())}`, { signal, cache: 'no-store' })
   if (!response.ok) throw new Error('Saved enquiries could not be loaded.')
   const data = await response.json() as EnquirySummary[]
   if (!Array.isArray(data) || !data.every(e => e && typeof e.enquiry_id === 'string' && typeof e.original_description === 'string'
@@ -150,7 +151,7 @@ export async function fetchEnquiries(signal: AbortSignal, offset = 0): Promise<E
 }
 
 export async function fetchEnquiry(enquiryId: string, signal: AbortSignal): Promise<EnquiryDetail> {
-  const response = await fetch(`/api/enquiries/${encodeURIComponent(enquiryId)}`, { signal, cache: 'no-store' })
+  const response = await apiFetch(`/api/enquiries/${encodeURIComponent(enquiryId)}`, { signal, cache: 'no-store' })
   if (!response.ok) throw new Error('Saved enquiry could not be opened.')
   const data = await response.json() as EnquiryDetail
   if (!data || data.enquiry_id !== enquiryId || !Array.isArray(data.runs) || !data.runs.every(r => r && typeof r.run_id === 'string'
@@ -177,17 +178,29 @@ function ingestionResponse(value: unknown): KnowledgeIngestion {
 }
 
 export async function fetchKnowledgeIngestion(signal: AbortSignal): Promise<KnowledgeIngestion> {
-  const response = await fetch('/api/knowledge/ingest/status', { signal, cache: 'no-store' })
+  const response = await apiFetch('/api/knowledge/ingest/status', { signal, cache: 'no-store' })
   if (!response.ok) throw new Error('Could not load ingestion progress.')
   return ingestionResponse(await response.json())
 }
 
 export async function uploadKnowledgeFile(file: File, role: string): Promise<KnowledgeIngestion> {
   const query = new URLSearchParams({ filename: file.name, role })
-  const response = await fetch(`/api/knowledge/ingest?${query}`, {
+  const response = await apiFetch(`/api/knowledge/ingest?${query}`, {
     method: 'POST', headers: { 'Content-Type': 'application/octet-stream' }, body: file,
   })
   const data = await response.json()
   if (!response.ok) throw new Error(typeof data.detail === 'string' ? data.detail : `Upload failed (HTTP ${response.status}).`)
   return ingestionResponse(data)
+}
+
+export async function fetchSavedAssessment(runId: string, signal: AbortSignal): Promise<SavedAssessment> {
+  const response = await apiFetch(`/api/assess/${encodeURIComponent(runId)}`, { signal })
+  if (!response.ok) throw new Error('Saved assessment could not be opened.')
+  const saved = await response.json()
+  if (!saved || saved.run_id !== runId || typeof saved.enquiry_id !== 'string' || typeof saved.draft_description !== 'string'
+    || typeof saved.description !== 'string' || !Number.isInteger(saved.round_no)
+    || !(saved.parent_run_id === null || typeof saved.parent_run_id === 'string')
+    || !['running', 'complete', 'incomplete', 'interrupted'].includes(saved.status)
+    || !Array.isArray(saved.clarification_answers) || !Array.isArray(saved.questions)) throw new Error('Unexpected saved assessment response.')
+  return { ...saved, run: isAssessmentRun(saved.run) ? saved.run : null }
 }

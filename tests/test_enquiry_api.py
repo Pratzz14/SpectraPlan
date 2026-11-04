@@ -5,7 +5,7 @@ import json
 
 import httpx
 
-from backend.main import create_app
+from tests.auth_helpers import create_app
 from backend.services.history.explainability import ExplainabilityStore
 from tests.test_assessment import draft, ledger
 from tests.test_assessment_api import mock_retrieval, provider_for
@@ -63,3 +63,37 @@ def test_storage_failure_prevents_unlogged_provider_work(monkeypatch):
             response=await c.post("/api/assess",json={"description":"A sample"})
             assert response.status_code == 503 and calls == []
     asyncio.run(run())
+
+
+def test_restored_clarification_labels_obey_length_limit_before_saving(monkeypatch):
+    from backend.core.config import Settings
+    from backend.services.history.explainability import question_id
+    from fastapi.testclient import TestClient
+
+    app = create_app(Settings(_env_file=None, assessment_max_description_chars=140))
+    store = app.state.explainability_store
+    parent = store.begin("A sample", [])
+    question = {"question": "What precision?", "context_ids": ["stream_1"]}
+    store.finish(parent["run_id"], {
+        "run_status": "complete",
+        "facts": {"contexts": [{"context_id": "stream_1", "label": "long sample label " * 20}]},
+        "assessment": {"clarification_questions": [question]},
+    })
+    calls = []
+
+    async def unexpected_assessment(*args, **kwargs):
+        calls.append(args)
+        raise AssertionError("Oversized input must not start an assessment")
+
+    monkeypatch.setattr("backend.api.routers.assessment.assess_case", unexpected_assessment)
+    response = TestClient(app).post("/api/assess", json={
+        "description": "A sample", "enquiry_id": parent["enquiry_id"],
+        "parent_run_id": parent["run_id"], "clarification_answers": [{
+            "question": question["question"], "context": "x", "answer": "1%",
+            "origin_run_id": parent["run_id"], "question_id": question_id(parent["run_id"], question),
+        }],
+    })
+    assert response.status_code == 422
+    assert response.json()["detail"]["code"] == "description_too_long"
+    assert calls == []
+    assert len(store.enquiry(parent["enquiry_id"])["runs"]) == 1

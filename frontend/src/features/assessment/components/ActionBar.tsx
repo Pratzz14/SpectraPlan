@@ -1,3 +1,4 @@
+import { apiFetch } from '../../../shared/api/transport'
 import { useEffect, useRef, useState } from 'react'
 import { reportText } from '../assessment'
 import type { AssessmentRun } from '../assessment'
@@ -39,7 +40,7 @@ export default function ActionBar({ run, description, loading, compact = false }
     const started = current.current
     setExportingPdf(true); setFeedback('')
     try {
-      const response = await fetch(`/api/assess/${encodeURIComponent(run.metadata.run_id)}/report.pdf`, { signal: AbortSignal.timeout(60000) })
+      const response = await apiFetch(`/api/assess/${encodeURIComponent(run.metadata.run_id)}/report.pdf`, { signal: AbortSignal.timeout(60000) })
       if (!response.ok) throw new Error(response.status === 404
         ? 'This saved analysis is no longer available. Analyze the enquiry again to create a new report.'
         : 'The PDF service could not generate the report. Please try again.')

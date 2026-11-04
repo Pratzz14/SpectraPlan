@@ -10,7 +10,7 @@ import pytest
 from backend.core.config import Settings
 from backend.services.search.evidence import CorpusUnavailable, EvidenceNotFound, EvidenceRevisionMismatch, load_snapshot
 from backend.services.knowledge.knowledge_store import digest, read_json, write_json
-from backend.main import create_app
+from tests.auth_helpers import create_app
 from backend.schemas.models import CaseFacts, CustomerStatement, MeasurementContext
 from backend.services.search.retrieval import (
     QUERY_PREFIX, CaseRetrievalService, RetrievalTimeout, _compact_query, _context_fields,

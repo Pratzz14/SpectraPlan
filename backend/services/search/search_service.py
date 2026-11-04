@@ -4,6 +4,7 @@ import time
 from backend.services.knowledge.knowledge_store import active_directory, load_records, read_json, validate_corpus
 from backend.services.search.retrieval import COLLECTION, QUERY_PREFIX, SEARCH_LOCK, Embedder, fuse, query_tokens, tokens
 from backend.pipelines.website.ingest import validate_web, web_directory
+from backend.services.search.evidence import CorpusUnavailable, EvidenceNotFound
 
 class SearchUnavailable(Exception):
     pass
@@ -14,8 +15,12 @@ class SearchQueryError(ValueError):
 
 
 class SearchService:
-    def __init__(self, settings):
+    def __init__(self, settings, repository=None):
         self.settings, self.embedder = settings, None
+        if repository is None:
+            from backend.services.cloud.knowledge import repository_for
+            repository = repository_for(settings)
+        self.repository = repository
 
     def status(self):
         result = {}
@@ -25,11 +30,22 @@ class SearchService:
                 result[kind] = {"status": "ready", "corpus_version": metadata["corpus_version"], "records": len(records)}
                 if kind == "website":
                     result[kind].update(pages=metadata["page_count"], seed_url=metadata["seed_url"], fetched_at=metadata["fetched_at"])
-            except (OSError, ValueError, KeyError):
+            except (OSError, ValueError, KeyError, CorpusUnavailable, EvidenceNotFound):
                 result[kind] = {"status": "unavailable", "records": 0}
         return result
 
     def _dataset(self, kind):
+        if self.repository is not None:
+            directory = self.repository.directory(kind)
+            if kind in {'technical', 'inspection'}:
+                manifest, passages, methods = load_records(directory)
+                records = [r for r in passages+methods if r.get('search_eligible', True)] if kind == 'inspection' else [r for r in passages+methods if r['retrieval_eligible']]
+                if kind == 'inspection':
+                    directory = directory/'inspection'
+            else:
+                manifest = read_json(directory/'manifest.json')
+                records = [r for r in read_json(directory/'records.json') if r['context_search_eligible']]
+            return directory, records, manifest
         if kind in {"technical", "inspection"}:
             directory = active_directory(self.settings.corpus_dir)
             validate_corpus(directory)
@@ -67,7 +83,7 @@ class SearchService:
                 loaded.append((kind, directory))
                 versions[kind] = manifest["corpus_version"]
                 records.update({r["evidence_id"]: {**r, "dataset": kind} for r in rows if not source_id or r["source_id"] == source_id})
-        except (OSError, ValueError, KeyError):
+        except (OSError, ValueError, KeyError, CorpusUnavailable, EvidenceNotFound):
             raise SearchUnavailable("The selected dataset is unavailable or failed validation. Check corpus readiness.") from None
         terms = query_tokens(query) if expand_synonyms else tokens(query)
         original_terms = tokens(query)
@@ -97,7 +113,7 @@ class SearchService:
                     if self.embedder.fingerprint != index["embedding_fingerprint"]:
                         raise SearchUnavailable("Embedding artifacts differ from the selected index. Rebuild it before searching.")
                     by_segment = {s["id"]: s for s in read_json(directory / "segments.json")}
-                    client = QdrantClient(path=str(directory / "qdrant"))
+                    client = self.repository.client(directory) if self.repository else QdrantClient(path=str(directory / "qdrant"))
                     try:
                         for point in client.query_points(COLLECTION, query=vector, limit=max(20,len(by_segment)) if source_id else 20).points:
                             if source_id and point.payload["evidence_id"] not in records:

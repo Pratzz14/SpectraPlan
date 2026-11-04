@@ -3,6 +3,7 @@
 import argparse
 import asyncio
 import json
+import os
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -46,7 +47,10 @@ async def run_cases(settings: Settings, selected: set[str] | None = None, *, use
         "review_status": "pending_source_support_inspection", "cases": [],
     }
     service = CaseRetrievalService(settings)
+    access_token = os.environ.get("SUPABASE_ACCESS_TOKEN", "").strip()
     if use_api:
+        if not access_token:
+            raise ValueError("Set SUPABASE_ACCESS_TOKEN to a signed-in user access token for API diagnostics")
         from backend.main import create_app
         application = create_app(settings)
     failed = False
@@ -70,7 +74,8 @@ async def run_cases(settings: Settings, selected: set[str] | None = None, *, use
                   "outcome": "failed", "result": None, "error": None}
         try:
             if use_api:
-                async with httpx.AsyncClient(transport=httpx.ASGITransport(app=application), base_url="http://assessment.local") as client:
+                async with httpx.AsyncClient(transport=httpx.ASGITransport(app=application), base_url="http://assessment.local",
+                                             headers={"Authorization": "Bearer " + access_token}) as client:
                     response = await client.post("/api/assess", json={"description": case["description"]})
                     result["http_status"] = response.status_code
                     output = AssessmentRun.model_validate(response.json())

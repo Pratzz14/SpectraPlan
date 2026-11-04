@@ -12,7 +12,7 @@ from pydantic import ValidationError
 
 from backend.pipelines.assessment.pipeline import assess_case, synthesize_assessment
 from backend.services.search.evidence import CorpusUnavailable, load_snapshot
-from backend.main import create_app
+from tests.auth_helpers import create_app
 from backend.schemas.models import AssessmentRun, ProposedSetting, MeasurementContext
 from backend.providers.provider import Provider, ProviderError
 from backend.pipelines.assessment.validation import (
@@ -43,7 +43,7 @@ def provider_for(responses, **settings):
 
 def mock_retrieval(monkeypatch, result=None, error=None):
     """Unit seam; canonical corpus authentication is covered separately below."""
-    monkeypatch.setattr("backend.pipelines.assessment.pipeline.authenticate_ledger", lambda *args: None)
+    monkeypatch.setattr("backend.pipelines.assessment.pipeline.authenticate_ledger", lambda *args, **kwargs: None)
 
     def retrieve(self, facts, deadline):
         if error:
@@ -403,6 +403,8 @@ def test_ambiguous_patient_relationship_requires_unit_clarification():
 
 
 def test_diagnostic_api_mode_records_incomplete_run(monkeypatch):
+    monkeypatch.setenv("SUPABASE_ACCESS_TOKEN", "test-operator-token")
+    monkeypatch.setattr("backend.main.create_app", create_app)
     from backend.cli.smoke_assessment import run_cases
     adapter, _ = provider_for([httpx.Response(503)])
     monkeypatch.setattr("backend.pipelines.assessment.pipeline.Provider", lambda settings: adapter)

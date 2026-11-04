@@ -6,7 +6,7 @@ import pytest
 
 from backend.core.config import Settings
 from backend.services.knowledge.knowledge_store import file_hash, read_json
-from backend.main import create_app
+from tests.auth_helpers import create_app
 from backend.services.search.search_service import SearchService, SearchUnavailable
 from backend.pipelines.website.ingest import canonical_url, crawl, extract_html, validate_web, web_directory
 from tests.corpus_fixture import FakeEmbedder, make_corpus

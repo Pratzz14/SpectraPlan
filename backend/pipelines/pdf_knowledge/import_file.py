@@ -55,7 +55,7 @@ def ingestion_status(settings):
 
 
 def ingest_file(settings, file: Path, *, role="technical", name=None, prepare_only=False,
-                concurrency=2, job_file=None):
+                concurrency=2, job_file=None, on_progress=None):
     root = settings.knowledge_work_dir
     root.mkdir(parents=True, exist_ok=True)
     state = {"job_id": uuid4().hex, "filename": name or file.name, "status": "running", "progress": {}, "message": "Preparing file"}
@@ -91,9 +91,13 @@ def ingest_file(settings, file: Path, *, role="technical", name=None, prepare_on
                 prior = read_json(latest / "manifest.json")
                 if {s["source_id"] for s in prior.get("sources", [])} != {source["source_id"]}:
                     shutil.rmtree(inside(root, "import/latest"))
+            def extraction_progress(record):
+                update(progress=progress(record))
+                if on_progress:
+                    on_progress(record)
             result = extract_all(settings, latest, source_ids=[source["source_id"]],
                                  concurrency=concurrency, prepare_only=prepare_only,
-                                 on_progress=lambda record: update(progress=progress(record)))
+                                 on_progress=extraction_progress)
             if result:
                 raise ValueError("Extraction did not finish. Existing knowledge was preserved; retry the file.")
             if prepare_only:

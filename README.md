@@ -1,25 +1,22 @@
 # SpectraPlan
 
-Source-grounded spectroscopy enquiry assessment, local search, extracted-knowledge inspection, and saved enquiry history.
+Source-grounded spectroscopy assessments with customer login and an admin lead inbox.
 
-## Setup
+Customers describe a measurement problem, answer clarification questions and export a provisional assessment. Admins also browse/upload sources, search extracted knowledge and review leads by email. Scientific recommendations require independent validation.
 
-Windows PowerShell, Python 3.12 and Node 22.12+; run from the repository root.
+## Start here
 
-```powershell
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-if (-not (Test-Path .env)) { Copy-Item .env.example .env }
-Push-Location frontend
-npm ci
-Pop-Location
-```
+| Guide | Contents |
+|---|---|
+| [Setup](docs/setup.md) | Install, Supabase email/password login, DashScope configuration and startup. |
+| [Architecture](docs/architecture.md) | Code map, assessment/ingestion flows, access rules and API contracts. |
+| [Operations](docs/operations.md) | Checks, knowledge restoration, live commands, evaluation and backups. |
+| [Quality](docs/quality.md) | Known limitations, historical results and evidence boundaries. |
+| [Supabase migration](docs/supabase.md) | Cloud data/files with React, FastAPI and ingestion processing on your PC. |
 
-Restore source files, embedding cache and corpus using [reproducibility](docs/reproducibility.md). Set backend credentials in `.env` only for model-powered features. Local search needs no LLM credentials.
+## Run locally
 
-## Start
-
-Separate terminals:
+Complete [setup](docs/setup.md) first. From the repository root, start the backend and frontend in separate PowerShell terminals:
 
 ```powershell
 .\.venv\Scripts\python.exe -m uvicorn backend.main:app --host 127.0.0.1 --port 8000 --reload
@@ -30,41 +27,25 @@ Push-Location frontend
 npm run dev
 ```
 
-Open http://127.0.0.1:5173. API schema: http://127.0.0.1:8000/docs. Stop with Ctrl+C. Startup makes no model calls; search smoke does not start the API.
+Open [SpectraPlan](http://127.0.0.1:5173); [API documentation](http://127.0.0.1:8000/docs) describes exact request/response shapes. Startup makes no model calls. Assessment and ingestion send content to the configured DashScope endpoint and consume quota.
 
-## Checks
+With `STORAGE_BACKEND=supabase`, also start the local ingestion worker in a third terminal:
 
 ```powershell
-New-Item -ItemType Directory -Force tmp | Out-Null
-.\.venv\Scripts\python.exe -m pytest -q --basetemp=tmp/pytest
-.\.venv\Scripts\python.exe -m evaluation.search_smoke
-Push-Location frontend
-npm test
-npm run lint
-npm run build
-Pop-Location
+.\.venv\Scripts\python.exe -m backend.cli.worker
 ```
 
-Search smoke runs four statements through BM25, embedded Qdrant and hybrid without model calls or downloads. Reports are under `outputs/search_smoke/`. Passing establishes operation, not scientific relevance.
+## Repository
 
-## Code map
+- `backend/`, `frontend/`: application code; `tests/`, `frontend/tests/`: regression tests.
+- `knowledge/`: source corpus and local indexes. Originals are supplied separately.
+- `evaluation/`, `scripts/`: scenario execution, offline checks and restoration.
+- `outputs/`: saved evidence and local work; read the [artifact map](outputs/README.md) before cleanup.
 
-- Backend: `api` HTTP routes; `core` settings; `schemas` validated contracts; `providers` model adapters/routing; `services` search, knowledge and history; `pipelines` assessment/document workflows; `cli` operational commands; `prompts` instructions.
-- Frontend: `app` shell; `features` assessment, search, knowledge, history and workspace; `shared` API transport and reusable UI.
-- `evaluation`: saved scenario runner and offline search smoke. `tests`: isolated backend checks. `scripts`: restoration and artifact verification.
+The [Supabase configuration](docs/supabase.md) stores history, published knowledge, vectors, documents and ingestion jobs in the cloud while Python and React stay local. The legacy local backend remains available for diagnostics and manual rollback; cloud mode never silently falls back to it. Public hosting also needs HTTPS, same-origin routing, background assessment jobs and usage controls. Environment files, databases, caches and build output stay out of Git.
 
-See [architecture](docs/architecture.md), [commands and services](docs/operations.md), [tool contracts](docs/tool_contracts.md), [knowledge pipeline](docs/knowledge_pipeline.md), and [quality limitations](docs/acceptance_review.md). Historical outputs and source snapshots are retained; completion does not imply expert validation.
-
-Verification results: [refactor checks](docs/refactor_verification.md).
-
-## Deployment boundary
-
-The app currently targets a trusted local workstation. Keep it on loopback: it has no user authentication or tenant isolation. Embedded Qdrant uses process locks; use one backend worker. Do not run corpus publication concurrently with searches. Back up original sources, corpus generations and SQLite history together. A public deployment requires authentication, access control, HTTPS termination, and a separately designed multi-worker storage setup.
+The previous 20 documentation files are preserved in one [checksum-verified archive](outputs/documentation_archive.zip). Archived answers and execution snapshots remain historical evidence, not proof of current scientific adequacy.
 
 ## License
 
 Project code: [MIT](LICENSE). Third-party source materials retain their own rights.
-
-
-
-Current provider: **Alibaba DashScope `qwen3.8-flash` only**, for Assessment and ingestion. Set `DASHSCOPE_API_KEY`; see [provider setup](docs/providers.md). No automatic provider fallback or startup probe is used.

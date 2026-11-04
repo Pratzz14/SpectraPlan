@@ -1,6 +1,6 @@
 import { evidenceLocation } from '../evidenceLocation'
 import { useEffect, useRef, useState } from 'react'
-import { assessEnquiry, fetchExplainability, fetchEnquiry } from '../../../shared/api/api'
+import { assessEnquiry, fetchSavedAssessment, fetchEnquiry } from '../../../shared/api/api'
 import { chemistWarnings, clarificationKey, composeEnquiry, contextLabel, readable } from '../assessment'
 import type { AssessmentRun, ClarificationAnswer, ClarificationQuestion } from '../assessment'
 import CustomerInput from './CustomerInput'
@@ -9,13 +9,14 @@ import EvidenceDrawer from './EvidenceDrawer'
 import Accordion from '../../../shared/ui/Accordion'
 import { ClarificationList, ExperimentPlan, RecommendationCards, RequirementsPanel, RunNotes } from './AssessmentResults'
 
-export default function AssessmentPage({ initialRun = '' }: { initialRun?: string }) {
+export default function AssessmentPage({ initialRun = '', newEnquiry }: { initialRun?: string; newEnquiry: () => void }) {
   const [draft, setDraft] = useState('')
   const [submitted, setSubmitted] = useState('')
   const [run, setRun] = useState<AssessmentRun | null>(null)
   const [questionRun, setQuestionRun] = useState<AssessmentRun | null>(null)
   const [answers, setAnswers] = useState<Record<string, ClarificationAnswer>>({})
   const [loading, setLoading] = useState(false)
+  const [restoring, setRestoring] = useState(!!initialRun)
   const [error, setError] = useState<string | null>(null)
   const [selected, setSelected] = useState<{ id: string; claim: string; source: AssessmentRun } | null>(null)
   const [enquiryId, setEnquiryId] = useState<string | undefined>()
@@ -28,7 +29,7 @@ export default function AssessmentPage({ initialRun = '' }: { initialRun?: strin
   const previousAnswers = Object.entries(answers).filter(([key]) => !questions.some(q => clarificationKey(q) === key))
   useEffect(() => () => { active.current?.abort(); active.current = null }, [])
   async function submit() {
-    if (!draft.trim()) return
+    if (restoring || !draft.trim()) return
     active.current?.abort()
     const controller = new AbortController()
     active.current = controller
@@ -36,6 +37,9 @@ export default function AssessmentPage({ initialRun = '' }: { initialRun?: strin
     try {
       const result = await assessEnquiry({ description: draft, enquiry_id: enquiryId, parent_run_id: currentRunId, clarification_answers: Object.values(answers).filter(item => item.answer.trim()) }, controller.signal)
       if (active.current === controller && !controller.signal.aborted) {
+        if (['', '#assess'].includes(window.location.hash.split('?')[0])) {
+          window.history.replaceState(null, '', `#assess?run=${encodeURIComponent(result.metadata.run_id)}`)
+        }
         setRun(result)
         setEnquiryId(result.metadata.enquiry_id ?? undefined); setCurrentRunId(result.metadata.run_id)
         if (result.assessment) setQuestionRun(result)
@@ -48,16 +52,18 @@ export default function AssessmentPage({ initialRun = '' }: { initialRun?: strin
   async function openRun(runId: string) {
     active.current?.abort()
     const controller = new AbortController(); active.current = controller
-    setLoading(true); setError(null); setSelected(null)
+    setRestoring(true); setLoading(true); setError(null); setSelected(null)
+    setDraft(''); setSubmitted(''); setRun(null); setQuestionRun(null); setAnswers({})
+    setEnquiryId(undefined); setCurrentRunId(undefined)
     try {
-      const saved = await fetchExplainability(runId, controller.signal)
+      const saved = await fetchSavedAssessment(runId, controller.signal)
       let questions = saved.run
       if (!questions?.assessment) {
         const detail = await fetchEnquiry(saved.enquiry_id, controller.signal)
         const byId = new Map(detail.runs.map(r => [r.run_id, r]))
         let parent = saved.parent_run_id
         while (parent && !questions?.assessment) {
-          const previous = await fetchExplainability(parent, controller.signal)
+          const previous = await fetchSavedAssessment(parent, controller.signal)
           questions = previous.run; parent = byId.get(parent)?.parent_run_id ?? null
         }
       }
@@ -75,7 +81,11 @@ export default function AssessmentPage({ initialRun = '' }: { initialRun?: strin
       if (saved.status === 'interrupted' || saved.status === 'running') setError(`This analysis is ${saved.status}. Its recorded events are available; you can analyze again.`)
     } catch (failure) {
       if (active.current === controller && !controller.signal.aborted) setError(failure instanceof Error ? failure.message : 'Saved enquiry could not be opened.')
-    } finally { if (active.current === controller && !controller.signal.aborted) setLoading(false) }
+    } finally {
+      if (active.current === controller && !controller.signal.aborted) {
+        setLoading(false); setRestoring(false)
+      }
+    }
   }
   useEffect(() => { if (initialRun) void openRun(initialRun) }, [initialRun])
   useEffect(() => { if (run || error) resultHeading.current?.focus() }, [run, error])
@@ -107,7 +117,7 @@ export default function AssessmentPage({ initialRun = '' }: { initialRun?: strin
         {questionRun ? <ClarificationList questions={questions} run={questionRun} inspect={inspectQuestion} answers={answers} answer={answer} /> : <section className="pending-questions"><h2>Clarification questions</h2><p className="section-note">{loading ? 'Preparing questions…' : 'Questions will appear after analysis.'}</p></section>}
         {previousAnswers.length ? <details className="previous-answers"><summary>Previous answers ({previousAnswers.length})</summary>{previousAnswers.map(([key, item]) => <label key={key}>{item.question}<textarea rows={2} value={item.answer} onChange={event => setAnswers(current => ({ ...current, [key]: { ...item, answer: event.target.value } }))} /></label>)}</details> : null}
       </div>
-      <div className="rail-actions"><button className="primary-button" type="submit" disabled={!draft.trim() || (loading && !changed)}>{loading ? changed ? 'Analyze updated enquiry' : 'Analyzing…' : submitted ? 'Analyze again' : 'Analyze'}</button><p className="section-note">{changed ? 'Changes not analyzed' : 'Submit enquiry and answers together.'}</p></div>
+      <div className="rail-actions"><button className="primary-button" type="submit" disabled={restoring || !draft.trim() || (loading && !changed)}>{restoring ? 'Loading saved enquiry…' : loading ? changed ? 'Analyze updated enquiry' : 'Analyzing…' : submitted ? 'Analyze again' : 'Analyze'}</button><button type="button" className="secondary-button new-enquiry-button" onClick={newEnquiry}>New enquiry</button><p className="section-note">{changed ? 'Changes not analyzed' : 'Submit enquiry and answers together.'}</p></div>
     </form>
     <section className="workspace-results assessment-output" aria-label="Assessment results" aria-busy={loading}>
       <div className="result-scroll">

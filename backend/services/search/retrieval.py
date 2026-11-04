@@ -328,9 +328,13 @@ def lexical_candidates(documents, query, limit=20):
 
 
 class CaseRetrievalService:
-    def __init__(self, settings):
+    def __init__(self, settings, repository=None):
         self.settings = settings
         self.embedder = None
+        if repository is None:
+            from backend.services.cloud.knowledge import repository_for
+            repository = repository_for(settings)
+        self.repository = repository
 
     def retrieve_case(self, facts: CaseFacts, deadline: float | None = None) -> RetrievalResult:
         ids = [c.context_id for c in facts.contexts]
@@ -346,7 +350,7 @@ class CaseRetrievalService:
             raise CorpusUnavailable("Evidence search is busy; try again shortly")
         try:
             _check_deadline(deadline)
-            snapshot = load_snapshot(self.settings.corpus_dir)
+            snapshot = self.repository.snapshot() if self.repository else load_snapshot(self.settings.corpus_dir)
             _check_deadline(deadline)
             if not facts.contexts:
                 return self._result(snapshot, [], [], [], [EvidenceGap(
@@ -358,7 +362,7 @@ class CaseRetrievalService:
                 raise CorpusUnavailable("Embedding artifacts differ from the pinned corpus index")
             _check_deadline(deadline)
             from qdrant_client import QdrantClient
-            client = QdrantClient(path=str(snapshot.directory / "qdrant"))
+            client = self.repository.client(snapshot.directory) if self.repository else QdrantClient(path=str(snapshot.directory / "qdrant"))
             try:
                 return self._retrieve(facts, snapshot, client, deadline)
             finally:

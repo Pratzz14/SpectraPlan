@@ -7,9 +7,9 @@ import { readable } from '../assessment/assessment'
 import EvidenceDrawer from '../assessment/components/EvidenceDrawer'
 import Drawer from '../../shared/ui/Drawer'
 
-const modes = [{value:'compare',label:'Compare all'},{value:'bm25',label:'BM25 keywords'},{value:'qdrant',label:'Qdrant semantic'},{value:'hybrid',label:'Hybrid'}] as const
+const modes = [{value:'compare',label:'Compare all'},{value:'bm25',label:'BM25 keywords'},{value:'qdrant',label:'Semantic search'},{value:'hybrid',label:'Hybrid'}] as const
 const datasetLabels = { technical: 'Technical corpus', website: 'Website context', all: 'Technical + website context', inspection: 'All extracted knowledge' }
-const engines = {bm25:{title:'BM25',score:'BM25 score'},qdrant:{title:'Qdrant',score:'Cosine similarity'},hybrid:{title:'Hybrid',score:'RRF score'}}
+const engines = {bm25:{title:'BM25',score:'BM25 score'},qdrant:{title:'Semantic',score:'Cosine similarity'},hybrid:{title:'Hybrid',score:'RRF score'}}
 function safeUrl(value?: string) { try { const url=new URL(value ?? ''); return url.protocol==='https:' ? url.href : undefined } catch { return undefined } }
 
 function ResultRow({hit, engine, inspect}: {hit:SearchHit;engine:keyof typeof engines;inspect:(hit:SearchHit)=>void}) {

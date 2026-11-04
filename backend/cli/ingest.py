@@ -31,6 +31,9 @@ def main():
     command.add_argument('--query', required=True)
     args = parser.parse_args()
     settings = Settings()
+    if settings.storage_backend == 'supabase':
+        from backend.services.cloud.commands import ingestion
+        return ingestion(settings,args)
     latest = settings.knowledge_work_dir / 'latest'
     latest.mkdir(parents=True, exist_ok=True)
     try:

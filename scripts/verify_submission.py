@@ -33,9 +33,10 @@ def credential_scan():
 
     values = dotenv_values(ROOT / ".env") if (ROOT / ".env").exists() else {}
     import os
-    values.update({key: value for key, value in os.environ.items() if key.endswith("_API_KEY")})
+    secret_suffixes = ("_API_KEY", "_SECRET_KEY", "_ACCESS_TOKEN")
+    values.update({key: value for key, value in os.environ.items() if key.endswith(secret_suffixes)})
     secrets = {str(value).encode() for key, value in values.items()
-               if key.endswith("_API_KEY") and value and len(str(value)) >= 16
+               if key.endswith(secret_suffixes) and value and len(str(value)) >= 16
                and not str(value).lower().startswith(("your_", "test", "fake", "placeholder"))}
     names = subprocess.check_output(
         ["git", "-c", "core.fsmonitor=false", "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
@@ -48,9 +49,9 @@ def credential_scan():
         content = path.read_bytes()
         count += 1
         if any(secret in content for secret in secrets):
-            findings.append({"path": name, "reason": "configured API key found"})
+            findings.append({"path": name, "reason": "configured secret found"})
         # High-specificity token formats; source/tests may contain placeholders.
-        for token in re.findall(rb"(?:AIza[0-9A-Za-z_-]{35}|gsk_[0-9A-Za-z]{40,}|sk-proj-[0-9A-Za-z_-]{40,})", content):
+        for token in re.findall(rb"(?:AIza[0-9A-Za-z_-]{35}|gsk_[0-9A-Za-z]{40,}|sk-proj-[0-9A-Za-z_-]{40,}|sb_secret_[0-9A-Za-z_-]{20,})", content):
             if len(set(token)) > 12:
                 findings.append({"path": name, "reason": "provider-token-shaped value; inspect privately"})
                 break
@@ -149,7 +150,7 @@ def check(manifest_path, portable=False):
     receipt["status"] = "passed" if not errors else "failed"
     receipt["errors"] = errors
     receipt["scientific_review"] = {"status": "known_content_failures",
-        "review": "docs/scenario_content_review.md", "implementation_review": "docs/retrieval_implementation_review.md",
+        "review": "docs/quality.md#historical-results", "implementation_review": "docs/quality.md#known-limitations",
         "note": "Complete envelopes do not establish adequate answers, entailment or spectroscopy performance."}
     return receipt
 

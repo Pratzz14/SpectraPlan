@@ -9,7 +9,7 @@ from pydantic import BaseModel, ConfigDict, ValidationError
 
 from backend.core.config import PROJECT_ROOT, Settings
 from backend.services.health import inspect_corpus
-from backend.main import create_app
+from tests.auth_helpers import create_app
 from backend.providers.provider import Provider, ProviderError, _retry_delay
 from backend.cli.smoke_provider import run_smoke
 from tests.corpus_fixture import make_corpus

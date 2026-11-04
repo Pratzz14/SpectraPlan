@@ -12,3 +12,6 @@ def get_retrieval(request: Request):
 
 def get_history(request: Request):
     return request.app.state.explainability_store
+
+def get_knowledge(request: Request):
+    return request.app.state.knowledge_repository

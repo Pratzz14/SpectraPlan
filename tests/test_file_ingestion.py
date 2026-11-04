@@ -9,7 +9,7 @@ import pytest
 from filelock import FileLock
 
 from backend.services.knowledge.knowledge_store import active_directory, load_records, read_json, file_hash
-from backend.main import create_app
+from tests.auth_helpers import create_app
 from backend.pipelines.pdf_knowledge import extract, import_file
 from backend.pipelines.pdf_knowledge.store import publish_extraction
 from tests.test_pdf_knowledge import prepared, answer

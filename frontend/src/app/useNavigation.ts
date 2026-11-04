@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 
-type View = 'assess' | 'search' | 'knowledge' | 'history' | 'workspace'
+type View = 'assess' | 'search' | 'knowledge' | 'leads' | 'workspace'
 function currentView(): View {
   const route = window.location.hash.split('?')[0]
-  return route === '#history' ? 'history' : route === '#search' ? 'search' : route === '#knowledge' ? 'knowledge' : ['#workspace', '#status'].includes(route) ? 'workspace' : 'assess'
+  return ['#history', '#leads'].includes(route) ? 'leads' : route === '#search' ? 'search' : route === '#knowledge' ? 'knowledge' : ['#workspace', '#status'].includes(route) ? 'workspace' : 'assess'
 }
 
 export function useNavigation() {
@@ -14,11 +14,18 @@ export function useNavigation() {
   const [assessmentSession, setAssessmentSession] = useState(0)
   useEffect(() => {
     const update = () => {
+      if (window.location.hash.split('?')[0] === '#history') window.history.replaceState(null, '', window.location.href.replace('#history', '#leads'))
       const next = currentView(); setRunTarget(next === 'assess' ? new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('run') ?? '' : ''); setView(next); setVisited(value => new Set([...value, next]))
       setEvidenceTarget(new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('evidence') ?? '')
     }
+    update()
     window.addEventListener('hashchange', update)
     return () => window.removeEventListener('hashchange', update)
   }, [])
-  return { view, visited, evidenceTarget, runTarget, assessmentSession, setAssessmentSession }
+  function newEnquiry() {
+    setRunTarget('')
+    setAssessmentSession(value => value + 1)
+    window.location.hash = '#assess'
+  }
+  return { newEnquiry, view, visited, evidenceTarget, runTarget, assessmentSession }
 }

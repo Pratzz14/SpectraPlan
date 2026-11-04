@@ -1,5 +1,5 @@
 {
-  "policy": "Trace PDF renderings are retained locally, excluded from Git; complete trace JSON and evidence are required portable artifacts. Original manifests are unchanged.",
+  "policy": "Historical inventory: listed trace PDF renderings were removed in the approved 2026-11-03 cleanup. Complete trace JSON and evidence remain required portable artifacts. Original manifests are unchanged.",
   "local_only_pdf_renderings": [
     {
       "path": "outputs/runs/20261018T132137Z_5227ad7c49cb4ff593f630f4b2e7627a/H01.trace.pdf",

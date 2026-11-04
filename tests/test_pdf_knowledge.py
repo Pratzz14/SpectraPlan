@@ -12,7 +12,7 @@ from backend.core.config import Settings
 from backend.services.knowledge.knowledge_store import active_directory, read_json, validate_corpus, write_json
 from backend.pipelines.pdf_knowledge import extract
 from backend.pipelines.pdf_knowledge.store import publish_extraction
-from backend.main import create_app
+from tests.auth_helpers import create_app
 from tests.corpus_fixture import FakeEmbedder
 
 

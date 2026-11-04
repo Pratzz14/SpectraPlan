@@ -10,6 +10,7 @@ import argparse
 import asyncio
 import hashlib
 import json
+import os
 import re
 import subprocess
 import time
@@ -367,6 +368,10 @@ async def run_cases(settings: Settings, *, selected: set[str] | None = None,
     if evaluation_kind == "final" and selected != FINAL_CASE_IDS:
         raise ValueError("Final evaluation always runs all H01-H06 cases")
 
+    access_token = os.environ.get("SUPABASE_ACCESS_TOKEN", "").strip()
+    if not access_token:
+        raise ValueError("Set SUPABASE_ACCESS_TOKEN to a signed-in administrator access token for API evaluation")
+
     batch_id = uuid4().hex
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     batch_dir = output_dir / f"{stamp}_{batch_id}"
@@ -405,7 +410,8 @@ async def run_cases(settings: Settings, *, selected: set[str] | None = None,
     application = create_app(run_settings)
     failed = False
 
-    async with httpx.AsyncClient(transport=httpx.ASGITransport(app=application), base_url="http://evaluation.local") as client:
+    async with httpx.AsyncClient(transport=httpx.ASGITransport(app=application), base_url="http://evaluation.local",
+                                 headers={"Authorization": "Bearer " + access_token}) as client:
         for case in cases:
             if case["case_id"] not in selected:
                 continue

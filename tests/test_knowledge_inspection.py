@@ -7,7 +7,7 @@ import pytest
 
 from backend.core.config import Settings
 from backend.services.knowledge.knowledge_store import write_json
-from backend.main import create_app
+from tests.auth_helpers import create_app
 
 
 def request(root):

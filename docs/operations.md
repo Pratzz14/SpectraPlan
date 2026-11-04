@@ -1,55 +1,81 @@
-# Commands and services
+# Operations
 
-All commands run from the repository root. Replace `python` with `.\.venv\Scripts\python.exe` on Windows. Credentials stay in backend environment variables.
+Run from the repository root. `python` below means `.\.venv\Scripts\python.exe` on Windows. Use `python -m <module> --help` for current flags; old provider-selection commands are obsolete.
 
-| Service | Address/storage | Operation |
-|---|---|---|
-| FastAPI | 127.0.0.1:8000 | `python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000`; one worker |
-| Vite | 127.0.0.1:5173 | `npm run dev` in frontend; proxies `/api` to backend |
-| Preview | 127.0.0.1:4173 | `npm run build`, then `npm run preview` in frontend |
-| Qdrant | corpus generation `qdrant/` folders | Embedded; no server or port; local cached BGE embeddings |
-| BM25 | generation `bm25.json` | Local lexical ranking, no embedding load |
-| History | `EXPLAINABILITY_DB_PATH` | SQLite; defaults to outputs/assessment/explainability.sqlite |
-| Ingestion worker | outputs/pdf_knowledge | Spawned process; status via `/api/knowledge/ingest/status` |
-| LLM providers | Alibaba DashScope · qwen3.8-flash | Assessment/extraction; network and credentials required |
-| Knowledge extraction | DashScope-compatible endpoint | PDF/Office extraction; network and credentials required |
+## Checks
 
-## CLI inventory
+```powershell
+.\.venv\Scripts\python.exe -m pip check
+.\.venv\Scripts\python.exe -m pytest -q --basetemp=tmp/pytest
+.\.venv\Scripts\python.exe -m evaluation.search_smoke
+Push-Location frontend
+npm test
+npm run lint
+npm run build
+Pop-Location
+```
 
-Run `python -m <module> --help` for option defaults. Flags below include optional and required arguments; `--help` documents required combinations.
+Backend tests block external HTTP and use disposable history. Domain tests explicitly inject an admin identity; auth tests use the production app with mocked Supabase responses. Search smoke uses existing local indexes and cached embeddings, with no model calls, downloads or publication. Build includes TypeScript checks. Passing these checks does not validate scientific recommendations.
 
-| Module | Purpose | Arguments |
-|---|---|---|
-| `backend.cli.ingest` | PDF and Office knowledge ingestion: python -m backend.cli.ingest build/publish/validate/report/search. | `build`, `pilot`, `add`, `--file`, `--role`, `--name`, `--prepare-only`, `--concurrency`, `--job-file`, `publish`, `validate`, `report`, `search`, `--query`, `--refresh`, `--source` |
-| `backend.cli.smoke_assessment` | Live development pipeline: python -m backend.cli.smoke_assessment --provider llmtech --public-trial. | `--case`, `--api`, `--request-deadline-s`, `--call-timeout-s`, `--output-dir` |
-| `backend.cli.smoke_extraction` | Manual live extraction check: python -m backend.cli.smoke_extraction. | `--case`, `--output-dir`, `--public-trial` |
-| `backend.cli.smoke_provider` | Live structured-output provider diagnostic. | No flags |
-| `backend.cli.smoke_retrieval` | Offline development inspection using accepted, hash-pinned F03 facts; no provider calls. |  |
-| `backend.pipelines.website.ingest` | Bounded S06 same-site HTML crawl. | `crawl`, `validate`, `--max-pages`, `--max-depth` |
-| `evaluation.run_evaluation` | Run development or final scenarios through the public assessment API. | `--case`, `--suite`, `--prepare-final`, `--verify`, `--publish`, `--source`, `--request-deadline-s`, `--call-timeout-s`, `--input`, `--output-dir` |
-| `evaluation.search_smoke` | Offline operational search checks; no provider initialization or downloads. | `--input`, `--output-dir` |
-| `scripts.restore_corpus` | Restore local images, report and indexes from the saved canonical evidence. | `--from-generation`, `--local-model-only` |
-| `scripts.verify_submission` | Verify the saved final batch; never generate, publish or edit answers. | `--manifest`, `--portable`, `--receipt` |
+## Knowledge
 
-Live calls: knowledge `build`/`pilot`/`add` (unless preparation-only), provider checks, assessment/extraction diagnostics, and scenario execution. Website `crawl` performs HTTP requests to the website. `publish` reuses saved extraction but may require embeddings. Restore with `--local-model-only` to forbid downloads. Search smoke uses cached embeddings only.
+Place separately supplied originals under `knowledge/original_sources/`. The supplied inventory is:
 
+| ID | Filename |
+|---|---|
+| S01 | `S01_Multispectral_Laboratory.pdf` |
+| S02 | `S02_AFS_Process_Control_Slides.pdf` |
+| S03 | `S03_LED_Kidney_Study_2017.pdf` |
+| S04 | `S04_Combi_MIR_Fluorescence_2021.pdf` |
+| S05 | `S05_AFS_Flyer.pdf` |
+| S06 | `S06_Laboratory_Link.txt` (optional website seed) |
+| T01 | `AFS_method_comparison_table.xlsx` |
+| D01_DOC | `AFS_Examples_and_Reference.docx` |
 
-## Frontend commands
+Check original hashes against the saved source manifest. Originals and local final-scenario text are excluded from Git; their redistribution rights are separate from the code license.
 
-Run in `frontend`: `npm ci`, `npm run dev`, `npm test`, `npm run lint`, `npm run typecheck`, `npm run build`, `npm run preview`. Build includes type checking.
+```powershell
+# Restore saved evidence and rebuild images/indexes without extraction-model calls.
+# Requires matching originals and a supplied embedding cache when local-only.
+python scripts/restore_corpus.py --local-model-only
+python -m backend.cli.ingest validate
+python -m backend.cli.ingest search --query "powder moisture"
+```
 
-## Safe search verification
+Restoration publishes a **new corpus identity** while preserving saved evidence IDs/revisions and old generations. `--from-generation <directory>` selects a specific saved generation. Without `--local-model-only`, embedding files may download. Stop other processes that hold the same Qdrant index before restoration or CLI search.
 
-`python -m evaluation.search_smoke --input evaluation/search_cases.json --output-dir outputs/search_smoke` runs locally without API startup, provider calls, index updates or automatic model downloads. Exit 0 means every check passed; exit 1 means a result/prerequisite failure.
+```powershell
+# LIVE: sends source content to DashScope and consumes quota.
+python -m backend.cli.ingest build --concurrency 2
+python -m backend.cli.ingest build --source S04
+python -m backend.cli.ingest add --file "C:\path\source.pdf" --role technical
+# LOCAL preparation only; no model call.
+python -m backend.cli.ingest add --file "C:\path\source.pdf" --prepare-only
+# Reuse completed extraction; publication may require local embeddings.
+python -m backend.cli.ingest publish
+```
 
-## Historical evidence
+PDF, XLSX and DOCX inputs are supported. Source roles are technical, research, business and development. Admins can also add files through Extracted knowledge. `--refresh` replaces matching cached extraction. Failed extraction uses local text/OCR when possible; unresolved storage/input failures block publication. Inspect active manifests for counts, fallback locations and validation status rather than relying on historical totals.
 
-`python -m scripts.verify_submission --portable` verifies archived artifacts without model calls. The scenario runner can generate new LLM assessments; do not invoke its default execution for offline verification. Existing final answers are historical and have documented content limitations.
+## Diagnostics and evaluation
 
+| Command | Effect |
+|---|---|
+| `python -m backend.cli.smoke_retrieval` | Local retrieval inspection using saved facts. |
+| `python -m backend.cli.smoke_provider` | Live structured-output request. |
+| `python -m backend.cli.smoke_extraction` | Live customer-fact extraction. |
+| `python -m backend.cli.smoke_assessment --case D01` | Live pipeline diagnostic. Add `--api` to exercise authentication/history. |
+| `python -m backend.pipelines.website.ingest crawl` | Optional bounded website HTTP crawl; separate business-context dataset. |
+| `python scripts/verify_submission.py --portable` | Offline verification of immutable final artifacts; no model calls. |
 
+API diagnostics need a current `SUPABASE_ACCESS_TOKEN` in the process environment; evaluation needs an admin token for traces. It is not a publishable/secret project key. Tokens are not saved in evaluation configuration. For new batches, run `python -m evaluation.run_evaluation --suite development` or `--suite final`; these make live model calls. `--verify <manifest>` verifies saved results; `--publish <manifest>` deliberately updates canonical answers. Do not publish individual diagnostic reruns as a final batch.
 
-## Dependency audit
+## Storage and backup
 
-`npm audit --omit=dev` reports no runtime dependency advisories at this update. The full audit reports seven moderate development-tool advisories inherited through ESLint/minimatch; npm reports no compatible fix. Do not force a major minimatch override: ESLint depends on its older API. Recheck before updating lint tooling.
+With `STORAGE_BACKEND=supabase`, use the cloud export and local worker procedures in [Supabase migration](supabase.md). Do not rerun the initial local import/activation after accepting cloud writes. The following filesystem backup instructions apply to the legacy local backend and pre-cutover snapshots.
 
-Assessment and ingestion now use `qwen3.8-flash` only. See [provider configuration](providers.md). No startup probes or fallback routing remain.
+Use one backend worker. Preserve source originals, active corpus generations/indexes, website snapshots, added-source registry and SQLite history together. For SQLite, use the backup API or stop the server and include any WAL files. Stop ingestion/search clients before copying active indexes. Do not run corpus publication concurrently with searches.
+
+`outputs/embedding_models/` caches embeddings; `outputs/pdf_knowledge/` stores ingestion work; `tmp/`, frontend build output and test caches are disposable when no process is using them. Their ignore rules do not make other `outputs/` or `knowledge/` files disposable. See the [artifact map](../outputs/README.md) before cleanup.
+
+Current code differs from archived execution snapshots, so a full historical runtime-drift audit can fail even when portable artifact integrity passes. Keep new verification receipts outside immutable run directories. Read [quality](quality.md) before interpreting saved assessments.

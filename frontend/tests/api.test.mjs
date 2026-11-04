@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'vitest'
-import { fetchExplainability, fetchEnquiries, fetchEnquiry } from '../src/shared/api/api'
+import { fetchExplainability, fetchEnquiries, fetchEnquiry, fetchSavedAssessment } from '../src/shared/api/api'
 
 async function respond(value, status, work) {
   const original = globalThis.fetch
@@ -23,4 +23,12 @@ test('history endpoints reject malformed summaries and rounds', async () => {
   await assert.rejects(respond({ enquiry_id:'id', runs:[null] }, 200, signal => fetchEnquiry('id', signal)), /Unexpected/)
   const summary = { enquiry_id:'id', original_description:'Sample', rounds:2, latest_run_id:'latest' }
   assert.deepEqual(await respond([summary], 200, signal => fetchEnquiries(signal)), [summary])
+})
+
+test('saved assessments use a separate contract without raw trace events', async () => {
+  const saved = { run_id: 'a'.repeat(32), enquiry_id: 'b'.repeat(32), parent_run_id: null, round_no: 1,
+    status: 'running', draft_description: 'Sample', description: 'Sample', clarification_answers: [], questions: [], run: null }
+  assert.deepEqual(await respond(saved, 200, signal => fetchSavedAssessment(saved.run_id, signal)), saved)
+  await assert.rejects(respond(null, 200, signal => fetchSavedAssessment(saved.run_id, signal)), /Unexpected/)
+  await assert.rejects(respond({ ...saved, enquiry_id: null }, 200, signal => fetchSavedAssessment(saved.run_id, signal)), /Unexpected/)
 })

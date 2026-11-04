@@ -10,6 +10,18 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
 class Settings(BaseSettings):
+    storage_backend: Literal["local", "supabase"] = "local"
+    database_url: SecretStr = SecretStr("")
+    supabase_migration_database_url: SecretStr = SecretStr("")
+    database_ssl_root_cert: Path | None = None
+    database_pool_size: int = Field(default=3, ge=1, le=10)
+    supabase_secret_key: SecretStr = SecretStr("")
+    supabase_source_bucket: str = "spectraplan-sources"
+    supabase_artifact_bucket: str = "spectraplan-artifacts"
+    cloud_cache_dir: Path = Path("tmp/supabase-cache")
+    supabase_url: str = ""
+    supabase_publishable_key: str = ""
+    admin_user_ids: str = ""
     model_config = SettingsConfigDict(
         env_file=PROJECT_ROOT / ".env", env_file_encoding="utf-8", extra="ignore"
     )
@@ -45,7 +57,7 @@ class Settings(BaseSettings):
     ingest_concurrency: int = Field(default=1, ge=1, le=4)
     ingest_max_output_tokens: int = Field(default=1000, ge=256, le=16384)
 
-    @field_validator("source_dir", "corpus_dir", "smoke_output_dir", "explainability_db_path", "ingest_cache_dir", "embedding_cache_dir", "web_corpus_dir", "knowledge_work_dir")
+    @field_validator("source_dir", "corpus_dir", "smoke_output_dir", "explainability_db_path", "ingest_cache_dir", "embedding_cache_dir", "web_corpus_dir", "knowledge_work_dir", "cloud_cache_dir")
     @classmethod
     def resolve_path(cls, value: Path) -> Path:
         return value.resolve() if value.is_absolute() else (PROJECT_ROOT / value).resolve()

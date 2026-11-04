@@ -287,6 +287,10 @@ def main():
     parser.add_argument("--max-depth", type=int, default=2)
     args = parser.parse_args()
     settings = Settings()
+    if settings.storage_backend == 'supabase':
+        from backend.services.cloud.commands import website
+        print(json.dumps(website(settings,args),indent=2))
+        return
     result = crawl(settings, max_pages=args.max_pages, max_depth=args.max_depth) if args.command == "crawl" else validate_web(web_directory(settings.web_corpus_dir))
     print(json.dumps(result, indent=2))
 

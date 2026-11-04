@@ -338,11 +338,11 @@ def _cited_ids(value):
     return set()
 
 
-def authenticate_ledger(facts, retrieval, root):
+def authenticate_ledger(facts, retrieval, root, repository=None):
     """Authenticate all retrieved records against their immutable published generation."""
     try:
         _check_synthesis_inputs(facts, retrieval)
-        snapshot = load_snapshot(root, retrieval.corpus_version)
+        snapshot = repository.snapshot(retrieval.corpus_version) if repository else load_snapshot(root, retrieval.corpus_version)
         for entry in retrieval.evidence:
             canonical = snapshot.resolve(entry.evidence.evidence_id, entry.evidence.revision)
             if canonical.model_dump() != entry.evidence.model_dump():

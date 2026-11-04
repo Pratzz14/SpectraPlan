@@ -1,6 +1,8 @@
 """Run from the repository root: python -m uvicorn backend.main:app --reload."""
 
-from backend.api.dependencies import get_settings, get_search, get_retrieval
+from backend.api.auth import require_admin
+
+from backend.api.dependencies import get_settings, get_search, get_retrieval, get_knowledge
 
 
 from fastapi import Depends, APIRouter, HTTPException
@@ -17,7 +19,7 @@ from backend.schemas.retrieval_models import RetrievalResult
 from backend.schemas.search import SearchRequest
 
 def create_router():
-    router = APIRouter(tags=["Search"])
+    router = APIRouter(tags=["Search"], dependencies=[Depends(require_admin)])
     @router.post("/api/retrieve", response_model=RetrievalResult)
     def retrieve(facts: CaseFacts, retrieval_service: CaseRetrievalService = Depends(get_retrieval)):
         try:
@@ -31,11 +33,12 @@ def create_router():
 
 
     @router.get("/api/evidence/{evidence_id}", response_model=ResolvedEvidence)
-    def evidence(evidence_id: str, corpus_version: str | None = None, revision: str | None = None, config: Settings = Depends(get_settings)):
+    def evidence(evidence_id: str, corpus_version: str | None = None, revision: str | None = None, config: Settings = Depends(get_settings), knowledge=Depends(get_knowledge)):
         if not SEARCH_LOCK.acquire(timeout=30):
             raise HTTPException(503, {"code": "evidence_unavailable", "message": "Evidence search is busy"})
         try:
-            return load_snapshot(config.corpus_dir, corpus_version).resolve(evidence_id, revision)
+            snapshot = knowledge.snapshot(corpus_version) if knowledge else load_snapshot(config.corpus_dir, corpus_version)
+            return snapshot.resolve(evidence_id, revision)
         except EvidenceNotFound as error:
             raise HTTPException(404, {"code": "evidence_not_found", "message": str(error)}) from None
         except EvidenceRevisionMismatch as error:

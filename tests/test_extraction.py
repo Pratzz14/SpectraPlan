@@ -13,7 +13,7 @@ from backend.pipelines.assessment.pipeline import (
     ExtractionValidationError, extract_case, validate_extraction,
 )
 from backend.core.config import Settings
-from backend.main import create_app
+from tests.auth_helpers import create_app
 from backend.schemas.models import CaseFacts, CustomerStatement, ExtractionRequest, FactProvenance, MeasurementContext
 from backend.providers.provider import Provider, ProviderError
 
