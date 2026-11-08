@@ -49,31 +49,11 @@ Desktop.ini
 *.swp
 *.swo
 
-# Keep reviewed corpus files and required evaluation outputs trackable.
-# Do not ignore knowledge/*.json, knowledge/*.jsonl or outputs/ globally.
-
-# Routine diagnostic runs stay local; explicitly retain source-reviewed run records.
-/outputs/assessment/[0-9]*.json
-/outputs/assessment/explainability.sqlite*
-/outputs/development/[0-9]*
-/outputs/runs/**/*.sqlite*
-/outputs/diagnostics/**/*.sqlite*
-# Redundant trace PDF renderings stay local; portable JSON traces are retained.
-/outputs/runs/**/*.trace.pdf
-/outputs/setup_checks/trace.pdf
-/outputs/test-tmp-*/
-!/outputs/assessment/20261017T204318Z_3ebb9b193319407aa703eca6dd222209.json
-!/outputs/assessment/20261018T031435Z_573cc337a2c7459cb0d31246fe0eebfe.json
-!/outputs/assessment/20261018T031140Z_5f79a57f653a4b59a57b1896af523416.json
-/outputs/extraction/[0-9]*.json
-!/outputs/extraction/20261017T162638Z_eca1681faa1948bd9a0b11aacd0c05e3.json
-!/outputs/extraction/20261017T162839Z_2d073001ae594680b250652ae122a62c.json
-/outputs/retrieval/[0-9]*.json
-!/outputs/retrieval/20261017T172345052038Z.json
+# Generated diagnostics, evaluation runs, and local runtime data
+/outputs/*
+!/outputs/README.md
 
 # Rebuildable ingestion working data and local model binaries
-/outputs/embedding_models/
-/outputs/ingest/cache/
 /knowledge/.staging/
 /knowledge/versions/*/qdrant/
 /knowledge/versions/*/inspection/qdrant/
@@ -85,31 +65,11 @@ Desktop.ini
 /knowledge/saved_extraction_64/*
 !/knowledge/saved_extraction_64/README.md
 !/knowledge/saved_extraction_64/checkpoint.json
-/outputs/ingest/pytest*/
-/outputs/ingest/live_partial_records.json
-/outputs/ingest/retry_llmtech_pages.py
-/outputs/ingest/save_checkpoint.py
 
 # Website snapshots keep extracted provenance trackable; raw HTML and vector binaries stay local.
 /knowledge/web/.staging/
 /knowledge/web/versions/*/html/
 /knowledge/web/versions/*/qdrant/
 
-!/outputs/assessment/20261018T034301Z_b59ccf87bb994269963a75f1fdaebae1.json
-
-!/outputs/assessment/20261018T034044Z_43095fab2e3c434995aeca61ab0540f4.json
-
-# Routine provider checks stay local; reviewed routing diagnostics are retained.
-/outputs/provider_smoke/[0-9]*.json
-!/outputs/provider_smoke/20261018T033442Z_472363a8904c4e94b0ca459173513eea.json
-!/outputs/provider_smoke/20261018T033639Z_1c212903d802454d84504cc24118311c.json
-!/outputs/provider_smoke/20261018T033740Z_4ccc6e87d58b4f94864e2539de6f9841.json
-
-# Latest PDF extraction diagnostics are local and overwritten per build.
-/outputs/pdf_knowledge/
-
 # Local registrations of user-added originals.
 /knowledge/added_sources.json
-
-/outputs/search_smoke/
-/outputs/refactor-tests/

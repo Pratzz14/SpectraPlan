@@ -61,12 +61,12 @@ PDF, XLSX and DOCX inputs are supported. Source roles are technical, research, b
 
 | Command | Effect |
 |---|---|
-| `python -m backend.cli.smoke_retrieval` | Local retrieval inspection using saved facts. |
+| `python -m backend.cli.smoke_retrieval` | Local retrieval inspection requiring separately saved extraction fixtures in `outputs/extraction/`. |
 | `python -m backend.cli.smoke_provider` | Live structured-output request. |
 | `python -m backend.cli.smoke_extraction` | Live customer-fact extraction. |
 | `python -m backend.cli.smoke_assessment --case D01` | Live pipeline diagnostic. Add `--api` to exercise authentication/history. |
 | `python -m backend.pipelines.website.ingest crawl` | Optional bounded website HTTP crawl; separate business-context dataset. |
-| `python scripts/verify_submission.py --portable` | Offline verification of immutable final artifacts; no model calls. |
+| `python scripts/verify_submission.py --portable` | Offline verification of a separately saved or locally generated final batch. |
 
 API diagnostics need a current `SUPABASE_ACCESS_TOKEN` in the process environment; evaluation needs an admin token for traces. It is not a publishable/secret project key. Tokens are not saved in evaluation configuration. For new batches, run `python -m evaluation.run_evaluation --suite development` or `--suite final`; these make live model calls. `--verify <manifest>` verifies saved results; `--publish <manifest>` deliberately updates canonical answers. Do not publish individual diagnostic reruns as a final batch.
 
@@ -76,6 +76,6 @@ With `STORAGE_BACKEND=supabase`, use the cloud export and local worker procedure
 
 Use one backend worker. Preserve source originals, active corpus generations/indexes, website snapshots, added-source registry and SQLite history together. For SQLite, use the backup API or stop the server and include any WAL files. Stop ingestion/search clients before copying active indexes. Do not run corpus publication concurrently with searches.
 
-`outputs/embedding_models/` caches embeddings; `outputs/pdf_knowledge/` stores ingestion work; `tmp/`, frontend build output and test caches are disposable when no process is using them. Their ignore rules do not make other `outputs/` or `knowledge/` files disposable. See the [artifact map](../outputs/README.md) before cleanup.
+`outputs/embedding_models/` caches embeddings; `outputs/pdf_knowledge/` stores ingestion work; `tmp/`, frontend build output and test caches are disposable when no process is using them. See the [artifact map](../outputs/README.md) for local data and backup guidance.
 
 Current code differs from archived execution snapshots, so a full historical runtime-drift audit can fail even when portable artifact integrity passes. Keep new verification receipts outside immutable run directories. Read [quality](quality.md) before interpreting saved assessments.
